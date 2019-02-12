@@ -5,9 +5,6 @@ import {
 
 
 
-
-
-
 class AtomicCalendar extends LitElement {
   static get properties() {
 
@@ -43,8 +40,8 @@ _render({ hass, config }) {
 				//await this.loadScript('https://unpkg.com/moment@2.23.0/moment.js')
 				await this.loadScript('/local/moment-with-locales.min.js')
 				moment.locale(this.hass.language);
-				const events = await this.getEvents()
-				this.updateHTML(events);
+				this.events = await this.getEvents()
+				this.updateHTML(this.events);
 
 			}
 
@@ -54,10 +51,10 @@ _render({ hass, config }) {
 			else if (!this.lastUpdateTime || moment().diff(this.lastUpdateTime,'minutes') > 15) {
 				 // this.getEvents();
 				moment.locale(this.hass.language);
-				const events = await this.getEvents()
+				this.events = await this.getEvents()
 				this.lastUpdateTime = moment();
 				this.shouldUpdateHtml = true;
-				this.updateHTML(events);	
+				this.updateHTML(this.events);	
 				}
 
 		this.isUpdating=false;
@@ -88,17 +85,19 @@ _render({ hass, config }) {
 				display: flex;
 				flex-flow: column nowrap;
 				flex: 1 1 auto;
+				margin-left: 5px;
+				margin-right: 5px;
 			}
 
 			td {
-				display: flex;
-				flex-flow: row nowrap;
+				/*display: flex;
+				flex-flow: row nowrap;*/
 				}
 			
 			tr{
 				width: 100%;
-				display: flex;
-				flex-flow: row nowrap;
+				/*display: flex;
+				flex-flow: row nowrap;*/
 			}
 
 			.event-row {
@@ -108,43 +107,54 @@ _render({ hass, config }) {
 
 			.event-date {
 				
-        
 				flex: 0 0 20px;
 				padding: 5px;
+				
+				text-align: center;
 				border: 1px solid #ccc;
-				color: blue;
+				color: ${this.config.dateColor};
+				font-size: ${this.config.dateSize}%;
+				vertical-align: top;
 			}
 			
 			.event-main {
-				display:flex;
+			/*	display:flex;*/
 				flex: 1 1 auto;
 				flex-direction:column;
 				padding: 5px;
 				border: 1px solid #ccc;
-				color: red;
+				
 			}
 			
 			.event-location {
 		
-
-				flex: 0 0 40px;
 				padding: 5px;
+				flex: 0 0 40px;
+			
 				border: 1px solid #ccc;
 				color: red;
+				text-align: right;
+				
+}
 				
 			.event-title {
 				flex: 1 1 auto;
-				padding: 5px;
-				border: 1px solid #ccc;
-				color: red;
+				font-size: ${this.config.titleSize}%;
+				color: ${this.config.titleColor};
+				
 			}		
 			
 			.event-time {
 				flex: 1 1 auto;
-				padding: 5px;
-				border: 1px solid #ccc;
-				color: red;
+			
+				font-size: ${this.config.timeSize}%;
+				color: ${this.config.timeColor};
 			}			
+			
+			.event-location-icon {
+			    height: 14px;
+                width: 14px;
+			}
 				
 		</style>
 
@@ -164,7 +174,17 @@ _render({ hass, config }) {
     }
     this.config = {
 		title: 'Kalendarz',
-		maxDaysToShow: 5,
+		fullDayEventText: 'Cały dzień',
+		showColors: true,  // show calendar title colors, if set
+		maxDaysToShow: 7,
+		dateColor: 'var(--primary-text-color)', // Date text color
+		dateSize: 90, //Date text size
+
+		timeColor: 'var(--primary-color)', // Time text color
+		timeSize: 90, //Time text size
+
+		titleColor: 'var(--primary-text-color)',
+		titleSize: 100,
 		...config
 		
 	}
@@ -196,59 +216,96 @@ _render({ hass, config }) {
 	return html`<div>${event.startTime.format('DD')}</div>`
    }
 
-
-hoursHTML(event) {
-	return html`
+	// generating Event Title HTML
+	getTitleHTML(event) {
+		console.log(event)
+		const titleColor = (this.config.showColors && event.config.color!== "undefined") ? event.config.color : this.config.titleColor
+		console.log(titleColor)
+		return html`
 		
-	`
-}
+		<div class="event-title" style="color: ${titleColor}">${event.title}</div>
+		`
+	}
+	
+	//generating Event Time HTML
+	getHoursHTML(event) {
+		var hours = ''
+		
+		if (event.isFullDayEvent)
+			return html`
+			<div >${this.config.fullDayEventText}</div>`
 
-  updateHTML(events){
-	
-	// check if no events 
-	// TODO: write something if no events
-	if (events.length==0)	
-		{
-			return 'No events in next days'
-		}
-	
-	const table = ``
+		if(event.startTime < moment().startOf('day'))
+			hours += event.startTime.format('LT') + ' - '
+
+
+		hours += event.endTime.format('LT')
+				
+		return html`
+			<div>${hours}</div>
+		`
+	}
+
+		getLocationHTML(event) {
+		var location = ''
+		if (!event.location) return html``
+		
+			location+=''
+			location+=event.address
 		
 
-	// grouping events by days
-	const groupsOfEvents = events.reduce(function (r,a) {
-			r[a.daysToSort] = r[a.daysToSort] || []
-			r[a.daysToSort].push(a);
-			return r
-		}, Object.create(null))
+		return html`
+			<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${location}</div>
+		`
+	}
+	
+	//update Calendar HTML
+	updateHTML(events){
+		
+		// check if no events 
+		// TODO: write something if no events
+		if (events.length==0)	
+			{
+				return 'No events in next days'
+			}
+		
+		const table = ``
+			
 
-	
-	//loop through days
-	const htmlDays=Object.values(groupsOfEvents).map((d) => {
+		// grouping events by days
+		const groupsOfEvents = events.reduce(function (r,a) {
+				r[a.daysToSort] = r[a.daysToSort] || []
+				r[a.daysToSort].push(a);
+				return r
+			}, Object.create(null))
+
 		
-		//loop through events for each day
-		const htmlEvents=Object.values(d).map((event,i) => {
-	
-				const hours = this.hoursHTML(event)
-	
-				return html`
-				<tr>
-					<td class="event-date"><div>
-							<div>${i===0 ? event.startTime.format('dd') : ''}</div>
-							<div>${i===0 ? event.startTime.format('DD') : ''}</div>
-							<div></div>
-						</div></td>
-					<td class="event-main">
-							<div class="event-title">${event.title}</div>
-							<div class="event-time">Date</div>
-					</td>
-					<td class="event-location">Location</td>
-				</tr>`
-			})
+		//loop through days
+		const htmlDays=Object.values(groupsOfEvents).map((d) => {
+			
+			//loop through events for each day
+			const htmlEvents=Object.values(d).map((event,i) => {
 		
-		//daily html
-		return htmlEvents
-	})
+					const hours = this.getHoursHTML(event)
+		
+					return html`
+					<tr>
+						<td class="event-date"><div>
+								<div>${i===0 ? event.startTime.format('DD') : ''}</div>
+								<div>${i===0 ? event.startTime.format('ddd') : ''}</div>
+								<div></div>
+							</div></td>
+						<td class="event-main">
+								${this.getTitleHTML(event)}
+								<div class="event-time">${this.getHoursHTML(event)}</div>
+						</td>
+						<td class="event-location">${this.getLocationHTML(event)}</td>
+					</tr>`
+				})
+			
+			//daily html
+			return htmlEvents
+		})
 
 		
 this.content =  html`
@@ -278,7 +335,7 @@ this.content =  html`
    */
 	async getEvents() {
 		let start = moment().startOf('day').format('YYYY-MM-DDTHH:mm:ss');
-		let end = moment().add(this.config.maxDaysToShow-1, 'days').format('YYYY-MM-DDTHH:mm:ss');
+		let end = moment().add(this.config.maxDaysToShow, 'days').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = this.config.entities.map(entity => 
 		`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		//getting data from HA
@@ -296,7 +353,7 @@ this.content =  html`
 
 	
    /**
-   * loads moment.pl
+   * loads moment.js
    * @return {Promise}
    */
 	async loadScript(src) {
@@ -317,15 +374,15 @@ customElements.define('atomic-calendar', AtomicCalendar);
 
 
 class SingleEvent {
-	constructor(singleEvent,settings) {
+	constructor(singleEvent,config) {
 		this.singleEvent=singleEvent;
-		this.settings=settings;
+		this.config=config;
 	}
 	
-	get color() {
-		if (this.settings.color)
-			return this.settings.color;
-		else return "black";
+	get titleColor() {
+		if (this.config.color)
+			return this.config.color;
+		else return 'var(--primary-text-color)';
 	}
 	
 	get title() {
@@ -343,7 +400,7 @@ class SingleEvent {
 	}
 	
 	get isFullDayEvent() {
-		if (!this.singleEvent.start.dateTime && this.singleEvent.start.date)
+		if (!this.singleEvent.start.dateTime && !this.singleEvent.end.dateTime)
 			return true
 		else return false
 	}
@@ -362,6 +419,12 @@ class SingleEvent {
 
 	}
 
+	get location() {
+		return this.singleEvent.location;
 
+	}
 	
+	get address() {
+		return this.singleEvent.location ? this.singleEvent.location.split(',')[0] : ''
+	}
 }
