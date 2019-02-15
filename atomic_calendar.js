@@ -13,6 +13,7 @@ class AtomicCalendar extends LitElement {
     return {
       hass: Object,
       config: Object,
+	  content: Object,
     }
   }
 
@@ -44,14 +45,14 @@ _render({ hass, config }) {
 			
 			// get events from HA Calendar each 15 minutes
 			 if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
-				moment.locale(this.hass.language);
+				moment.locale('en');
 				this.events = await this.getEvents()
 				this.lastCalendarUpdateTime = moment();
 				this.shouldUpdateHtml = true;
 				}
 
 			// update HTML each 1 minute, or after calendar reload
-			if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 0) {
+			if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 1) {
 				this.updateHTML(this.events);
 				this.shouldUpdateHtml = false;
 				this.lastHTMLUpdateTime = moment();
@@ -189,9 +190,9 @@ _render({ hass, config }) {
     }
     this.config = {
 		// text translations
-		title: 'Kalendarz', // Card title
-		fullDayEventText: 'Cały dzień', // "All day" custom text
-		untilText: 'Do', // "Until" custom text
+		title: 'Calendar', // Card title
+		fullDayEventText: 'All day', // "All day" custom text
+		untilText: 'Until', // "Until" custom text
 		
 		// main settings
 		momentLocation: '/local/moment-with-locales.min.js', // path to moment.js library if local
@@ -285,7 +286,7 @@ _render({ hass, config }) {
 				return html`<div>${this.config.untilText} ${event.endTime.format('LT')}</div>`
 			//5. starts today or later, ends later -> 'hour - until date'
 			else if(!moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(event.startTime,'day'))
-				return html`<div>${event.startTime.format('LT')}, ${this.config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+				return html`<div>${event.startTime.format('LT')}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
 			// 6. Normal one day event, with time set -> 'hour - hour'
 			else return html`
 				<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`
