@@ -11,17 +11,17 @@ class AtomicCalendar extends LitElement {
     return {
       hass: Object,
       config: Object,
-	  content: Object
+	  content: Object,
     }
   }
 
 	constructor() {
 		super();
-		this.lastUpdateTime;
+		this.lastCalendarUpdateTime;
+		this.lastHTMLUpdateTime;
 		this.events;
-		this.content=html`<div>HTML before calendar read</div>`;
+		this.content=html``;
 		this.shouldUpdateHtml = false;
-
 	}
   
   updated(){
@@ -37,30 +37,43 @@ _render({ hass, config }) {
 			// wait for moment.js or continue if already loaded
 			if(typeof(moment) == "undefined"){
 				//await this.loadScript('https://unpkg.com/moment@2.23.0/moment.js')
-				await this.loadScript('/local/moment-with-locales.min.js')
-				moment.locale(this.hass.language);
-				this.events = await this.getEvents()
-				this.updateHTML(this.events);
-
+				await this.loadScript(this.config.momentLocation)
+				console.log('moment.js loaded')
 			}
-
 			
-
 			// get events from HA Calendar each 15 minutes
-			else if (!this.lastUpdateTime || moment().diff(this.lastUpdateTime,'minutes') > 15) {
-				 // this.getEvents();
+			 if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
 				moment.locale(this.hass.language);
 				this.events = await this.getEvents()
-				this.lastUpdateTime = moment();
+				this.lastCalendarUpdateTime = moment();
 				this.shouldUpdateHtml = true;
-				this.updateHTML(this.events);	
+				}
+
+			// update HTML each 1 minute, or after calendar reload
+			if (this.shouldUpdateHtml || !this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 1) {
+				this.updateHTML(this.events);
+				this.shouldUpdateHtml = false;
+				this.lastHTMLUpdateTime = moment();
 				}
 
 		this.isUpdating=false;
-		}
-		)()
+		})()
 	}
-	return this.content;
+	
+	return html`
+	      ${this.setStyle()}
+	  
+
+	  <ha-card class="cal-card">
+		<div class="cal-title" >
+			${this.config.title}
+		</div>
+		<div>
+			<table><tbody>
+				${this.content}
+			</tbody></table>
+		</div>
+	  </ha-card>`
 
   }
 
@@ -70,58 +83,34 @@ _render({ hass, config }) {
 		<style>
 			.cal-card{
 		
-				padding: 8px;
+				padding: 16px;
 			}
 			.cal-title {
 				font-size: var(--paper-font-headline_-_font-size);
 				color: var(--primary-text-color);
-				padding: 16px 16px 5px 16px;
+				padding: 8px 8px 5px 0px;
 				
 			}
 			table{
 				color:black;
-			/*	border: 1px solid #ccc;*/
-			/*	border-spacing: 0;*/
-				/*display: flex;
-				flex-flow: column nowrap;
-				flex: 1 1 auto;*/
-				margin-left: 5px;
-				margin-right: 5px;
-				
-				
-				  border-collapse: separate;
-  border-spacing: 10px 5px;
-   border-collapse: collapse;
+				margin-left: 0px;
+				margin-right: 0px;
+				border-spacing: 10px 5px;
+				border-collapse: collapse;
 				
 			}
 
 			td {
-				/*display: flex;
-				flex-flow: row nowrap;*/
-				
-						
+				padding: 0px;
 				}
 			
 			tr{
-				width: 100%;
-				/*display: flex;
-				flex-flow: row nowrap;*/
-
-				
-								 
+				width: 100%;				 
 			}
 
-		
-
 			.event-left {
-				
-			/*	flex: 0 0 20px;*/
-				padding: 5px;
-				padding-top: 7px;
-				padding-left: 8px;
-				padding-right: 10px;
+				padding: 7px 10px 3px 8px;
 				text-align: center;
-		
 				color: ${this.config.dateColor};
 				font-size: ${this.config.dateSize}%;
 				vertical-align: top;
@@ -129,22 +118,17 @@ _render({ hass, config }) {
 			}
 			
 			.event-right {
-				/* display:inline-block;*/
-				 display: flex;
-				 justify-content: space-between;
-				padding: 5px;
+				display: flex;
+				justify-content: space-between;
+				padding: 4px 5px 4px 5px;
+			
 						 
 			}
 			
 			.event-main {
-				/*display:flex;*/
-				/*flex: 1 1 auto;
 				flex-direction:row nowrap;*/
-
-				/*border: 1px solid #ccc;*/
-				/*flex-direction: row */
-				  display: inline-block;
-				  vertical-align: top;
+				display: inline-block;
+			    vertical-align: top;
 		
 			}
 			
@@ -155,15 +139,12 @@ _render({ hass, config }) {
 			}
 				
 			.event-title {
-				/*flex: 1 1 auto;*/
 				font-size: ${this.config.titleSize}%;
 				color: ${this.config.titleColor};
 				
 			}		
 			
 			.event-time {
-				/*flex: 1 1 auto;*/
-			
 				font-size: ${this.config.timeSize}%;
 				color: ${this.config.timeColor};
 			}			
@@ -180,16 +161,25 @@ _render({ hass, config }) {
 				text-decoration: none;
 				font-size: ${this.config.locationTextSize}%;
 			}
+
+			.circle {
+				width: 12px;
+				height: 12px;
+				color: var(--primary-color);
+				margin-left: -2px
+			}
+
+			hr {
+				color: var(--primary-color);
+				margin: -8px 0px 2px 0px;
+				border-width: 1px 0 0 0;
+
+			}
 				
 		</style>
 
 		`
 
-	}
-
-  updateEvents() {
-			this.lastUpdateTime = moment();
-			this.shouldUpdateHtml = true;
 	}
 
 
@@ -199,28 +189,41 @@ _render({ hass, config }) {
     }
     this.config = {
 		// text translations
-		title: 'Kalendarz',
-		fullDayEventText: 'Cały dzień',
-		untilText: 'Do', 
+		title: 'Kalendarz', // Card title
+		fullDayEventText: 'Cały dzień', // "All day" custom text
+		untilText: 'Do', // "Until" custom text
 		
 		// main settings
-		showColors: true,  // show calendar title colors, if set
-		maxDaysToShow: 7,
-		showLocation: true,
-		showMonth: false, // show month under day
+		momentLocation: '/local/moment-with-locales.min.js', // path to moment.js library if local
+		//momentLocation: 'https://unpkg.com/moment@2.23.0/min/moment-with-locales.js', //
+		showColors: true,  // show calendar title colors, if set in config (each calendar separately)
+		maxDaysToShow: 7, // maximum days to show
+		showLocation: true, // show location link (right side)
+		showMonth: false, // show month under day (left side)
+		fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
+		showCurrentEventLine: true, // show a line between last and next event
 
-		dateColor: 'var(--primary-text-color)', // Date text color
-		dateSize: 90, //Date text size
+		// color and font settings
+		dateColor: 'var(--primary-text-color)', // Date text color (left side)
+		dateSize: 90, //Date text size (percent of standard text)
 
-		timeColor: 'var(--primary-color)', // Time text color
+		timeColor: 'var(--primary-color)', // Time text color (center bottom)
 		timeSize: 90, //Time text size
 
-		titleColor: 'var(--primary-text-color)', //Event title settingss
+		titleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 		titleSize: 100,
 
-		locationIconColor: 'rgb(230, 124, 115)', //Location link settings
+		locationIconColor: 'rgb(230, 124, 115)', //Location link settings (right side)
 		locationLinkColor: 'var(--primary-text-color)',
 		locationTextSize: 90,
+		
+		// finished events settings
+		dimFinishedEvents: true, // make finished events greyed out or set opacity
+		finishedEventOpacity: 0.6, // opacity level
+		finishedEventFilter: 'grayscale(100%)', // css filter 
+
+		// days separating
+		dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
 		...config
 		
 	}
@@ -246,15 +249,12 @@ _render({ hass, config }) {
     });
   }
 
-  
-  eventHTML(event) {
-	
-	return html`<div>${event.startTime.format('DD')}</div>`
-   }
 
-	// generating Event Title HTML
+   /**
+   * generate Event Title (summary) HTML
+   * 
+   */
 	getTitleHTML(event) {
-		//console.log(event)
 		const titleColor = (this.config.showColors && event.config.color!== "undefined") ? event.config.color : this.config.titleColor
 	
 		return html`
@@ -263,23 +263,39 @@ _render({ hass, config }) {
 		`
 	}
 	
-	//generating Event Time HTML
+   /**
+   * generate Hours HTML
+   * 
+   */
 	getHoursHTML(event) {
-		
-		// 1. Full day event, one day only
-		if (event.isFullDayEvent)
-			return html`<div >${this.config.fullDayEventText}</div>`
-		// 2. Event ends another day
-		else if (event.endTime > moment().endOf('day'))
-			{
-				return html`
-				<div>${this.config.untilText} ${event.endTime.format('LL')}</div>`
-			}
-		// 3. Normal one day event, with time set
-		else return html`
-			<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`
+		var today = moment()
+		// full day events, no hours set
+			// 1. One day only, or multiple day ends today -> 'All day'
+			if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today,'day')))
+				return html`<div>${this.config.fullDayEventText}</div>`
+			// 2. Starts any day, ends later -> 'All day, end date'
+			else if (event.isFullMoreDaysEvent )
+				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+			// 3. starts before today, ends after today -> 'date - date'
+			else if (event.isFullMoreDaysEvent && (moment(event.startTime).isBefore(today,'day') || moment(event.andTime).isAfter(today,'day') ))
+				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+		// events with hours set
+			//4. long term event, ends today -> 'until hour'
+			else if(moment(event.startTime).isBefore(today,'day'))
+				return html`<div>${this.config.untilText} ${event.endTime.format('LT')}</div>`
+			//5. starts today or later, ends later -> 'hour - until date'
+			else if(!moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(event.startTime,'day'))
+				return html`<div>${event.startTime.format('LT')}, ${this.config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+			// 6. Normal one day event, with time set -> 'hour - hour'
+			else return html`
+				<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`
+
 	}
 
+   /**
+   * generate Event Location link HTML
+   * 
+   */
 	getLocationHTML(event) {
 	
 		if (!event.location || !this.config.showLocation) return html``
@@ -288,9 +304,16 @@ _render({ hass, config }) {
 		`
 	}
 	
-	//update Calendar HTML
+
+
+	
+   /**
+   * update Calendar HTML
+   * 
+   */
 	updateHTML(events){
-		
+	var htmlDays = ''
+	
 		// check if no events 
 		// TODO: write something if no events
 		if (events.length==0)	
@@ -301,34 +324,56 @@ _render({ hass, config }) {
 		const table = ``
 			
 
-		// grouping events by days
+		// grouping events by days, returns object with days and events
 		const groupsOfEvents = events.reduce(function (r,a) {
 				r[a.daysToSort] = r[a.daysToSort] || []
 				r[a.daysToSort].push(a);
 				return r
-			}, Object.create(null))
+			}, {})
+			
+		var days = Object.keys(groupsOfEvents).map(function(k){
+			return groupsOfEvents[k];
+			});
 
-		
+	
+		// move today's finished events up
+		// taking first day if today
+		if (moment(days[0][0]).isSame(moment(), "day")) {
+			var d = days[0]
+			for(var i = days[0].length; i--; i>0) {
+				if(days[0][i].isEventFinished) {
+					days[0][i].isFinished=true
+					var a = d.splice(i,1);
+					d.unshift(a[0]);
+				}
+			}
+			days[0] = d
+		}
+			
 		//loop through days
-		const htmlDays=Object.values(groupsOfEvents).map((d, di) => {
+		 htmlDays=days.map((day, di) => {
 			
 			//loop through events for each day
-			const htmlEvents=Object.values(d).map((event,i) => {
-					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid ;' : ''
-					//const hours = this.getHoursHTML(event)
-		
+			const htmlEvents=day.map((event,i, arr) => {
+					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid '+this.config.dayWrapperLineColor : ''
+					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
+						&& moment(event.startTime).isAfter(moment()) 
+						&& (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
+					) ? html`<ha-icon icon="mdi:circle" class="circle"></ha-icon><hr />` : ``
+					
+					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
+	
 					return html`
-			<tr style="${dayWrap} ">
+					<tr style="${dayWrap} ">
 						<td class="event-left"><div>
 								<div>${(i===0 && this.config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('ddd') : ''}</div>
-
-								<div></div>
-							</td>
-						<td >
+						</td>
+						<td style="width: 100%; ${finishedEventsStyle}">
+							<div>${currentEventLine}</div>
 							<div class="event-right">
-								<div class="event-main">
+								<div class="event-main" >
 									${this.getTitleHTML(event)}
 									<div class="event-time">${this.getHoursHTML(event)}</div>
 								</div>
@@ -336,36 +381,16 @@ _render({ hass, config }) {
 									${this.getLocationHTML(event)}
 								</div>
 							</div>
-							<div></div>
 						</td>
 						
 					</tr>`
 				})
 			
-			//daily html
 			return htmlEvents
 		})
-
-		
-this.content =  html`
-      ${this.setStyle()}
-	  
-
-	  <ha-card class="cal-card">
-		<div class="cal-title" >
-			${this.config.title}
-		</div>
-		<div>
-			<table><tbody>
-				${htmlDays}
-			</tbody></table>
-		</div>
-	  </ha-card>
-
-     
-    `;
-
-	}
+  
+  this.content =  html`${htmlDays}`
+  }
 
 
    /**
@@ -379,15 +404,18 @@ this.content =  html`
 		`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		//getting data from HA
 
+		try{
 		return await (Promise.all( calendarUrlList.map(url => 
 		this.hass.callApi('get',url))).then((result) => {
 				let ev = [].concat.apply([], (result.map((singleCalEvents,i) => {
 				//getting each event from each calendar, passing settings, assuming calendars were resolved in the correct order
-				return singleCalEvents.map(evt =>  new SingleEvent(evt,this.config.entities[i]))
+				return singleCalEvents.map(evt =>  new EventClass(evt,this.config.entities[i]))
 			})))
+
 		// sort events
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
 		return ev}))
+		} catch (error) {console.log('error: ', error) }
 	}
 
 	
@@ -406,16 +434,42 @@ this.content =  html`
 		});
 }
 
+   /**
+   * ready-to-use function to remove year from moment format('LL')
+   * @param {moment}
+   * @return {String} [month, day]
+   */
+
+ getCurrDayAndMonth(locale) {
+  var today = locale.format('LL');
+  return today
+    .replace(locale.format('YYYY'), '') // remove year
+    .replace(/\s\s+/g, ' ')// remove double spaces, if any
+    .trim() // remove spaces from the start and the end
+    .replace(/[рг]\./, '') // remove year letter from RU/UK locales
+    .replace(/de$/, '') // remove year prefix from PT
+    .replace(/b\.$/, '') // remove year prefix from SE
+    .trim() // remove spaces from the start and the end
+    .replace(/,$/g, ''); // remove comma from the end
+}
+
+
+
+
 
 }
 customElements.define('atomic-calendar', AtomicCalendar);
 
 
 
-class SingleEvent {
-	constructor(singleEvent,config) {
-		this.singleEvent=singleEvent;
+
+class EventClass {
+	constructor(eventClass,config) {
+		this.eventClass=eventClass;
 		this.config=config;
+		this._startTime= this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
+		this._endTime= this.eventClass.end.dateTime ? moment(this.eventClass.end.dateTime) : moment(this.eventClass.end.date).subtract(1, 'days').endOf('day')
+		this.isFinished = false;
 	}
 	
 	get titleColor() {
@@ -425,41 +479,42 @@ class SingleEvent {
 	}
 	
 	get title() {
-		return this.singleEvent.summary
+		return this.eventClass.summary
 	}
 	
 	//true start time
 	get startTime() {
-		if (this.singleEvent.start.dateTime) return moment(this.singleEvent.start.dateTime)
-		else return moment(this.singleEvent.start.date).local().startOf('day')
+		return this._startTime
 	}
 
 	//start time, but returns today if before today
 	get startTimeToShow() {
-		var time = this.singleEvent.start.dateTime ? moment(this.singleEvent.start.dateTime) : moment(this.singleEvent.start.date).local().startOf('day')
-		if (moment(time) < moment().startOf('day'))
+		var time = this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
+		if (moment(time).isBefore(moment().startOf('day')))
 			return moment().startOf('day') 
 		    else return time
 	}
 	
 	get endTime() {
-		if (this.singleEvent.end.dateTime) return moment(this.singleEvent.end.dateTime)
-		
-		else return moment(this.singleEvent.end.date).subtract(1, 'days').endOf('day')
+		return this._endTime
 	}
 	
-	// is full day event, but only one day
+	// is full day event
 	get isFullDayEvent() {
-	console.log	(this.singleEvent.start.date)
-		console.log	(this.singleEvent.end.date)
-		if (!this.singleEvent.start.dateTime && !this.singleEvent.end.dateTime && moment(this.singleEvent.start.date).isSame(moment(this.singleEvent.end.date).subtract(1, 'days'), 'day'))
+		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime )
+				return true
+		else return false
+	}
+	// is full day event, but only one day
+	get isFullOneDayEvent() {
+		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day'))
 				return true
 		else return false
 	}
 	
 	// is full day event, more days
 	get isFullMoreDaysEvent() {
-		if (!this.singleEvent.start.dateTime && !this.singleEvent.end.dateTime && this.singleEvent.start.date !== this.singleEvent.end.date)
+		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && !moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day'))
 			return true
 		else return false
 	}
@@ -469,24 +524,30 @@ class SingleEvent {
 		return moment(this.startTimeToShow).format('YYYYMMDD');
 	}
 	get isEventToday(){
-			return (moment(this.singleEvent.start.dateTime || this.singleEvent.start.date).isSame(moment(), 'day') ?  true :  false);
+		return (moment(this.eventClass.start.dateTime || this.eventClass.start.date).isSame(moment(), 'day') ?  true :  false);
 	}
 	
 	get isEventTomorrow() {
-			return moment(this.singleEvent.start.dateTime || this.singleEvent.start.date).isSame(moment().add(1,'day'), 'day') ?  true :  false;
-
+		return moment(this.eventClass.start.dateTime || this.eventClass.start.date).isSame(moment().add(1,'day'), 'day') ?  true :  false;
+	}
+	
+	get isEventRunning() {
+		return (moment(this.startTime).isBefore(moment()) && moment(this.endTime).isAfter(moment()) )
 	}
 
+	get isEventFinished() {
+		return (moment(this.endTime).isBefore(moment()))
+	}
+	
 	get location() {
-		return this.singleEvent.location ? (this.singleEvent.location).split(' ').join('+') : '';
-
+		return this.eventClass.location ? (this.eventClass.location).split(' ').join('+') : '';
 	}
 	
 	get address() {
-		return this.singleEvent.location ? this.singleEvent.location.split(',')[0] : ''
+		return this.eventClass.location ? this.eventClass.location.split(',')[0] : ''
 	}
 
 	get link() {
-		return this.singleEvent.htmlLink
+		return this.eventClass.htmlLink
 	}
 }
