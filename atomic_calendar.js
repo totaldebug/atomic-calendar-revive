@@ -3,6 +3,8 @@ import {
   LitElement, html
 } from 'https://unpkg.com/@polymer/lit-element@^0.5.2/lit-element.js?module';
 
+//from 'https://unpkg.com/@polymer/lit-element@^0.5.2/lit-element.js?module';
+
 
 
 class AtomicCalendar extends LitElement {
@@ -11,7 +13,6 @@ class AtomicCalendar extends LitElement {
     return {
       hass: Object,
       config: Object,
-	  content: Object,
     }
   }
 
@@ -50,7 +51,7 @@ _render({ hass, config }) {
 				}
 
 			// update HTML each 1 minute, or after calendar reload
-			if (this.shouldUpdateHtml || !this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 1) {
+			if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 0) {
 				this.updateHTML(this.events);
 				this.shouldUpdateHtml = false;
 				this.lastHTMLUpdateTime = moment();
@@ -59,7 +60,6 @@ _render({ hass, config }) {
 		this.isUpdating=false;
 		})()
 	}
-	
 	return html`
 	      ${this.setStyle()}
 	  
