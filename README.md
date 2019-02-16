@@ -12,6 +12,7 @@ The most important features:
 
 TODO:
 - event progress
+- lot of fixes and improvements
 
 The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
 
