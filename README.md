@@ -58,3 +58,13 @@ The component should not work slower than other calendars, the bottleneck is the
 
 
 ## Configuration examples
+
+```yaml
+          - type: "custom:atomic-calendar"
+            title: "Kalendarz"
+            entities:
+            - entity: calendar.kalendarz_dom
+              color: red
+            - calendar.atomic7777
+              
+```
