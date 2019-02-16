@@ -112,7 +112,7 @@ render() {
 			}
 
 			.event-left {
-				padding: 7px 10px 3px 8px;
+				padding: 5px 10px 3px 8px;
 				text-align: center;
 				color: ${this.config.dateColor};
 				font-size: ${this.config.dateSize}%;
@@ -177,6 +177,11 @@ render() {
 				margin: -8px 0px 2px 0px;
 				border-width: 1px 0 0 0;
 
+			}
+			
+			.eventBar {
+				margin-top: -5px; 
+				margin-bottom: -2px;
 			}
 				
 		</style>
@@ -358,7 +363,7 @@ render() {
 					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
 						&& moment(event.startTime).isAfter(moment()) 
 						&& (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
-					) ? html`<ha-icon icon="mdi:circle" class="circle"></ha-icon><hr />` : ``
+					) ? html`<div class="eventBar"><ha-icon icon="mdi:circle" class="circle"></ha-icon><hr /></div>` : ``
 					
 					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
 	

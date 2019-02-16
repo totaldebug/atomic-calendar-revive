@@ -317,7 +317,7 @@ window.JSCompiler_renameProperty=((e,a)=>e);const U={toAttribute(e,a){switch(a){
 			}
 
 			.event-left {
-				padding: 7px 10px 3px 8px;
+				padding: 5px 10px 3px 8px;
 				text-align: center;
 				color: ${this.config.dateColor};
 				font-size: ${this.config.dateSize}%;
@@ -392,7 +392,7 @@ window.JSCompiler_renameProperty=((e,a)=>e);const U={toAttribute(e,a){switch(a){
 		`}getHoursHTML(e){var a=me()();return e.isFullOneDayEvent||e.isFullMoreDaysEvent&&me()(e.endTime).isSame(a,"day")?O`<div>${this.config.fullDayEventText}</div>`:e.isFullMoreDaysEvent?O`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(me()(e.endTime))}</div>`:e.isFullMoreDaysEvent&&(me()(e.startTime).isBefore(a,"day")||me()(e.andTime).isAfter(a,"day"))?O`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(me()(e.endTime))}</div>`:me()(e.startTime).isBefore(a,"day")?O`<div>${this.config.untilText} ${e.endTime.format("LT")}</div>`:!me()(e.startTime).isBefore(a,"day")&&me()(e.endTime).isAfter(e.startTime,"day")?O`<div>${e.startTime.format("LT")}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(me()(e.endTime))}</div>`:O`
 				<div>${e.startTime.format("LT")} - ${e.endTime.format("LT")}</div>`}getLocationHTML(e){return e.location&&this.config.showLocation?O`
 			<div><a href="https://maps.google.com/?q=${e.location}" target="_blank" class="location-link"><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${e.address}</a></div>
-		`:O``}updateHTML(e){var a;if(0==e.length)return"No events in next days";const t=e.reduce(function(e,a){return e[a.daysToSort]=e[a.daysToSort]||[],e[a.daysToSort].push(a),e},{});var s=Object.keys(t).map(function(e){return t[e]});if(me()(s[0][0]).isSame(me()(),"day")){for(var n=s[0],d=s[0].length;d--;d>0)if(s[0][d].isEventFinished){s[0][d].isFinished=!0;var r=n.splice(d,1);n.unshift(r[0])}s[0]=n}a=s.map((e,a)=>e.map((e,t,s)=>{const n=0==t&&a>0?"border-top: 1px solid "+this.config.dayWrapperLineColor:"",d=0!=a||!this.config.showCurrentEventLine||!me()(e.startTime).isAfter(me()())||0!=t&&me()(s[t-1].startTime).isAfter(me()())?"":O`<ha-icon icon="mdi:circle" class="circle"></ha-icon><hr />`,r=e.isFinished&&this.config.dimFinishedEvents?"opacity: "+this.config.finishedEventOpacity+"; filter: "+this.config.finishedEventFilter:"";return O`
+		`:O``}updateHTML(e){var a;if(0==e.length)return"No events in next days";const t=e.reduce(function(e,a){return e[a.daysToSort]=e[a.daysToSort]||[],e[a.daysToSort].push(a),e},{});var s=Object.keys(t).map(function(e){return t[e]});if(me()(s[0][0]).isSame(me()(),"day")){for(var n=s[0],d=s[0].length;d--;d>0)if(s[0][d].isEventFinished){s[0][d].isFinished=!0;var r=n.splice(d,1);n.unshift(r[0])}s[0]=n}a=s.map((e,a)=>e.map((e,t,s)=>{const n=0==t&&a>0?"border-top: 1px solid "+this.config.dayWrapperLineColor:"",d=0!=a||!this.config.showCurrentEventLine||!me()(e.startTime).isAfter(me()())||0!=t&&me()(s[t-1].startTime).isAfter(me()())?"":O`<div style="margin-top: -5px;"><ha-icon icon="mdi:circle" class="circle"></ha-icon><hr /></div>`,r=e.isFinished&&this.config.dimFinishedEvents?"opacity: "+this.config.finishedEventOpacity+"; filter: "+this.config.finishedEventFilter:"";return O`
 					<tr style="${n} ">
 						<td class="event-left"><div>
 								<div>${0===t&&this.config.showMonth?e.startTimeToShow.format("MMM"):""}</div>
