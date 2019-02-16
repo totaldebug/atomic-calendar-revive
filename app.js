@@ -9,9 +9,9 @@ class AtomicCalendar extends LitElement {
   static get properties() {
 
     return {
-      hass: Object,
-      config: Object,
-	  content: Object,
+		hass: Object,
+		config: Object,
+		content: Object,
     }
   }
 
@@ -37,7 +37,7 @@ render() {
 
 			
 			// get events from HA Calendar each 15 minutes
-			 if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
+			if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
 				moment.locale('en');
 				this.events = await this.getEvents()
 				this.lastCalendarUpdateTime = moment();
@@ -72,9 +72,14 @@ render() {
   }
 
   static get styles() {
-        return [css`h4 { color: orange;} `];
+        return [css`
+		
+		
+		
+		
+		`];
       }
-	  
+
   setStyle(){
 	return html`
 		<style>
@@ -317,9 +322,6 @@ render() {
 			{
 				return 'No events in next days'
 			}
-		
-		const table = ``
-			
 
 		// grouping events by days, returns object with days and events
 		const groupsOfEvents = events.reduce(function (r,a) {
@@ -348,7 +350,7 @@ render() {
 		}
 			
 		//loop through days
-		 htmlDays=days.map((day, di) => {
+		htmlDays=days.map((day, di) => {
 			
 			//loop through events for each day
 			const htmlEvents=day.map((event,i, arr) => {
@@ -412,24 +414,13 @@ render() {
 		// sort events
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
 		return ev}))
-		} catch (error) {console.log('error: ', error) }
+		} catch (error) {
+			console.log('error: ', error) 
+			}
 	}
 
 	
-   /**
-   * loads moment.js
-   * @return {Promise}
-   */
-	async loadScript(src) {
-		return new Promise(resolve => {
-			const script = document.createElement('script');
-			script.src = src;
-			script.type = 'text/javascript';
-			script.async = true;
-			script.onload = resolve;
-			document.body.appendChild(script);
-		});
-}
+
 
    /**
    * ready-to-use function to remove year from moment format('LL')
@@ -489,7 +480,7 @@ class EventClass {
 		var time = this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
 		if (moment(time).isBefore(moment().startOf('day')))
 			return moment().startOf('day') 
-		    else return time
+			else return time
 	}
 	
 	get endTime() {
