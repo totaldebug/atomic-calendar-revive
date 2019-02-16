@@ -38,7 +38,7 @@ render() {
 			
 			// get events from HA Calendar each 15 minutes
 			if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
-				moment.locale('en');
+				moment.locale(this.hass.language);
 				this.events = await this.getEvents()
 				this.lastCalendarUpdateTime = moment();
 				this.shouldUpdateHtml = true;
@@ -46,6 +46,7 @@ render() {
 
 			// update HTML each 1 minute, or after calendar reload
 			if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 1) {
+				moment.locale(this.hass.language);
 				this.updateHTML(this.events);
 				this.shouldUpdateHtml = false;
 				this.lastHTMLUpdateTime = moment();
@@ -172,7 +173,7 @@ render() {
 			}
 
 			hr {
-				color: var(--primary-color);
+			color: ${this.config.progressBarColor};
 				margin: -8px 0px 2px 0px;
 				border-width: 1px 0 0 0;
 
@@ -196,8 +197,6 @@ render() {
 		untilText: 'Until', // "Until" custom text
 		
 		// main settings
-		momentLocation: '/local/moment-with-locales.min.js', // path to moment.js library if local
-		//momentLocation: 'https://unpkg.com/moment@2.23.0/min/moment-with-locales.js', //
 		showColors: true,  // show calendar title colors, if set in config (each calendar separately)
 		maxDaysToShow: 7, // maximum days to show
 		showLocation: true, // show location link (right side)
@@ -226,6 +225,7 @@ render() {
 
 		// days separating
 		dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
+		progressBarColor: 'var(--primary-color)',
 		...config
 		
 	}
