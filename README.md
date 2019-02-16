@@ -8,6 +8,7 @@ The most important features:
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - Move today's completed events up and dim them
 - Show progress bar before the next event
+- No need to load external libraries
 
 TODO:
 - event progress
