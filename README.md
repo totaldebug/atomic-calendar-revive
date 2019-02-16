@@ -1,4 +1,4 @@
-# atomic_calendar
+# atomic calendar card
 Advanced (experimental) calendar card for Home Assistant with Lovelace
 
 It is my custom calendar card with advanced settings. It loads calendar events from Home Assistant calendar component.
@@ -9,7 +9,13 @@ The most important features:
 - Move today's completed events up and dim them
 - Show progress bar before the next event
 
+TODO:
+- event progress
+
 The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
+
+![Preview](https://user-images.githubusercontent.com/11677097/52900547-78825000-31f7-11e9-926b-50589c3ddf64.jpg) 
+![Preview](https://user-images.githubusercontent.com/11677097/52900557-a23b7700-31f7-11e9-9628-89293d4ee2fe.jpg)
 
 ## Install
 1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/blob/master/atomic-calendar.js)
