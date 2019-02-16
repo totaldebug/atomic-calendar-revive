@@ -43,7 +43,8 @@ The component should not work slower than other calendars, the bottleneck is the
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
-| showCurrentEventLine | boolean | optional | v0.3.0 | `true` Show line before next event
+| showCurrentEventLine | boolean | optional | v0.3.0 | `true` Show line before next event. Don't enable when showProgressBar is true - will look bad
+| showProgressBar | boolean | optional | v0.5.5 | `false` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
 
 ### Colors, fonts
 
@@ -62,7 +63,9 @@ The component should not work slower than other calendars, the bottleneck is the
 | finishedEventOpacity | float | optional | v0.3.0 | `0.6` Opacity level of finished events
 | finishedEventOpacity | string | optional | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale)
 | dayWrapperLineColor | string | optional | v0.3.0 | `default text color` Color of line - days separate
-| progressBarColor | string | optional | v0.3.0 | `default color` Color of line showing next event
+| eventBarColor | string | optional | v0.3.0 | `default color` Color of line showing next event
+| progressBarColor | string | optional | v0.5.5 | `default color` Color of progress bar
+
 
 
 
