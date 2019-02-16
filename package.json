@@ -1,0 +1,29 @@
+{
+  "name": "atomic-calendar",
+  "version": "0.0.1",
+  "description": "Calendar Card for Home Assistant",
+  "main": "atomic-calendar.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack  --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomic7777/atomic_calendar.git"
+  },
+  "author": "Wojciech Mamak",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.3.3",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
+    "rollup": "^1.1.2",
+    "webpack": "^4.29.4",
+    "webpack-cli": "^3.2.3"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "lit-element": "^2.0.1",
+    "moment": "^2.24.0"
+  }
+}
