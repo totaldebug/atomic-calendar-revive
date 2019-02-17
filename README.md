@@ -43,34 +43,41 @@ The component should not work slower than other calendars, the bottleneck is the
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
-| showCurrentEventLine | boolean | optional | v0.3.0 | `true` Show line before next event. Don't enable when showProgressBar is true - will look bad
+
+
+### Text colors and fonts
+| Name | Type | Since | Description |
+|------|:----:|:-----:|-------------|
+| dateColor | string | v0.3.0 | `default text color` Color of date (left side)
+| dateSize | integer | v0.3.0 | `90` Date text size (percent of default font)
+| timeColor | string | v0.3.0 | `default color` Color of time (under the event title)
+| timeSize | integer | v0.3.0 | `90` Time text size (percent of default font)
+| titleColor | string | v0.3.0 | `default text color` Color of event title
+| titleSize | integer | v0.3.0 | `100` Event title text size (percent of default font)
+| locationLinkColor | string | v0.3.0 | `default text color` Color of location link (right side)
+| locationTextSize | integer | v0.3.0 | `90` Location text size (percent of default font)
+| locationIconColor | string | v0.3.0 | `rgb(230, 124, 115)` Color of location icon
+| dimFinishedEvents | boolean | v0.3.0 | `true` Apply filters to finished events (configured below)
+| finishedEventOpacity | float | v0.3.0 | `0.6` Opacity level of finished events
+| finishedEventOpacity | string | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale)
+| dayWrapperLineColor | string | v0.3.0 | `default text color` Color of line - days separate
+
+### Next event pointer (currently line with icon)
+| Name | Type | Since | Description |
+|------|:----:|:-----:|-------------|
+| showCurrentEventLine | boolean | v0.3.0 | `true` Show line before next event. Don't enable when showProgressBar is true - will look bad
+| eventBarColor | string | v0.3.0 | `default color` Color of line showing next event
+
+### Event progress bar (line with icon)
+| Name | Type | Since | Description |
+|------|:----:|:-----:|-------------|
 | showProgressBar | boolean | optional | v0.5.5 | `false` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
-
-### Colors, fonts
-
-| Name | Type | Default | Since | Description |
-|------|:----:|:-------:|:-----:|-------------|
-| dateColor | string | optional | v0.3.0 | `default text color` Color of date (left side)
-| dateSize | integer | optional | v0.3.0 | `90` Date text size (percent of default font)
-| timeColor | string | optional | v0.3.0 | `default color` Color of time (under the event title)
-| timeSize | integer | optional | v0.3.0 | `90` Time text size (percent of default font)
-| titleColor | string | optional | v0.3.0 | `default text color` Color of event title
-| titleSize | integer | optional | v0.3.0 | `100` Event title text size (percent of default font)
-| locationLinkColor | string | optional | v0.3.0 | `default text color` Color of location link (right side)
-| locationTextSize | integer | optional | v0.3.0 | `90` Location text size (percent of default font)
-| locationIconColor | string | optional | v0.3.0 | `rgb(230, 124, 115)` Color of location icon
-| dimFinishedEvents | boolean | optional | v0.3.0 | `true` Apply filters to finished events (configured below)
-| finishedEventOpacity | float | optional | v0.3.0 | `0.6` Opacity level of finished events
-| finishedEventOpacity | string | optional | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale)
-| dayWrapperLineColor | string | optional | v0.3.0 | `default text color` Color of line - days separate
-| eventBarColor | string | optional | v0.3.0 | `default color` Color of line showing next event
-| progressBarColor | string | optional | v0.5.5 | `default color` Color of progress bar
-
-
+| progressBarColor | string | v0.5.5 | `default color` Color of progress bar
 
 
 ## Configuration examples
 
+Simple configuration:
 ```yaml
           - type: "custom:atomic-calendar"
             title: "Kalendarz"
@@ -79,4 +86,36 @@ The component should not work slower than other calendars, the bottleneck is the
               color: red
             - calendar.atomic7777
               
+```
+
+Advanced config with all options, colors changed and progress bar enabled:
+```yaml
+          - type: "custom:atomic-calendar"
+            title: "Calendar"
+            entities:
+            - entity: calendar.YOUR_CALENDARS_HERE
+			title: 'Calendar'
+			fullDayEventText: 'All day'
+			untilText: 'Until'
+			showColors: true
+			maxDaysToShow: 7
+			showLocation: true
+			showMonth: false
+			showCurrentEventLine: false
+			dateColor: black
+			dateSize: 90
+			timeColor: blue
+			timeSize: 90
+			titleColor: black
+			titleSize: 100
+			locationIconColor: 'rgb(230, 124, 115)'
+			locationLinkColor: black
+			locationTextSize: 90
+			dimFinishedEvents: true
+			finishedEventOpacity: 0.6
+			finishedEventFilter: 'grayscale(100%)'
+			dayWrapperLineColor: black
+			eventBarColor: blue
+			showProgressBar: true
+			progressBarColor: blue
 ```
