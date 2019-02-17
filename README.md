@@ -94,7 +94,6 @@ Advanced config with all options, colors changed and progress bar enabled:
             title: "Calendar"
             entities:
             - entity: calendar.YOUR_CALENDARS_HERE
-            title: 'Calendar'
             fullDayEventText: 'All day'
             untilText: 'Until'
             showColors: true
