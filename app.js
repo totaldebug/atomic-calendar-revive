@@ -63,7 +63,7 @@ render() {
 		<div class="cal-title" >
 			${this.config.title}
 		</div>
-		<div>
+		<div style="padding-top: 4px;">
 			<table><tbody>
 				${this.content}
 			</tbody></table>
@@ -91,7 +91,8 @@ render() {
 			.cal-title {
 				font-size: var(--paper-font-headline_-_font-size);
 				color: var(--primary-text-color);
-				padding: 8px 8px 5px 0px;
+				padding: 4px 8px 12px 0px;
+				line-height: 40px;
 				
 			}
 			table{
@@ -100,11 +101,12 @@ render() {
 				margin-right: 0px;
 				border-spacing: 10px 5px;
 				border-collapse: collapse;
+			
 				
 			}
 
 			td {
-				padding: 0px;
+				padding: 4px 0 4px 0;
 				}
 			
 			tr{
@@ -112,7 +114,7 @@ render() {
 			}
 
 			.event-left {
-				padding: 5px 10px 3px 8px;
+				padding: 4px 10px 3px 8px;
 				text-align: center;
 				color: ${this.config.dateColor};
 				font-size: ${this.config.dateSize}%;
@@ -123,13 +125,13 @@ render() {
 			.event-right {
 				display: flex;
 				justify-content: space-between;
-				padding: 4px 5px 4px 5px;
+				padding: 0px 5px 4px 5px;
 			
 						 
 			}
 			
 			.event-main {
-				flex-direction:row nowrap;*/
+				flex-direction:row nowrap;
 				display: inline-block;
 			    vertical-align: top;
 		
@@ -198,7 +200,7 @@ render() {
 			.progress-circle {
 				width: 12px;
 				height: 12px;
-			color: ${this.config.progressBarColor};
+				color: ${this.config.progressBarColor};
 				margin-left: -2px
 
 			}
@@ -347,12 +349,18 @@ render() {
    */
 	updateHTML(events){
 	var htmlDays = ''
-	
+			
+		if (!events)	
+			{	// TODO some more tests end error message
+				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
+				return
+			}
 		// check if no events 
 		// TODO: write something if no events
 		if (events.length==0)	
-			{
-				return 'No events in next days'
+			{	
+				this.content =  html`No events in the next days`
+				return 
 			}
 
 		// grouping events by days, returns object with days and events
@@ -386,7 +394,7 @@ render() {
 			
 			//loop through events for each day
 			const htmlEvents=day.map((event,i, arr) => {
-					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid;  '+this.config.dayWrapperLineColor : ''
+					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid; padding-top: 4px; color: '+this.config.dayWrapperLineColor : ''
 					
 					//show line before next event
 					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
@@ -460,7 +468,7 @@ render() {
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
 		return ev}))
 		} catch (error) {
-			//console.log('error: ', error) 
+			console.log('error: ', error) 
 			}
 	}
 
