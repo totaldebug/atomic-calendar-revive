@@ -94,28 +94,27 @@ Advanced config with all options, colors changed and progress bar enabled:
             title: "Calendar"
             entities:
             - entity: calendar.YOUR_CALENDARS_HERE
-			title: 'Calendar'
-			fullDayEventText: 'All day'
-			untilText: 'Until'
-			showColors: true
-			maxDaysToShow: 7
-			showLocation: true
-			showMonth: false
-			showCurrentEventLine: false
-			dateColor: black
-			dateSize: 90
-			timeColor: blue
-			timeSize: 90
-			titleColor: black
-			titleSize: 100
-			locationIconColor: 'rgb(230, 124, 115)'
-			locationLinkColor: black
-			locationTextSize: 90
-			dimFinishedEvents: true
-			finishedEventOpacity: 0.6
-			finishedEventFilter: 'grayscale(100%)'
-			dayWrapperLineColor: black
-			eventBarColor: blue
-			showProgressBar: true
-			progressBarColor: blue
+            fullDayEventText: 'All day'
+            untilText: 'Until'
+            showColors: true
+            maxDaysToShow: 7
+            showLocation: true
+            showMonth: false
+            showCurrentEventLine: false
+            dateColor: black
+            dateSize: 90
+            timeColor: blue
+            timeSize: 90
+            titleColor: black
+            titleSize: 100
+            locationIconColor: 'rgb(230, 124, 115)'
+            locationLinkColor: black
+            locationTextSize: 90
+            dimFinishedEvents: true
+            finishedEventOpacity: 0.6
+            finishedEventFilter: 'grayscale(100%)'
+            dayWrapperLineColor: black
+            eventBarColor: blue
+            showProgressBar: true
+            progressBarColor: blue
 ```
