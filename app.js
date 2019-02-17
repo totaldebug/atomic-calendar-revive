@@ -165,15 +165,15 @@ render() {
 				font-size: ${this.config.locationTextSize}%;
 			}
 
-			.circle {
+			.event-circle {
 				width: 12px;
 				height: 12px;
-				color: var(--primary-color);
+				color: ${this.config.eventBarColor};
 				margin-left: -2px
 			}
 
-			hr {
-			color: ${this.config.progressBarColor};
+			hr.event {
+				color: ${this.config.eventBarColor};
 				margin: -8px 0px 2px 0px;
 				border-width: 1px 0 0 0;
 
@@ -184,6 +184,30 @@ render() {
 				margin-bottom: -2px;
 			}
 				
+			hr.progress {
+			color: ${this.config.progressBarColor};
+				margin: -8px 0px 2px 0px;
+				border-width: 1px 0 0 0;
+			}
+				
+			.progress-container {
+				margin-top: -7px; 
+				margin-bottom: 7px;
+				
+			}	
+			.progress-circle {
+				width: 12px;
+				height: 12px;
+			color: ${this.config.progressBarColor};
+				margin-left: -2px
+
+			}
+			
+			.progressBar {
+				margin-top: -5px; 
+				margin-bottom: -2px;
+			}
+
 		</style>
 
 		`
@@ -230,6 +254,9 @@ render() {
 
 		// days separating
 		dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
+		eventBarColor: 'var(--primary-color)',
+
+		showProgressBar: true,
 		progressBarColor: 'var(--primary-color)',
 		...config
 		
@@ -359,16 +386,28 @@ render() {
 			
 			//loop through events for each day
 			const htmlEvents=day.map((event,i, arr) => {
-					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid '+this.config.dayWrapperLineColor : ''
-					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
-						&& moment(event.startTime).isAfter(moment()) 
-						&& (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
-					) ? html`<div class="eventBar"><ha-icon icon="mdi:circle" class="circle"></ha-icon><hr /></div>` : ``
+					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid;  '+this.config.dayWrapperLineColor : ''
 					
+					//show line before next event
+					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
+						&& moment(event.startTime).isAfter(moment()) && (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
+					) ? html`<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle"></ha-icon><hr class="event"/></div>` : ``
+
+					//show current event progress bar
+					var progressBar = ``
+					if (di==0 && this.config.showProgressBar && event.isEventRunning) {
+						let eventDuration = event.endTime.diff(event.startTime, 'minutes');
+						let eventProgress = moment().diff(event.startTime, 'minutes');
+						let eventPercentProgress= Math.floor((eventProgress * 100)/eventDuration);
+						progressBar = html`<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progress" /></div>`;
+					
+					} 
+					
+			
 					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
 	
 					return html`
-					<tr style="${dayWrap} ">
+					<tr style="${dayWrap}">
 						<td class="event-left"><div>
 								<div>${(i===0 && this.config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
@@ -385,8 +424,9 @@ render() {
 									${this.getLocationHTML(event)}
 								</div>
 							</div>
+					${progressBar}
 						</td>
-						
+
 					</tr>`
 				})
 			
@@ -420,7 +460,7 @@ render() {
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
 		return ev}))
 		} catch (error) {
-			console.log('error: ', error) 
+			//console.log('error: ', error) 
 			}
 	}
 
