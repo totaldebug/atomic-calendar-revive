@@ -17,7 +17,7 @@ TODO:
 
 The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
 
-![Preview](https://user-images.githubusercontent.com/11677097/52900547-78825000-31f7-11e9-926b-50589c3ddf64.jpg) 
+![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 
 ## Install
