@@ -314,6 +314,7 @@ render() {
    */
 	getHoursHTML(event) {
 		var today = moment()
+		
 		// full day events, no hours set
 			// 1. One day only, or multiple day ends today -> 'All day'
 			if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today,'day')))
@@ -557,14 +558,21 @@ class EventClass {
 	}
 	// is full day event, but only one day
 	get isFullOneDayEvent() {
-		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day'))
-				return true
+		if ((!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) || (
+		moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day'))  && moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.end.dateTime).subtract(1, 'days'), 'day')
+
+		))
+			return true	
 		else return false
 	}
 	
 	// is full day event, more days
 	get isFullMoreDaysEvent() {
-		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && !moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day'))
+		if ((!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && !moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day') 
+			) || (
+		moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day'))  && moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day')
+		)
+		)
 			return true
 		else return false
 	}
