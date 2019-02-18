@@ -1,4 +1,4 @@
-# atomic calendar card v0.5.9
+# atomic calendar card v0.6.0
 Advanced (experimental) calendar card for Home Assistant with Lovelace
 
 It is my custom calendar card with advanced settings. It loads calendar events from Home Assistant calendar component.
@@ -65,13 +65,13 @@ The component should not work slower than other calendars, the bottleneck is the
 ### Next event pointer (currently line with icon)
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
-| showCurrentEventLine | boolean | v0.3.0 | `true` Show line before next event. Don't enable when showProgressBar is true - will look bad
+| showCurrentEventLine | boolean | v0.3.0 | `false` Show line before next event. Don't enable when showProgressBar is true - will look bad
 | eventBarColor | string | v0.3.0 | `default color` Color of line showing next event
 
 ### Event progress bar (line with icon)
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
-| showProgressBar | boolean | optional | v0.5.5 | `false` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
+| showProgressBar | boolean | optional | v0.5.5 | `true` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
 | progressBarColor | string | v0.5.5 | `default color` Color of progress bar
 
 
