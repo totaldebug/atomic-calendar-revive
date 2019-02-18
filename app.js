@@ -174,8 +174,8 @@ render() {
 			}
 
 			.event-circle {
-				width: 12px;
-				height: 12px;
+				width: 10px;
+				height: 10px;
 				color: ${this.config.eventBarColor};
 				margin-left: -2px
 			}
@@ -196,6 +196,7 @@ render() {
 			color: ${this.config.progressBarColor};
 				margin: -8px 0px 2px 0px;
 				border-width: 1px 0 0 0;
+				border-color: ${this.config.progressBarColor};
 			}
 				
 			.progress-container {
@@ -204,8 +205,8 @@ render() {
 				
 			}	
 			.progress-circle {
-				width: 12px;
-				height: 12px;
+				width: 10px;
+				height: 10px;
 				color: ${this.config.progressBarColor};
 				margin-left: -2px
 
@@ -214,6 +215,8 @@ render() {
 			.progressBar {
 				margin-top: -5px; 
 				margin-bottom: -2px;
+				border-color: ${this.config.progressBarColor};
+				
 			}
 
 		</style>
