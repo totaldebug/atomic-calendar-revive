@@ -7,13 +7,13 @@ The most important features:
 - Shows time of events in a different way (dates, hours)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - Moves today's completed events up and dim them
-- Highlights the next event, or show progress bar 
+- Highlights the next event, or show a progress bar 
 - No need to load external libraries (everything is included)
 - All translations included, few of the words can be configured in settings 
 
 TODO:
 - event progress
-- lot of fixes and improvements
+- a lot of fixes and improvements
 
 The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
 
