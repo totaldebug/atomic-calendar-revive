@@ -18,10 +18,10 @@ TODO:
 The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
 
 ![Preview](https://user-images.githubusercontent.com/11677097/52900547-78825000-31f7-11e9-926b-50589c3ddf64.jpg) 
-![Preview](https://user-images.githubusercontent.com/11677097/52900557-a23b7700-31f7-11e9-9628-89293d4ee2fe.jpg)
+![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 
 ## Install
-1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.5.9/atomic-calendar.js)
+1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.6.0/atomic-calendar.js)
 2. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
