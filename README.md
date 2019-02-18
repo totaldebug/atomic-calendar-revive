@@ -1,15 +1,15 @@
 # atomic calendar card v0.6.1
-Advanced (experimental) calendar card for Home Assistant with Lovelace
+Advanced calendar card for Home Assistant with Lovelace
 
-It is my custom calendar card with advanced settings. It loads calendar events from Home Assistant calendar component.
+Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
 
 The most important features:
-- Show time of events in a different way (dates, hours)
+- Shows time of events in a different way (dates, hours)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
-- Move today's completed events up and dim them
-- Highlight the next event, or showprogress bar 
-- No need to load external libraries
-- Translations included
+- Moves today's completed events up and dim them
+- Highlights the next event, or show progress bar 
+- No need to load external libraries (everything is included)
+- All translations included, few of the words can be configured in settings 
 
 TODO:
 - event progress
