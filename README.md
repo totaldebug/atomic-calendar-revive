@@ -1,4 +1,4 @@
-# atomic calendar card v0.6.0
+# atomic calendar card v0.6.1
 Advanced (experimental) calendar card for Home Assistant with Lovelace
 
 It is my custom calendar card with advanced settings. It loads calendar events from Home Assistant calendar component.
@@ -21,7 +21,7 @@ The component should not work slower than other calendars, the bottleneck is the
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 
 ## Install
-1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.6.0/atomic-calendar.js)
+1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.6.1/atomic-calendar.js)
 2. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
