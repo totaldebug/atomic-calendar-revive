@@ -28,7 +28,8 @@ The component should not work slower than other calendars, the bottleneck is the
     - url: /local/atomic-calendar.js?v=0.3.1
       type: module
   ```
-3. Add card with options to `ui-lovelace.yaml`
+3. Add card with options to `ui-lovelace.yaml`, examples below
+4. If you are upgrading, try to reload your browser cache by pressing ctrl-shift-r or shift-F5.
 
 ## Options
 ### Main settings
