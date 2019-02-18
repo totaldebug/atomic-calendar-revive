@@ -7,7 +7,7 @@ The most important features:
 - Show time of events in a different way (dates, hours)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - Move today's completed events up and dim them
-- Show progress bar before the next event
+- Highlight the next event, or showprogress bar 
 - No need to load external libraries
 - Translations included
 
