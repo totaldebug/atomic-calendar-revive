@@ -5,7 +5,7 @@ module.exports = {
   optimization: {
     minimize: true,
   },
-  watch: true,
+  watch: false,
   node: {
     fs: 'empty',
   },

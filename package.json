@@ -5,10 +5,12 @@
   "main": "atomic-calendar.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack  --config webpack.config.js",
-    "transpile": "babel app.js -d dist --copy-files",
+    "start": "webpack  --watch --config webpack.config.js",
+    "dev": "webpack --watch --config webpack-dev.config.js",
     "lint": "./node_modules/.bin/eslint app.js",
-    "babel": "babel app.js --out-file atomic-calendar-bundle.js"
+    "devtool": "webpack --config  webpack-devtool.config.js",
+    "devtool-build": "webpack --config  webpack-devtool-build.config.js && npm run babel",
+    "babel": "babel atomic-calendar.js --out-file atomic-calendar.js"
   },
   "repository": {
     "type": "git",
@@ -19,12 +21,17 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-transform-template-literals": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "babel-loader": "^8.0.5",
+    "babel-preset-minify": "^0.5.0",
     "eslint": "^5.14.0",
-    "rollup": "^1.1.2",
     "webpack": "^4.29.4",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "lit-element": "^2.0.1",
