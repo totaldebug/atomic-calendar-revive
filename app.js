@@ -74,10 +74,6 @@ render() {
 
   static get styles() {
         return [css`
-		
-		
-		
-		
 		`];
       }
 
@@ -109,6 +105,12 @@ render() {
 				padding: 4px 0 4px 0;
 				}
 			
+			.daywrap{
+				padding: 2px 0 4px 0;
+				border-top: 1px solid; 
+				color: ${this.config.dayWrapperLineColor};
+				}
+				
 			tr{
 				width: 100%;				 
 			}
@@ -121,6 +123,10 @@ render() {
 				vertical-align: top;
 						 
 			}
+			
+			.daywrap > td {
+				padding-top: 8px; 
+				}
 			
 			.event-right {
 				display: flex;
@@ -233,7 +239,7 @@ render() {
 		showLocation: true, // show location link (right side)
 		showMonth: false, // show month under day (left side)
 		fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
-		showCurrentEventLine: true, // show a line between last and next event
+		showCurrentEventLine: false, // show a line between last and next event
 
 		// color and font settings
 		dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -349,7 +355,7 @@ render() {
    */
 	updateHTML(events){
 	var htmlDays = ''
-			
+
 		if (!events)	
 			{	// TODO some more tests end error message
 				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
@@ -394,7 +400,7 @@ render() {
 			
 			//loop through events for each day
 			const htmlEvents=day.map((event,i, arr) => {
-					const dayWrap = (i==0 && di > 0) ? 'border-top: 1px solid; padding-top: 4px; color: '+this.config.dayWrapperLineColor : ''
+					const dayWrap = (i==0 && di > 0) ? 'daywrap' : ''
 					
 					//show line before next event
 					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
@@ -415,7 +421,7 @@ render() {
 					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
 	
 					return html`
-					<tr style="${dayWrap}">
+					<tr class="${dayWrap}">
 						<td class="event-left"><div>
 								<div>${(i===0 && this.config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
@@ -440,7 +446,7 @@ render() {
 			
 			return htmlEvents
 		})
-  
+
   this.content =  html`${htmlDays}`
   }
 
