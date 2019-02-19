@@ -3,8 +3,6 @@ import { html } from 'lit-html';
 import moment from 'moment';
 import 'moment/min/locales';
 
-
-
 class AtomicCalendar extends LitElement {
   static get properties() {
 
@@ -22,10 +20,11 @@ class AtomicCalendar extends LitElement {
 		this.events;
 		this.content=html``;
 		this.shouldUpdateHtml = false;
+		this.errorMessage='Loading...';
 	}
   
   updated(){
-   
+
   }  
   
 render() {
@@ -34,9 +33,6 @@ render() {
 		(async () => {
 			this.isUpdating=true;
 
-
-			
-			// get events from HA Calendar each 15 minutes
 			if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
 				moment.locale(this.hass.language);
 				this.events = await this.getEvents()
@@ -45,16 +41,18 @@ render() {
 				}
 
 			// update HTML each 1 minute, or after calendar reload
-			if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 1) {
+		/*	if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 1) {
 				moment.locale(this.hass.language);
 				this.updateHTML(this.events);
 				this.shouldUpdateHtml = false;
 				this.lastHTMLUpdateTime = moment();
-				}
+				}*/
+				this.updateHTML(this.events);
 
 		this.isUpdating=false;
 		})()
 	}
+
 	return html`
 	      ${this.setStyle()}
 	  
@@ -69,7 +67,6 @@ render() {
 			</tbody></table>
 		</div>
 	  </ha-card>`
-
   }
 
   static get styles() {
@@ -222,9 +219,7 @@ render() {
 		</style>
 
 		`
-
 	}
-
 
   setConfig(config) {
     if (!config.entities) {
@@ -270,7 +265,6 @@ render() {
 		showProgressBar: true,
 		progressBarColor: 'var(--primary-color)',
 		...config
-		
 	}
 	
 	if (typeof this.config.entities === 'string')
@@ -279,7 +273,6 @@ render() {
       if (typeof entity === 'string')
         this.config.entities[i] = { entity: entity };
 	});
-
   }
 
   // The height of your card. Home Assistant uses this to automatically
@@ -293,7 +286,6 @@ render() {
       entity_id: state.entity_id
     });
   }
-
 
    /**
    * generate Event Title (summary) HTML
@@ -349,23 +341,20 @@ render() {
 			<div><a href="https://maps.google.com/?q=${event.location}" target="_blank" class="location-link"><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
 		`
 	}
-	
-
-
-	
+		
    /**
    * update Calendar HTML
    * 
    */
 	updateHTML(events){
 	var htmlDays = ''
-
+var startTime = window.performance.now();
 		if (!events)	
 			{	// TODO some more tests end error message
-				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
+				this.content =  html`${this.errorMessage}`
 				return
 			}
-		// check if no events 
+
 		// TODO: write something if no events
 		if (events.length==0)	
 			{	
@@ -383,7 +372,6 @@ render() {
 		var days = Object.keys(groupsOfEvents).map(function(k){
 			return groupsOfEvents[k];
 			});
-
 	
 		// move today's finished events up
 		// taking first day if today
@@ -420,7 +408,6 @@ render() {
 						progressBar = html`<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progress" /></div>`;
 					
 					} 
-					
 			
 					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
 	
@@ -450,7 +437,6 @@ render() {
 			
 			return htmlEvents
 		})
-
   this.content =  html`${htmlDays}`
   }
 
@@ -464,19 +450,22 @@ render() {
 		let end = moment().add(this.config.maxDaysToShow, 'days').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = this.config.entities.map(entity => 
 		`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
-		//getting data from HA
-
 		try{
 		return await (Promise.all( calendarUrlList.map(url => 
 		this.hass.callApi('get',url))).then((result) => {
 				let ev = [].concat.apply([], (result.map((singleCalEvents,i) => {
-				//getting each event from each calendar, passing settings, assuming calendars were resolved in the correct order
 				return singleCalEvents.map(evt =>  new EventClass(evt,this.config.entities[i]))
 			})))
-
+		
 		// sort events
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
-		return ev}))
+		return ev}).catch(function(error) {
+			console.log("error: "+error) ;
+			this.errorMessage='The calendar cannot be loaded from the Home Assistant component.'	
+				}
+			)
+		
+		)
 		} catch (error) {
 			console.log('error: ', error) 
 			}
@@ -538,7 +527,7 @@ class EventClass {
 		return this._startTime
 	}
 
-	//start time, but returns today if before today
+	//start time, returns today if before today
 	get startTimeToShow() {
 		var time = this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
 		if (moment(time).isBefore(moment().startOf('day')))
