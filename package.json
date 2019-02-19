@@ -10,7 +10,10 @@
     "lint": "./node_modules/.bin/eslint app.js",
     "devtool": "webpack --config  webpack-devtool.config.js",
     "devtool-build": "webpack --config  webpack-devtool-build.config.js && npm run babel",
-    "babel": "babel atomic-calendar.js --out-file atomic-calendar.js"
+    "build": "webpack --config  webpack-build.config.js ",
+    "babel": "babel atomic-calendar.js --out-file atomic-calendar.js",
+	"rollup": "rollup -c",
+	"rbuild": "npm run rollup  && npm run babel"
   },
   "repository": {
     "type": "git",
@@ -27,8 +30,12 @@
     "@babel/preset-env": "^7.3.1",
     "babel-loader": "^8.0.5",
     "babel-preset-minify": "^0.5.0",
-    "eslint": "^5.14.0",
-    "webpack": "^4.29.4",
+    "eslint": "^5.14.1",
+    "rollup": "^1.2.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-terser": "^4.0.4",
+    "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1"

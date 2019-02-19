@@ -1,4 +1,4 @@
-import { LitElement, css } from 'lit-element';
+import { LitElement } from 'lit-element';
 import { html } from 'lit-html';
 import moment from 'moment';
 import 'moment/min/locales';
@@ -70,8 +70,7 @@ render() {
   }
 
   static get styles() {
-        return [css`
-		`];
+      
       }
 
   setStyle(){
@@ -348,7 +347,7 @@ render() {
    */
 	updateHTML(events){
 	var htmlDays = ''
-var startTime = window.performance.now();
+
 		if (!events)	
 			{	// TODO some more tests end error message
 				this.content =  html`${this.errorMessage}`
