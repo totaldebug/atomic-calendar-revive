@@ -5,7 +5,6 @@ import commonjs from 'rollup-plugin-commonjs';
 
 export default {
     input: 'app.js',
-	sourcemap: false,
     output: {
         file: 'atomic-calendar.js',
         format: 'iife'
@@ -15,7 +14,6 @@ export default {
     },
     plugins: [
         resolve(),
-        commonjs(),
-        terser()
+	    commonjs(),
     ]
 };

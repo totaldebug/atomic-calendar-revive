@@ -4,16 +4,11 @@
   "description": "Calendar Card for Home Assistant",
   "main": "atomic-calendar.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack  --watch --config webpack.config.js",
-    "dev": "webpack --watch --config webpack-dev.config.js",
     "lint": "./node_modules/.bin/eslint app.js",
-    "devtool": "webpack --config  webpack-devtool.config.js",
-    "devtool-build": "webpack --config  webpack-devtool-build.config.js && npm run babel",
-    "build": "webpack --config  webpack-build.config.js ",
     "babel": "babel atomic-calendar.js --out-file atomic-calendar.js",
 	"rollup": "rollup -c",
-	"rbuild": "npm run rollup  && npm run babel"
+	"rbuild": "npm run rollup  && npm run babel",
+	"watch": "rollup -c --watch --config rollup-dev.config.js"
   },
   "repository": {
     "type": "git",

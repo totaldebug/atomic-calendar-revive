@@ -19,17 +19,17 @@ class AtomicCalendar extends LitElement {
 		this.lastHTMLUpdateTime;
 		this.events;
 		this.content=html``;
-		this.shouldUpdateHtml = false;
+		this.shouldUpdateHtml = true;
 		this.errorMessage='Loading...';
 	}
   
   updated(){
-
+this.shouldUpdateHtml=false
   }  
   
 render() {
 
-	if(!this.isUpdating){
+	if(!this.isUpdating ){
 		(async () => {
 			this.isUpdating=true;
 
@@ -37,15 +37,12 @@ render() {
 				moment.locale(this.hass.language);
 				this.events = await this.getEvents()
 				this.lastCalendarUpdateTime = moment();
-				this.shouldUpdateHtml = true;
 				}
-
+			
 			this.updateHTML(this.events);
-
 		this.isUpdating=false;
 		})()
 	}
-
 	return html`
 	      ${this.setStyle()}
 	  
@@ -177,8 +174,8 @@ render() {
 			}
 			
 			.eventBar {
-				margin-top: -5px; 
-				margin-bottom: -2px;
+				margin-top: -10px; 
+				margin-bottom: 0px;
 			}
 				
 			hr.progress {
@@ -190,9 +187,8 @@ render() {
 				
 			.progress-container {
 				margin-top: -7px; 
-				margin-bottom: 7px;
-				
 			}	
+			
 			.progress-circle {
 				width: 10px;
 				height: 10px;
@@ -206,6 +202,15 @@ render() {
 				margin-bottom: -2px;
 				border-color: ${this.config.progressBarColor};
 				
+			}
+			
+			.nextEventIcon{
+				width: 10px;
+				height: 10px;
+				float: left;
+			display: block;
+			margin-left: -14px;
+           /* margin-top: 5px;*/
 			}
 
 		</style>
@@ -283,16 +288,17 @@ render() {
    * generate Event Title (summary) HTML
    * 
    */
-	getTitleHTML(event) {
+	getTitleHTML(event,isEventNext) {
 		const titleColor = (this.config.showColors && event.config.color!== "undefined") ? event.config.color : this.config.titleColor
+		const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
 	
 		return html`
-		<a href="${event.link}" style="text-decoration: none;" target="_blank">
+		${eventIcon}<a href="${event.link}" style="text-decoration: none;" target="_blank">
 		<div class="event-title" style="color: ${titleColor}">${event.title}</div></a>
 		`
 	}
 	
-   /**
+   /** 
    * generate Hours HTML
    * 
    */
@@ -339,7 +345,7 @@ render() {
    * 
    */
 	updateHTML(events){
-	var htmlDays = ''
+		var htmlDays = ''
 
 		if (!events)	
 			{	// TODO some more tests end error message
@@ -364,21 +370,27 @@ render() {
 		var days = Object.keys(groupsOfEvents).map(function(k){
 			return groupsOfEvents[k];
 			});
-	
+
+
 		// move today's finished events up
-		// taking first day if today
-		if (moment(days[0][0]).isSame(moment(), "day")) {
-			var d = days[0]
-			for(var i = days[0].length; i--; i>0) {
-				if(days[0][i].isEventFinished) {
+		const length=days[0].length
+		if (moment(days[0][0]).isSame(moment(), "day") && length>1 ) {
+
+			var i=1
+			while(i < length) {
+				if (days[0][i].isEventFinished && !days[0][i-1].isEventFinished) {	
 					days[0][i].isFinished=true
-					var a = d.splice(i,1);
-					d.unshift(a[0]);
+					//var temp=days[0][i]
+					//days[0][i]=days[0][i-1]
+					//days[0][i-1]=temp
+					[days[0][i], days[0][i-1]] = [days[0][i-1], days[0][i]]
+					if (i>1) i--
 				}
+				else 
+					i++
 			}
-			days[0] = d
 		}
-			
+		
 		//loop through days
 		htmlDays=days.map((day, di) => {
 			
@@ -386,6 +398,8 @@ render() {
 			const htmlEvents=day.map((event,i, arr) => {
 					const dayWrap = (i==0 && di > 0) ? 'daywrap' : ''
 					
+					const isEventNext = (di==0 && moment(event.startTime).isAfter(moment()) && (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
+					) ? true : false
 					//show line before next event
 					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
 						&& moment(event.startTime).isAfter(moment()) && (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
@@ -401,7 +415,7 @@ render() {
 					
 					} 
 			
-					const finishedEventsStyle = (event.isFinished && this.config.dimFinishedEvents)? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
+					const finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
 	
 					return html`
 					<tr class="${dayWrap}">
@@ -414,7 +428,7 @@ render() {
 							<div>${currentEventLine}</div>
 							<div class="event-right">
 								<div class="event-main" >
-									${this.getTitleHTML(event)}
+									${this.getTitleHTML(event,isEventNext)}
 									<div class="event-time">${this.getHoursHTML(event)}</div>
 								</div>
 								<div class="event-location">
@@ -561,13 +575,6 @@ class EventClass {
 	// return YYYYMMDD for sorting
 	get daysToSort() {
 		return moment(this.startTimeToShow).format('YYYYMMDD');
-	}
-	get isEventToday(){
-		return (moment(this.eventClass.start.dateTime || this.eventClass.start.date).isSame(moment(), 'day') ?  true :  false);
-	}
-	
-	get isEventTomorrow() {
-		return moment(this.eventClass.start.dateTime || this.eventClass.start.date).isSame(moment().add(1,'day'), 'day') ?  true :  false;
 	}
 	
 	get isEventRunning() {
