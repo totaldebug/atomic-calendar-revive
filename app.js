@@ -40,14 +40,7 @@ render() {
 				this.shouldUpdateHtml = true;
 				}
 
-			// update HTML each 1 minute, or after calendar reload
-		/*	if (this.shouldUpdateHtml || !this.lastHTMLUpdateTime || moment().diff(this.lastHTMLUpdateTime,'minutes') > 1) {
-				moment.locale(this.hass.language);
-				this.updateHTML(this.events);
-				this.shouldUpdateHtml = false;
-				this.lastHTMLUpdateTime = moment();
-				}*/
-				this.updateHTML(this.events);
+			this.updateHTML(this.events);
 
 		this.isUpdating=false;
 		})()
