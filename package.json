@@ -7,7 +7,7 @@
     "lint": "./node_modules/.bin/eslint app.js",
     "babel": "babel atomic-calendar.js --out-file atomic-calendar.js",
 	"rollup": "rollup -c",
-	"rbuild": "npm run rollup  && npm run babel",
+	"build": "npm run rollup  && npm run babel",
 	"watch": "rollup -c --watch --config rollup-dev.config.js"
   },
   "repository": {

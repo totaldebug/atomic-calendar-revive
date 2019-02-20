@@ -117,7 +117,7 @@ render() {
 			.event-right {
 				display: flex;
 				justify-content: space-between;
-				padding: 0px 5px 4px 5px;
+				padding: 0px 5px 0 5px;
 			
 						 
 			}
@@ -186,7 +186,7 @@ render() {
 			}
 				
 			.progress-container {
-				margin-top: -7px; 
+				margin-top: -5px; 
 			}	
 			
 			.progress-circle {
@@ -290,10 +290,10 @@ render() {
    */
 	getTitleHTML(event,isEventNext) {
 		const titleColor = (this.config.showColors && event.config.color!== "undefined") ? event.config.color : this.config.titleColor
-		const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
+		//const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
 	
 		return html`
-		${eventIcon}<a href="${event.link}" style="text-decoration: none;" target="_blank">
+		<a href="${event.link}" style="text-decoration: none;" target="_blank">
 		<div class="event-title" style="color: ${titleColor}">${event.title}</div></a>
 		`
 	}
@@ -344,45 +344,27 @@ render() {
    * update Calendar HTML
    * 
    */
-	updateHTML(events){
+	updateHTML(days){
 		var htmlDays = ''
-
-		if (!events)	
+		
+		if (!days)	
 			{	// TODO some more tests end error message
-				this.content =  html`${this.errorMessage}`
+				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
 				return
 			}
 
-		// TODO: write something if no events
-		if (events.length==0)	
+		// TODO write something if no events
+		if (days.length==0)	
 			{	
 				this.content =  html`No events in the next days`
 				return 
 			}
 
-		// grouping events by days, returns object with days and events
-		const groupsOfEvents = events.reduce(function (r,a) {
-				r[a.daysToSort] = r[a.daysToSort] || []
-				r[a.daysToSort].push(a);
-				return r
-			}, {})
-			
-		var days = Object.keys(groupsOfEvents).map(function(k){
-			return groupsOfEvents[k];
-			});
-
-
 		// move today's finished events up
-		const length=days[0].length
-		if (moment(days[0][0]).isSame(moment(), "day") && length>1 ) {
-
+		if (moment(days[0][0]).isSame(moment(), "day") && days[0].length>1 ) {
 			var i=1
-			while(i < length) {
+			while(i < days[0].length) {
 				if (days[0][i].isEventFinished && !days[0][i-1].isEventFinished) {	
-					days[0][i].isFinished=true
-					//var temp=days[0][i]
-					//days[0][i]=days[0][i-1]
-					//days[0][i-1]=temp
 					[days[0][i], days[0][i-1]] = [days[0][i-1], days[0][i]]
 					if (i>1) i--
 				}
@@ -416,7 +398,9 @@ render() {
 					} 
 			
 					const finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: `+this.config.finishedEventOpacity+`; filter: `+this.config.finishedEventFilter : ``
-	
+
+					const lastEventStyle = i==arr.length-1 ? 'padding-bottom: 8px;' : ''
+
 					return html`
 					<tr class="${dayWrap}">
 						<td class="event-left"><div>
@@ -424,7 +408,7 @@ render() {
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('ddd') : ''}</div>
 						</td>
-						<td style="width: 100%; ${finishedEventsStyle}">
+						<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle} ">
 							<div>${currentEventLine}</div>
 							<div class="event-right">
 								<div class="event-main" >
@@ -452,6 +436,7 @@ render() {
    * 
    */
 	async getEvents() {
+
 		let start = moment().startOf('day').format('YYYY-MM-DDTHH:mm:ss');
 		let end = moment().add(this.config.maxDaysToShow, 'days').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = this.config.entities.map(entity => 
@@ -465,9 +450,21 @@ render() {
 		
 		// sort events
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
-		return ev}).catch(function(error) {
-			console.log("error: "+error) ;
-			this.errorMessage='The calendar cannot be loaded from the Home Assistant component.'	
+		
+				// grouping events by days, returns object with days and events
+		const groupsOfEvents = ev.reduce(function (r,a) {
+				r[a.daysToSort] = r[a.daysToSort] || []
+				r[a.daysToSort].push(a);
+				return r
+			}, {})
+			
+		var days = Object.keys(groupsOfEvents).map(function(k){
+			return groupsOfEvents[k];
+			});
+
+		return days}).catch(function(error) {
+			console.log("error: "+error) 
+
 				}
 			)
 		
