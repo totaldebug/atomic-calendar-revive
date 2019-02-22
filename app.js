@@ -20,29 +20,36 @@ class AtomicCalendar extends LitElement {
 		this.events;
 		this.content=html``;
 		this.shouldUpdateHtml = true;
-		this.errorMessage='Loading...';
+		this.errorMessage='';
 	}
   
   updated(){
-this.shouldUpdateHtml=false
+
   }  
   
 render() {
 
 	if(!this.isUpdating ){
+		if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15)
 		(async () => {
 			this.isUpdating=true;
 
-			if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
+			 
 				moment.locale(this.hass.language);
+			try {
 				this.events = await this.getEvents()
-				this.lastCalendarUpdateTime = moment();
-				}
+			} catch (error) {
+				this.errorMessage='The calendar can\'t be loaded from Home Assistant component'
+			}
 			
+			this.lastCalendarUpdateTime = moment();
 			this.updateHTML(this.events);
-		this.isUpdating=false;
+			this.isUpdating=false;
 		})()
 	}
+	
+
+	this.updateHTML(this.events);
 	return html`
 	      ${this.setStyle()}
 	  
@@ -313,16 +320,19 @@ render() {
 			else if (event.isFullMoreDaysEvent )
 				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
 			// 3. starts before today, ends after today -> 'date - date'
-			else if (event.isFullMoreDaysEvent && (moment(event.startTime).isBefore(today,'day') || moment(event.andTime).isAfter(today,'day') ))
+			else if (event.isFullMoreDaysEvent && (moment(event.startTime).isBefore(today,'day') || moment(event.endTime).isAfter(today,'day') ))
 				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
 		// events with hours set
-			//4. long term event, ends today -> 'until hour'
-			else if(moment(event.startTime).isBefore(today,'day'))
+			//4. long term event, ends later -> 'until date'
+			else if(moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(today,'day'))	
+				return html`<div>${this.config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+			//5. long term event, ends today -> 'until hour'
+			else if(moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isSame(today,'day'))
 				return html`<div>${this.config.untilText} ${event.endTime.format('LT')}</div>`
-			//5. starts today or later, ends later -> 'hour - until date'
+			//6. starts today or later, ends later -> 'hour - until date'
 			else if(!moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(event.startTime,'day'))
 				return html`<div>${event.startTime.format('LT')}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
-			// 6. Normal one day event, with time set -> 'hour - hour'
+			// 7. Normal one day event, with time set -> 'hour - hour'
 			else return html`
 				<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`
 
@@ -345,11 +355,12 @@ render() {
    * 
    */
 	updateHTML(days){
+		
 		var htmlDays = ''
 		
 		if (!days)	
 			{	// TODO some more tests end error message
-				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
+				this.content =  html`${this.errorMessage}`
 				return
 			}
 
@@ -462,15 +473,10 @@ render() {
 			return groupsOfEvents[k];
 			});
 
-		return days}).catch(function(error) {
-			console.log("error: "+error) 
-
-				}
-			)
-		
+		return days})
 		)
 		} catch (error) {
-			console.log('error: ', error) 
+			throw error
 			}
 	}
 
