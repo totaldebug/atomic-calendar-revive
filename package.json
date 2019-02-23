@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint app.js",
     "babel": "babel atomic-calendar.js --out-file atomic-calendar.js",
-	"rollup": "rollup -c",
-	"build": "npm run rollup  && npm run babel",
-	"watch": "rollup -c --watch --config rollup-dev.config.js"
+    "rollup": "rollup -c",
+    "build": "npm run rollup  && npm run babel",
+    "watch": "rollup -c --watch --config rollup-dev.config.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "lit-element": "^2.0.1",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "node-google-calendar": "^1.1.1"
   }
 }

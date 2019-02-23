@@ -10,6 +10,7 @@ class AtomicCalendar extends LitElement {
 		hass: Object,
 		config: Object,
 		content: Object,
+		selectedMonth: Object
     }
   }
 
@@ -20,41 +21,67 @@ class AtomicCalendar extends LitElement {
 		this.events;
 		this.content=html``;
 		this.shouldUpdateHtml = true;
-		this.errorMessage='Loading...';
+		this.errorMessage='';
+		this.modeToggle=true;
+		this.selectedMonth=moment();
+		this.refreshCalEvents=null;
+		this.monthToGet=moment().format("MM");
+		this.month = [];;
+
 	}
   
   updated(){
-this.shouldUpdateHtml=false
   }  
   
 render() {
-
+				moment.locale(this.hass.language, {
+					week : {
+						dow : this.config.firstDayOfWeek 
+					}
+				});
 	if(!this.isUpdating ){
+		if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15)
 		(async () => {
 			this.isUpdating=true;
 
-			if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15) {
-				moment.locale(this.hass.language);
+			 
+
+			try {
 				this.events = await this.getEvents()
-				this.lastCalendarUpdateTime = moment();
-				}
+			} catch (error) {
+				this.errorMessage='The calendar can\'t be loaded from Home Assistant component'
+			}
 			
+			this.lastCalendarUpdateTime = moment();
 			this.updateHTML(this.events);
-		this.isUpdating=false;
+			this.isUpdating=false;
 		})()
 	}
+
+var t0 = performance.now();	
+if(!this.modeToggle)
+	this.updateHTML(this.events);
+else
+	this.updateHTML2(this.events);
+
+//var t1 = performance.now();
+//console.log((t1 - t0) + " ms")
+
+
 	return html`
 	      ${this.setStyle()}
 	  
 
 	  <ha-card class="cal-card">
-		<div class="cal-title" >
+		<div  class="cal-title"  @click='${e => this.handleToggle(e)}'> 
+
 			${this.config.title}
+
 		</div>
 		<div style="padding-top: 4px;">
-			<table><tbody>
+			
 				${this.content}
-			</tbody></table>
+			
 		</div>
 	  </ha-card>`
   }
@@ -63,6 +90,13 @@ render() {
       
       }
 
+	  
+	  handleToggle(e){
+		  this.modeToggle=!this.modeToggle
+		  this.requestUpdate()
+	  }
+	  
+	  
   setStyle(){
 	return html`
 		<style>
@@ -75,6 +109,8 @@ render() {
 				color: var(--primary-text-color);
 				padding: 4px 8px 12px 0px;
 				line-height: 40px;
+				cursor: default;
+				
 				
 			}
 			table{
@@ -213,6 +249,66 @@ render() {
            /* margin-top: 5px;*/
 			}
 
+
+
+
+			table.cal{
+				color:black;
+				margin-left: 0px;
+				margin-right: 0px;
+				border-spacing: 10px 5px;
+				border-collapse: collapse;
+				width: 100%;
+				table-layout:fixed;
+				
+			}
+
+			td.cal {
+				padding: 0 0 0 0;
+				
+				text-align: center;
+				vertical-align: middle;
+				width:100%;  
+
+				}		
+
+			.calDay {
+				height: 30px;
+
+			}
+
+			tr.cal {
+				width: 100%;	
+						
+			}
+
+
+			paper-icon-button {
+				width: 30px;
+				height: 30px;
+				padding: 4px;
+			}
+
+	
+
+
+			.calTitleContainer {
+				display: flex;
+				vertical-align: middle;
+				align-items: center;
+				justify-content: space-between;
+				margin: 8px;
+			}
+			
+			.calTitle {
+	
+			}
+
+			.calTableContainer {
+				width: 100%;
+				}
+			
+
 		</style>
 
 		`
@@ -231,6 +327,8 @@ render() {
 		// main settings
 		showColors: true,  // show calendar title colors, if set in config (each calendar separately)
 		maxDaysToShow: 7, // maximum days to show
+		
+		
 		showLocation: true, // show location link (right side)
 		showMonth: false, // show month under day (left side)
 		fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
@@ -261,6 +359,9 @@ render() {
 
 		showProgressBar: true,
 		progressBarColor: 'var(--primary-color)',
+		
+		
+		firstDayOfWeek: 1, // default 1 - monday
 		...config
 	}
 	
@@ -313,19 +414,21 @@ render() {
 			else if (event.isFullMoreDaysEvent )
 				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
 			// 3. starts before today, ends after today -> 'date - date'
-			else if (event.isFullMoreDaysEvent && (moment(event.startTime).isBefore(today,'day') || moment(event.andTime).isAfter(today,'day') ))
+			else if (event.isFullMoreDaysEvent && (moment(event.startTime).isBefore(today,'day') || moment(event.endTime).isAfter(today,'day') ))
 				return html`<div>${this.config.fullDayEventText}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
 		// events with hours set
-			//4. long term event, ends today -> 'until hour'
-			else if(moment(event.startTime).isBefore(today,'day'))
+			//4. long term event, ends later -> 'until date'
+			else if(moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(today,'day'))	
+				return html`<div>${this.config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
+			//5. long term event, ends today -> 'until hour'
+			else if(moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isSame(today,'day'))
 				return html`<div>${this.config.untilText} ${event.endTime.format('LT')}</div>`
-			//5. starts today or later, ends later -> 'hour - until date'
+			//6. starts today or later, ends later -> 'hour - until date'
 			else if(!moment(event.startTime).isBefore(today,'day') && moment(event.endTime).isAfter(event.startTime,'day'))
 				return html`<div>${event.startTime.format('LT')}, ${this.config.untilText.toLowerCase()} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`
-			// 6. Normal one day event, with time set -> 'hour - hour'
+			// 7. Normal one day event, with time set -> 'hour - hour'
 			else return html`
 				<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`
-
 	}
 
    /**
@@ -349,7 +452,7 @@ render() {
 		
 		if (!days)	
 			{	// TODO some more tests end error message
-				this.content =  html`The calendar cannot be loaded from the Home Assistant component.`
+				this.content =  html`${this.errorMessage}`
 				return
 			}
 
@@ -373,6 +476,8 @@ render() {
 			}
 		}
 		
+		
+		
 		//loop through days
 		htmlDays=days.map((day, di) => {
 			
@@ -383,9 +488,8 @@ render() {
 					const isEventNext = (di==0 && moment(event.startTime).isAfter(moment()) && (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
 					) ? true : false
 					//show line before next event
-					const currentEventLine = (di==0 && this.config.showCurrentEventLine 
-						&& moment(event.startTime).isAfter(moment()) && (i==0 || !moment(arr[i-1].startTime).isAfter(moment())) 
-					) ? html`<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle"></ha-icon><hr class="event"/></div>` : ``
+					const currentEventLine = (this.config.showCurrentEventLine 
+						&& isEventNext) ? html`<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle"></ha-icon><hr class="event"/></div>` : ``
 
 					//show current event progress bar
 					var progressBar = ``
@@ -402,6 +506,7 @@ render() {
 					const lastEventStyle = i==arr.length-1 ? 'padding-bottom: 8px;' : ''
 
 					return html`
+					
 					<tr class="${dayWrap}">
 						<td class="event-left"><div>
 								<div>${(i===0 && this.config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
@@ -427,8 +532,30 @@ render() {
 			
 			return htmlEvents
 		})
-  this.content =  html`${htmlDays}`
+  this.content =  html`<table><tbody>${htmlDays}</tbody></table>`
   }
+
+
+
+   /**
+   * ready-to-use function to remove year from moment format('LL')
+   * @param {moment}
+   * @return {String} [month, day]
+   */
+   
+ getCurrDayAndMonth(locale) {
+  var today = locale.format('LL');
+  return today
+    .replace(locale.format('YYYY'), '') // remove year
+    .replace(/\s\s+/g, ' ')// remove double spaces, if any
+    .trim() // remove spaces from the start and the end
+    .replace(/[рг]\./, '') // remove year letter from RU/UK locales
+    .replace(/de$/, '') // remove year prefix from PT
+    .replace(/b\.$/, '') // remove year prefix from SE
+    .trim() // remove spaces from the start and the end
+    .replace(/,$/g, ''); // remove comma from the end
+}
+
 
 
    /**
@@ -462,39 +589,146 @@ render() {
 			return groupsOfEvents[k];
 			});
 
-		return days}).catch(function(error) {
-			console.log("error: "+error) 
-
-				}
-			)
-		
+		return days})
 		)
 		} catch (error) {
-			console.log('error: ', error) 
+			throw error
 			}
 	}
 
+
+	getEvents2(a,b,monthToGet,month) {
+		this.refreshCalEvents=false
+		let start = moment(a).startOf('day').format('YYYY-MM-DDTHH:mm:ss');
+		let end = moment(b).format('YYYY-MM-DDTHH:mm:ss');
+	//	let calendarUrlList = this.config.entities.map`calendars/calendar.kalendarz_swieta?start=${start}Z&end=${end}Z`
+		
+		let calendarUrlList = []
+		this.config.entities.map(entity => {
+			if(entity.type) {
+				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,entity.type])
+			}
+		})
+
+
+		Promise.all( calendarUrlList.map(url => 
+				this.hass.callApi('get',url[0]))).then((result,i,arr) => { 		
+					if(monthToGet==this.monthToGet)
+					result.map((eventsArray, i) =>  {
+						this.month.map( m => {
+							eventsArray.map((event) => {
+								const startTime= event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
+								const endTime= event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
+								if(!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day')) 
+					
+								m[calendarUrlList[i][1]].push('123')
+						
+					
+							}) 
+						
+						})
+							return month
+					})
+				this.requestUpdate()
+				})
+
 	
+	}
+		
+		
+
+		
+ buildCalendar(selectedMonth) {
+	 
+	 const firstDay=moment(selectedMonth).startOf('month')
+	 const dayOfWeekNumber = firstDay.day()
+     const startDate = moment(firstDay).add(this.config.firstDayOfWeek-dayOfWeekNumber, 'days')
+	 const endDate = moment(firstDay).add(42-dayOfWeekNumber+this.config.firstDayOfWeek, 'days')
 
 
-   /**
-   * ready-to-use function to remove year from moment format('LL')
-   * @param {moment}
-   * @return {String} [month, day]
-   */
+     this.month = [];
+	 for(var i=this.config.firstDayOfWeek-dayOfWeekNumber; i<42-dayOfWeekNumber+this.config.firstDayOfWeek; i++) {
+		  
+		 this.month.push(new CalendarDay(moment(firstDay).add(i, 'days'), i))
+	 }
+	 
 
- getCurrDayAndMonth(locale) {
-  var today = locale.format('LL');
-  return today
-    .replace(locale.format('YYYY'), '') // remove year
-    .replace(/\s\s+/g, ' ')// remove double spaces, if any
-    .trim() // remove spaces from the start and the end
-    .replace(/[рг]\./, '') // remove year letter from RU/UK locales
-    .replace(/de$/, '') // remove year prefix from PT
-    .replace(/b\.$/, '') // remove year prefix from SE
-    .trim() // remove spaces from the start and the end
-    .replace(/,$/g, ''); // remove comma from the end
+
+ }
+
+ 
+ handleMonthChange(i) {
+	this.selectedMonth=moment(this.selectedMonth).add(i, 'months');
+	this.monthToGet = this.selectedMonth.format("M");
+	this.refreshCalEvents=true
+ }
+
+ 
+ 
+ updateHTML2(events) {
+
+  
+	if(this.month.length==0 || this.refreshCalEvents) {
+
+		this.buildCalendar(this.selectedMonth)
+		this.getEvents2(this.month[0].date,this.month[41].date,this.monthToGet,this.month) 
+	}
+
+	let month=this.month
+
+
+	const weekDays = moment.weekdaysMin(true)
+	const htmlHeader = weekDays.map((day) => html`
+		<th class="cal">${day}</th>`
+		)
+
+	const htmlDays = month.map((day,i) => {
+
+		const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;` 
+		const dayStyleToday = moment(day.date).isSame(moment(),'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
+		const dayEvent1Style = day.holiday.length>0 ? `color: red; ` : ''
+
+
+		return html`
+			
+			${i % 7 === 0 ? html`<tr class="cal">` :''}
+				<td class="cal">
+					<div class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayEvent1Style} ">
+						<div style="  position: relative; top: 20%;">${day.dayNumber}</div>
+					</div>
+				</td>
+			${i && (i % 6 === 0) ? html`</tr>` :''}
+			`}
+	)
+
+
+	this.content =  html`
+		<div  class="calTitleContainer">
+			<div class="calTitle">
+				${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 	
+			</div>
+			<div class="calButtons">
+							<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="heart"></paper-icon-button>
+							<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="heart"></paper-icon-button>
+			</div>
+		</div>
+						<div class="calTableContainer">
+							<table class="cal">
+								<thead>  <tr>
+									${htmlHeader}
+								</tr>  </thead>
+
+							<tbody>${htmlDays}
+							</tbody>
+							</table>
+						</div>`
+
 }
+
+
+
+
+
 
 
 
@@ -504,6 +738,49 @@ render() {
 customElements.define('atomic-calendar', AtomicCalendar);
 
 
+// class for 42 days in calendar mode
+
+class CalendarDay {
+	constructor(calendarDay,d) {
+		this.calendarDay=calendarDay
+		this._lp=d;
+		this.ymd=moment(calendarDay).format("YYYY-MM-DD")
+		this._holiday = [];
+		this._icon1 = [];
+
+		}
+
+	get date() {
+		return moment(this.calendarDay)
+	}
+
+	/*get date() {
+		return moment(this.calendarDay).format()
+	}			*/
+
+	get dayNumber() {
+		return moment(this.calendarDay).format("DD")
+	}	
+	
+	get monthNumber() {
+		return moment(this.calendarDay).month() 
+	}
+
+	set holiday(eventName) {
+		this._holiday = eventName;   
+	}
+	
+	get holiday() {
+		return this._holiday;  
+	}
+	set icon1(eventName) {
+		this._icon1 = eventName;   
+  }
+	
+	get icon1() {
+		return this._icon1;  
+  }
+}
 
 
 class EventClass {
@@ -594,3 +871,8 @@ class EventClass {
 		return this.eventClass.htmlLink
 	}
 }
+
+
+
+
+
