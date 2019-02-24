@@ -28,6 +28,7 @@ class AtomicCalendar extends LitElement {
 		this.monthToGet=moment().format("MM");
 		this.month = [];
 		this.showLoader = false;
+		this.eventSummary = html`&nbsp;`;
 	}
 
   updated(){
@@ -666,8 +667,8 @@ else
 								const endTime= event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 								if(!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day')) 
 					
-							try{	m[calendarUrlList[i][1]].push('123')
-								} catch (e) {console.log(e,calendarUrlList[i][1])}
+							try{m[calendarUrlList[i][1]].push(event.summary)
+								} catch (e) {console.log('error: ',e,calendarUrlList[i][1])}
 					
 							}) 
 						
@@ -709,6 +710,20 @@ else
 	}
 
 
+	handleEventSummary(day) {
+
+		/*if (day.holiday && day.holiday.length>0)  events = day.holiday.join(', ')
+		if (day.daybackground && day.daybackground.length>0)  events = day.daybackground.join(', ')
+		if (day.icon1 && day.icon1.length>0)  events = day.icon1.join(', ')
+		if (day.icon2 && day.icon2.length>0)  events = day.icon2.join(', ')*/
+
+		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2])).join(', ')
+		if(events == '') events = html`&nbsp;`
+		this.eventSummary = html`${events}`
+		this.requestUpdate()
+
+	}
+
    /**
    * update Calendar mode HTML
    * 
@@ -737,16 +752,16 @@ else
 
 			return html`		
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
-					<td class="cal"">
-						<div class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
-							<div style="position: relative; top: 5%; ">
-							${(day.dayNumber).replace(/^0|[^\/]0./, '')}
+					<td class="cal">
+							<div @click='${e => this.handleEventSummary(day)}' class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
+								<div style="position: relative; top: 5%; ">
+								${(day.dayNumber).replace(/^0|[^\/]0./, '')}
+								</div>
+								<div>
+									${dayIcon1} ${dayIcon2}
+								</div>
 							</div>
-							<div>
-								${dayIcon1} ${dayIcon2}
-							</div>
-						</div>
-				
+					
 					</td>
 				${i && (i % 6 === 0) ? html`</tr>` :''}
 				`}
@@ -755,23 +770,29 @@ else
 		this.content =  html`
 			<div  class="calTitleContainer">
 				<div class="calTitle">
-					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 	
+					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
+						${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
+					</a>	
 				</div>
 				<div class="calButtons">
 								<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="heart"></paper-icon-button>
 								<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="heart"></paper-icon-button>
 				</div>
 			</div>
-							<div class="calTableContainer">
-								<table class="cal">
-									<thead>  <tr>
-										${htmlHeader}
-									</tr>  </thead>
-
-								<tbody>${htmlDays}
-								</tbody>
-								</table>
-							</div>`
+			<div class="calTableContainer">
+				<table class="cal">
+					<thead>  <tr>
+						${htmlHeader}
+					</tr>  </thead>
+					<tbody>
+						${htmlDays}
+					</tbody>
+				</table>
+			</div>
+			<div style="font-size: 90%;">
+				${this.eventSummary}
+			</div>
+`
 
 		}
 	}
