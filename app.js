@@ -22,26 +22,27 @@ class AtomicCalendar extends LitElement {
 		this.content=html``;
 		this.shouldUpdateHtml = true;
 		this.errorMessage='';
-		this.modeToggle=true;
+		this.modeToggle=0;
 		this.selectedMonth=moment();
 		this.refreshCalEvents=null;
 		this.monthToGet=moment().format("MM");
-		this.month = [];;
-
+		this.month = [];
+		this.showLoader = false;
 	}
-  
+
   updated(){
   }  
-  
+
 render() {
-				moment.locale(this.hass.language, {
-					week : {
-						dow : this.config.firstDayOfWeek 
-					}
-				});
+		moment.updateLocale(this.hass.language, {
+		week : {
+			dow : this.config.firstDayOfWeek 
+		}
+	});
 	if(!this.isUpdating ){
 		if (!this.lastCalendarUpdateTime || moment().diff(this.lastCalendarUpdateTime,'minutes') > 15)
 		(async () => {
+			this.showLoader=true
 			this.isUpdating=true;
 
 			 
@@ -53,16 +54,16 @@ render() {
 			}
 			
 			this.lastCalendarUpdateTime = moment();
-			this.updateHTML(this.events);
+			this.updateEventsHTML(this.events);
 			this.isUpdating=false;
 		})()
 	}
 
 var t0 = performance.now();	
-if(!this.modeToggle)
-	this.updateHTML(this.events);
+if(this.modeToggle==1)
+	this.updateEventsHTML(this.events);
 else
-	this.updateHTML2(this.events);
+	this.updateCalendarHTML();
 
 //var t1 = performance.now();
 //console.log((t1 - t0) + " ms")
@@ -73,12 +74,13 @@ else
 	  
 
 	  <ha-card class="cal-card">
-		<div  class="cal-title"  @click='${e => this.handleToggle(e)}'> 
-
-			${this.config.title}
-
+		<div class="cal-titleContainer">
+			<div  class="cal-title"  @click='${e => this.handleToggle(e)}'> 
+				${this.config.title}
+			</div> 
+				${(this.showLoader && this.config.showLoader) ? html`<div style="padding-top: 16px;padding-right: 16px;"><div class="loader" ></div> </div>` : ''}
 		</div>
-		<div style="padding-top: 4px;">
+<div style="padding-top: 4px;">
 			
 				${this.content}
 			
@@ -88,13 +90,15 @@ else
 
   static get styles() {
       
-      }
+  }
 
 	  
-	  handleToggle(e){
-		  this.modeToggle=!this.modeToggle
-		  this.requestUpdate()
-	  }
+  handleToggle(e){
+	if (this.config.enableModeChange) {
+		this.modeToggle==1 ? this.modeToggle = 2 : this.modeToggle = 1 
+		this.requestUpdate()
+	}
+  }
 	  
 	  
   setStyle(){
@@ -110,9 +114,15 @@ else
 				padding: 4px 8px 12px 0px;
 				line-height: 40px;
 				cursor: default;
-				
-				
+				float:left;
+				}
+			.cal-titleContainer {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between; 
 			}
+
+			
 			table{
 				color:black;
 				margin-left: 0px;
@@ -265,7 +275,7 @@ else
 
 			td.cal {
 				padding: 0 0 0 0;
-				
+			
 				text-align: center;
 				vertical-align: middle;
 				width:100%;  
@@ -274,6 +284,8 @@ else
 
 			.calDay {
 				height: 30px;
+
+				/*justify-content: space-between;*/
 
 			}
 
@@ -308,7 +320,24 @@ else
 				width: 100%;
 				}
 			
+			.loader {
+				border: 4px solid #f3f3f3;
+				border-top: 4px solid grey; 
+				border-radius: 50%;
+				width: 14px;
+				height: 14px;
+				animation: spin 2s linear infinite;
+				float:left;
 
+
+			}
+
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}
+			
+			
 		</style>
 
 		`
@@ -327,12 +356,13 @@ else
 		// main settings
 		showColors: true,  // show calendar title colors, if set in config (each calendar separately)
 		maxDaysToShow: 7, // maximum days to show
-		
-		
+		showLoader: true, // show animation when loading events from Google calendar
+
 		showLocation: true, // show location link (right side)
 		showMonth: false, // show month under day (left side)
 		fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
 		showCurrentEventLine: false, // show a line between last and next event
+		
 
 		// color and font settings
 		dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -360,10 +390,22 @@ else
 		showProgressBar: true,
 		progressBarColor: 'var(--primary-color)',
 		
+		enableModeChange: false,
+		modeToggle: 1,
+		CalEventBackgroundColor: '#ededed',
+		CalEventHolidayColor: 'red',
+		CalEventIcon1: 'mdi:gift',
+		CalEventIcon1Color: 'var(--primary-text-color)',
+		CalEventIcon2: 'mdi:home',
+		CalEventIcon2Color: 'var(--primary-text-color)',
 		
 		firstDayOfWeek: 1, // default 1 - monday
 		...config
 	}
+
+
+	
+	this.modeToggle = this.config.modeToggle
 	
 	if (typeof this.config.entities === 'string')
       this.config.entities = [{entity: config.entities}];
@@ -444,10 +486,10 @@ else
 	}
 		
    /**
-   * update Calendar HTML
+   * update Events main HTML
    * 
    */
-	updateHTML(days){
+	updateEventsHTML(days){
 		var htmlDays = ''
 		
 		if (!days)	
@@ -476,8 +518,7 @@ else
 			}
 		}
 		
-		
-		
+				
 		//loop through days
 		htmlDays=days.map((day, di) => {
 			
@@ -559,7 +600,7 @@ else
 
 
    /**
-   * gets events from HA Calendar
+   * gets events from HA Calendar to Events mode
    * 
    */
 	async getEvents() {
@@ -588,7 +629,7 @@ else
 		var days = Object.keys(groupsOfEvents).map(function(k){
 			return groupsOfEvents[k];
 			});
-
+		this.showLoader=false
 		return days})
 		)
 		} catch (error) {
@@ -597,7 +638,11 @@ else
 	}
 
 
-	getEvents2(a,b,monthToGet,month) {
+   /**
+   * gets events from HA to Calendar
+   * 
+   */
+	getCalendarEvents(a,b,monthToGet,month) {
 		this.refreshCalEvents=false
 		let start = moment(a).startOf('day').format('YYYY-MM-DDTHH:mm:ss');
 		let end = moment(b).format('YYYY-MM-DDTHH:mm:ss');
@@ -621,14 +666,16 @@ else
 								const endTime= event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 								if(!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day')) 
 					
-								m[calendarUrlList[i][1]].push('123')
-						
+							try{	m[calendarUrlList[i][1]].push('123')
+								} catch (e) {console.log(e,calendarUrlList[i][1])}
 					
 							}) 
 						
 						})
 							return month
 					})
+				this.showLoader=false
+				this.refreshCalEvents=false
 				this.requestUpdate()
 				})
 
@@ -636,109 +683,107 @@ else
 	}
 		
 		
-
-		
- buildCalendar(selectedMonth) {
-	 
-	 const firstDay=moment(selectedMonth).startOf('month')
-	 const dayOfWeekNumber = firstDay.day()
-     const startDate = moment(firstDay).add(this.config.firstDayOfWeek-dayOfWeekNumber, 'days')
-	 const endDate = moment(firstDay).add(42-dayOfWeekNumber+this.config.firstDayOfWeek, 'days')
-
-
-     this.month = [];
-	 for(var i=this.config.firstDayOfWeek-dayOfWeekNumber; i<42-dayOfWeekNumber+this.config.firstDayOfWeek; i++) {
-		  
-		 this.month.push(new CalendarDay(moment(firstDay).add(i, 'days'), i))
-	 }
-	 
-
-
- }
-
- 
- handleMonthChange(i) {
-	this.selectedMonth=moment(this.selectedMonth).add(i, 'months');
-	this.monthToGet = this.selectedMonth.format("M");
-	this.refreshCalEvents=true
- }
-
- 
- 
- updateHTML2(events) {
-
-  
-	if(this.month.length==0 || this.refreshCalEvents) {
-
-		this.buildCalendar(this.selectedMonth)
-		this.getEvents2(this.month[0].date,this.month[41].date,this.monthToGet,this.month) 
+   /**
+   * create array for 42 calendar days
+   * 
+   */	
+	buildCalendar(selectedMonth) {
+		const firstDay=moment(selectedMonth).startOf('month')
+		const dayOfWeekNumber = firstDay.day()
+		const startDate = moment(firstDay).add(this.config.firstDayOfWeek-dayOfWeekNumber, 'days')
+		const endDate = moment(firstDay).add(42-dayOfWeekNumber+this.config.firstDayOfWeek, 'days')
+		this.month = [];
+		for(var i=this.config.firstDayOfWeek-dayOfWeekNumber; i<42-dayOfWeekNumber+this.config.firstDayOfWeek; i++) {
+			this.month.push(new CalendarDay(moment(firstDay).add(i, 'days'), i))
+		}
 	}
 
-	let month=this.month
+   /**
+   * change month in calendar mode
+   * 
+   */
+	handleMonthChange(i) {
+		this.selectedMonth=moment(this.selectedMonth).add(i, 'months');
+		this.monthToGet = this.selectedMonth.format("M");
+		this.refreshCalEvents=true
+	}
 
 
-	const weekDays = moment.weekdaysMin(true)
-	const htmlHeader = weekDays.map((day) => html`
-		<th class="cal">${day}</th>`
-		)
+   /**
+   * update Calendar mode HTML
+   * 
+   */
+	updateCalendarHTML() {
+		if(this.month.length==0 || this.refreshCalEvents || moment().diff(this.lastCalendarUpdateTime,'minutes') > 120) {
+			this.lastCalendarUpdateTime=moment()
+			this.showLoader=true
+			this.buildCalendar(this.selectedMonth)
+			this.getCalendarEvents(this.month[0].date,this.month[41].date,this.monthToGet,this.month) 
+		}
 
-	const htmlDays = month.map((day,i) => {
+		let month=this.month
+		const weekDays = moment.weekdaysMin(true)
+		const htmlHeader = weekDays.map((day) => html`
+			<th class="cal">${day}</th>`
+			)
 
-		const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;` 
-		const dayStyleToday = moment(day.date).isSame(moment(),'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
-		const dayEvent1Style = day.holiday.length>0 ? `color: red; ` : ''
+		const htmlDays = month.map((day,i) => {
+			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;` 
+			const dayStyleToday = moment(day.date).isSame(moment(),'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
+			const dayHolidayStyle = (day.holiday && day.holiday.length>0) ? `color: ${this.config.CalEventHolidayColor}; ` : ''
+			const dayBackgroundStyle = (day.daybackground && day.daybackground.length>0) ? `background-color: CalEventBackgroundColor; ` : ''
+			const dayIcon1 = (day.icon1 && day.icon1.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px;  margin-top: -5px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon1}"></ha-icon></span>` : ''
+			const dayIcon2 = (day.icon2 && day.icon2.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px; margin-top: -5px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon2}"></ha-icon></span>` : ''
 
+			return html`		
+				${i % 7 === 0 ? html`<tr class="cal">` :''}
+					<td class="cal"">
+						<div class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
+							<div style="position: relative; top: 5%; ">
+							${(day.dayNumber).replace(/^0|[^\/]0./, '')}
+							</div>
+							<div>
+								${dayIcon1} ${dayIcon2}
+							</div>
+						</div>
+				
+					</td>
+				${i && (i % 6 === 0) ? html`</tr>` :''}
+				`}
+			)
 
-		return html`
-			
-			${i % 7 === 0 ? html`<tr class="cal">` :''}
-				<td class="cal">
-					<div class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayEvent1Style} ">
-						<div style="  position: relative; top: 20%;">${day.dayNumber}</div>
-					</div>
-				</td>
-			${i && (i % 6 === 0) ? html`</tr>` :''}
-			`}
-	)
-
-
-	this.content =  html`
-		<div  class="calTitleContainer">
-			<div class="calTitle">
-				${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 	
+		this.content =  html`
+			<div  class="calTitleContainer">
+				<div class="calTitle">
+					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 	
+				</div>
+				<div class="calButtons">
+								<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="heart"></paper-icon-button>
+								<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="heart"></paper-icon-button>
+				</div>
 			</div>
-			<div class="calButtons">
-							<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="heart"></paper-icon-button>
-							<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="heart"></paper-icon-button>
-			</div>
-		</div>
-						<div class="calTableContainer">
-							<table class="cal">
-								<thead>  <tr>
-									${htmlHeader}
-								</tr>  </thead>
+							<div class="calTableContainer">
+								<table class="cal">
+									<thead>  <tr>
+										${htmlHeader}
+									</tr>  </thead>
 
-							<tbody>${htmlDays}
-							</tbody>
-							</table>
-						</div>`
+								<tbody>${htmlDays}
+								</tbody>
+								</table>
+							</div>`
 
-}
+		}
+	}
 
 
-
-
-
-
-
-
-
-
-}
 customElements.define('atomic-calendar', AtomicCalendar);
 
 
-// class for 42 days in calendar mode
+   /**
+   * class for 42 calendar days
+   * 
+   */
 
 class CalendarDay {
 	constructor(calendarDay,d) {
@@ -747,16 +792,13 @@ class CalendarDay {
 		this.ymd=moment(calendarDay).format("YYYY-MM-DD")
 		this._holiday = [];
 		this._icon1 = [];
-
+		this._icon2 = [];
+		this._daybackground = [];
 		}
 
 	get date() {
 		return moment(this.calendarDay)
 	}
-
-	/*get date() {
-		return moment(this.calendarDay).format()
-	}			*/
 
 	get dayNumber() {
 		return moment(this.calendarDay).format("DD")
@@ -772,16 +814,37 @@ class CalendarDay {
 	
 	get holiday() {
 		return this._holiday;  
+
 	}
 	set icon1(eventName) {
 		this._icon1 = eventName;   
-  }
+    }
 	
 	get icon1() {
 		return this._icon1;  
-  }
+    }
+
+	set icon2(eventName) {
+		this._icon2 = eventName;   
+    }
+	
+	get icon2() {
+		return this._icon2;  
+    }
+
+	set daybackground(eventName) {
+		this._daybackground = eventName;   
+    }
+		
+	get daybackground() {
+		return this._daybackground;  
+    }
 }
 
+   /**
+   * class for Events in events mode
+   * 
+   */
 
 class EventClass {
 	constructor(eventClass,config) {

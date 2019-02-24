@@ -20,7 +20,7 @@ The component should not work slower than other calendars, the bottleneck is the
 ![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 
-## Install
+## 1. Installation
 1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.6.4/atomic-calendar.js)
 2. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
@@ -31,7 +31,7 @@ The component should not work slower than other calendars, the bottleneck is the
 3. Add card with options to `ui-lovelace.yaml`, examples below
 4. If you are upgrading, try to reload your browser cache by pressing ctrl-shift-r or shift-F5.
 
-## Options
+## 2. Options
 ### Main settings
 
 | Name | Type | Default | Since | Description |
@@ -44,7 +44,7 @@ The component should not work slower than other calendars, the bottleneck is the
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
-
+| showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
 
 ### Text colors and fonts
 | Name | Type | Since | Description |
@@ -75,8 +75,46 @@ The component should not work slower than other calendars, the bottleneck is the
 | showProgressBar | boolean | optional | v0.5.5 | `true` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
 | progressBarColor | string | v0.5.5 | `default color` Color of progress bar
 
+## 3. Calendar Mode
+The second mode of view - calendar mode - is to show full month calendar with simple events icons or colors, for most important, infrequent events, like holiday or birthday.
+You can change mode by clicking "Calendar" title, or even make it default view.
+To make it working correctly you need to get more events than default 5 - you need to follow instruction in chapter 5 of this Readme, and setup it for 15-30 events.
 
-## Configuration examples
+There are four configurable possibilities for showing events occurring any day:
+- day number color - for example "14" will be red for Valentine's Day
+- background color change
+- Icon1 - will show any mdi icon under date, like birthday (default: gift icon)
+- Icon2 - same like above, just any other type of event (default: home icon)
+
+If you want to use any calendar's events, you have to add one (and only one) of types:
+
+```
+            entities:
+            - entity: calendar.calendar_holiday
+              type: holiday
+            - entity: calendar.calendar_somethingelse
+              type: daybackground
+            - entity: calendar.home_events
+              type: icon2
+            - entity: calendar.birthday
+              type: icon1
+			- entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
+```
+
+## Calendar Mode settings
+| Name | Type | Since | Description |
+|------|:----:|:-----:|-------------|
+| enableModeChange | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events)
+| modeToggle | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default
+| firstDayOfWeek | integer | v0.7.0 | `1` First day of week, default 1 for Monday
+| CalEventBackgroundColor | string | v0.7.0 | `#ededed` Color of background for `type: daybackground` calendar
+| CalEventHolidayColor | string | v0.7.0 | `red` Color of day for `type: holiday` calendar
+| CalEventIcon1 | string | v0.7.0 | `mdi:gift` Icon for `type: icon1` calendar
+| CalEventIcon1Color | string | v0.7.0 | `default` Color of icon for `type: icon1` calendar
+| CalEventIcon2 | string | v0.7.0 | `mdi:home` Icon for `type: icon2` calendar
+| CalEventIcon2Color | string | v0.7.0 | `default` Color of icon for `type: icon2` calendar
+
+## 4. Configuration examples
 
 Simple configuration:
 ```yaml
@@ -120,7 +158,7 @@ Advanced config with all options, colors changed and progress bar enabled:
             progressBarColor: blue
 ```
 
-## How to show more than 5 events
+## 5. How to show more than 5 events
 
 This card will show maximum 5 events from each calendar. It's because of Home Asistant component limit. If you want to show more events, you have to download the google calendar component:
 
@@ -134,3 +172,4 @@ wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/home
 ```
 4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
+
