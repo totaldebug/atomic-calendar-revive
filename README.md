@@ -19,6 +19,7 @@ The component should not work slower than other calendars, the bottleneck is the
 
 ![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
+![Preview](https://user-images.githubusercontent.com/11677097/53302875-b6205200-3863-11e9-8ab2-5ec95b0799d0.png)
 
 ## 1. Installation
 1. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.6.4/atomic-calendar.js)
