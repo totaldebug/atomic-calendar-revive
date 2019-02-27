@@ -285,7 +285,7 @@ else
 
 			.calDay {
 				height: 30px;
-
+				font-size: 95%
 				/*justify-content: space-between;*/
 
 			}
@@ -310,7 +310,7 @@ else
 				vertical-align: middle;
 				align-items: center;
 				justify-content: space-between;
-				margin: 8px;
+				margin: 0 8px 0 8px;
 			}
 			
 			.calTitle {
@@ -393,12 +393,21 @@ else
 		
 		enableModeChange: false,
 		modeToggle: 1,
+
 		CalEventBackgroundColor: '#ededed',
+		CalEventBackgroundFilter: null,
+
 		CalEventHolidayColor: 'red',
+		CalEventHolidayFilter: null,
+
 		CalEventIcon1: 'mdi:gift',
 		CalEventIcon1Color: 'var(--primary-text-color)',
+		CalEventIcon1Filter: 'test',
+		
+
 		CalEventIcon2: 'mdi:home',
 		CalEventIcon2Color: 'var(--primary-text-color)',
+		CalEventIcon2Filter: null,
 		
 		firstDayOfWeek: 1, // default 1 - monday
 		...config
@@ -598,6 +607,21 @@ else
     .replace(/,$/g, ''); // remove comma from the end
 }
 
+   /**
+   * check if string contains one of keywords
+   * @param string, comma delimited string
+   * @return bool
+   */
+ checkFilter(str,filter) {
+	const keywords =  filter.split(',')
+	return(keywords.some((keyword) => {
+		if(RegExp( '\\b'+keyword+'\\b', 'i').test(str))
+			return true
+		else return false
+	}))
+		
+
+ }
 
 
    /**
@@ -616,7 +640,7 @@ else
 				let ev = [].concat.apply([], (result.map((singleCalEvents,i) => {
 				return singleCalEvents.map(evt =>  new EventClass(evt,this.config.entities[i]))
 			})))
-		
+
 		// sort events
 		ev = ev.sort((a,b) => moment(a.startTimeToShow) - moment(b.startTimeToShow)   )
 		
@@ -634,6 +658,7 @@ else
 		return days})
 		)
 		} catch (error) {
+			this.showLoader=false
 			throw error
 			}
 	}
@@ -649,10 +674,10 @@ else
 		let end = moment(b).format('YYYY-MM-DDTHH:mm:ss');
 	//	let calendarUrlList = this.config.entities.map`calendars/calendar.kalendarz_swieta?start=${start}Z&end=${end}Z`
 		
-		let calendarUrlList = []
+		let calendarUrlList = [] // [url, type of event configured for this callendar,filters]
 		this.config.entities.map(entity => {
 			if(entity.type) {
-				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,entity.type])
+				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,entity.type, entity.filter])
 			}
 		})
 
@@ -665,9 +690,17 @@ else
 							eventsArray.map((event) => {
 								const startTime= event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime= event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-								if(!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day')) 
-					
-							try{m[calendarUrlList[i][1]].push(event.summary)
+								// check if 'm' calendar day == event date
+								if(!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') )
+								try{
+								// check for filter keywords
+								//console.log(calendarUrlList[i][2], event.summary)
+								if(!calendarUrlList[i][2] || (calendarUrlList[i][2] && 
+									this.checkFilter(event.summary,calendarUrlList[i][2])
+									))
+									{
+										m[calendarUrlList[i][1]].push(event.summary)
+									}
 								} catch (e) {console.log('error: ',e,calendarUrlList[i][1])}
 					
 							}) 
@@ -678,6 +711,9 @@ else
 				this.showLoader=false
 				this.refreshCalEvents=false
 				this.requestUpdate()
+				}).catch ((err) => {
+					this.refreshCalEvents=false
+					console.log('error: ',err)
 				})
 
 	
@@ -706,17 +742,12 @@ else
 	handleMonthChange(i) {
 		this.selectedMonth=moment(this.selectedMonth).add(i, 'months');
 		this.monthToGet = this.selectedMonth.format("M");
+		this.eventSummary = html`&nbsp;`;
 		this.refreshCalEvents=true
 	}
 
 
 	handleEventSummary(day) {
-
-		/*if (day.holiday && day.holiday.length>0)  events = day.holiday.join(', ')
-		if (day.daybackground && day.daybackground.length>0)  events = day.daybackground.join(', ')
-		if (day.icon1 && day.icon1.length>0)  events = day.icon1.join(', ')
-		if (day.icon2 && day.icon2.length>0)  events = day.icon2.join(', ')*/
-
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2])).join(', ')
 		if(events == '') events = html`&nbsp;`
 		this.eventSummary = html`${events}`
@@ -747,8 +778,8 @@ else
 			const dayStyleToday = moment(day.date).isSame(moment(),'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
 			const dayHolidayStyle = (day.holiday && day.holiday.length>0) ? `color: ${this.config.CalEventHolidayColor}; ` : ''
 			const dayBackgroundStyle = (day.daybackground && day.daybackground.length>0) ? `background-color: CalEventBackgroundColor; ` : ''
-			const dayIcon1 = (day.icon1 && day.icon1.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px;  margin-top: -5px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon1}"></ha-icon></span>` : ''
-			const dayIcon2 = (day.icon2 && day.icon2.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px; margin-top: -5px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon2}"></ha-icon></span>` : ''
+			const dayIcon1 = (day.icon1 && day.icon1.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px;  margin-top: -7px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon1}"></ha-icon></span>` : ''
+			const dayIcon2 = (day.icon2 && day.icon2.length>0) ? html`<span><ha-icon style="width: 10px;height:10px; padding-top: 0px; margin-top: -7px; color: ${this.config.CalEventIcon1Color} ;" icon="${this.config.CalEventIcon2}"></ha-icon></span>` : ''
 
 			return html`		
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
