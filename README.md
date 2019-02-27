@@ -109,7 +109,7 @@ If you want to use any calendar's events, you have to add one (and only one) of 
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
 | enableModeChange | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events)
-| modeToggle | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default
+| defaultMode | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default
 | firstDayOfWeek | integer | v0.7.0 | `1` First day of week, default 1 for Monday
 | CalEventBackgroundColor | string | v0.7.0 | `#ededed` Color of background for `type: daybackground` calendar
 | CalEventHolidayColor | string | v0.7.0 | `red` Color of day for `type: holiday` calendar
