@@ -96,14 +96,13 @@ If you want to use any calendar's events, you have to add one (and only one) of 
 ```
             entities:
             - entity: calendar.calendar_holiday
-              type: holiday
-            - entity: calendar.calendar_somethingelse
-              type: daybackground
+              type: holiday			// events from this calendar will be red
             - entity: calendar.home_events
               type: icon2
+	      filter: 'bills,waste'            // only events with those words will be shown
             - entity: calendar.birthday
-              type: icon1
-			- entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
+              type: icon1		 	// no filters, show all events
+	    - entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
 ```
 
 ## Calendar Mode settings
