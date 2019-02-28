@@ -167,12 +167,12 @@ Advanced config with all options, colors changed and progress bar enabled:
 This card will show maximum 5 events from each calendar. It's because of Home Asistant component limit. If you want to show more events, you have to download the google calendar component:
 
 1. Go to your Home Assistant config directory (where you have configuration.yaml file)
-2. Create a subdirectory `custom_components/calendar` and go inside:
-3. Download ![Google.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/calendar/google.py) file
+2. Create a subdirectory `custom_components/google` and go inside:
+3. Download ![Google.py](raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) file
 ```
 mkdir -p custom_components/calendar
 cd custom_components/calendar
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/calendar/google.py
+wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py
 ```
 4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
