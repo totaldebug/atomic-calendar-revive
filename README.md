@@ -211,9 +211,9 @@ wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/home
 
 ## 7. Automatic update
 Automatic update using `custom_updater` component:
-1. You need Custom_updater installed and configured
-2. Install atomic-calendar.js to `/www/atomic-calendar.js` as any other card
-3. Add this refenerce to ui-lovelace.yaml (just change `/local` to `/customcards`):
+1. You need custom_updater installed and configured
+2. Download atomic-calendar.js to `/www/atomic-calendar.js` as any other card
+3. Add this reference to ui-lovelace.yaml (just change `/local` to `/customcards`):
 ```
   resources:
     - url: /customcards/atomic-calendar.js
