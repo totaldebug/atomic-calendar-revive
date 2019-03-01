@@ -38,7 +38,7 @@ If you have any suggestions about design or functionality, please let me know, o
 2. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
-    - url: /local/atomic-calendar.js?v=0.6.3
+    - url: /local/atomic-calendar.js
       type: module
   ```
 3. Add card with options to `ui-lovelace.yaml`, examples below
@@ -209,3 +209,19 @@ wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/home
 4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
 
+## 7. Automatic update
+Automatic update using `custom_updater` component:
+1. You need Custom_updater installed and configured
+2. Install atomic-calendar.js to `/www/atomic-calendar.js` as any other card
+3. Add this refenerce to ui-lovelace.yaml (just change `/local` to `/customcards`):
+```
+  resources:
+    - url: /customcards/atomic-calendar.js
+      type: js
+```
+4. Add this url line to `custom_updater` settings in `configuration.yaml`:
+```
+custom_updater:
+   card_urls:
+   - https://raw.githubusercontent.com/atomic7777/atomic_calendar/master/tracker.json
+```
