@@ -1,7 +1,4 @@
-﻿import {
-	LitElement,
-	html
-} from 'lit-element';
+﻿import { LitElement,html } from 'lit-element';
 import moment from 'moment';
 import 'moment/min/locales';
 
