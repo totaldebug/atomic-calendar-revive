@@ -3,23 +3,31 @@ Advanced calendar card for Home Assistant with Lovelace
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
 
+It contains two types of views: `Events mode` and `Calendar mode`. You can switch or select the default one.
+
+
+
 The most important features:
 - No need to load external libraries (everything is included)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - All translations included, few of the words can be configured in settings 
+- Compatible with all day and multiple day events
+- Fast switch between both modes, or make one of them default
+
 * Event mode:
 - Shows nearest events, one by one, day by day, time of events in a different way (dates, hours)
 - Moves today's completed events up and dim them
 - Highlights the next event, or show a progress bar 
+- Shows event location link 
+- Clicking on title will open new window with Google Calendar
+- Clicking on Location will open a window with this location on Google Maps
+
 * Calendar mode:
-- Show full month and more (a table with 42 days) wich configurable events icons like holiday, birthday
+- Show a traditional calendar (a table with 42 days) with configurable events icons like holiday, birthday
 - Quick overview of the following months
-- Fast switch between both modes, or make one of them default
+- You can set keywords to show only important things, like birthday
 
-TODO:
-- a lot of fixes and improvements
-
-The component should not work slower than other calendars, the bottleneck is the download of data from Google calendar.
+If you have any suggestions about design or functionality, please let me know, open an issue or add a comment to ![community thread](https://community.home-assistant.io/t/lovelace-advanced-calendar-card).
 
 ![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
@@ -83,27 +91,30 @@ The component should not work slower than other calendars, the bottleneck is the
 ## 3. Calendar Mode
 The second mode of view - calendar mode - is to show full month calendar with simple events icons or colors, for most important, infrequent events, like holiday or birthday.
 You can change mode by clicking "Calendar" title, or even make it default view.
-To make it working correctly you need to get more events than default 5 - you need to follow instruction in chapter 5 of this Readme, and setup it for 15-30 events.
+To make it working correctly you need to get more events than default 5 - you need to follow instruction in chapter 6 of this Readme, and setup it for 20-30 events at least.
 
 There are four configurable possibilities for showing events occurring any day:
 - day number color - for example "14" will be red for Valentine's Day
-- background color change
 - Icon1 - will show any mdi icon under date, like birthday (default: gift icon)
-- Icon2 - same like above, just any other type of event (default: home icon)
+- Icon2 - like above, just any other type of event (default: home icon)
+- Icon3 - like above (default: star icon)
 
-If you want to use any calendar's events, you have to add one (and only one) of types:
+If you want to use any calendar's events, you have to add one or more of types:
 
 ```
             entities:
             - entity: calendar.calendar_holiday
               type: holiday			// events from this calendar will be red
             - entity: calendar.home_events
-              type: icon2
-	      filter: 'bills,waste'            // only events with those words will be shown
+              type: icon2,icon3 // will show icon2 and icon3, but with filters configured below
             - entity: calendar.birthday
-              type: icon1		 	// no filters, show all events
-	    - entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
+              type: icon1		 	// Icon1 has no filters, show all events from this calendar
+	        - entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
+			CalEventIcon1Filter: bills,waste            // only events with those words will be shown
+			CalEventIcon2Filter: cleaning            // only events with those words will be shown		
+			
 ```
+If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
 
 ## Calendar Mode settings
 | Name | Type | Since | Description |
@@ -111,19 +122,23 @@ If you want to use any calendar's events, you have to add one (and only one) of 
 | enableModeChange | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events)
 | defaultMode | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default
 | firstDayOfWeek | integer | v0.7.0 | `1` First day of week, default 1 for Monday
-| CalEventBackgroundColor | string | v0.7.0 | `#ededed` Color of background for `type: daybackground` calendar
 | CalEventHolidayColor | string | v0.7.0 | `red` Color of day for `type: holiday` calendar
 | CalEventIcon1 | string | v0.7.0 | `mdi:gift` Icon for `type: icon1` calendar
 | CalEventIcon1Color | string | v0.7.0 | `default` Color of icon for `type: icon1` calendar
+| CalEventIcon1Filter | string | v0.7.0 | `null` List of comma separated keywords
 | CalEventIcon2 | string | v0.7.0 | `mdi:home` Icon for `type: icon2` calendar
 | CalEventIcon2Color | string | v0.7.0 | `default` Color of icon for `type: icon2` calendar
+| CalEventIcon2Filter | string | v0.7.0 | `null` List of comma separated keywords
+| CalEventIcon3 | string | v0.7.0 | `mdi:star` Icon for `type: icon3` calendar
+| CalEventIcon3Color | string | v0.7.0 | `default` Color of icon for `type: icon3` calendar
+| CalEventIcon3Filter | string | v0.7.0 | `null` List of comma separated keywords
 
 ## 4. Configuration examples
 
 Simple configuration:
 ```yaml
           - type: "custom:atomic-calendar"
-            title: "Kalendarz"
+            title: "Calendar"
             entities:
             - entity: calendar.kalendarz_dom
               color: red
@@ -162,7 +177,24 @@ Advanced config with all options, colors changed and progress bar enabled:
             progressBarColor: blue
 ```
 
-## 5. How to show more than 5 events
+Simple configuration, both Events mode and Calendar mode, calendar is default:
+```
+          - type: "custom:atomic-calendar"
+            title: "Calendar"
+			enableModeChange: true
+            defaultMode: 2
+			CalEventIcon1Filter: birthday
+			CalEventIcon2Filter: waste,bills
+            entities:
+            - entity: calendar.kalendarz_dom
+			  type: icon2
+            - calendar.atomic7777
+			  type: icon1,icon2
+            - entity: calendar.kalendarz_swieta
+              type: holiday		
+```
+
+## 6. How to show more than 5 events
 
 This card will show maximum 5 events from each calendar. It's because of Home Asistant component limit. If you want to show more events, you have to download the google calendar component:
 
