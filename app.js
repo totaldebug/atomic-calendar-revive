@@ -255,7 +255,7 @@ class AtomicCalendar extends LitElement {
 
 
 			table.cal{
-				color:black;
+								color: ${this.config.titleColor}
 				margin-left: 0px;
 				margin-right: 0px;
 				border-spacing: 10px 5px;
@@ -278,10 +278,12 @@ class AtomicCalendar extends LitElement {
 				font-size: 95%;
 				max-width: 38px;
 				margin: auto;
+				color: ${this.config.titleColor}
 			}
 
 			tr.cal {
 				width: 100%;		
+
 			}
 
 
