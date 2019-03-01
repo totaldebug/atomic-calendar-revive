@@ -217,7 +217,7 @@ Automatic update using `custom_updater` component:
 ```
   resources:
     - url: /customcards/atomic-calendar.js
-      type: js
+      type: module
 ```
 4. Add this url line to `custom_updater` settings in `configuration.yaml`:
 ```
