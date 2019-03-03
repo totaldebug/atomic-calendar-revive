@@ -19,7 +19,7 @@ The most important features:
 - Moves today's completed events up and dim them
 - Highlights the next event, or show a progress bar 
 - Shows event location link 
-- Clicking on title will open new window with Google Calendar
+- Clicking on the title will open a new window with Google Calendar
 - Clicking on Location will open a window with this location on Google Maps
 
 * Calendar mode:
@@ -196,7 +196,7 @@ Simple configuration, both Events mode and Calendar mode, calendar is default:
 
 ## 6. How to show more than 5 events
 
-This card will show maximum 5 events from each calendar. It's because of Home Asistant component limit. If you want to show more events, you have to download the google calendar component:
+This card will show maximum 5 events from each calendar. It's because of Home Assistant component limit. If you want to show more events, you have to download the google calendar component:
 
 1. Go to your Home Assistant config directory (where you have configuration.yaml file)
 2. Create a subdirectory `custom_components/google` and go inside:
