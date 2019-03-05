@@ -1,8 +1,8 @@
 {
     "atomic-calendar": {
-      "updated_at": "2019-03-01",
-      "version": "0.7.1",
-      "remote_location": "https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.1/atomic-calendar.js",
+      "updated_at": "2019-03-05",
+      "version": "0.7.2",
+      "remote_location": "https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.2/atomic-calendar.js",
       "visit_repo": "https://github.com/atomic7777/atomic_calendar",
       "changelog": "https://github.com/atomic7777/atomic_calendar/releases/latest"
     }
