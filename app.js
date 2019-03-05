@@ -56,7 +56,6 @@ class AtomicCalendar extends LitElement {
 				})()
 		}
 
-		var t0 = performance.now();
 		if (this.modeToggle == 1)
 			this.updateEventsHTML(this.events);
 		else
@@ -70,8 +69,18 @@ class AtomicCalendar extends LitElement {
 		<div class="cal-titleContainer">
 			<div  class="cal-title"  @click='${e => this.handleToggle(e)}'> 
 				${this.config.title}
-			</div> 
-				${(this.showLoader && this.config.showLoader) ? html`<div style="padding-top: 16px;padding-right: 16px;"><div class="loader" ></div> </div>` : ''}
+			</div>
+				
+				
+				${(this.showLoader && this.config.showLoader) ? html`
+					<div  class="loader" ></div>` : ''}
+		
+		
+				<div class="calDate">
+				${(this.config.showDate) ? this.getDate() : null}
+	
+			</div>
+			
 		</div>
 <div style="padding-top: 4px;">
 			
@@ -103,6 +112,7 @@ class AtomicCalendar extends LitElement {
 			}
 			.cal-title {
 				font-size: var(--paper-font-headline_-_font-size);
+
 				color: var(--primary-text-color);
 				padding: 4px 8px 12px 0px;
 				line-height: 40px;
@@ -113,8 +123,24 @@ class AtomicCalendar extends LitElement {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between; 
+			    vertical-align: middle;
+				align-items: center;
+				margin: 0 8px 0 8px;
 			}
 
+		
+
+			.calDate {
+			    font-size: var(--paper-font-headline_-_font-size);
+				    font-size: 1.3rem;
+    font-weight: 400;
+				color: var(--primary-text-color);
+				padding: 4px 8px 12px 0px;
+				line-height: 40px;
+				cursor: default;
+				float:right;
+				    opacity: .75;
+			}
 			
 			table{
 				color:black;
@@ -255,7 +281,7 @@ class AtomicCalendar extends LitElement {
 
 
 			table.cal{
-								color: ${this.config.titleColor}
+				color: ${this.config.titleColor}
 				margin-left: 0px;
 				margin-right: 0px;
 				border-spacing: 10px 5px;
@@ -293,17 +319,6 @@ class AtomicCalendar extends LitElement {
 				padding: 4px;
 			}
 
-			.calTitleContainer {
-				display: flex;
-				vertical-align: middle;
-				align-items: center;
-				justify-content: space-between;
-				margin: 0 8px 0 8px;
-			}
-			
-			.calTitle {
-	
-			}
 
 			.calTableContainer {
 				width: 100%;
@@ -317,6 +332,8 @@ class AtomicCalendar extends LitElement {
 				margin-right: -1px;
 				margin-left: -1px;
 			}	
+			
+			
 			
 			.loader {
 				border: 4px solid #f3f3f3;
@@ -340,6 +357,11 @@ class AtomicCalendar extends LitElement {
 
 		`
 	}
+	
+	getDate() {
+		const date=moment().format(this.config.dateFormat)
+		return html`${date}`
+	}
 
 	setConfig(config) {
 		if (!config.entities) {
@@ -360,7 +382,8 @@ class AtomicCalendar extends LitElement {
 			showMonth: false, // show month under day (left side)
 			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
 			showCurrentEventLine: false, // show a line between last and next event
-
+			showDate: false,
+			dateFormat: 'LL',
 
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -543,7 +566,7 @@ class AtomicCalendar extends LitElement {
 					isEventNext) ? html `<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle"></ha-icon><hr class="event"/></div>` : ``
 
 				//show current event progress bar
-				const progressBar = ``
+				var progressBar = ``
 				if (di == 0 && this.config.showProgressBar && event.isEventRunning) {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
@@ -552,10 +575,9 @@ class AtomicCalendar extends LitElement {
 
 				}
 
-				const finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter : ``
+				var finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter : ``
 
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : ''
-
 				return html `
 					
 					<tr class="${dayWrap}">
@@ -582,7 +604,7 @@ class AtomicCalendar extends LitElement {
 			})
 
 			return htmlEvents
-		})
+		}) 
 		this.content = html `<table><tbody>${htmlDays}</tbody></table>`
 	}
 
