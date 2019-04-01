@@ -62,6 +62,7 @@ If you have any suggestions about design or functionality, please let me know, o
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
 | showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the title
 | dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
+| hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - `12h` or `24h` or `default` (default for local HA language settings)
 
 
 ### Text colors and fonts

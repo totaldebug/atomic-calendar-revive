@@ -3,16 +3,33 @@ import moment from 'moment';
 import 'moment/min/locales';
 
 class AtomicCalendar extends LitElement {
-	static get properties() {
 
+
+	set hass(hass) {
+		 this._hass=hass
+				
+	let timeFormat = moment.localeData(this._hass.language).longDateFormat('LT')
+	if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
+	else if (this.config.hoursFormat=='24h') timeFormat = 'hh:mm'
+		moment.updateLocale(this._hass.language, {
+			week: {
+				dow: this.config.firstDayOfWeek
+			},
+			longDateFormat : {
+				LT: timeFormat
+			}
+		});
+	}
+	 
+	static get properties() {
 		return {
-			hass: Object,
+			_hass: {},
 			config: Object,
 			content: Object,
 			selectedMonth: Object
 		}
 	}
-
+	
 	constructor() {
 		super();
 		this.lastCalendarUpdateTime;
@@ -34,11 +51,8 @@ class AtomicCalendar extends LitElement {
 	updated() {}
 
 	render() {
-		moment.updateLocale(this.hass.language, {
-			week: {
-				dow: this.config.firstDayOfWeek
-			}
-		});
+
+		
 		if (!this.isUpdating && this.modeToggle == 1) {
 			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'minutes') > 15)
 				(async() => {
@@ -93,6 +107,12 @@ class AtomicCalendar extends LitElement {
 	static get styles() {
 
 	}
+	
+	firstTimeConfig() {
+	
+		
+	}
+	
 
 
 	handleToggle(e) {
@@ -384,6 +404,8 @@ class AtomicCalendar extends LitElement {
 			showCurrentEventLine: false, // show a line between last and next event
 			showDate: false,
 			dateFormat: 'LL',
+			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
+
 
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -452,6 +474,7 @@ class AtomicCalendar extends LitElement {
 		});
 	}
 
+
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.
 	getCardSize() {
@@ -459,7 +482,7 @@ class AtomicCalendar extends LitElement {
 	}
 
 	_toggle(state) {
-		this.hass.callService('homeassistant', 'toggle', {
+		this._hass.callService('homeassistant', 'toggle', {
 			entity_id: state.entity_id
 		});
 	}
@@ -656,7 +679,7 @@ class AtomicCalendar extends LitElement {
 			`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
-				this.hass.callApi('get', url))).then((result) => {
+				this._hass.callApi('get', url))).then((result) => {
 				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
 					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
 				})))
@@ -702,7 +725,7 @@ class AtomicCalendar extends LitElement {
 
 
 		Promise.all(calendarUrlList.map(url =>
-			this.hass.callApi('get', url[0]))).then((result, i) => {
+			this._hass.callApi('get', url[0]))).then((result, i) => {
 			if (monthToGet == this.monthToGet)
 				result.map((eventsArray, i) => {
 					this.month.map(m => {
@@ -798,7 +821,7 @@ class AtomicCalendar extends LitElement {
 		return html`
 			<div class="calTitle">
 				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
-					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
+					${moment(this.selectedMonth).locale(this._hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
 					</a>	
 			</div>
 			<div class="calButtons">
@@ -875,6 +898,7 @@ class AtomicCalendar extends LitElement {
 			</div>
 			`
 	}
+	
 }
 
 
@@ -1041,4 +1065,24 @@ class EventClass {
 	get link() {
 		return this.eventClass.htmlLink
 	}
+	
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
