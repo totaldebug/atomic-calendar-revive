@@ -10,7 +10,8 @@ class AtomicCalendar extends LitElement {
 				
 	let timeFormat = moment.localeData(this._hass.language).longDateFormat('LT')
 	if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
-	else if (this.config.hoursFormat=='24h') timeFormat = 'hh:mm'
+	else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
+	else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
 		moment.updateLocale(this._hass.language, {
 			week: {
 				dow: this.config.firstDayOfWeek
@@ -61,6 +62,7 @@ class AtomicCalendar extends LitElement {
 					try {
 						this.events = await this.getEvents()
 					} catch (error) {
+						console.log(error)
 						this.errorMessage = 'The calendar can\'t be loaded from Home Assistant component'
 					}
 
@@ -405,7 +407,7 @@ class AtomicCalendar extends LitElement {
 			showDate: false,
 			dateFormat: 'LL',
 			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
-
+			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -673,8 +675,11 @@ class AtomicCalendar extends LitElement {
 	 * 
 	 */
 	async getEvents() {
-		let start = moment().startOf('day').format('YYYY-MM-DDTHH:mm:ss');
-		let end = moment().add(this.config.maxDaysToShow, 'days').format('YYYY-MM-DDTHH:mm:ss');
+
+
+		let timeOffset = new Date().getTimezoneOffset()
+		let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = this.config.entities.map(entity =>
 			`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		try {
@@ -713,8 +718,9 @@ class AtomicCalendar extends LitElement {
 	 */
 	getCalendarEvents(startDay, endDay, monthToGet, month) {
 		this.refreshCalEvents = false
-		let start = moment(startDay).startOf('day').format('YYYY-MM-DDTHH:mm:ss');
-		let end = moment(endDay).endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+		let timeOffset = new Date().getTimezoneOffset()
+		let start = moment(startDay).startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		let end = moment(endDay).endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		// calendarUrlList[url, type of event configured for this callendar,filters]
 		let calendarUrlList = []
 		this.config.entities.map(entity => {

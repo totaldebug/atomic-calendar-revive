@@ -1,4 +1,4 @@
-# atomic calendar card v0.7.2
+# atomic calendar card v0.7.3
 Advanced calendar card for Home Assistant with Lovelace
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
@@ -35,7 +35,7 @@ If you have any suggestions about design or functionality, please let me know, o
 
 ## 1. Installation
 1. You need to have the ![Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
-2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.2/atomic-calendar.js) - link not working (in development)
+2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.3/atomic-calendar.js) - link not working (in development)
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
@@ -62,8 +62,8 @@ If you have any suggestions about design or functionality, please let me know, o
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
 | showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the title
 | dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
-| hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - `12h` or `24h` or `default` (default for local HA language settings)
-
+| hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
+| startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
 
 ### Text colors and fonts
 | Name | Type | Since | Description |
