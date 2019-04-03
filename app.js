@@ -3,34 +3,6 @@ import moment from 'moment';
 import 'moment/min/locales';
 
 class AtomicCalendar extends LitElement {
-
-
-	set hass(hass) {
-		 this._hass=hass
-				
-	let timeFormat = moment.localeData(this._hass.language).longDateFormat('LT')
-	if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
-	else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
-	else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
-		moment.updateLocale(this._hass.language, {
-			week: {
-				dow: this.config.firstDayOfWeek
-			},
-			longDateFormat : {
-				LT: timeFormat
-			}
-		});
-	}
-	 
-	static get properties() {
-		return {
-			_hass: {},
-			config: Object,
-			content: Object,
-			selectedMonth: Object
-		}
-	}
-	
 	constructor() {
 		super();
 		this.lastCalendarUpdateTime;
@@ -47,7 +19,42 @@ class AtomicCalendar extends LitElement {
 		this.month = [];
 		this.showLoader = false;
 		this.eventSummary = html `&nbsp;`;
+		this.firstrun = true
 	}
+
+	set hass(hass) {
+		if(!this._hass) this._hass=hass
+		if(this.firstrun){
+			let timeFormat = moment.localeData(this._hass.language).longDateFormat('LT')
+			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
+			else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
+			else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
+				moment.updateLocale(this._hass.language, {
+					week: {
+						dow: this.config.firstDayOfWeek
+					},
+					longDateFormat : {
+						LT: timeFormat
+					}
+				});
+			let timeOffset = new Date().getTimezoneOffset()
+			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
+			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+			this.firstrun=false
+			console.log("atomic_calendar v0.7.4 loaded")
+		}
+	}
+	 
+	static get properties() {
+		return {
+			_hass: {},
+			config: Object,
+			content: Object,
+			selectedMonth: Object
+		}
+	}
+	
+
 
 	updated() {}
 
@@ -685,6 +692,7 @@ class AtomicCalendar extends LitElement {
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
 				this._hass.callApi('get', url))).then((result) => {
+
 				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
 					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
 				})))
@@ -790,8 +798,11 @@ class AtomicCalendar extends LitElement {
 		const dayOfWeekNumber = firstDay.day()
 		const startDate = moment(firstDay).add(this.config.firstDayOfWeek - dayOfWeekNumber, 'days')
 		const endDate = moment(firstDay).add(42 - dayOfWeekNumber + this.config.firstDayOfWeek, 'days')
+
 		this.month = [];
-		for (var i = this.config.firstDayOfWeek - dayOfWeekNumber; i < 42 - dayOfWeekNumber + this.config.firstDayOfWeek; i++) {
+		let weekShift = 0;
+		(dayOfWeekNumber - this.config.firstDayOfWeek) >=0 ? weekShift = 0 : weekShift = 7
+		for (var i = this.config.firstDayOfWeek - dayOfWeekNumber - weekShift ; i < 42 - dayOfWeekNumber + this.config.firstDayOfWeek -weekShift; i++) {
 			this.month.push(new CalendarDay(moment(firstDay).add(i, 'days'), i))
 		}
 	}
