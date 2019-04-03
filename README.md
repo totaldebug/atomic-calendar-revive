@@ -39,7 +39,7 @@ If you have any suggestions about design or functionality, please let me know, o
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
-    - url: /customcards/atomic-calendar.js
+    - url: /local/atomic-calendar.js
       type: module
   ```
 4. Add card with options to `ui-lovelace.yaml`, examples below
