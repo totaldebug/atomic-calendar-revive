@@ -22,32 +22,11 @@ class AtomicCalendar extends LitElement {
 		this.firstrun = true
 	}
 
-	set hass(hass) {
-		if(!this._hass) this._hass=hass
-		if(this.firstrun){
-			let timeFormat = moment.localeData(this._hass.language).longDateFormat('LT')
-			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
-			else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
-			else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
-				moment.updateLocale(this._hass.language, {
-					week: {
-						dow: this.config.firstDayOfWeek
-					},
-					longDateFormat : {
-						LT: timeFormat
-					}
-				});
-			let timeOffset = new Date().getTimezoneOffset()
-			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
-			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
-			this.firstrun=false
-			console.log("atomic_calendar v0.7.4 loaded")
-		}
-	}
+
 	 
 	static get properties() {
 		return {
-			_hass: {},
+			hass: Object,
 			config: Object,
 			content: Object,
 			selectedMonth: Object
@@ -59,7 +38,30 @@ class AtomicCalendar extends LitElement {
 	updated() {}
 
 	render() {
-
+ 
+ 
+ 		if(this.firstrun){
+			let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
+			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
+			else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
+			else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
+				moment.updateLocale(this.hass.language, {
+					week: {
+						dow: this.config.firstDayOfWeek
+					},
+					longDateFormat : {
+						LT: timeFormat
+					}
+				});
+			let timeOffset = new Date().getTimezoneOffset()
+			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
+			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
+			this.firstrun=false
+			console.log("atomic_calendar v0.7.4a loaded")
+		}
+ 
+ 
+ 
 		
 		if (!this.isUpdating && this.modeToggle == 1) {
 			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'minutes') > 15)
@@ -491,7 +493,7 @@ class AtomicCalendar extends LitElement {
 	}
 
 	_toggle(state) {
-		this._hass.callService('homeassistant', 'toggle', {
+		this.hass.callService('homeassistant', 'toggle', {
 			entity_id: state.entity_id
 		});
 	}
@@ -691,7 +693,7 @@ class AtomicCalendar extends LitElement {
 			`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
-				this._hass.callApi('get', url))).then((result) => {
+				this.hass.callApi('get', url))).then((result) => {
 
 				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
 					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
@@ -739,7 +741,7 @@ class AtomicCalendar extends LitElement {
 
 
 		Promise.all(calendarUrlList.map(url =>
-			this._hass.callApi('get', url[0]))).then((result, i) => {
+			this.hass.callApi('get', url[0]))).then((result, i) => {
 			if (monthToGet == this.monthToGet)
 				result.map((eventsArray, i) => {
 					this.month.map(m => {
@@ -838,7 +840,7 @@ class AtomicCalendar extends LitElement {
 		return html`
 			<div class="calTitle">
 				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
-					${moment(this.selectedMonth).locale(this._hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
+					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
 					</a>	
 			</div>
 			<div class="calButtons">
