@@ -19,7 +19,7 @@ class AtomicCalendar extends LitElement {
 		this.month = [];
 		this.showLoader = false;
 		this.eventSummary = html `&nbsp;`;
-		this.firstrun = true
+		this.firstrun = true;
 	}
 
 
@@ -57,7 +57,7 @@ class AtomicCalendar extends LitElement {
 			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
 			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
 			this.firstrun=false
-			console.log("atomic_calendar v0.7.4a loaded")
+			console.log("atomic_calendar v0.7.5 loaded")
 		}
  
  
@@ -73,11 +73,13 @@ class AtomicCalendar extends LitElement {
 					} catch (error) {
 						console.log(error)
 						this.errorMessage = 'The calendar can\'t be loaded from Home Assistant component'
+						this.showLoader = false
 					}
 
 					this.lastEventsUpdateTime = moment();
 					this.updateEventsHTML(this.events);
 					this.isUpdating = false;
+					this.showLoader = false
 				})()
 		}
 
@@ -359,7 +361,7 @@ class AtomicCalendar extends LitElement {
 				width: 10px;
 				height:10px; 
 				padding-top: 0px;  
-				margin-top: -7px;
+				margin-top: -10px;
 				margin-right: -1px;
 				margin-left: -1px;
 			}	
@@ -417,6 +419,7 @@ class AtomicCalendar extends LitElement {
 			dateFormat: 'LL',
 			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
 			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
+			showLastCalendarWeek: true, // always shows last line/week in calendar mode, even if it's not the current month
 
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
@@ -685,8 +688,7 @@ class AtomicCalendar extends LitElement {
 	 */
 	async getEvents() {
 
-
-		let timeOffset = new Date().getTimezoneOffset()
+		let timeOffset = -moment().utcOffset()
 		let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = this.config.entities.map(entity =>
@@ -785,6 +787,7 @@ class AtomicCalendar extends LitElement {
 		}).catch((err) => {
 			this.refreshCalEvents = false
 			console.log('error: ', err)
+			this.showLoader = false
 		})
 
 
@@ -793,7 +796,7 @@ class AtomicCalendar extends LitElement {
 
 	/**
 	 * create array for 42 calendar days
-	 * 
+	 * showLastCalendarWeek
 	 */
 	buildCalendar(selectedMonth) {
 		const firstDay = moment(selectedMonth).startOf('month')
@@ -839,14 +842,15 @@ class AtomicCalendar extends LitElement {
 	getCalendarHeaderHTML() {
 		return html`
 			<div class="calTitle">
-				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
-					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
-					</a>	
-			</div>
-			<div class="calButtons">
 				<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="left"></paper-icon-button>
+				<div style="display: inline-block; min-width: 9em;  text-align: center;">	
+					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
+					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
+					</a>
+				</div>
 				<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="right"></paper-icon-button>
-			</div>`
+			</div>
+		`
 	}
 
 	/**
@@ -854,6 +858,9 @@ class AtomicCalendar extends LitElement {
 	 * 
 	 */
 	getCalendarDaysHTML(month) {
+		var showLastRow = true
+		if(!this.config.showLastCalendarWeek && !moment(month[35].date).isSame(this.selectedMonth, 'month')) showLastRow = false
+
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
 			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
@@ -863,6 +870,7 @@ class AtomicCalendar extends LitElement {
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this.config.CalEventIcon2Color};" icon="${this.config.CalEventIcon2}"></ha-icon></span>` : ''
 			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this.config.CalEventIcon3Color};" icon="${this.config.CalEventIcon3}"></ha-icon></span>` : ''
 
+			if(i<35 || showLastRow)
 			return html `		
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
 					<td class="cal">
@@ -878,6 +886,7 @@ class AtomicCalendar extends LitElement {
 					</td>
 				${i && (i % 6 === 0) ? html`</tr>` :''}
 				`
+				
 		})
 	}
 
@@ -891,6 +900,7 @@ class AtomicCalendar extends LitElement {
 			this.showLoader = true
 			this.buildCalendar(this.selectedMonth)
 			this.getCalendarEvents(this.month[0].date, this.month[41].date, this.monthToGet, this.month)
+			this.showLoader = false
 		}
 
 		const month = this.month

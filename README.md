@@ -1,4 +1,4 @@
-# atomic calendar card v0.7.4
+# atomic calendar card v0.7.5
 Advanced calendar card for Home Assistant with Lovelace
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
@@ -35,7 +35,7 @@ If you have any suggestions about design or functionality, please let me know, o
 
 ## 1. Installation
 1. You need to have the ![Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
-2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.4/atomic-calendar.js) - link not working (in development)
+2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.5/atomic-calendar.js) - link not working (in development)
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
@@ -138,6 +138,7 @@ If you set filters (keywords) for any type, it will show an icon only when event
 | CalEventIcon3 | string | v0.7.0 | `mdi:star` Icon for `type: icon3` calendar
 | CalEventIcon3Color | string | v0.7.0 | `default` Color of icon for `type: icon3` calendar
 | CalEventIcon3Filter | string | v0.7.0 | `null` List of comma separated keywords
+| showLastCalendarWeek  | boolean | v0.7.5 | `true` If true (default) it will always show 6 lines. If false, the 6th line won't be displayed if not needed.
 
 ## 4. Configuration examples
 
