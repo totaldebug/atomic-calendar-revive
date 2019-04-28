@@ -214,8 +214,8 @@ This card will show maximum 5 events from each calendar. It's because of Home As
 ![__init__.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py) 
 
 ```
-mkdir -p custom_components/calendar
-cd custom_components/calendar
+mkdir -p custom_components/google
+cd custom_components/google
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/services.yaml
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json
