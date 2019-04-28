@@ -207,7 +207,8 @@ This card will show maximum 5 events from each calendar. It's because of Home As
 
 1. Go to your Home Assistant config directory (where you have configuration.yaml file)
 2. Create a subdirectory `custom_components/google` and go inside:
-3. Download files. Important: in Home Assistant 92.0 and above all 4 files are needed! It will be ignored if you have only calendar.py. ![calendar.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) 
+3. Download files. Important: in Home Assistant 92.0 and above all 4 files are needed! It will be ignored if you have only calendar.py. 
+![calendar.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) 
 ![services.yaml](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/services.yaml) 
 ![manifest.json](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json) 
 ![__init__.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py) 
@@ -219,6 +220,7 @@ wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/home
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/services.yaml
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py
+```
 4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
 
