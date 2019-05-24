@@ -221,7 +221,7 @@ wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/home
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py
 ```
-4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
+4. Open the calendar.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
 
 ## 7. Automatic update
