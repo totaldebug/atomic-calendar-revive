@@ -5,7 +5,7 @@
   "main": "atomic-calendar.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint app.js",
-    "babel": "babel atomic-calendar.js --out-file atomic-calendar.js",
+    "babel": "babel dist/atomic_calendar.js --out-file dist/atomic_calendar.js",
     "rollup": "rollup -c",
     "build": "npm run rollup  && npm run babel",
     "watch": "rollup -c --watch --config rollup-dev.config.js"

@@ -57,7 +57,7 @@ class AtomicCalendar extends LitElement {
 			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
 			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
 			this.firstrun=false
-			console.log("atomic_calendar v0.7.5 loaded")
+			console.log("atomic_calendar v0.7.9 loaded")
 		}
  
  
@@ -762,7 +762,7 @@ class AtomicCalendar extends LitElement {
 						eventsArray.map((event, i) => {
 							const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-console.log(event.summary," - ",this.checkFilter(event.summary, calendarBlacklist))
+
 							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 								//checking for calendar type (icons) and keywords
 								try {
