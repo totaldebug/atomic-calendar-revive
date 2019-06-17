@@ -21,7 +21,7 @@ class AtomicCalendar extends LitElement {
 		this.eventSummary = html `&nbsp;`;
 		this.firstrun = true;
 	}
-
+ 
 
 	 
 	static get properties() {
@@ -39,7 +39,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
  
- 
+
  		if(this.firstrun){
 			let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
 			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
@@ -89,8 +89,8 @@ class AtomicCalendar extends LitElement {
 			this.updateCalendarHTML();
 
 		return html `
-	      ${this.setStyle()}
-	  
+	    
+	  ${this.setStyle()}
 
 	  <ha-card class="cal-card">
 		<div class="cal-titleContainer">
@@ -192,7 +192,6 @@ class AtomicCalendar extends LitElement {
 			.daywrap{
 				padding: 2px 0 4px 0;
 				border-top: 1px solid; 
-				color: ${this.config.dayWrapperLineColor};
 				}
 				
 			tr{
@@ -202,8 +201,6 @@ class AtomicCalendar extends LitElement {
 			.event-left {
 				padding: 4px 10px 3px 8px;
 				text-align: center;
-				color: ${this.config.dateColor};
-				font-size: ${this.config.dateSize}%;
 				vertical-align: top;
 						 
 			}
@@ -234,33 +231,24 @@ class AtomicCalendar extends LitElement {
 			}
 				
 			.event-title {
-				font-size: ${this.config.titleSize}%;
-				color: ${this.config.titleColor};
+		
 				
 			}		
 			
-			.event-time {
-				font-size: ${this.config.timeSize}%;
-				color: ${this.config.timeColor};
-			}			
 			
 			.event-location-icon {
 			    height: 15px;
                 width: 15px;
-				color: ${this.config.locationIconColor};
 				margin-top: -2px;
 			}
 
 			.location-link {
-				color: ${this.config.locationLinkColor};
 				text-decoration: none;
-				font-size: ${this.config.locationTextSize}%;
 			}
 
 			.event-circle {
 				width: 10px;
 				height: 10px;
-				color: ${this.config.eventBarColor};
 				margin-left: -2px
 			}
 
@@ -277,10 +265,8 @@ class AtomicCalendar extends LitElement {
 			}
 				
 			hr.progress {
-			color: ${this.config.progressBarColor};
 				margin: -8px 0px 2px 0px;
 				border-width: 1px 0 0 0;
-				border-color: ${this.config.progressBarColor};
 			}
 				
 			.progress-container {
@@ -314,7 +300,6 @@ class AtomicCalendar extends LitElement {
 
 
 			table.cal{
-				color: ${this.config.titleColor}
 				margin-left: 0px;
 				margin-right: 0px;
 				border-spacing: 10px 5px;
@@ -337,7 +322,6 @@ class AtomicCalendar extends LitElement {
 				font-size: 95%;
 				max-width: 38px;
 				margin: auto;
-				color: ${this.config.titleColor}
 			}
 
 			tr.cal {
@@ -420,13 +404,17 @@ class AtomicCalendar extends LitElement {
 			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
 			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 			showLastCalendarWeek: true, // always shows last line/week in calendar mode, even if it's not the current month
-
+			showCalNameInEvent: false,
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
 
+			showNoEventsForToday: false,
+			noEventsForTodayText: 'No events for today',
+			
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
+			showHours: true, //shows the bottom line (time, duration of event)
 
 			titleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 			titleSize: 100,
@@ -470,9 +458,9 @@ class AtomicCalendar extends LitElement {
 			CalEventIcon3Filter: null,
 
 			firstDayOfWeek: 1, // default 1 - monday
+			blacklist: null,
 			...config
 		}
-
 
 		this.modeToggle = this.config.defaultMode
 
@@ -486,6 +474,8 @@ class AtomicCalendar extends LitElement {
 					entity: entity
 				};
 		});
+				
+
 	}
 
 
@@ -506,12 +496,14 @@ class AtomicCalendar extends LitElement {
 	 * 
 	 */
 	getTitleHTML(event, isEventNext) {
-		const titleColor = (this.config.showColors && event.config.color !== "undefined") ? event.config.color : this.config.titleColor
+	
+		const titletext = (this.config.showCalNameInEvent) ? event.eventClass.organizer.displayName+": " + event.title : event.title
+		
+		const titleColor = (this.config.showColors && typeof event.config.titleColor != 'undefined') ? event.config.titleColor : this.config.titleColor
 		//const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
-
 		return html `
 		<a href="${event.link}" style="text-decoration: none;" target="_blank">
-		<div class="event-title" style="color: ${titleColor}">${event.title}</div></a>
+		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div></a>
 		`
 	}
 
@@ -555,7 +547,7 @@ class AtomicCalendar extends LitElement {
 
 		if (!event.location || !this.config.showLocation) return html ``
 		else return html `
-			<div><a href="https://maps.google.com/?q=${event.location}" target="_blank" class="location-link"><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
+			<div><a href="https://maps.google.com/?q=${event.location}" target="_blank" class="location-link" style="color: ${this.config.locationLinkColor};font-size: ${this.config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
 		`
 	}
 
@@ -569,13 +561,14 @@ class AtomicCalendar extends LitElement {
 		if (!days) { // TODO some more tests end error message
 			this.content = html `${this.errorMessage}`
 			return
-		}
-
+		} 
+		
 		// TODO write something if no events
 		if (days.length == 0) {
 			this.content = html `No events in the next days`
 			return
 		}
+		
 
 		// move today's finished events up
 		if (moment(days[0][0]).isSame(moment(), "day") && days[0].length > 1) {
@@ -588,19 +581,20 @@ class AtomicCalendar extends LitElement {
 					i++
 			}
 		}
+		
+		// check if no events for today and push a "no events" text
 
-
+		
 		//loop through days
 		htmlDays = days.map((day, di) => {
 
 			//loop through events for each day
 			const htmlEvents = day.map((event, i, arr) => {
 				const dayWrap = (i == 0 && di > 0) ? 'daywrap' : ''
-
 				const isEventNext = (di == 0 && moment(event.startTime).isAfter(moment()) && (i == 0 || !moment(arr[i - 1].startTime).isAfter(moment()))) ? true : false
 				//show line before next event
 				const currentEventLine = (this.config.showCurrentEventLine &&
-					isEventNext) ? html `<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle"></ha-icon><hr class="event"/></div>` : ``
+					isEventNext) ? html `<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle" style="color: ${this.config.eventBarColor};"></ha-icon><hr class="event"/></div>` : ``
 
 				//show current event progress bar
 				var progressBar = ``
@@ -608,17 +602,19 @@ class AtomicCalendar extends LitElement {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
 					let eventPercentProgress = Math.floor((eventProgress * 100) / eventDuration);
-					progressBar = html `<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progress" /></div>`;
+					progressBar = html `<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progress" style="color: ${this.config.progressBarColor};border-color: ${this.config.progressBarColor};" /></div>`;
 
 				}
 
 				var finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter : ``
 
+				const hoursHTML = this.config.showHours ? html`<div style="color: ${this.config.timeColor}; font-size: ${this.config.timeSize}%;">${this.getHoursHTML(event)}</div>` : ''
+
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : ''
 				return html `
 					
-					<tr class="${dayWrap}">
-						<td class="event-left"><div>
+					<tr class="${dayWrap}" style="color: ${this.config.dayWrapperLineColor};">
+						<td class="event-left" style="color: ${this.config.dateColor};font-size: ${this.config.dateSize}%;"><div>
 								<div>${(i===0 && this.config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('ddd') : ''}</div>
@@ -628,7 +624,7 @@ class AtomicCalendar extends LitElement {
 							<div class="event-right">
 								<div class="event-main" >
 									${this.getTitleHTML(event,isEventNext)}
-									<div class="event-time">${this.getHoursHTML(event)}</div>
+									${hoursHTML}
 								</div>
 								<div class="event-location">
 									${this.getLocationHTML(event)}
@@ -691,14 +687,26 @@ class AtomicCalendar extends LitElement {
 		let timeOffset = -moment().utcOffset()
 		let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
-		let calendarUrlList = this.config.entities.map(entity =>
-			`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
+		let calendarUrlList = []
+		this.config.entities.map(entity =>
+			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.blacklist ])
+			)
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
-				this.hass.callApi('get', url))).then((result) => {
-
+				this.hass.callApi('get', url[0]))).then((result, n) => {
 				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
-					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
+					let singleEvent = []
+					let blacklist = calendarUrlList[1][1]
+					singleCalEvents.map(evt => {
+				
+					if(!blacklist || (blacklist && !this.checkFilter(evt.summary, blacklist))){
+						singleEvent.push(new EventClass(evt, this.config.entities[i] ))
+					}					
+
+					
+					})
+					return singleEvent
+					//return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i], calendarUrlList[1] ))
 				})))
 
 				// sort events
@@ -725,7 +733,7 @@ class AtomicCalendar extends LitElement {
 
 
 	/**
-	 * gets events from HA to Calendar
+	 * gets events from HA to Calendar mode
 	 * 
 	 */
 	getCalendarEvents(startDay, endDay, monthToGet, month) {
@@ -737,10 +745,11 @@ class AtomicCalendar extends LitElement {
 		let calendarUrlList = []
 		this.config.entities.map(entity => {
 			if (entity.type) {
-				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.type])
-			}
+				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.type,
+				entity.blacklist ? entity.blacklist : ''
+				])
+			}  
 		})
-
 
 		Promise.all(calendarUrlList.map(url =>
 			this.hass.callApi('get', url[0]))).then((result, i) => {
@@ -749,22 +758,23 @@ class AtomicCalendar extends LitElement {
 					this.month.map(m => {
 						const calendarTypes = calendarUrlList[i][1]
 						const calendarUrl = calendarUrlList[i][0]
+						const calendarBlacklist = calendarUrlList[i][2]
 						eventsArray.map((event, i) => {
 							const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-
-							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
+console.log(event.summary," - ",this.checkFilter(event.summary, calendarBlacklist))
+							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 								//checking for calendar type (icons) and keywords
 								try {
-									if (this.checkFilter('icon1', calendarTypes)) {
+									if (this.checkFilter('icon1', calendarTypes)){
 										if (!this.config.CalEventIcon1Filter || this.checkFilter(event.summary, this.config.CalEventIcon1Filter))
 											m['icon1'].push(event.summary)
 									}
-									if (this.checkFilter('icon2', calendarTypes)) {
+									if (this.checkFilter('icon2', calendarTypes)){
 										if (!this.config.CalEventIcon2Filter || this.checkFilter(event.summary, this.config.CalEventIcon2Filter))
 											m['icon2'].push(event.summary)
 									}
-									if (this.checkFilter('icon3', calendarTypes)) {
+									if (this.checkFilter('icon3', calendarTypes)){
 										if (!this.config.CalEventIcon3Filter || this.checkFilter(event.summary, this.config.CalEventIcon3Filter))
 											m['icon3'].push(event.summary)
 
@@ -874,7 +884,7 @@ class AtomicCalendar extends LitElement {
 			return html `		
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
 					<td class="cal">
-							<div @click='${e => this.handleEventSummary(day)}' class="calDay" style="${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
+							<div @click='${e => this.handleEventSummary(day)}' class="calDay" style=" color: ${this.config.titleColor}; ${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
 								<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^\/]0./, '')}
 								</div>
@@ -902,7 +912,6 @@ class AtomicCalendar extends LitElement {
 			this.getCalendarEvents(this.month[0].date, this.month[41].date, this.monthToGet, this.month)
 			this.showLoader = false
 		}
-
 		const month = this.month
 		const weekDays = moment.weekdaysMin(true)
 		const htmlDayNames = weekDays.map((day) => html `
@@ -913,7 +922,7 @@ class AtomicCalendar extends LitElement {
 				${this.getCalendarHeaderHTML()}
 			</div>
 			<div class="calTableContainer">
-				<table class="cal">
+				<table class="cal" style="color: ${this.config.titleColor};">
 					<thead>  <tr>
 						${htmlDayNames}
 					</tr>  </thead>
@@ -1019,10 +1028,12 @@ class EventClass {
 	}
 
 	get titleColor() {
-		if (this.config.color)
-			return this.config.color;
+		if (this.config.titleColor)
+			return this.config.titleColor;
 		else return 'var(--primary-text-color)';
 	}
+	
+
 
 	get title() {
 		return this.eventClass.summary
