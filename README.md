@@ -1,5 +1,6 @@
 # atomic calendar card v0.8.1
-Advanced calendar card for Home Assistant with Lovelace
+Advanced calendar card for Home Assistant with Lovelace.
+
 Work in progress. If you have any problems, please use v0.7.5
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
