@@ -1,7 +1,7 @@
 # atomic calendar card v0.8.1
 Advanced calendar card for Home Assistant with Lovelace.
 
-Work in progress. If you have any problems, please use v0.7.5
+Work in progress. If you have any problems, please use [v0.7.5](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.5/atomic-calendar.js)
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
 
@@ -37,7 +37,7 @@ If you have any suggestions about design or functionality, please let me know, o
 
 ## 1. Installation
 1. You need to have the ![Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
-2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.7.5/atomic-calendar.js) - link not working (in development)
+2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.8.1/atomic-calendar.js) - link not working (in development)
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
@@ -231,3 +231,9 @@ https://github.com/atomic7777/atomic_calendar
 ```
 4. Choose type: Plugin
 5. The atomic_calendar component will be installed and updated.
+6. Add to the `ui-lovelace.yaml` file :
+```
+resources:
+   - url: /community_plugin/atomic_calendar/atomic_calendar.js
+     type: module
+```
