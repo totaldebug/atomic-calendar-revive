@@ -4,9 +4,8 @@
       "@babel/preset-env",
       {
         "modules": false,
-        "targets": {
-          "esmodules": true
-        }
+		"targets": "> 2.5%, not dead"
+
       }
     ],
     ["minify"]

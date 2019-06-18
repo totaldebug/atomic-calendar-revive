@@ -1,4 +1,4 @@
-# atomic calendar card v0.7.9
+# atomic calendar card v0.7.5
 Advanced calendar card for Home Assistant with Lovelace
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
@@ -64,11 +64,6 @@ If you have any suggestions about design or functionality, please let me know, o
 | dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
 | hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
-| showHours | boolean | optional | v0.7.6 | `true` Show the time od duration of event (the bottom line)
-| showCalNameInEvent | boolean | optional | v0.7.6 | `false` Show calendar name in event title, to distinguish between multiple calendars
-| showNoEventsForToday | boolean | optional | v0.7.6 | `false` Show "no events for today" if no events (configurable text)
-| noEventsForTodayText | string | optional | v0.7.6 | `No events for today` "no events for today" text, if showNoEventsForToday is enabled
-
 
 ### Text colors and fonts
 | Name | Type | Since | Description |
@@ -98,13 +93,6 @@ If you have any suggestions about design or functionality, please let me know, o
 |------|:----:|:-----:|-------------|
 | showProgressBar | boolean | optional | v0.5.5 | `true` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
 | progressBarColor | string | v0.5.5 | `default color` Color of progress bar
-
-### Entity options (configurations for each calendar)
-| Name | Type | Since | Description |
-|------|:----:|:-----:|-------------|
-| type | string | optional | v0.5.5 | `` Type of calendar (in calendar mode) Icon1, Icon2, Icon3, Birthday. Explained below.
-| blacklist | string | v0.7.9 | `` List of comma separated blacklisted keywords. Events containing any of them will not be shown.
-
 
 ## 3. Calendar Mode
 The second mode of view - calendar mode - is to show full month calendar with simple events icons or colors, for most important, infrequent events, like holiday or birthday.
@@ -219,21 +207,19 @@ This card will show maximum 5 events from each calendar. It's because of Home As
 
 1. Go to your Home Assistant config directory (where you have configuration.yaml file)
 2. Create a subdirectory `custom_components/google` and go inside:
-3. Download files. Important: in Home Assistant 92.0 and above all 4 files are needed! It will be ignored if you have only calendar.py. 
-![calendar.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) 
-![services.yaml](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/services.yaml) 
-![manifest.json](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json) 
+3. Download files. Important: in Home Assistant 89.0 and above all 3 files are needed! It will be ignored if you have only calendar.py. ![Google.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) 
 ![__init__.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py) 
+![tts.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/tts.py) 
+
 
 ```
-mkdir -p custom_components/google
-cd custom_components/google
+mkdir -p custom_components/calendar
+cd custom_components/calendar
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/services.yaml
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/manifest.json
 wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py
+wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/tts.py
 ```
-4. Open the calendar.py file with text editor and change ``'maxResults': 5,`` to anything you want.
+4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
 5. Save the file and restart Home Assistant.
 
 ## 7. Automatic update

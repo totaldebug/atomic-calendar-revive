@@ -2,10 +2,10 @@
   "name": "atomic-calendar",
   "version": "0.4.0",
   "description": "Calendar Card for Home Assistant",
-  "main": "atomic-calendar.js",
+  "main": "atomic_calendar.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint app.js",
-    "babel": "babel dist/atomic_calendar.js --out-file dist/atomic_calendar.js",
+    "lint": "eslint app.js",
+    "babel": "babel atomic_calendar.js --out-file atomic_calendar.js",
     "rollup": "rollup -c",
     "build": "npm run rollup  && npm run babel",
     "watch": "rollup -c --watch --config rollup-dev.config.js"
@@ -17,28 +17,32 @@
   "author": "Wojciech Mamak",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.5",
-    "@babel/plugin-proposal-class-properties": "^7.4.4",
-    "@babel/plugin-proposal-decorators": "^7.4.4",
-    "@babel/plugin-transform-template-literals": "^7.4.4",
-    "@babel/preset-env": "^7.4.5",
-    "babel-loader": "^8.0.6",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.3",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@babel/plugin-transform-template-literals": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "babel-loader": "^8.0.5",
     "babel-preset-minify": "^0.5.0",
-    "eslint": "^5.16.0",
-    "rollup": "^1.15.6",
-    "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-node-resolve": "^4.2.4",
+    "eslint": "^5.14.1",
+    "rollup": "^1.2.2",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^4.0.4",
-    "webpack": "^4.34.0",
-    "webpack-cli": "^3.3.4",
-    "webpack-dev-server": "^3.7.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14",
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
     "lit-element": "^2.0.1",
     "moment": "^2.24.0",
     "node-google-calendar": "^1.1.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/atomic7777/atomic_calendar/issues"
+  },
+  "homepage": "https://github.com/atomic7777/atomic_calendar#readme"
 }

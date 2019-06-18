@@ -22,8 +22,6 @@ class AtomicCalendar extends LitElement {
 		this.firstrun = true;
 	}
  
-
-	 
 	static get properties() {
 		return {
 			hass: Object,
@@ -32,15 +30,10 @@ class AtomicCalendar extends LitElement {
 			selectedMonth: Object
 		}
 	}
-	
-
-
 	updated() {}
 
 	render() {
- 
-
- 		if(this.firstrun){
+        if(this.firstrun){
 			let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
 			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
 			else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
@@ -53,11 +46,8 @@ class AtomicCalendar extends LitElement {
 						LT: timeFormat
 					}
 				});
-			let timeOffset = new Date().getTimezoneOffset()
-			let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').format('YYYY-MM-DDTHH:mm:ss');
-			let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').format('YYYY-MM-DDTHH:mm:ss');
 			this.firstrun=false
-			console.log("atomic_calendar v0.7.9 loaded")
+			console.log("atomic_calendar v0.8.1b loaded")
 		}
  
  
@@ -94,7 +84,7 @@ class AtomicCalendar extends LitElement {
 
 	  <ha-card class="cal-card">
 		<div class="cal-titleContainer">
-			<div  class="cal-title"  @click='${e => this.handleToggle(e)}'> 
+			<div  class="cal-title"  @click='${e => this.handleToggle()}'> 
 				${this.config.title}
 			</div>
 				
@@ -116,10 +106,6 @@ class AtomicCalendar extends LitElement {
 		</div>
 	  </ha-card>`
 	}
-
-	static get styles() {
-
-	}
 	
 	firstTimeConfig() {
 	
@@ -127,8 +113,7 @@ class AtomicCalendar extends LitElement {
 	}
 	
 
-
-	handleToggle(e) {
+	handleToggle() {
 		if (this.config.enableModeChange) {
 			this.modeToggle == 1 ? this.modeToggle = 2 : this.modeToggle = 1
 			this.requestUpdate()
@@ -495,8 +480,7 @@ class AtomicCalendar extends LitElement {
 	 * generate Event Title (summary) HTML
 	 * 
 	 */
-	getTitleHTML(event, isEventNext) {
-	
+	getTitleHTML(event) {
 		const titletext = (this.config.showCalNameInEvent) ? event.eventClass.organizer.displayName+": " + event.title : event.title
 		
 		const titleColor = (this.config.showColors && typeof event.config.titleColor != 'undefined') ? event.config.titleColor : this.config.titleColor
@@ -623,7 +607,7 @@ class AtomicCalendar extends LitElement {
 							<div>${currentEventLine}</div>
 							<div class="event-right">
 								<div class="event-main" >
-									${this.getTitleHTML(event,isEventNext)}
+									${this.getTitleHTML(event)}
 									${hoursHTML}
 								</div>
 								<div class="event-location">
@@ -654,7 +638,7 @@ class AtomicCalendar extends LitElement {
 			.replace(locale.format('YYYY'), '') // remove year
 			.replace(/\s\s+/g, ' ') // remove double spaces, if any
 			.trim() // remove spaces from the start and the end
-			.replace(/[рг]\./, '') // remove year letter from RU/UK locales
+			.replace(/[??]\./, '') // remove year letter from RU/UK locales
 			.replace(/de$/, '') // remove year prefix from PT
 			.replace(/b\.$/, '') // remove year prefix from SE
 			.trim() // remove spaces from the start and the end
@@ -668,12 +652,14 @@ class AtomicCalendar extends LitElement {
 	 * @return {bool}
 	 */
 	checkFilter(str, filter) {
+		if(typeof filter != 'undefined' && filter!=''){
 		const keywords = filter.split(',')
 		return (keywords.some((keyword) => {
 			if (RegExp('(?:^|\\s)' + keyword.trim(), 'i').test(str))
 				return true
 			else return false
 		}))
+	} else return false
 
 	}
 
@@ -688,29 +674,15 @@ class AtomicCalendar extends LitElement {
 		let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = []
-		this.config.entities.map(entity =>
-			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.blacklist ])
-			)
+		this.config.entities.map(entity =>{
+			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`])
+		})
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
-				this.hass.callApi('get', url[0]))).then((result, n) => {
+				this.hass.callApi('get', url[0]))).then((result) => {
 				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
-					let singleEvent = []
-					let blacklist = calendarUrlList[1][1]
-					singleCalEvents.map(evt => {
-				
-					if(!blacklist || (blacklist && !this.checkFilter(evt.summary, blacklist))){
-						singleEvent.push(new EventClass(evt, this.config.entities[i] ))
-					}					
-
-					
-					})
-					return singleEvent
-					//return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i], calendarUrlList[1] ))
+					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
 				})))
-
-				// sort events
-				ev = ev.sort((a, b) => moment(a.startTimeToShow) - moment(b.startTimeToShow))
 
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a) {
@@ -732,6 +704,7 @@ class AtomicCalendar extends LitElement {
 	}
 
 
+
 	/**
 	 * gets events from HA to Calendar mode
 	 * 
@@ -744,22 +717,22 @@ class AtomicCalendar extends LitElement {
 		// calendarUrlList[url, type of event configured for this callendar,filters]
 		let calendarUrlList = []
 		this.config.entities.map(entity => {
-			if (entity.type) {
+			if (typeof entity.type != 'undefined') {
 				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.type,
-				entity.blacklist ? entity.blacklist : ''
+				typeof entity.blacklist!= 'undefined' ? entity.blacklist : ''
 				])
 			}  
 		})
 
 		Promise.all(calendarUrlList.map(url =>
-			this.hass.callApi('get', url[0]))).then((result, i) => {
+			this.hass.callApi('get', url[0]))).then((result) => {
 			if (monthToGet == this.monthToGet)
 				result.map((eventsArray, i) => {
 					this.month.map(m => {
 						const calendarTypes = calendarUrlList[i][1]
 						const calendarUrl = calendarUrlList[i][0]
-						const calendarBlacklist = calendarUrlList[i][2]
-						eventsArray.map((event, i) => {
+						const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
+						eventsArray.map((event) => {
 							const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 
@@ -811,9 +784,6 @@ class AtomicCalendar extends LitElement {
 	buildCalendar(selectedMonth) {
 		const firstDay = moment(selectedMonth).startOf('month')
 		const dayOfWeekNumber = firstDay.day()
-		const startDate = moment(firstDay).add(this.config.firstDayOfWeek - dayOfWeekNumber, 'days')
-		const endDate = moment(firstDay).add(42 - dayOfWeekNumber + this.config.firstDayOfWeek, 'days')
-
 		this.month = [];
 		let weekShift = 0;
 		(dayOfWeekNumber - this.config.firstDayOfWeek) >=0 ? weekShift = 0 : weekShift = 7
@@ -915,7 +885,7 @@ class AtomicCalendar extends LitElement {
 		const month = this.month
 		const weekDays = moment.weekdaysMin(true)
 		const htmlDayNames = weekDays.map((day) => html `
-			<th class="cal" style="padding-bottom: 8px;">${day}</th>`)
+			<th class="cal" style="padding-bottom: 8px; color:  ${this.config.titleColor};">${day}</th>`)
 
 		this.content = html `
 			<div  class="calTitleContainer">
@@ -1025,6 +995,7 @@ class EventClass {
 		this._startTime = this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
 		this._endTime = this.eventClass.end.dateTime ? moment(this.eventClass.end.dateTime) : moment(this.eventClass.end.date).subtract(1, 'days').endOf('day')
 		this.isFinished = false;
+		
 	}
 
 	get titleColor() {
