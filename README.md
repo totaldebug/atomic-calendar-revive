@@ -1,5 +1,6 @@
-# atomic calendar card v0.7.5
+# atomic calendar card v0.8.1
 Advanced calendar card for Home Assistant with Lovelace
+Work in progress. If you have any problems, please use v0.7.5
 
 Calendar card with advanced settings. It loads calendar events from Home Assistant - Google calendar component.
 
@@ -94,6 +95,13 @@ If you have any suggestions about design or functionality, please let me know, o
 | showProgressBar | boolean | optional | v0.5.5 | `true` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad
 | progressBarColor | string | v0.5.5 | `default color` Color of progress bar
 
+### Entity options (configurations for each calendar)
+| Name | Type | Since | Description |
+|------|:----:|:-----:|-------------|
+| type | string | optional | v0.5.5 | `null` Type of calendar (in calendar mode) Icon1, Icon2, Icon3, Birthday. Explained below.
+| blacklist | string | v0.7.9 | `null` List of comma separated blacklisted keywords. Events containing any of them will not be shown.
+
+
 ## 3. Calendar Mode
 The second mode of view - calendar mode - is to show full month calendar with simple events icons or colors, for most important, infrequent events, like holiday or birthday.
 You can change mode by clicking "Calendar" title, or even make it default view.
@@ -150,6 +158,7 @@ Simple configuration:
             - entity: calendar.kalendarz_dom
               color: red
             - calendar.atomic7777
+	      blacklist: 'word1, word2'
               
 ```
 
@@ -202,39 +211,22 @@ Simple configuration, both Events mode and Calendar mode, calendar is default:
 ```
 
 ## 6. How to show more than 5 events
-
-This card will show maximum 5 events from each calendar. It's because of Home Assistant component limit. If you want to show more events, you have to download the google calendar component:
-
-1. Go to your Home Assistant config directory (where you have configuration.yaml file)
-2. Create a subdirectory `custom_components/google` and go inside:
-3. Download files. Important: in Home Assistant 89.0 and above all 3 files are needed! It will be ignored if you have only calendar.py. ![Google.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py) 
-![__init__.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py) 
-![tts.py](https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/tts.py) 
-
-
+You have to add `max_tesults` setting to `google_calendars.yaml` file:
 ```
-mkdir -p custom_components/calendar
-cd custom_components/calendar
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/calendar.py
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/__init__.py
-wget https://raw.githubusercontent.com/home-assistant/home-assistant/master/homeassistant/components/google/tts.py
+- cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
+  entities:
+  - device_id: calendar_id
+    name: Calendar_name
+    max_results: 15
 ```
-4. Open the Google.py file with text editor and change ``'maxResults': 5,`` to anything you want.
-5. Save the file and restart Home Assistant.
 
 ## 7. Automatic update
-Automatic update using `custom_updater` component:
-1. You need custom_updater installed and configured
-2. Download atomic-calendar.js to `/www/atomic-calendar.js` as any other card
-3. Add this reference to ui-lovelace.yaml (just change `/local` to `/customcards`):
+Automatic update using `HACS` component:
+1. You need HACS installed and configured
+2. Go to Community tab, Settings 
+3. Paste this line into `Add custom repository` field:
 ```
-  resources:
-    - url: /customcards/atomic-calendar.js
-      type: module
+https://github.com/atomic7777/atomic_calendar
 ```
-4. Add this url line to `custom_updater` settings in `configuration.yaml`:
-```
-custom_updater:
-   card_urls:
-   - https://raw.githubusercontent.com/atomic7777/atomic_calendar/master/tracker.json
-```
+4. Choose type: Plugin
+5. The atomic_calendar component will be installed and updated.
