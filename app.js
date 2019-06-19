@@ -47,7 +47,7 @@ class AtomicCalendar extends LitElement {
 					}
 				});
 			this.firstrun=false
-			console.log("atomic_calendar v0.8.1b loaded")
+			console.log("atomic_calendar v0.8.2 loaded")
 		}
  
  
@@ -680,10 +680,17 @@ class AtomicCalendar extends LitElement {
 		try {
 			return await (Promise.all(calendarUrlList.map(url =>
 				this.hass.callApi('get', url[0]))).then((result) => {
-				let ev = [].concat.apply([], (result.map((singleCalEvents, i) => {
-					return singleCalEvents.map(evt => new EventClass(evt, this.config.entities[i]))
-				})))
-
+					let singleEvents = []
+					result.map((calendar, i) => {
+						calendar.map((singleEvent) => {
+							let blacklist = typeof this.config.entities[i]["blacklist"] != 'undefined' ? this.config.entities[i]["blacklist"] : ''
+								if(blacklist=='' || !this.checkFilter(singleEvent.summary, blacklist)){
+									singleEvents.push(new EventClass(singleEvent, this.config.entities[i] ))
+								}
+						})
+					})
+				let ev = [].concat.apply([], singleEvents )
+				
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a) {
 					r[a.daysToSort] = r[a.daysToSort] || []
