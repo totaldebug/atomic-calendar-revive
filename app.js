@@ -496,7 +496,6 @@ class AtomicCalendar extends LitElement {
 	 * 
 	 */
 	getHoursHTML(event) {
-		console.log(event)
 		const today = moment()
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
