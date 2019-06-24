@@ -34,21 +34,22 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
-			if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
-			else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
-			else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
-				moment.updateLocale(this.hass.language, {
-					week: {
-						dow: this.config.firstDayOfWeek
-					},
-					longDateFormat : {
-						LT: timeFormat
-					}
-				});
-			this.firstrun=false
-			console.log("atomic_calendar v0.8.2 loaded")
+			console.log("atomic_calendar v0.8.3 loaded")	
 		}
+		let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
+		if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
+		else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
+		else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
+			moment.updateLocale(this.hass.language, {
+				week: {
+					dow: this.config.firstDayOfWeek
+				},
+				longDateFormat : {
+					LT: timeFormat
+				}
+			});
+		this.firstrun=false
+
  
  
  
@@ -353,8 +354,7 @@ class AtomicCalendar extends LitElement {
 				0% { transform: rotate(0deg); }
 				100% { transform: rotate(360deg); }
 			}
-			
-			
+
 		</style>
 
 		`
@@ -496,8 +496,8 @@ class AtomicCalendar extends LitElement {
 	 * 
 	 */
 	getHoursHTML(event) {
+		console.log(event)
 		const today = moment()
-
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
 		if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today, 'day')))
@@ -690,7 +690,6 @@ class AtomicCalendar extends LitElement {
 						})
 					})
 				let ev = [].concat.apply([], singleEvents )
-				
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a) {
 					r[a.daysToSort] = r[a.daysToSort] || []
@@ -890,8 +889,8 @@ class AtomicCalendar extends LitElement {
 			this.showLoader = false
 		}
 		const month = this.month
-		const weekDays = moment.weekdaysMin(true)
-		const htmlDayNames = weekDays.map((day) => html `
+		var weekDays = moment.weekdaysMin(true)
+     	const htmlDayNames = weekDays.map((day) => html `
 			<th class="cal" style="padding-bottom: 8px; color:  ${this.config.titleColor};">${day}</th>`)
 
 		this.content = html `
