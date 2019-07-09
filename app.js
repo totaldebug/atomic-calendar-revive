@@ -35,9 +35,9 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.3 loaded")	
+			console.log("atomic_calendar v0.8.4 loaded")	
 		}
-		this.language = this.config.language != '' ? this.config.language : this.hass.language
+		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
 		if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
 		else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
@@ -205,6 +205,14 @@ class AtomicCalendar extends LitElement {
 						 
 			}
 			
+			.event-description {
+				display: flex;
+				justify-content: space-between;
+				padding: 0px 5px 0 5px;
+			
+						 
+			}
+
 			.event-main {
 				flex-direction:row nowrap;
 				display: inline-block;
@@ -396,6 +404,10 @@ class AtomicCalendar extends LitElement {
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
+
+			descColor: 'var(--primary-text-color)', // Description text color (left side)
+			descSize: 80, //Description text size (percent of standard text)
+
 
 			showNoEventsForToday: false,
 			noEventsForTodayText: 'No events for today',
@@ -595,6 +607,7 @@ class AtomicCalendar extends LitElement {
 				var finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter : ``
 
 				const hoursHTML = this.config.showHours ? html`<div style="color: ${this.config.timeColor}; font-size: ${this.config.timeSize}%;">${this.getHoursHTML(event)}</div>` : ''
+				const descHTML = this.config.showDescription ? html`<div class="event-description" style="color: ${this.config.descColor};font-size: ${this.config.descSize}%;">${event.description}</div>` : ''
 
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : ''
 				return html `
@@ -616,6 +629,7 @@ class AtomicCalendar extends LitElement {
 									${this.getLocationHTML(event)}
 								</div>
 							</div>
+							${descHTML}
 					${progressBar}
 						</td>
 
@@ -1016,6 +1030,10 @@ class EventClass {
 
 	get title() {
 		return this.eventClass.summary
+	}
+
+	get description() {
+		return this.eventClass.description
 	}
 
 	//true start time
