@@ -35,7 +35,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.4 loaded")	
+			console.log("atomic_calendar v0.8.5 loaded")	
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
