@@ -66,6 +66,9 @@ If you have any suggestions about design or functionality, please let me know, o
 | dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
 | hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
+| language | string | optional | v0.7.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
+| showDescription | boolean | optional | v0.7.4 | `true` Shows long description of event from Google Calendar.
+
 
 ### Text colors and fonts
 | Name | Type | Since | Description |
@@ -83,6 +86,7 @@ If you have any suggestions about design or functionality, please let me know, o
 | finishedEventOpacity | float | v0.3.0 | `0.6` Opacity level of finished events
 | finishedEventOpacity | string | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale)
 | dayWrapperLineColor | string | v0.3.0 | `default text color` Color of line - days separate
+
 
 ### Next event pointer (currently line with icon)
 | Name | Type | Since | Description |

@@ -20,6 +20,7 @@ class AtomicCalendar extends LitElement {
 		this.showLoader = false;
 		this.eventSummary = html `&nbsp;`;
 		this.firstrun = true;
+		this.language = '';
 	}
  
 	static get properties() {
@@ -36,11 +37,12 @@ class AtomicCalendar extends LitElement {
         if(this.firstrun){
 			console.log("atomic_calendar v0.8.3 loaded")	
 		}
-		let timeFormat = moment.localeData(this.hass.language).longDateFormat('LT')
+		this.language = this.config.language != '' ? this.config.language : this.hass.language
+		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
 		if (this.config.hoursFormat=='12h') timeFormat = 'h:mm A'
 		else if (this.config.hoursFormat=='24h') timeFormat = 'H:mm'
 		else if(this.config.hoursFormat!='default') timeFormat = this.config.hoursFormat
-			moment.updateLocale(this.hass.language, {
+			moment.updateLocale(this.language, {
 				week: {
 					dow: this.config.firstDayOfWeek
 				},
@@ -374,6 +376,7 @@ class AtomicCalendar extends LitElement {
 			title: 'Calendar', // Card title
 			fullDayEventText: 'All day', // "All day" custom text
 			untilText: 'Until', // "Until" custom text
+			language: '',
 
 			// main settings
 			showColors: true, // show calendar title colors, if set in config (each calendar separately)
@@ -830,7 +833,7 @@ class AtomicCalendar extends LitElement {
 				<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="left"></paper-icon-button>
 				<div style="display: inline-block; min-width: 9em;  text-align: center;">	
 					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
-					${moment(this.selectedMonth).locale(this.hass.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
+					${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
 					</a>
 				</div>
 				<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="right"></paper-icon-button>
