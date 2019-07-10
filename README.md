@@ -68,6 +68,8 @@ If you have any suggestions about design or functionality, please let me know, o
 
 ### Translations and language related settings
 Week / month names are translated automatically
+| Name | Type | Default | Since | Description |
+|------|:----:|:-------:|:-----:|-------------|
 | language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
 | untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
 | fullDayEventText | string | optional | v0.3.0 | `All day` Custom translation of `All day` text
