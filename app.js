@@ -35,7 +35,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.8 loaded")	
+			console.log("atomic_calendar v0.8.9 loaded")	
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
@@ -381,9 +381,9 @@ class AtomicCalendar extends LitElement {
 		}
 		this.config = {
 			// text translations
-			title: 'Kalendarz', // Card title
-			fullDayEventText: 'Cały dzień', // "All day" custom text
-			untilText: 'Do', // "Until" custom text
+			title: 'Calendar', // Card title
+			fullDayEventText: 'All day', // "All day" custom text
+			untilText: 'Until', // "Until" custom text
 			language: '',
 
 			// main settings
