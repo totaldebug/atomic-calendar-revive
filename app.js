@@ -35,7 +35,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.7 loaded")	
+			console.log("atomic_calendar v0.8.8 loaded")	
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
@@ -584,7 +584,7 @@ class AtomicCalendar extends LitElement {
 		}
 		
 		// check if no events for today and push a "no events" fake event
-		if (showNoEventsForToday && moment(days[0][0].startTime).isAfter(moment(), "day") && days[0].length > 0) {
+		if (this.config.showNoEventsForToday && moment(days[0][0].startTime).isAfter(moment(), "day") && days[0].length > 0) {
 			var emptyEv = {
 				eventClass :'',
 				config : '',
