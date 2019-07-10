@@ -68,6 +68,9 @@ If you have any suggestions about design or functionality, please let me know, o
 
 ### Translations and language related settings
 Week / month names are translated automatically
+
+| Name | Type | Default | Since | Description |
+|------|:----:|:-------:|:-----:|-------------|
 | language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
 | untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
 | fullDayEventText | string | optional | v0.3.0 | `All day` Custom translation of `All day` text
@@ -77,6 +80,7 @@ Week / month names are translated automatically
 | hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 
 ### Text colors and fonts
+If you don't set colors, default theme colors will be used. If you use automatic night/day modes, don't use manual color settings.
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
 | dateColor | string | v0.3.0 | `default text color` Color of date (left side)
