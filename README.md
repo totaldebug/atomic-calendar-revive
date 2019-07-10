@@ -64,13 +64,15 @@ If you have any suggestions about design or functionality, please let me know, o
 | showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the title
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
 | showDescription | boolean | optional | v0.8.4 | `false` Shows long description of event from Google Calendar.
+| showNoEventsForToday | boolean | optional | v0.8.6 | `false` Shows `No events for today` if no events, instead of omit the entry.
 
 ### Translations and language related settings
 Week / month names are translated automatically
 | language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
 | untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
 | fullDayEventText | string | optional | v0.3.0 | `All day` Custom translation of `All day` text
-| noEventsForTodayText | string | optional | v0.3.0 | `No events for today` Custom translation of `No events for today` text
+| noEventsForNextDaysText | string | optional | v0.8.6 | `No events in the next days` Custom translation of `No events in the next days` text
+| noEventsForTodayText | string | optional | v0.8.6 | `No events for today` Custom translation of `No events for today` text, only if `showNoEventsForToday` is true
 | dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
 | hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 
