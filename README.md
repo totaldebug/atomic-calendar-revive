@@ -56,19 +56,23 @@ If you have any suggestions about design or functionality, please let me know, o
 | type | string | **required** | v0.3.0 | `custom:atomic-calendar`
 | entities | list | **required** | v0.3.0 | One or more calendars, configured in HA [Google Calendar component](https://www.home-assistant.io/components/calendar.google/)
 | title | string | optional | v0.3.0 | `Calendar` Calendar title
-| untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
 | showColors | string | optional | v0.3.0 | `true` Show colors in events, configured in entities list
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
 | showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the title
-| dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
-| hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
-| language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
 | showDescription | boolean | optional | v0.8.4 | `false` Shows long description of event from Google Calendar.
 
+### Translations and language related settings
+Week / month names are translated automatically
+| language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
+| untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
+| fullDayEventText | string | optional | v0.3.0 | `All day` Custom translation of `All day` text
+| noEventsForTodayText | string | optional | v0.3.0 | `No events for today` Custom translation of `No events for today` text
+| dateFormat | string | optional | v0.7.2 | `LL` Custom date format - see https://devhints.io/moment for examples
+| hoursFormat | string | optional | v0.7.3 | `default` Custom hours format - you can set `12h` or `24h` or `default` (default for local HA language settings) or even provide your custom, like `HH:mm` or `h:mm A` - see https://devhints.io/moment for examples
 
 ### Text colors and fonts
 | Name | Type | Since | Description |
