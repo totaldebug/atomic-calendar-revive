@@ -35,7 +35,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.5 loaded")	
+			console.log("atomic_calendar v0.8.6 loaded")	
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
@@ -381,9 +381,9 @@ class AtomicCalendar extends LitElement {
 		}
 		this.config = {
 			// text translations
-			title: 'Calendar', // Card title
-			fullDayEventText: 'All day', // "All day" custom text
-			untilText: 'Until', // "Until" custom text
+			title: 'Kalendarz', // Card title
+			fullDayEventText: 'Cały dzień', // "All day" custom text
+			untilText: 'Do', // "Until" custom text
 			language: '',
 
 			// main settings
@@ -411,7 +411,8 @@ class AtomicCalendar extends LitElement {
 
 			showNoEventsForToday: false,
 			noEventsForTodayText: 'No events for today',
-			
+			noEventsForNextDaysText: 'No events in the next days',
+
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
 			showHours: true, //shows the bottom line (time, duration of event)
@@ -497,7 +498,8 @@ class AtomicCalendar extends LitElement {
 	 */
 	getTitleHTML(event) {
 		const titletext = (this.config.showCalNameInEvent) ? event.eventClass.organizer.displayName+": " + event.title : event.title
-		
+		//var titleColor = this.config.titleColor !='' ? this.config.titleColor : 'var(--primary-text-color)'
+		//if (this.config.showColors && typeof event.config.titleColor != 'undefined')  titleColor=event.config.titleColor
 		const titleColor = (this.config.showColors && typeof event.config.titleColor != 'undefined') ? event.config.titleColor : this.config.titleColor
 		//const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
 		return html `
@@ -512,6 +514,7 @@ class AtomicCalendar extends LitElement {
 	 */
 	getHoursHTML(event) {
 		const today = moment()
+		if(event.isEmpty) return html `<div>&nbsp;</div>`
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
 		if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today, 'day')))
@@ -563,7 +566,7 @@ class AtomicCalendar extends LitElement {
 		
 		// TODO write something if no events
 		if (days.length == 0) {
-			this.content = html `No events in the next days`
+			this.content = this.config.noEventsForNextDaysText
 			return
 		}
 		
@@ -580,8 +583,23 @@ class AtomicCalendar extends LitElement {
 			}
 		}
 		
-		// check if no events for today and push a "no events" text
-
+		// check if no events for today and push a "no events" fake event
+		if (moment(days[0][0].startTime).isAfter(moment(), "day") && days[0].length > 0) {
+			var emptyEv = {
+				eventClass :'',
+				config : '',
+				start : { dateTime: moment().endOf('day')},
+				end : { dateTime: moment().endOf('day')},
+				summary: this.config.noEventsForTodayText,
+				isFinished : false,
+				htmlLink : 'https://calendar.google.com/calendar/r/day?sf=true'
+			};
+			var emptyEvent = new EventClass(emptyEv , '')
+			emptyEvent.isEmpty = true
+			var d = [] 
+			d[0]=emptyEvent
+			days.unshift(d)
+		}
 		
 		//loop through days
 		htmlDays = days.map((day, di) => {
@@ -1017,7 +1035,7 @@ class EventClass {
 		this._startTime = this.eventClass.start.dateTime ? moment(this.eventClass.start.dateTime) : moment(this.eventClass.start.date).startOf('day')
 		this._endTime = this.eventClass.end.dateTime ? moment(this.eventClass.end.dateTime) : moment(this.eventClass.end.date).subtract(1, 'days').endOf('day')
 		this.isFinished = false;
-		
+		this.isEmpty = false;
 	}
 
 	get titleColor() {
@@ -1025,8 +1043,6 @@ class EventClass {
 			return this.config.titleColor;
 		else return 'var(--primary-text-color)';
 	}
-	
-
 
 	get title() {
 		return this.eventClass.summary
