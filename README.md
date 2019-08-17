@@ -81,6 +81,7 @@ Week / month names are translated automatically
 
 ### Text colors and fonts
 If you don't set colors, default theme colors will be used. If you use automatic night/day modes, don't use manual color settings.
+
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
 | dateColor | string | v0.3.0 | `default text color` Color of date (left side)
@@ -137,12 +138,12 @@ If you want to use any calendar's events, you have to add one or more of types:
             - entity: calendar.calendar_holiday
               type: holiday			// events from this calendar will be red
             - entity: calendar.home_events
-              type: icon2,icon3 // will show icon2 and icon3, but with filters configured below
+              type: icon2,icon3                 // will show icon2 and icon3, but with filters configured below
             - entity: calendar.birthday
               type: icon1		 	// Icon1 has no filters, show all events from this calendar
-	        - entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
-			CalEventIcon1Filter: bills,waste            // only events with those words will be shown
-			CalEventIcon2Filter: cleaning            // only events with those words will be shown		
+	    - entity: calendar.atomic7777       // no type, it won't be shown in calendar mode
+	    CalEventIcon1Filter: bills,waste    // only events with those words will be shown
+	    CalEventIcon2Filter: cleaning       // only events with those words will be shown		
 			
 ```
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
@@ -214,15 +215,15 @@ Simple configuration, both Events mode and Calendar mode, calendar is default:
 ```
           - type: "custom:atomic-calendar"
             title: "Calendar"
-			enableModeChange: true
+	    enableModeChange: true
             defaultMode: 2
-			CalEventIcon1Filter: birthday
-			CalEventIcon2Filter: waste,bills
+	    CalEventIcon1Filter: birthday
+	    CalEventIcon2Filter: waste,bills
             entities:
             - entity: calendar.kalendarz_dom
-			  type: icon2
+	      type: icon2
             - calendar.atomic7777
-			  type: icon1,icon2
+	      type: icon1,icon2
             - entity: calendar.kalendarz_swieta
               type: holiday		
 ```
