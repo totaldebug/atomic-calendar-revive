@@ -211,7 +211,7 @@ Advanced config with all options, colors changed and progress bar enabled:
 ```
 
 Simple configuration, both Events mode and Calendar mode, calendar is default:
-```
+```yaml
 - type: "custom:atomic-calendar"
   title: "Calendar"
   enableModeChange: true
@@ -229,7 +229,7 @@ Simple configuration, both Events mode and Calendar mode, calendar is default:
 
 ## 6. How to show more than 5 events
 You have to add `max_tesults` setting to `google_calendars.yaml` file:
-```
+```yaml
 - cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
   entities:
   - device_id: calendar_id
@@ -248,7 +248,7 @@ https://github.com/atomic7777/atomic_calendar
 4. Choose type: Plugin
 5. The atomic_calendar component will be installed and updated.
 6. Add to the `ui-lovelace.yaml` file :
-```
+```yaml
 resources:
    - url: /community_plugin/atomic_calendar/atomic_calendar.js
      type: module
