@@ -228,7 +228,7 @@ Simple configuration, both Events mode and Calendar mode, calendar is default:
 ```
 
 ## 6. How to show more than 5 events
-You have to add `max_tesults` setting to `google_calendars.yaml` file:
+You have to add `max_results` setting to `google_calendars.yaml` file:
 ```yaml
 - cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
   entities:
