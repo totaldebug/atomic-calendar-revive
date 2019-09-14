@@ -29,14 +29,14 @@ The most important features:
 - Quick overview of the following months
 - You can set keywords to show only important things, like birthday
 
-If you have any suggestions about design or functionality, please let me know, open an issue or add a comment to ![community thread](https://community.home-assistant.io/t/lovelace-advanced-calendar-card).
+If you have any suggestions about design or functionality, please let me know, open an issue or add a comment to [community thread](https://community.home-assistant.io/t/lovelace-advanced-calendar-card).
 
 ![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/53302875-b6205200-3863-11e9-8ab2-5ec95b0799d0.png)
 
 ## 1. Installation
-1. You need to have the ![Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
+1. You need to have the [Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
 2. Download `atomic-calendar.js` file to `/www` directory in your Home Assistant - [latest release](https://github.com/atomic7777/atomic_calendar/releases/download/v0.8.5/atomic_calendar.js) - link not working (in development)
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
@@ -81,6 +81,7 @@ Week / month names are translated automatically
 
 ### Text colors and fonts
 If you don't set colors, default theme colors will be used. If you use automatic night/day modes, don't use manual color settings.
+
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
 | dateColor | string | v0.3.0 | `default text color` Color of date (left side)
@@ -132,19 +133,19 @@ There are four configurable possibilities for showing events occurring any day:
 
 If you want to use any calendar's events, you have to add one or more of types:
 
+```yaml
+CalEventIcon1Filter: bills,waste       # only events with those words will be shown
+CalEventIcon2Filter: cleaning          # only events with those words will be shown
+entities:
+- entity: calendar.atomic7777          # no type, it won't be shown in calendar mode
+- type: holiday                        # events from this calendar will be red
+  entity: calendar.calendar_holiday
+- type: icon1,icon2                    # will show icon1 and icon2, but with filters configured above
+  entity: calendar.home_events
+- type: icon3                          # icon1 has no filters, show all events from this calendar
+  entity: calendar.birthday
 ```
-            entities:
-            - entity: calendar.calendar_holiday
-              type: holiday			// events from this calendar will be red
-            - entity: calendar.home_events
-              type: icon2,icon3 // will show icon2 and icon3, but with filters configured below
-            - entity: calendar.birthday
-              type: icon1		 	// Icon1 has no filters, show all events from this calendar
-	        - entity: calendar.atomic7777 // no type, it won't be shown in calendar mode
-			CalEventIcon1Filter: bills,waste            // only events with those words will be shown
-			CalEventIcon2Filter: cleaning            // only events with those words will be shown		
-			
-```
+
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
 
 ## Calendar Mode settings
@@ -169,67 +170,66 @@ If you set filters (keywords) for any type, it will show an icon only when event
 
 Simple configuration:
 ```yaml
-          - type: "custom:atomic-calendar"
-            title: "Calendar"
-            entities:
-            - entity: calendar.kalendarz_dom
-              color: red
-            - calendar.atomic7777
-	      blacklist: 'word1, word2'
-              
+- type: "custom:atomic-calendar"
+  title: "Calendar"
+  entities:
+  - entity: calendar.kalendarz_dom
+    color: red
+  - calendar.atomic7777
+    blacklist: 'word1, word2'
 ```
 
 Advanced config with all options, colors changed and progress bar enabled:
 ```yaml
-          - type: "custom:atomic-calendar"
-            title: "Calendar"
-            entities:
-            - entity: calendar.YOUR_CALENDARS_HERE
-            fullDayEventText: 'All day'
-            untilText: 'Until'
-            showColors: true
-            maxDaysToShow: 7
-            showLocation: true
-            showMonth: false
-            showCurrentEventLine: false
-            dateColor: black
-            dateSize: 90
-            timeColor: blue
-            timeSize: 90
-            titleColor: black
-            titleSize: 100
-            locationIconColor: 'rgb(230, 124, 115)'
-            locationLinkColor: black
-            locationTextSize: 90
-            dimFinishedEvents: true
-            finishedEventOpacity: 0.6
-            finishedEventFilter: 'grayscale(100%)'
-            dayWrapperLineColor: black
-            eventBarColor: blue
-            showProgressBar: true
-            progressBarColor: blue
+- type: "custom:atomic-calendar"
+  title: "Calendar"
+  entities:
+  - entity: calendar.YOUR_CALENDARS_HERE
+  fullDayEventText: 'All day'
+  untilText: 'Until'
+  showColors: true
+  maxDaysToShow: 7
+  showLocation: true
+  showMonth: false
+  showCurrentEventLine: false
+  dateColor: black
+  dateSize: 90
+  timeColor: blue
+  timeSize: 90
+  titleColor: black
+  titleSize: 100
+  locationIconColor: 'rgb(230, 124, 115)'
+  locationLinkColor: black
+  locationTextSize: 90
+  dimFinishedEvents: true
+  finishedEventOpacity: 0.6
+  finishedEventFilter: 'grayscale(100%)'
+  dayWrapperLineColor: black
+  eventBarColor: blue
+  showProgressBar: true
+  progressBarColor: blue
 ```
 
 Simple configuration, both Events mode and Calendar mode, calendar is default:
-```
-          - type: "custom:atomic-calendar"
-            title: "Calendar"
-			enableModeChange: true
-            defaultMode: 2
-			CalEventIcon1Filter: birthday
-			CalEventIcon2Filter: waste,bills
-            entities:
-            - entity: calendar.kalendarz_dom
-			  type: icon2
-            - calendar.atomic7777
-			  type: icon1,icon2
-            - entity: calendar.kalendarz_swieta
-              type: holiday		
+```yaml
+- type: "custom:atomic-calendar"
+  title: "Calendar"
+  enableModeChange: true
+  defaultMode: 2
+  CalEventIcon1Filter: birthday
+  CalEventIcon2Filter: waste,bills
+  entities:
+  - entity: calendar.kalendarz_dom
+    type: icon2
+  - entity: calendar.atomic7777
+    type: icon1,icon2
+  - entity: calendar.kalendarz_swieta
+    type: holiday		
 ```
 
 ## 6. How to show more than 5 events
-You have to add `max_tesults` setting to `google_calendars.yaml` file:
-```
+You have to add `max_results` setting to `google_calendars.yaml` file:
+```yaml
 - cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
   entities:
   - device_id: calendar_id
@@ -248,7 +248,7 @@ https://github.com/atomic7777/atomic_calendar
 4. Choose type: Plugin
 5. The atomic_calendar component will be installed and updated.
 6. Add to the `ui-lovelace.yaml` file :
-```
+```yaml
 resources:
    - url: /community_plugin/atomic_calendar/atomic_calendar.js
      type: module
