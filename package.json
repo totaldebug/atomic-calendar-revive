@@ -37,7 +37,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "lit-element": "^2.0.1",
+    "lit-element": "^2.2.1",
     "moment": "^2.24.0",
     "node-google-calendar": "^1.1.1"
   },
