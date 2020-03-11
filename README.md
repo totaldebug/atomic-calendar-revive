@@ -146,6 +146,7 @@ entities:
   entity: calendar.birthday
 ```
 
+```
             entities:
             - entity: calendar.calendar_holiday
               type: holiday			// events from this calendar will be red
