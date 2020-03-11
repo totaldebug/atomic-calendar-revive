@@ -35,7 +35,7 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.8.9 loaded")	
+			console.log("atomic_calendar v0.9.0 loaded")	
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
@@ -376,6 +376,7 @@ class AtomicCalendar extends LitElement {
 	}
 
 	setConfig(config) {
+		config = JSON.parse(JSON.stringify(config));
 		if (!config.entities) {
 			throw new Error('You need to define entities');
 		}
@@ -388,7 +389,8 @@ class AtomicCalendar extends LitElement {
 
 			// main settings
 			showColors: true, // show calendar title colors, if set in config (each calendar separately)
-			maxDaysToShow: 7, // maximum days to show
+			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
+			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
 			showLoader: true, // show animation when loading events from Google calendar
 
 			showLocation: true, // show location link (right side)
@@ -401,6 +403,7 @@ class AtomicCalendar extends LitElement {
 			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 			showLastCalendarWeek: true, // always shows last line/week in calendar mode, even if it's not the current month
 			showCalNameInEvent: false,
+			sortByStartTime: false, // sort first by calendar, then by time
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
@@ -425,6 +428,7 @@ class AtomicCalendar extends LitElement {
 			locationTextSize: 90,
 
 			// finished events settings
+			hideFinishedEvents: false, // show finished events
 			dimFinishedEvents: true, // make finished events greyed out or set opacity
 			finishedEventOpacity: 0.6, // opacity level
 			finishedEventFilter: 'grayscale(100%)', // css filter 
@@ -706,7 +710,8 @@ class AtomicCalendar extends LitElement {
 
 		let timeOffset = -moment().utcOffset()
 		let start = moment().add(this.config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
-		let end = moment().add((this.config.maxDaysToShow + this.config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		let endOffset = Math.max(this.config.maxDaysToShow, 1) + this.config.startDaysAhead;
+		let end = moment().add(endOffset, 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		let calendarUrlList = []
 		this.config.entities.map(entity =>{
 			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`])
@@ -715,14 +720,23 @@ class AtomicCalendar extends LitElement {
 			return await (Promise.all(calendarUrlList.map(url =>
 				this.hass.callApi('get', url[0]))).then((result) => {
 					let singleEvents = []
+					let eventCount = 0
 					result.map((calendar, i) => {
 						calendar.map((singleEvent) => {
 							let blacklist = typeof this.config.entities[i]["blacklist"] != 'undefined' ? this.config.entities[i]["blacklist"] : ''
-								if(blacklist=='' || !this.checkFilter(singleEvent.summary, blacklist)){
-									singleEvents.push(new EventClass(singleEvent, this.config.entities[i] ))
+							let singleAPIEvent = new EventClass(singleEvent, this.config.entities[i])
+								if((this.config.maxEventCount === 0 || eventCount < this.config.maxEventCount) && (blacklist=='' || !this.checkFilter(singleEvent.summary, blacklist)) && ((this.config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) || !(this.config.hideFinishedEvents && singleAPIEvent.isEventFinished))){
+									singleEvents.push(singleAPIEvent);
+									eventCount++;
 								}
 						})
 					})
+				
+				if (this.config.sortByStartTime) {
+					singleEvents.sort(function(a,b) {
+						return moment(a.startTime).diff(moment(b.startTime));
+					})
+				}
 				let ev = [].concat.apply([], singleEvents )
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a) {
@@ -1118,24 +1132,4 @@ class EventClass {
 	get link() {
 		return this.eventClass.htmlLink
 	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

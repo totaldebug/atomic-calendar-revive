@@ -1,4 +1,4 @@
-# atomic calendar card v0.8.5
+# atomic calendar card v0.9.0
 Advanced calendar card for Home Assistant with Lovelace.
 
 Work in progress. If you have any problems, please use [v0.8.5](https://github.com/atomic7777/atomic_calendar/releases/download/v0.8.5/atomic_calendar.js)
@@ -57,7 +57,8 @@ If you have any suggestions about design or functionality, please let me know, o
 | entities | list | **required** | v0.3.0 | One or more calendars, configured in HA [Google Calendar component](https://www.home-assistant.io/components/calendar.google/)
 | title | string | optional | v0.3.0 | `Calendar` Calendar title
 | showColors | string | optional | v0.3.0 | `true` Show colors in events, configured in entities list
-| maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show
+| maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show; if set to zero will only display currently running events
+| maxEventCount | integer | optional | v0.9.0 | `0` Maximum number of events to show; zero removes any limitation
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
@@ -65,6 +66,7 @@ If you have any suggestions about design or functionality, please let me know, o
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
 | showDescription | boolean | optional | v0.8.4 | `false` Shows long description of event from Google Calendar.
 | showNoEventsForToday | boolean | optional | v0.8.6 | `false` Shows `No events for today` if no events, instead of omit the entry.
+| sortByStartTime | boolean | optional | v0.9.0 | `false` Sort events by start time first instead of grouping them by calendar.
 
 ### Translations and language related settings
 Week / month names are translated automatically
@@ -93,6 +95,7 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | locationLinkColor | string | v0.3.0 | `default text color` Color of location link (right side)
 | locationTextSize | integer | v0.3.0 | `90` Location text size (percent of default font)
 | locationIconColor | string | v0.3.0 | `rgb(230, 124, 115)` Color of location icon
+| hideFinishedEvents | boolean | v0.9.0 | `false` Don't display finished events
 | dimFinishedEvents | boolean | v0.3.0 | `true` Apply filters to finished events (configured below)
 | finishedEventOpacity | float | v0.3.0 | `0.6` Opacity level of finished events
 | finishedEventOpacity | string | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale)
@@ -144,9 +147,8 @@ entities:
   entity: calendar.home_events
 - type: icon3                          # icon1 has no filters, show all events from this calendar
   entity: calendar.birthday
-```
 
-```
+
             entities:
             - entity: calendar.calendar_holiday
               type: holiday			// events from this calendar will be red
@@ -157,7 +159,6 @@ entities:
 	    - entity: calendar.atomic7777       // no type, it won't be shown in calendar mode
 	    CalEventIcon1Filter: bills,waste    // only events with those words will be shown
 	    CalEventIcon2Filter: cleaning       // only events with those words will be shown		
-			
 ```
 
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
