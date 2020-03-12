@@ -514,7 +514,7 @@ class AtomicCalendar extends LitElement {
 		//if (this.config.showColors && typeof event.config.titleColor != 'undefined')  titleColor=event.config.titleColor
 		const titleColor = (this.config.showColors && typeof event.config.titleColor != 'undefined') ? event.config.titleColor : this.config.titleColor
 		//const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
-		if (this.config.disableEventLink) return html `
+		if (this.config.disableEventLink || (event.link === null)) return html `
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div>
 		`
 		else return html `
