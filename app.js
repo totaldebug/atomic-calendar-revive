@@ -36,7 +36,7 @@ class AtomicCalendar extends LitElement {
 	render() {
         if(this.firstrun){
 			console.info(
-				"%c atomic_calendar_revive %c v0.10.1 ",
+				"%c atomic_calendar_revive %c v0.11.0 ",
 				"color: white; background: coral; font-weight: 700;",
 				"color: coral; background: white; font-weight: 700;"
 			);
@@ -410,6 +410,8 @@ class AtomicCalendar extends LitElement {
 			sortByStartTime: false, // sort first by calendar, then by time
 			disableEventLink: false, // disables links to event calendar
 			disableLocationLink: false, // disables links to event calendar
+			linkTarget: '_blank', // Target for links, can use any HTML target type
+
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
@@ -516,7 +518,7 @@ class AtomicCalendar extends LitElement {
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div>
 		`
 		else return html `
-		<a href="${event.Link}" style="text-decoration: none;" target="_blank">
+		<a href="${event.Link}" style="text-decoration: none;" target="${this.config.linkTarget}">
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div></a>
 		`
 	}
@@ -564,7 +566,7 @@ class AtomicCalendar extends LitElement {
 		<div><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
 		`		
 		else return html `
-			<div><a href="https://maps.google.com/?q=${event.location}" target="_blank" class="location-link" style="color: ${this.config.locationLinkColor};font-size: ${this.config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
+			<div><a href="https://maps.google.com/?q=${event.location}" target="${this.config.linkTarget}" class="location-link" style="color: ${this.config.locationLinkColor};font-size: ${this.config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
 		`
 	}
 
@@ -890,7 +892,7 @@ class AtomicCalendar extends LitElement {
 			<div class="calTitle">
 				<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="left"></paper-icon-button>
 				<div style="display: inline-block; min-width: 9em;  text-align: center;">	
-					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="_blank">
+					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this.config.titleColor}" target="${this.config.linkTarget}">
 					${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')} 
 					</a>
 				</div>
