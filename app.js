@@ -36,7 +36,7 @@ class AtomicCalendar extends LitElement {
 	render() {
         if(this.firstrun){
 			console.info(
-				"%c atomic_calendar_revive %c v0.11.0 ",
+				"%c atomic_calendar_revive %c v0.11.2 ",
 				"color: white; background: coral; font-weight: 700;",
 				"color: coral; background: white; font-weight: 700;"
 			);
