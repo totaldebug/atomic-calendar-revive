@@ -1,4 +1,4 @@
-# atomic calendar card v0.9.1
+# atomic calendar card v0.10.0
 This version works with HA v106
 
 Advanced calendar card for Home Assistant with Lovelace.
