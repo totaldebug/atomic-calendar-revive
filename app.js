@@ -518,7 +518,7 @@ class AtomicCalendar extends LitElement {
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div>
 		`
 		else return html `
-		<a href="${event.Link}" style="text-decoration: none;" target="${this.config.linkTarget}">
+		<a href="${event.link}" style="text-decoration: none;" target="${this.config.linkTarget}">
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div></a>
 		`
 	}
