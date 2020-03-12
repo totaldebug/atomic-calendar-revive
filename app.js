@@ -35,7 +35,11 @@ class AtomicCalendar extends LitElement {
 
 	render() {
         if(this.firstrun){
-			console.log("atomic_calendar v0.9.0 loaded")	
+			console.info(
+				"%c atomic_calendar_revive %c v0.10.0 ",
+				"color: white; background: coral; font-weight: 700;",
+				"color: coral; background: white; font-weight: 700;"
+			);
 		}
 		this.language = this.config.language != '' ? this.config.language : this.hass.language.toLowerCase()
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
@@ -393,7 +397,7 @@ class AtomicCalendar extends LitElement {
 			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
 			showLoader: true, // show animation when loading events from Google calendar
 
-			showLocation: true, // show location link (right side)
+			showLocation: true, // show location (right side)
 			showMonth: false, // show month under day (left side)
 			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
 			showCurrentEventLine: false, // show a line between last and next event
@@ -404,6 +408,8 @@ class AtomicCalendar extends LitElement {
 			showLastCalendarWeek: true, // always shows last line/week in calendar mode, even if it's not the current month
 			showCalNameInEvent: false,
 			sortByStartTime: false, // sort first by calendar, then by time
+			disableEventLink: false, // disables links to event calendar
+			disableLocationLink: false, // disables links to event calendar
 			// color and font settings
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
@@ -506,8 +512,11 @@ class AtomicCalendar extends LitElement {
 		//if (this.config.showColors && typeof event.config.titleColor != 'undefined')  titleColor=event.config.titleColor
 		const titleColor = (this.config.showColors && typeof event.config.titleColor != 'undefined') ? event.config.titleColor : this.config.titleColor
 		//const eventIcon = isEventNext ? html`<ha-icon class="nextEventIcon" icon="mdi:arrow-right-bold"></ha-icon>` : ``
-		return html `
-		<a href="${event.link}" style="text-decoration: none;" target="_blank">
+		if (this.config.disableEventLink) return html `
+		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div>
+		`
+		else return html `
+		<a href="${event.Link}" style="text-decoration: none;" target="_blank">
 		<div class="event-title" style="font-size: ${this.config.titleSize}%;color: ${titleColor}">${titletext}</div></a>
 		`
 	}
@@ -551,6 +560,9 @@ class AtomicCalendar extends LitElement {
 	getLocationHTML(event) {
 
 		if (!event.location || !this.config.showLocation) return html ``
+		else if (this.config.disableLocationLink) return html `
+		<div><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
+		`		
 		else return html `
 			<div><a href="https://maps.google.com/?q=${event.location}" target="_blank" class="location-link" style="color: ${this.config.locationLinkColor};font-size: ${this.config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
 		`

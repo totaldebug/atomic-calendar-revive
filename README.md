@@ -1,4 +1,4 @@
-# atomic calendar card v0.9.1
+# atomic calendar card v0.10.0
 This version works with HA v106
 
 Advanced calendar card for Home Assistant with Lovelace.
@@ -67,6 +67,8 @@ If you have any suggestions about design or functionality, please let me know, o
 | showDescription | boolean | optional | v0.8.4 | `false` Shows long description of event from Google Calendar.
 | showNoEventsForToday | boolean | optional | v0.8.6 | `false` Shows `No events for today` if no events, instead of omit the entry.
 | sortByStartTime | boolean | optional | v0.9.0 | `false` Sort events by start time first instead of grouping them by calendar.
+| disableEventLink | boolean | optional | v0.10.0 | `false` disables links in event title.
+| disableLocationLink | boolean | optional | v0.10.0 | `false` disables links in event location
 
 ### Translations and language related settings
 Week / month names are translated automatically

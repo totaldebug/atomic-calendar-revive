@@ -1,0 +1,7 @@
+{
+  "name": "Atomic Calendar Revive",
+  "content_in_root": true,
+  "filename": "atomic_calendar.js",
+  "country": ["GB"],
+  "render_readme": true
+}
