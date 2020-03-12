@@ -1,6 +1,6 @@
 {
   "name": "atomic-calendar",
-  "version": "0.4.0",
+  "version": "0.10.0",
   "description": "Calendar Card for Home Assistant",
   "main": "atomic_calendar.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atomic7777/atomic_calendar.git"
+    "url": "git+https://github.com/marksie1988/atomic_calendar.git"
   },
   "author": "Wojciech Mamak",
   "license": "ISC",
@@ -42,7 +42,7 @@
     "node-google-calendar": "^1.1.1"
   },
   "bugs": {
-    "url": "https://github.com/atomic7777/atomic_calendar/issues"
+    "url": "https://github.com/marksie1988/atomic_calendar/issues"
   },
-  "homepage": "https://github.com/atomic7777/atomic_calendar#readme"
+  "homepage": "https://github.com/marksie1988/atomic_calendar#readme"
 }
