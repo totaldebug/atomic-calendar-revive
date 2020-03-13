@@ -409,7 +409,7 @@ e.defineLocale("zh-tw",{months:"一月_二月_三月_四月_五月_六月_七月
 
 	  <ha-card class="cal-card">
 		<div class="cal-nameContainer">
-			${this._config.name?P`
+			${this.config.name?P`
 					<div  class="cal-name"  @click='${e=>this.handleToggle()}'> 
 					${this.config.name}
 					</div>

@@ -108,7 +108,7 @@ class AtomicCalendar extends LitElement {
 
 	  <ha-card class="cal-card">
 		<div class="cal-nameContainer">
-			${this._config.name
+			${this.config.name
 				? html`
 					<div  class="cal-name"  @click='${e => this.handleToggle()}'> 
 					${this.config.name}
