@@ -563,7 +563,7 @@ class AtomicCalendar extends LitElement {
 
 		if (!event.location || !this.config.showLocation) return html ``
 		else if (this.config.disableLocationLink) return html `
-		<div><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
+		<div><ha-icon class="event-location-icon" style="color:${this.config.locationIconColor};" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
 		`		
 		else return html `
 			<div><a href="https://maps.google.com/?q=${event.location}" target="${this.config.linkTarget}" class="location-link" style="color: ${this.config.locationLinkColor};font-size: ${this.config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this.config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
@@ -640,7 +640,7 @@ class AtomicCalendar extends LitElement {
 
 				}
 
-				var finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter : ``
+				var finishedEventsStyle = (event.isEventFinished && this.config.dimFinishedEvents) ? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter + `;` : ``
 
 				const hoursHTML = this.config.showHours ? html`<div style="color: ${this.config.timeColor}; font-size: ${this.config.timeSize}%;">${this.getHoursHTML(event)}</div>` : ''
 				const descHTML = this.config.showDescription ? html`<div class="event-description" style="color: ${this.config.descColor};font-size: ${this.config.descSize}%;">${event.description}</div>` : ''

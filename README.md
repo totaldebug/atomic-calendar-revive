@@ -1,4 +1,4 @@
-# atomic calendar card v0.11.1
+# atomic calendar card v0.11.2
 This version works with HA v106
 
 Advanced calendar card for Home Assistant with Lovelace.
@@ -192,7 +192,7 @@ Simple configuration:
   title: "Calendar"
   entities:
   - entity: calendar.kalendarz_dom
-    color: red
+    titleColor: red
   - calendar.atomic7777
     blacklist: 'word1, word2'
 ```
@@ -229,7 +229,7 @@ Advanced config with all options, colors changed and progress bar enabled:
 ```
 
 Simple configuration, both Events mode and Calendar mode, calendar is default:
-```
+```yaml
           - type: "custom:atomic-calendar"
             title: "Calendar"
 	    enableModeChange: true
