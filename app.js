@@ -2,6 +2,23 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
+function hasConfigOrEntityChanged(element, changedProps) {
+	if (changedProps.has("_config")) {
+	  return true;
+	}
+  
+	const oldHass = changedProps.get("hass");
+	if (oldHass) {
+	  return (
+		oldHass.states[element._config.entity] !==
+		  element.hass.states[element._config.entity] ||
+		oldHass.states["sun.sun"] !== element.hass.states["sun.sun"]
+	  );
+	}
+  
+	return true;
+  }
+
 class AtomicCalendar extends LitElement {
 	constructor() {
 		super();
@@ -36,7 +53,7 @@ class AtomicCalendar extends LitElement {
 	render() {
         if(this.firstrun){
 			console.info(
-				"%c atomic_calendar_revive %c v0.11.2 ",
+				"%c atomic_calendar_revive %c v0.12.0 ",
 				"color: white; background: coral; font-weight: 700;",
 				"color: coral; background: white; font-weight: 700;"
 			);
@@ -90,26 +107,25 @@ class AtomicCalendar extends LitElement {
 	  ${this.setStyle()}
 
 	  <ha-card class="cal-card">
-		<div class="cal-titleContainer">
-			<div  class="cal-title"  @click='${e => this.handleToggle()}'> 
-				${this.config.title}
-			</div>
+		<div class="cal-nameContainer">
+			${this._config.name
+				? html`
+					<div  class="cal-name"  @click='${e => this.handleToggle()}'> 
+					${this.config.name}
+					</div>
+			  	`
+				: ""}
+			
 				
-				
-				${(this.showLoader && this.config.showLoader) ? html`
-					<div  class="loader" ></div>` : ''}
-		
-		
-				<div class="calDate">
+			${(this.showLoader && this.config.showLoader) ? html`
+				<div  class="loader" ></div>` : ''
+			}
+			<div class="calDate">
 				${(this.config.showDate) ? this.getDate() : null}
-	
 			</div>
-			
 		</div>
-<div style="padding-top: 4px;">
-			
-				${this.content}
-			
+		<div style="padding-top: 4px;">	
+			${this.content}
 		</div>
 	  </ha-card>`
 	}
@@ -135,7 +151,7 @@ class AtomicCalendar extends LitElement {
 				cursor: default;
 				padding: 16px;
 			}
-			.cal-title {
+			.cal-name {
 				font-size: var(--paper-font-headline_-_font-size);
 
 				color: var(--primary-text-color);
@@ -144,7 +160,7 @@ class AtomicCalendar extends LitElement {
 				cursor: default;
 				float:left;
 				}
-			.cal-titleContainer {
+			.cal-nameContainer {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between; 
@@ -382,11 +398,10 @@ class AtomicCalendar extends LitElement {
 	setConfig(config) {
 		config = JSON.parse(JSON.stringify(config));
 		if (!config.entities) {
-			throw new Error('You need to define entities');
+			throw new Error('Please define atomic_calendar card entity');
 		}
 		this.config = {
 			// text translations
-			title: 'Calendar', // Card title
 			fullDayEventText: 'All day', // "All day" custom text
 			untilText: 'Until', // "Until" custom text
 			language: '',
@@ -490,7 +505,9 @@ class AtomicCalendar extends LitElement {
 				
 
 	}
-
+	shouldUpdate(changedProps) {
+		return hasConfigOrEntityChanged(this, changedProps);
+	}
 
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.

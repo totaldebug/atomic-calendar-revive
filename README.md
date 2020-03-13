@@ -21,7 +21,7 @@ The most important features:
 - Moves today's completed events up and dim them
 - Highlights the next event, or show a progress bar 
 - Shows event location link 
-- Clicking on the title will open a new window with Google Calendar
+- Clicking on the event title will open a new window with Google Calendar
 - Clicking on Location will open a window with this location on Google Maps
 
 * Calendar mode:
@@ -55,14 +55,14 @@ If you have any suggestions about design or functionality, please let me know, o
 |------|:----:|:-------:|:-----:|-------------|
 | type | string | **required** | v0.3.0 | `custom:atomic-calendar`
 | entities | list | **required** | v0.3.0 | One or more calendars, configured in HA [Google Calendar component](https://www.home-assistant.io/components/calendar.google/)
-| title | string | optional | v0.3.0 | `Calendar` Calendar title
+| name | string | optional | v0.12.0 | Card name. 
 | showColors | string | optional | v0.3.0 | `true` Show colors in events, configured in entities list
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show; if set to zero will only display currently running events
 | maxEventCount | integer | optional | v0.9.0 | `0` Maximum number of events to show; zero removes any limitation
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
-| showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the title
+| showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the card name
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
 | showDescription | boolean | optional | v0.8.4 | `false` Shows long description of event from Google Calendar.
 | showNoEventsForToday | boolean | optional | v0.8.6 | `false` Shows `No events for today` if no events, instead of omit the entry.
@@ -129,7 +129,7 @@ If you don't set colors, default theme colors will be used. If you use automatic
 ## 3. Calendar Mode
 The second mode of view - calendar mode - is to show full month calendar with simple events icons or colors, for most important, infrequent events, like holiday or birthday.
 You can change mode by clicking "Calendar" title, or even make it default view.
-To make it working correctly you need to get more events than default 5 - you need to follow instruction in chapter 6 of this Readme, and setup it for 20-30 events at least.
+To make it work correctly you need to get more events than default 5 - you need to follow instruction in chapter 6 of this Readme, and setup it for 20-30 events at least.
 
 There are four configurable possibilities for showing events occurring any day:
 - day number color - for example "14" will be red for Valentine's Day
@@ -150,18 +150,18 @@ entities:
   entity: calendar.home_events
 - type: icon3                          # icon1 has no filters, show all events from this calendar
   entity: calendar.birthday
-
-
-            entities:
-            - entity: calendar.calendar_holiday
-              type: holiday			// events from this calendar will be red
-            - entity: calendar.home_events
-              type: icon2,icon3                 // will show icon2 and icon3, but with filters configured below
-            - entity: calendar.birthday
-              type: icon1		 	// Icon1 has no filters, show all events from this calendar
-	    - entity: calendar.atomic7777       // no type, it won't be shown in calendar mode
-	    CalEventIcon1Filter: bills,waste    // only events with those words will be shown
-	    CalEventIcon2Filter: cleaning       // only events with those words will be shown		
+```
+```yaml
+entities:
+- entity: calendar.calendar_holiday
+  type: holiday			                  # events from this calendar will be red
+- entity: calendar.home_events
+  type: icon2,icon3                   # will show icon2 and icon3, but with filters configured below
+- entity: calendar.birthday
+  type: icon1		 	                    # Icon1 has no filters, show all events from this calendar
+- entity: calendar.atomic7777         # no type, it won't be shown in calendar mode
+CalEventIcon1Filter: bills,waste      # only events with those words will be shown
+CalEventIcon2Filter: cleaning         # only events with those words will be shown		
 ```
 
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
@@ -169,7 +169,7 @@ If you set filters (keywords) for any type, it will show an icon only when event
 ## Calendar Mode settings
 | Name | Type | Since | Description |
 |------|:----:|:-----:|-------------|
-| enableModeChange | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events)
+| enableModeChange | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events) must have "name" set to toggle
 | defaultMode | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default
 | firstDayOfWeek | integer | v0.7.0 | `1` First day of week, default 1 for Monday
 | CalEventHolidayColor | string | v0.7.0 | `red` Color of day for `type: holiday` calendar
@@ -189,18 +189,17 @@ If you set filters (keywords) for any type, it will show an icon only when event
 Simple configuration:
 ```yaml
 - type: "custom:atomic-calendar"
-  title: "Calendar"
   entities:
   - entity: calendar.kalendarz_dom
     titleColor: red
-  - calendar.atomic7777
+  - entity: calendar.atomic7777
     blacklist: 'word1, word2'
 ```
 
 Advanced config with all options, colors changed and progress bar enabled:
 ```yaml
 - type: "custom:atomic-calendar"
-  title: "Calendar"
+  name: "Calendar"
   entities:
   - entity: calendar.YOUR_CALENDARS_HERE
   fullDayEventText: 'All day'
@@ -230,19 +229,19 @@ Advanced config with all options, colors changed and progress bar enabled:
 
 Simple configuration, both Events mode and Calendar mode, calendar is default:
 ```yaml
-          - type: "custom:atomic-calendar"
-            title: "Calendar"
-	    enableModeChange: true
-            defaultMode: 2
-	    CalEventIcon1Filter: birthday
-	    CalEventIcon2Filter: waste,bills
-            entities:
-            - entity: calendar.kalendarz_dom
-	      type: icon2
-            - calendar.atomic7777
-	      type: icon1,icon2
-            - entity: calendar.kalendarz_swieta
-              type: holiday		
+- type: "custom:atomic-calendar"
+  name: "Calendar"
+  enableModeChange: true
+  defaultMode: 2
+  CalEventIcon1Filter: birthday
+  CalEventIcon2Filter: waste,bills
+  entities:
+  - entity: calendar.kalendarz_dom
+    type: icon2
+  - entity: calendar.atomic7777
+	  type: icon1,icon2
+  - entity: calendar.kalendarz_swieta
+    type: holiday		
 
 ```
 
@@ -256,19 +255,19 @@ You have to add `max_results` setting to `google_calendars.yaml` file:
     max_results: 15
 ```
 
-## 7. Automatic update
-Automatic update using `HACS` component:
+## 7. HACS
+Install using `HACS` component:
 1. You need HACS installed and configured
 2. Go to Community tab, Settings 
 3. Paste this line into `Add custom repository` field:
 ```
-https://github.com/atomic7777/atomic_calendar
+marksie1988/atomic_calendar
 ```
 4. Choose type: Plugin
-5. The atomic_calendar component will be installed and updated.
+5. The atomic_calendar_revive component will be available to install under the Plugins tab.
 6. Add to the `ui-lovelace.yaml` file :
 ```yaml
 resources:
-   - url: /community_plugin/atomic_calendar/atomic_calendar.js
-     type: module
+  - url: /community_plugin/atomic_calendar/atomic_calendar.js
+    type: module
 ```
