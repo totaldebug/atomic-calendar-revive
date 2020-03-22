@@ -24,7 +24,10 @@ const fireEvent = (node, type, detail, options) => {
   const html = LitElement.prototype.html;
   const css = LitElement.prototype.css;
   
+  var linkTargets=["_blank","_self","_parent", "_top"];
+
   export class AtomicCalendarReviveEditor extends LitElement {
+
     setConfig(config) {
       this._config = { ...config };
     }
@@ -79,6 +82,42 @@ const fireEvent = (node, type, detail, options) => {
       return false;
     }
 
+    get _showNoEventsForToday(){
+      if (this._config) {
+        return this._config.showNoEventsForToday || false;
+      }
+      return false;
+    }
+
+    get _sortByStartTime(){
+      if (this._config) {
+        return this._config.sortByStartTime || false;
+      }
+      return false;
+    }
+
+    get _disableEventLink(){
+      if (this._config) {
+        return this._config.disableEventLink || false;
+      }
+      return false;
+    }
+
+    get _disableLocationLink(){
+      if (this._config) {
+        return this._config.disableLocationLink || false;
+      }
+      return false;
+    }
+
+    get _linkTarget(){
+      if (this._config) {
+        return this._config.linkTarget || '_blank';
+      }
+  
+      return '_blank';
+    }
+
     render() {
 
       if (!this.hass) {
@@ -94,6 +133,7 @@ const fireEvent = (node, type, detail, options) => {
               .configValue="${"name"}"
               @value-changed="${this._valueChanged}"
             ></paper-input>
+
             <ha-switch
             aria-label=${`Toggle Colors ${this._showColors ? 'off' : 'on'}`}
             .checked=${this._showColors !== false}
@@ -136,6 +176,49 @@ const fireEvent = (node, type, detail, options) => {
             @change=${this._valueChanged}
             >Show Description</ha-switch
             >
+            <ha-switch
+            aria-label=${`Toggle No Events Today  ${this._showNoEventsForToday  ? 'on' : 'off'}`}
+            .checked=${this._showNoEventsForToday  !== false}
+            .configValue=${'showNoEventsForToday'}
+            @change=${this._valueChanged}
+            >Show 'No Events Today'</ha-switch
+            >
+            <ha-switch
+            aria-label=${`Toggle sort by start time  ${this._sortByStartTime  ? 'on' : 'off'}`}
+            .checked=${this._sortByStartTime  !== false}
+            .configValue=${'sortByStartTime'}
+            @change=${this._valueChanged}
+            >Sort by Start Time</ha-switch
+            >
+            <ha-switch
+            aria-label=${`Toggle event link  ${this._disableEventLink  ? 'on' : 'off'}`}
+            .checked=${this._disableEventLink  !== false}
+            .configValue=${'disableEventLink'}
+            @change=${this._valueChanged}
+            >Disable Event Link URL</ha-switch
+            >
+            <ha-switch
+            aria-label=${`Toggle location link  ${this._disableLocationLink  ? 'on' : 'off'}`}
+            .checked=${this._disableLocationLink  !== false}
+            .configValue=${'disableLocationLink'}
+            @change=${this._valueChanged}
+            >Disable Location Link URL</ha-switch
+            >
+            <div class="values">
+                <paper-dropdown-menu
+                  label="Link Target"
+                  @value-changed=${this._valueChanged}
+                  .configValue=${'linkTarget'}
+                >
+                  <paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
+                    ${linkTargets.map(linkTarget => {
+                      return html`
+                        <paper-item>${linkTarget}</paper-item>
+                      `;
+                    })}
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </div>
           </div>
         </div>
       `;
