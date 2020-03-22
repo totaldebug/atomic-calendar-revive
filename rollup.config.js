@@ -4,10 +4,9 @@ import commonjs from 'rollup-plugin-commonjs';
 
 
 export default {
-    input: 'app.js',
+    input: './src/atomic-calendar-revive.js',
     output: {
-        file: 'atomic_calendar.js',
-        format: 'iife'
+        dir: 'dist'
     },
 	watch: {
     clearScreen: false
