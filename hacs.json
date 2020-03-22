@@ -1,6 +1,6 @@
 {
   "name": "Atomic Calendar Revive",
-  "filename": "dist/atomic-calendar-revive.js",
+  "filename": "atomic-calendar-revive.js",
   "country": ["GB"],
   "render_readme": true
 }
