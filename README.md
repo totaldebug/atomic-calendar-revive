@@ -1,6 +1,8 @@
 # Atomic Calendar Revive v1.0.0
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
+This Card was origionally created by Atomic777 but has been revived by myself in this repo.
+
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
 
 [![GitHub Release][releases-shield]][releases]
@@ -25,6 +27,7 @@ It contains two types of views: `Events mode` and `Calendar mode`. You can switc
 
 
 The most important features:
+- NEW - Added first version of Lovelace UI Editor (not all options are in yet)
 - No need to load external libraries (everything is included)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - All translations included, few of the words can be configured in settings 
