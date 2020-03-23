@@ -127,6 +127,7 @@ const fireEvent = (node, type, detail, options) => {
       return html`
         <div class="card-config">
           <div>
+            <span>Editor Version: ${EDITOR_VERSION}</span>
             <paper-input
               label="Name"
               .value="${this._name}"

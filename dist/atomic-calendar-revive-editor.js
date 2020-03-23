@@ -1,6 +1,7 @@
-const e=(e,t,o,i)=>{i=i||{},o=null==o?{}:o;const s=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return s.detail=o,e.dispatchEvent(s),s};!customElements.get("ha-switch")&&customElements.get("paper-toggle-button")&&customElements.define("ha-switch",customElements.get("paper-toggle-button"));const t=Object.getPrototypeOf(customElements.get("hui-view")),o=t.prototype.html,i=t.prototype.css;var s=["_blank","_self","_parent","_top"];class a extends t{setConfig(e){this._config={...e}}static get properties(){return{hass:{},_config:{}}}get _name(){return this._config.name||""}get _showColors(){return this._config&&this._config.showColors||!0}get _showLocation(){return this._config&&this._config.showLocation||!0}get _showMonth(){return this._config&&this._config.showMonth||!1}get _showLoader(){return this._config&&this._config.showLoader||!0}get _showDate(){return this._config&&this._config.showDate||!1}get _showDescription(){return this._config&&this._config.showDescription||!1}get _showNoEventsForToday(){return this._config&&this._config.showNoEventsForToday||!1}get _sortByStartTime(){return this._config&&this._config.sortByStartTime||!1}get _disableEventLink(){return this._config&&this._config.disableEventLink||!1}get _disableLocationLink(){return this._config&&this._config.disableLocationLink||!1}get _linkTarget(){return this._config&&this._config.linkTarget||"_blank"}render(){return this.hass?o`
+!customElements.get("ha-switch")&&customElements.get("paper-toggle-button")&&customElements.define("ha-switch",customElements.get("paper-toggle-button"));const e=Object.getPrototypeOf(customElements.get("hui-view")),t=e.prototype.html,o=e.prototype.css;var i=["_blank","_self","_parent","_top"];class a extends e{setConfig(e){this._config={...e}}static get properties(){return{hass:{},_config:{}}}get _name(){return this._config.name||""}get _showColors(){return this._config&&this._config.showColors||!0}get _showLocation(){return this._config&&this._config.showLocation||!0}get _showMonth(){return this._config&&this._config.showMonth||!1}get _showLoader(){return this._config&&this._config.showLoader||!0}get _showDate(){return this._config&&this._config.showDate||!1}get _showDescription(){return this._config&&this._config.showDescription||!1}get _showNoEventsForToday(){return this._config&&this._config.showNoEventsForToday||!1}get _sortByStartTime(){return this._config&&this._config.sortByStartTime||!1}get _disableEventLink(){return this._config&&this._config.disableEventLink||!1}get _disableLocationLink(){return this._config&&this._config.disableLocationLink||!1}get _linkTarget(){return this._config&&this._config.linkTarget||"_blank"}render(){return this.hass?t`
         <div class="card-config">
           <div>
+            <span>Editor Version: ${"1.0.0-alpha"}</span>
             <paper-input
               label="Name"
               .value="${this._name}"
@@ -84,8 +85,8 @@ const e=(e,t,o,i)=>{i=i||{},o=null==o?{}:o;const s=new Event(t,{bubbles:void 0==
                   @value-changed=${this._valueChanged}
                   .configValue=${"linkTarget"}
                 >
-                  <paper-listbox slot="dropdown-content" .selected=${s.indexOf(this._linkTarget)}>
-                    ${s.map(e=>o`
+                  <paper-listbox slot="dropdown-content" .selected=${i.indexOf(this._linkTarget)}>
+                    ${i.map(e=>t`
                         <paper-item>${e}</paper-item>
                       `)}
                   </paper-listbox>
@@ -93,7 +94,7 @@ const e=(e,t,o,i)=>{i=i||{},o=null==o?{}:o;const s=new Event(t,{bubbles:void 0==
               </div>
           </div>
         </div>
-      `:o``}_valueChanged(t){if(!this._config||!this.hass)return;const o=t.target;this[`_${o.configValue}`]!==o.value&&(o.configValue&&(""===o.value?delete this._config[o.configValue]:this._config={...this._config,[o.configValue]:void 0!==o.checked?o.checked:o.value}),e(this,"config-changed",{config:this._config}))}static get styles(){return i`
+      `:t``}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target;this[`_${t.configValue}`]!==t.value&&(t.configValue&&(""===t.value?delete this._config[t.configValue]:this._config={...this._config,[t.configValue]:void 0!==t.checked?t.checked:t.value}),((e,t,o,i)=>{i=i||{},o=null==o?{}:o;const a=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});a.detail=o,e.dispatchEvent(a)})(this,"config-changed",{config:this._config}))}static get styles(){return o`
         ha-switch {
           padding-top: 16px;
         }

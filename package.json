@@ -1,11 +1,12 @@
 {
-  "name": "atomic-calendar",
+  "name": "atomic-calendar-revive",
   "version": "1.0.0",
   "description": "Calendar Card for Home Assistant",
   "main": "atomic-calendar-revive.js",
   "scripts": {
-    "lint": "eslint app.js",
-    "babel": "babel atomic-calendar-revive.js --out-file atomic-calendar-revive.js",
+    "lintapp": "eslint src/atomic-calendar-revive.js",
+    "linteditor": "eslint src/atomic-calendar-revive-editor.js",
+    "babel": "babel dist/atomic-calendar-revive.js --out-file dist/atomic-calendar-revive.js",
     "rollup": "rollup -c",
     "build": "npm run rollup  && npm run babel",
     "watch": "rollup -c --watch --config rollup-dev.config.js"
