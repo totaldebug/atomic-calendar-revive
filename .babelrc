@@ -4,11 +4,16 @@
       "@babel/preset-env",
       {
         "modules": false,
-		"targets": "> 2.5%, not dead"
-
+		    "targets": "> 2.5%, not dead"
       }
     ],
-    ["minify"]
+    [
+      "minify",
+      {
+        "evaluate": false,
+        "mangle": false
+      }
+    ]
   ],
   "plugins": [
     [

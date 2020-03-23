@@ -6,15 +6,15 @@ const CARD_VERSION = '1.0.0';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
-	  return true;
+		return true;
 	}
   
 	const oldHass = changedProps.get("hass");
 	if (oldHass) {
-	  return (
+		return (
 		oldHass.states[element._config.entity] !==
-		  element.hass.states[element._config.entity] 
-	  );
+			element.hass.states[element._config.entity] 
+		);
 	}
   
 	return true;
@@ -122,8 +122,7 @@ class AtomicCalendarRevive extends LitElement {
 					</div>
 			  	`
 				: ""}
-			
-				
+
 			${(this.showLoader && this._config.showLoader) ? html`
 				<div  class="loader" ></div>` : ''
 			}
@@ -945,7 +944,7 @@ class AtomicCalendarRevive extends LitElement {
 					<td class="cal">
 							<div @click='${e => this.handleEventSummary(day)}' class="calDay" style=" color: ${this._config.titleColor}; ${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
 								<div style="position: relative; top: 5%; ">
-								${(day.dayNumber).replace(/^0|[^\/]0./, '')}
+								${(day.dayNumber).replace(/^0|[^/]0./, '')}
 								</div>
 								<div>
 									${dayIcon1} ${dayIcon2} ${dayIcon3}
@@ -973,7 +972,7 @@ class AtomicCalendarRevive extends LitElement {
 		}
 		const month = this.month
 		var weekDays = moment.weekdaysMin(true)
-     	const htmlDayNames = weekDays.map((day) => html `
+		const htmlDayNames = weekDays.map((day) => html `
 			<th class="cal" style="padding-bottom: 8px; color:  ${this._config.titleColor};">${day}</th>`)
 
 		this.content = html `
