@@ -3,7 +3,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 
 export default {
-    input: 'app.js',
+    input: './src/app.js',
     output: {
         file: 'atomic-calendar-revive.js',
         format: 'iife'

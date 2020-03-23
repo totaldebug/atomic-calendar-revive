@@ -4,7 +4,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 
 export default {
-    input: './src/atomic-calendar-revive.js',
+    input: './src/app.js',
     output: {
         dir: 'dist'
     },

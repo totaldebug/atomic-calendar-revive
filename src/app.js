@@ -51,7 +51,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	static async getConfigElement() {
-		await import("./atomic-calendar-revive-editor.js");
+		await import("./app-editor.js");
 		return document.createElement("atomic-calendar-revive-editor");
 	}
 	
