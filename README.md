@@ -311,7 +311,7 @@ If you do not have rollup please note this in your pull request and I will happi
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/marksie1988/atomic_calendar?color=32cd32&style=for-the-badge
 [commits]: https://github.com/marksie1988/atomic_calendar/commits/master
-[discord]: https://discord.gg/5e9yvq
+[discord]: https://discord.gg/8JYbyCQ
 [discord-shield]: https://img.shields.io/discord/250606775361994754?color=32cd32&style=for-the-badge
 [license-shield]: https://img.shields.io/github/license/marksie1988/atomic_calendar?color=32cd32&style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020?color=32cd32&style=for-the-badge
