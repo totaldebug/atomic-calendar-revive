@@ -4,9 +4,9 @@
   "description": "Calendar Card for Home Assistant",
   "main": "atomic-calendar-revive.js",
   "scripts": {
-    "lintapp": "eslint src/atomic-calendar-revive.js",
-    "linteditor": "eslint src/atomic-calendar-revive-editor.js",
-    "babel": "babel dist/atomic-calendar-revive.js --out-file dist/atomic-calendar-revive.js",
+    "lintapp": "eslint src/app.js",
+    "linteditor": "eslint src/app-editor.js",
+    "babel": "babel dist/app.js --out-file dist/app.js",
     "rollup": "rollup -c",
     "build": "npm run rollup  && npm run babel",
     "watch": "rollup -c --watch --config rollup-dev.config.js"
