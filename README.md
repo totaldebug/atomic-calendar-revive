@@ -162,7 +162,7 @@ Week / month names are translated automatically
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
-    - url: /community_plugin/atomic_calendar/atomic-calendar-revive.js
+    - url: /community_plugin/atomic_calendar_revive/atomic-calendar-revive.js
       type: module
   ```
 4. If you use Lovelace and want to use the editor, download the atomic-calendar-revive-editor.js to /www/community/atomic_calendar/. (or the folder you used above)
@@ -184,7 +184,7 @@ marksie1988/atomic_calendar
 6. Add the below to the raw configuration editor or to the `ui-lovelace.yaml` file :
 ```yaml
 resources:
-  - url: /community_plugin/atomic_calendar/atomic-calendar-revive.js
+  - url: /community_plugin/atomic_calendar_revive/atomic-calendar-revive.js
     type: module
 ```
 
