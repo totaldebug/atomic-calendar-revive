@@ -1,4 +1,4 @@
-# Atomic Calendar Revive v1.0.0
+# Atomic Calendar Revive v1.1.0
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
 This Card was origionally created by Atomic777 but has been revived by myself in this repo.
