@@ -98,6 +98,7 @@ Hey dude! Help me out for a couple of :beers: or a :coffee:!
 |------|:----:|:-----:|-------------|
 | type | string | optional | v0.5.5 | `null` Type of calendar (in calendar mode) Icon1, Icon2, Icon3, Birthday. Explained below.
 | blacklist | string | v0.7.9 | `null` List of comma separated blacklisted keywords. Events containing any of them will not be shown.
+| whitelist | string | v1.1.0 | `null` List of comma separated whitelisted keywords. Only events containing any of them will be shown.
 
 ### Calendar Mode settings
 | Name | Type | Since | Description |
@@ -208,6 +209,7 @@ For calendar mode we recommend that this is set to at least 30
   entities:
   - entity: calendar.YOUR_CALENDAR_HERE
     titleColor: red
+    whitelist: 'word1,word2'
   - entity: calendar.YOUR_CALENDAR1_HERE
     blacklist: 'word1, word2'
 ```
