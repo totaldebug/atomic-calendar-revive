@@ -1,18 +1,24 @@
-# Atomic Calendar Revive v1.1.0
+# Atomic Calendar Revive v1.1.1
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
-This Card was origionally created by Atomic777 but has been revived by myself in this repo.
-
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
+
 
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
+[![Known Issues][issues-shield]][issues]
 ![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
 
 [![Discord][discord-shield]][discord]
+
+## Support
+
+Hey dude! Help me out for a couple of :beers: or a :coffee:!
+
+[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/marksie1988)
 
 
 ## About
@@ -52,12 +58,6 @@ If you have any suggestions about design or functionality, please let me know by
 ![Preview](https://user-images.githubusercontent.com/11677097/52933554-08d5a780-3354-11e9-87d8-d5d15c4a7c7a.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/52933319-3ff78900-3353-11e9-8c9b-09a315b840a0.png)
 ![Preview](https://user-images.githubusercontent.com/11677097/53302875-b6205200-3863-11e9-8ab2-5ec95b0799d0.png)
-
-## Support
-
-Hey dude! Help me out for a couple of :beers: or a :coffee:!
-
-[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/marksie1988)
 
 ## Options
 
@@ -319,3 +319,5 @@ If you do not have rollup please note this in your pull request and I will happi
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020?color=32cd32&style=for-the-badge
 [releases-shield]: https://img.shields.io/github/v/release/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
 [releases]: https://github.com/marksie1988/atomic_calendar_revive/releases
+[issues-shield]: https://img.shields.io/github/v/issues/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
+[issues]: https://github.com/marksie1988/atomic_calendar_revive/issues

@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.1.0';
+const CARD_VERSION = '1.1.1';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -744,9 +744,9 @@ class AtomicCalendarRevive extends LitElement {
 	async getEvents() {
 
 		let timeOffset = -moment().utcOffset()
-		let start = moment().add(this._config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
-		let endOffset = Math.max(this._config.maxDaysToShow, 1) + this._config.startDaysAhead;
-		let end = moment().add(endOffset, 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		let start = moment().add(this._config.startDaysAhead, 'days').startOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');		
+		let end = moment().add((this._config.maxDaysToShow + this._config.startDaysAhead), 'days').endOf('day').add(timeOffset,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+		
 		let calendarUrlList = []
 		this._config.entities.map(entity =>{
 			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`])
@@ -823,12 +823,12 @@ class AtomicCalendarRevive extends LitElement {
 						const calendarTypes = calendarUrlList[i][1]
 						const calendarUrl = calendarUrlList[i][0]
 						const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
-						const calendarWhitelist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
+						const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
 						eventsArray.map((event) => {
 							const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 
-							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist) && this.checkFilter(event.summary, calendarWhitelist))
+							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 								//checking for calendar type (icons) and keywords
 								try {
 									if (this.checkFilter('icon1', calendarTypes)){
