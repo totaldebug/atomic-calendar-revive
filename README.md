@@ -1,4 +1,4 @@
-# Atomic Calendar Revive v1.1.1
+# Atomic Calendar Revive v1.2.0
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
@@ -99,6 +99,7 @@ If you have any suggestions about design or functionality, please let me know by
 | type | string | optional | v0.5.5 | `null` Type of calendar (in calendar mode) Icon1, Icon2, Icon3, Birthday. Explained below.
 | blacklist | string | v0.7.9 | `null` List of comma separated blacklisted keywords. Events containing any of them will not be shown.
 | whitelist | string | v1.1.0 | `null` List of comma separated whitelisted keywords. Only events containing any of them will be shown.
+| eventCalName | string | v1.2.0 | `null` Add a calendar name to be shown with event.
 
 ### Calendar Mode settings
 | Name | Type | Since | Description |
@@ -140,6 +141,8 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | dayWrapperLineColor | string | v0.3.0 | `default text color` Color of line - days separate
 | descColor | string | v0.8.4 | `default text color` Description of date (left side)
 | descSize | integer | v0.8.4 | `80` Description text size (percent of default font)
+| eventCalNameColor | string | v1.2.0 | `default text color` color of `eventCalName` if set
+| eventCalNameSize | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)
 
 ### Language Options
 

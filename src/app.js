@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.1.1';
+const CARD_VERSION = '1.2.0';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -280,6 +280,15 @@ class AtomicCalendarRevive extends LitElement {
 				border-width: 1px 0 0 0;
 
 			}
+
+			.event-cal-name {
+				color: ${this._config.eventCalNameColor};
+				font-size: ${this._config.eventCalNameSize}%;
+			}
+			.event-cal-name-icon {
+			    height: 15px;
+                width: 15px;
+			}
 			
 			.eventBar {
 				margin-top: -10px; 
@@ -466,6 +475,9 @@ class AtomicCalendarRevive extends LitElement {
 			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
 			eventBarColor: 'var(--primary-color)',
 
+			eventCalNameColor: 'var(--primary-text-color)',
+			eventCalNameSize: 90,
+
 			showProgressBar: true,
 			progressBarColor: 'var(--primary-color)',
 
@@ -651,6 +663,9 @@ class AtomicCalendarRevive extends LitElement {
 				const currentEventLine = (this._config.showCurrentEventLine &&
 					isEventNext) ? html `<div class="eventBar"><ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon><hr class="event"/></div>` : ``
 
+				//show calendar name
+				const eventCalName = (event._config.eventCalName) ? html `<div class="event-cal-name"><ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}</div>` : ``
+
 				//show current event progress bar
 				var progressBar = ``
 				if (di == 0 && this._config.showProgressBar && event.isEventRunning) {
@@ -686,8 +701,15 @@ class AtomicCalendarRevive extends LitElement {
 									${this.getLocationHTML(event)}
 								</div>
 							</div>
-							${descHTML}
-					${progressBar}
+							<div class="event-right">
+								<div class="event-main" >
+									${descHTML}
+								</div>
+								<div class="event-location">
+									${eventCalName}
+								</div>
+							</div>			
+							${progressBar}
 						</td>
 
 					</tr>`
@@ -760,6 +782,7 @@ class AtomicCalendarRevive extends LitElement {
 						calendar.map((singleEvent) => {
 							let blacklist = typeof this._config.entities[i]["blacklist"] != 'undefined' ? this._config.entities[i]["blacklist"] : ''
 							let whitelist = typeof this._config.entities[i]["whitelist"] != 'undefined' ? this._config.entities[i]["whitelist"] : ''
+							let eventCalName = typeof this._config.entities[i]["eventCalName"] != 'undefined' ? this._config.entities[i]["eventCalName"] : ''
 							let singleAPIEvent = new EventClass(singleEvent, this._config.entities[i])
 								if((this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount) && (blacklist=='' || !this.checkFilter(singleEvent.summary, blacklist)) && (whitelist=='' || this.checkFilter(singleEvent.summary, whitelist)) && ((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) || !(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))){
 									singleEvents.push(singleAPIEvent);
