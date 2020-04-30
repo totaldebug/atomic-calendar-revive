@@ -322,5 +322,5 @@ If you do not have rollup please note this in your pull request and I will happi
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020?color=32cd32&style=for-the-badge
 [releases-shield]: https://img.shields.io/github/v/release/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
 [releases]: https://github.com/marksie1988/atomic_calendar_revive/releases
-[issues-shield]: https://img.shields.io/github/v/issues/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
 [issues]: https://github.com/marksie1988/atomic_calendar_revive/issues
