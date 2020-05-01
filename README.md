@@ -23,9 +23,9 @@ Hey dude! Help me out for a couple of :beers: or a :coffee:!
 
 ## About
 
-Atomic Calendar Revive is an updated version of the card originally created by atomic7777. 
+Atomic Calendar Revive is an updated version of the card originally created by atomic7777.
 
-This calendar card includes advanced settings that allow much more flexibility than other cards. 
+This calendar card includes advanced settings that allow much more flexibility than other cards.
 
 It loads calendar events from Home Assistant - Google calendar component.
 
@@ -36,15 +36,15 @@ The most important features:
 - NEW - Added first version of Lovelace UI Editor (not all options are in yet)
 - No need to load external libraries (everything is included)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
-- All translations included, few of the words can be configured in settings 
+- All translations included, few of the words can be configured in settings
 - Compatible with all day and multiple day events
 - Fast switch between both modes, or make one of them default
 
 * Event mode:
 - Shows nearest events, one by one, day by day, time of events in a different way (dates, hours)
 - Moves today's completed events up and dim them
-- Highlights the next event, or show a progress bar 
-- Shows event location link 
+- Highlights the next event, or show a progress bar
+- Shows event location link
 - Clicking on the event title will open a new window with Google Calendar (can be disabled)
 - Clicking on Location will open a window with this location on Google Maps  (can be disabled)
 
@@ -67,7 +67,7 @@ If you have any suggestions about design or functionality, please let me know by
 |------|:----:|:-------:|:-----:|-------------|
 | type | string | **required** | v0.3.0 | `custom:atomic-calendar`
 | entities | list | **required** | v0.3.0 | One or more calendars, configured in HA [Google Calendar component](https://www.home-assistant.io/components/calendar.google/)
-| name | string | optional | v0.12.0 | Card name. 
+| name | string | optional | v0.12.0 | Card name.
 | showColors | boolean | optional | v0.3.0 | `true` Show colors in events, configured in entities list
 | maxDaysToShow | integer | optional | v0.3.0 | `7` Maximum number of days to show; if set to zero will only display currently running events
 | maxEventCount | integer | optional | v0.9.0 | `0` Maximum number of events to show; zero removes any limitation
@@ -143,6 +143,8 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | descSize | integer | v0.8.4 | `80` Description text size (percent of default font)
 | eventCalNameColor | string | v1.2.0 | `default text color` color of `eventCalName` if set
 | eventCalNameSize | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)
+| CalGridColor | string | v1.3.0 | `#DCDCDC` color of calendar grid border
+| CalDayColor | string | v1.3.0 | `#DCDCDC` background color of todays calendar date
 
 ### Language Options
 
@@ -150,7 +152,7 @@ Week / month names are translated automatically
 
 | Name | Type | Default | Since | Description |
 |------|:----:|:-------:|:-----:|-------------|
-| language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used. 
+| language | string | optional | v0.8.4 | `default` Force language change. For example `pt-br`. If not set, default HA language is used.
 | untilText | string | optional | v0.3.0 | `Until` Custom translation of `Until` text
 | fullDayEventText | string | optional | v0.3.0 | `All day` Custom translation of `All day` text
 | noEventsForNextDaysText | string | optional | v0.8.6 | `No events in the next days` Custom translation of `No events in the next days` text
@@ -178,7 +180,7 @@ Week / month names are translated automatically
 ### HACS (recommended)
 Install using `HACS` component:
 1. You need HACS installed and configured
-2. Go to Community tab, Settings 
+2. Go to Community tab, Settings
 3. Paste this line into `Add custom repository` field:
 ```
 marksie1988/atomic_calendar
@@ -193,7 +195,7 @@ resources:
 ```
 
 ## How to show more than 5 events {: #more-than-5 }
-In order to increase the amount of events that are shown you have to add `max_results` setting to `google_calendars.yaml` file 
+In order to increase the amount of events that are shown you have to add `max_results` setting to `google_calendars.yaml` file
 
 For calendar mode we recommend that this is set to at least 30
 ```yaml
@@ -262,7 +264,7 @@ For calendar mode we recommend that this is set to at least 30
   - entity: calendar.YOUR_CALENDAR1_HERE
 	  type: icon1,icon2
   - entity: calendar.YOUR_CALENDAR2_HERE
-    type: holiday		
+    type: holiday
 
 ```
 
@@ -301,7 +303,7 @@ entities:
   type: icon1		 	                    # Icon1 has no filters, show all events from this calendar
 - entity: calendar.YOUR_CALENDAR2_HERE         # no type, it won't be shown in calendar mode
 CalEventIcon1Filter: bills,waste      # only events with those words will be shown
-CalEventIcon2Filter: cleaning         # only events with those words will be shown		
+CalEventIcon2Filter: cleaning         # only events with those words will be shown
 ```
 
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.
@@ -310,7 +312,7 @@ If you set filters (keywords) for any type, it will show an icon only when event
 
 I welcome anyone to improve on this module, any amendments should be made to the files inside the `src` directory and then rollup should be run.
 
-If you do not have rollup please note this in your pull request and I will happily do this prior to merging the request. 
+If you do not have rollup please note this in your pull request and I will happily do this prior to merging the request.
 
 
 
