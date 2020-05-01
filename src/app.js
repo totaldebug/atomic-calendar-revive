@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0';
+const CARD_VERSION = '1.3.0-dev1';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -928,7 +928,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `border: 1px solid grey;` : `border: 1px solid grey; border-color: transparent;`
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.CalDayColor};` : `border: 1px solid grey; border-color: transparent;`
 			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ''
 			const dayBackgroundStyle = (day.daybackground && day.daybackground.length > 0) ? `background-color: ${this._config.CalEventBackgroundColor}; ` : ''
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
@@ -938,7 +938,7 @@ class AtomicCalendarRevive extends LitElement {
 			if(i<35 || showLastRow)
 			return html `
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
-					<td @click='${e => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor}; background-color: ${this._config.CalDayColor};${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
+					<td @click='${e => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor}; ${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
 							<div class="calDay" >
 							<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^/]0./, '')}
