@@ -154,6 +154,7 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | eventCalNameSize | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)
 | CalGridColor | string | v1.3.0 | `#DCDCDC` color of calendar grid border
 | CalDayColor | string | v1.3.0 | `#DCDCDC` background color of todays calendar date
+| calEventBulletColor | string | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day 
 
 ### Language Options
 

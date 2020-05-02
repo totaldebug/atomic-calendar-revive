@@ -469,6 +469,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			CalGridColor: '#DCDCDC',
 			CalDayColor: '#DCDCDC',
+			calEventBulletColor: '#cc5500',
 
 			CalEventBackgroundColor: '#ededed',
 			CalEventBackgroundFilter: null,
@@ -915,7 +916,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.eventSummary = events.map((eventItem, i, arr)=> {
 			return html `
 				<div>
-					<div class="bullet-item-div" style="border-color: rgb(121, 85, 72)"></div>
+					<div class="bullet-item-div" style="border-color: ${this._config.calEventBulletColor}"></div>
 					<span class="bullet-item-span">${eventItem}</span>
 				</div>`
 		})
