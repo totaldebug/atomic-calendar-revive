@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0-dev4';
+const CARD_VERSION = '1.3.0-dev5';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -239,7 +239,6 @@ class AtomicCalendarRevive extends LitElement {
 			.event-title {
 			}
 
-
 			.event-location-icon {
 			    height: 15px;
                 width: 15px;
@@ -344,6 +343,23 @@ class AtomicCalendarRevive extends LitElement {
 			.calTableContainer {
 				width: 100%;
 			}
+
+			.bullet-item-div{
+				-webkit-border-radius: 8px;
+				border-radius: 8px;
+				border: 4px solid;
+				height: 0;
+				width: 0;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			.bullet-item-span{
+				overflow: hidden;
+				white-space: nowrap;
+				display: inline-block;
+				vertical-align: middle;
+			}
+
 
 			.calIcon {
 				width: 10px;
@@ -897,7 +913,11 @@ class AtomicCalendarRevive extends LitElement {
 		var eventsHtm = '';
 
 		this.eventSummary = events.map((eventItem, i, arr)=> {
-			return html `<li>${eventItem}</li>`
+			return html `
+				<div>
+					<div class="bullet-item-div" style="border-color: rgb(121, 85, 72)"></div>
+					<span class="bullet-item-span">${eventItem}</span>
+				</div>`
 		})
 
 		this.requestUpdate()
@@ -938,7 +958,7 @@ class AtomicCalendarRevive extends LitElement {
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
 			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
-
+		
 			if(i<35 || showLastRow)
 			return html `
 				${i % 7 === 0 ? html`<tr class="cal">` :''}
@@ -989,9 +1009,7 @@ class AtomicCalendarRevive extends LitElement {
 				</table>
 			</div>
 			<div style="font-size: 90%;">
-				<ul>
 					${this.eventSummary}
-				</ul>
 			</div>
 			`
 	}
