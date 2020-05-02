@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0-dev2';
+const CARD_VERSION = '1.3.0-dev4';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -318,7 +318,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			td.cal {
 				padding: 5px 5px 5px 5px;
-				border: 1px solid ${this._config.calGridColor};
+				border: 1px solid ${this._config.CalGridColor};
 				text-align: center;
 				vertical-align: middle;
 				width:100%;
@@ -893,9 +893,13 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	handleEventSummary(day) {
-		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3])).join(', ')
-		if (events == '') events = html `&nbsp;`
-		this.eventSummary = html `${events}`
+		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
+		var eventsHtm = '';
+
+		this.eventSummary = events.map((eventItem, i, arr)=> {
+			return html `<li>${eventItem}</li>`
+		})
+
 		this.requestUpdate()
 
 	}
@@ -985,7 +989,9 @@ class AtomicCalendarRevive extends LitElement {
 				</table>
 			</div>
 			<div style="font-size: 90%;">
-				${this.eventSummary}
+				<ul>
+					${this.eventSummary}
+				</ul>
 			</div>
 			`
 	}
