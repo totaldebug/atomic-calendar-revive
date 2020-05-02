@@ -31,9 +31,18 @@ It loads calendar events from Home Assistant - Google calendar component.
 
 It contains two types of views: `Events mode` and `Calendar mode`. You can switch or select the default one.
 
+New features that are only in Revive:
+- Added more appealing UI Look
+- Added the ability to display calendar names
+- Added keyword whitelists
+- Added linkTarget option to allow selecting specific action when clicking link
+- Added ability to disable Event and Location Links
+- Added first version of Lovelace UI Editor (not all options are in yet)
+- Merged PR that: Hides finished events, sorts events by start time, shows currently running events. allows limiting total number of events
+- Resolved issue with 106 showing error: `Cannot assign to read only property '0' of object '[object Array]'`
+- Multiple Bug Fixes
 
 The most important features:
-- NEW - Added first version of Lovelace UI Editor (not all options are in yet)
 - No need to load external libraries (everything is included)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - All translations included, few of the words can be configured in settings
