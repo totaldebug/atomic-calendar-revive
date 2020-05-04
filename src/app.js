@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0-dev5';
+const CARD_VERSION = '1.3.0';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -418,7 +418,7 @@ class AtomicCalendarRevive extends LitElement {
 			dateFormat: 'LL',
 			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
 			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
-			showLastCalendarWeek: true, // always shows last line/week in calendar mode, even if it's not the current month
+			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 			showCalNameInEvent: false,
 			sortByStartTime: false, // sort first by calendar, then by time
 			disableEventLink: false, // disables links to event calendar
@@ -959,7 +959,7 @@ class AtomicCalendarRevive extends LitElement {
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
 			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
-		
+
 			if(i<35 || showLastRow)
 			return html `
 				${i % 7 === 0 ? html`<tr class="cal">` :''}

@@ -20,4 +20,4 @@ nav_order: 4
 | CalEventIcon3 | string | v0.7.0 | `mdi:star` Icon for `type: icon3` calendar
 | CalEventIcon3Color | string | v0.7.0 | `default` Color of icon for `type: icon3` calendar
 | CalEventIcon3Filter | string | v0.7.0 | `null` List of comma separated keywords
-| showLastCalendarWeek  | boolean | v0.7.5 | `true` If true (default) it will always show 6 lines. If false, the 6th line won't be displayed if not needed.
+| showLastCalendarWeek  | boolean | v0.7.5 | `false` If true it will always show 6 lines. If false, the 6th line won't be displayed if not needed.

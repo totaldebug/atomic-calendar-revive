@@ -1,4 +1,4 @@
-# Atomic Calendar Revive v1.2.0
+# Atomic Calendar Revive v1.3.0
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
@@ -126,7 +126,7 @@ If you have any suggestions about design or functionality, please let me know by
 | CalEventIcon3 | string | v0.7.0 | `mdi:star` Icon for `type: icon3` calendar
 | CalEventIcon3Color | string | v0.7.0 | `default` Color of icon for `type: icon3` calendar
 | CalEventIcon3Filter | string | v0.7.0 | `null` List of comma separated keywords
-| showLastCalendarWeek  | boolean | v0.7.5 | `true` If true (default) it will always show 6 lines. If false, the 6th line won't be displayed if not needed.
+| showLastCalendarWeek  | boolean | v0.7.5 | `false` If true it will always show 6 lines. If false, the 6th line won't be displayed if not needed.
 
 ### Text colors and fonts
 
