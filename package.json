@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marksie1988/atomic_calendar_revive.git"
+    "url": "git+https://github.com/marksie1988/atomic-calendar-revive.git"
   },
   "author": "Steven Marks",
   "license": "ISC",
@@ -44,7 +44,7 @@
     "node-google-calendar": "^1.1.1"
   },
   "bugs": {
-    "url": "https://github.com/marksie1988/atomic_calendar_revive/issues"
+    "url": "https://github.com/marksie1988/atomic-calendar-revive/issues"
   },
-  "homepage": "https://github.com/marksie1988/atomic_calendar_revive#readme"
+  "homepage": "https://github.com/marksie1988/atomic-calendar-revive#readme"
 }

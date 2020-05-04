@@ -3,10 +3,11 @@
     "dockerFile": "Dockerfile",
     "context": "..",
     "workspaceFolder": "/workspace",
-    "workspaceMount": "type=bind,source=/home/${env:USERNAME}/atomic-calendar,target=/workspace",
+    "workspaceMount": "type=bind,source=/home/${env:USERNAME}/repos/atomic-calendar-revive,target=/workspace",
     "extensions": [
-        "github.vscode-pull-request-github",
-        "esbenp.prettier-vscode"
+		"github.vscode-pull-request-github",
+		"esbenp.prettier-vscode",
+		"yzhang.markdown-all-in-one"
     ],
     "settings": {
         "files.eol": "\n",

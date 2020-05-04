@@ -1,11 +1,15 @@
 FROM node:latest
 
-RUN apt-get update
+RUN apt update
 
-RUN apt-get install -y zsh
+RUN apt upgrade  -y
 
-RUN yarn global add eslint
+RUN apt install zsh -y
 
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
+
+#COPY package*.json ./
+
+#RUN npm install
 
 CMD ["zsh"]
