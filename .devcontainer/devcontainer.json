@@ -1,0 +1,20 @@
+{
+    "name": "Atomic Calendar Revive",
+    "dockerFile": "Dockerfile",
+    "context": "..",
+    "workspaceFolder": "/workspace",
+    "workspaceMount": "type=bind,source=/home/${env:USERNAME}/atomic-calendar,target=/workspace",
+    "extensions": [
+        "github.vscode-pull-request-github",
+        "esbenp.prettier-vscode"
+    ],
+    "settings": {
+        "files.eol": "\n",
+        "editor.tabSize": 2,
+        "terminal.integrated.shell.linux": "/bin/zsh",
+        "editor.formatOnPaste": false,
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.trimTrailingWhitespace": true
+    }
+}
