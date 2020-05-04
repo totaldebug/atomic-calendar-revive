@@ -154,7 +154,7 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | eventCalNameSize | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)
 | CalGridColor | string | v1.3.0 | `#DCDCDC` color of calendar grid border
 | CalDayColor | string | v1.3.0 | `#DCDCDC` background color of todays calendar date
-| calEventBulletColor | string | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day 
+| calEventBulletColor | string | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day
 
 ### Language Options
 
@@ -174,14 +174,14 @@ Week / month names are translated automatically
 
 ### Manual
 1. You need to have the [Google calendar](https://www.home-assistant.io/components/calendar.google/) component configured in Home Assistant.
-2. Download `atomic-calendar-revive.js` file from the `dist` directory to `/www/community/atomic_calendar_revive/atomic-calendar-revive.js` directory in your Home Assistant - [latest release](https://github.com/marksie1988/atomic_calendar_revive/releases/latest)
+2. Download `atomic-calendar-revive.js` file from the `dist` directory to `/www/community/atomic-calendar-revive/atomic-calendar-revive.js` directory in your Home Assistant - [latest release](https://github.com/marksie1988/atomic-calendar-revive/releases/latest)
 3. Add this reference to your `ui-lovelace.yaml` file:
   ```yaml
   resources:
-    - url: /community_plugin/atomic_calendar_revive/atomic-calendar-revive.js
+    - url: /community_plugin/atomic-calendar-revive/atomic-calendar-revive.js
       type: module
   ```
-4. If you use Lovelace and want to use the editor, download the atomic-calendar-revive-editor.js to /www/community/atomic_calendar/. (or the folder you used above)
+4. If you use Lovelace and want to use the editor, download the `atomic-calendar-revive-editor.js` to `/www/community/atomic-calendar-revive/`. (or the folder you used above)
 5. Add the card to the UI using the GUI editor or to `ui-lovelace.yaml` with options, examples below
 6. If you are upgrading, try to reload your browser cache by pressing ctrl-shift-r or shift-F5.
 7. If you want to use `Calendar mode` follow the guide [here](#more-than-5), because by default HA only gets the 5 nearest events from Google Calendar.
@@ -193,14 +193,14 @@ Install using `HACS` component:
 2. Go to Community tab, Settings
 3. Paste this line into `Add custom repository` field:
 ```
-marksie1988/atomic_calendar
+marksie1988/atomic-calendar-revive
 ```
 4. Choose type: Plugin
 5. The atomic calendar revive component will be available to install under the Plugins tab.
 6. Add the below to the raw configuration editor or to the `ui-lovelace.yaml` file :
 ```yaml
 resources:
-  - url: /community_plugin/atomic_calendar_revive/atomic-calendar-revive.js
+  - url: /community_plugin/atomic-calendar-revive/atomic-calendar-revive.js
     type: module
 ```
 
@@ -326,13 +326,13 @@ If you do not have rollup please note this in your pull request and I will happi
 
 
 
-[commits-shield]: https://img.shields.io/github/commit-activity/y/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
-[commits]: https://github.com/marksie1988/atomic_calendar_revive/commits/master
+[commits-shield]: https://img.shields.io/github/commit-activity/y/marksie1988/atomic-calendar-revive?color=32cd32&style=for-the-badge
+[commits]: https://github.com/marksie1988/atomic-calendar-revive/commits/master
 [discord]: https://discord.gg/8JYbyCQ
 [discord-shield]: https://img.shields.io/discord/250606775361994754?color=32cd32&style=for-the-badge
-[license-shield]: https://img.shields.io/github/license/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/marksie1988/atomic-calendar-revive?color=32cd32&style=for-the-badge
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020?color=32cd32&style=for-the-badge
-[releases-shield]: https://img.shields.io/github/v/release/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
-[releases]: https://github.com/marksie1988/atomic_calendar_revive/releases
-[issues-shield]: https://img.shields.io/github/issues/marksie1988/atomic_calendar_revive?color=32cd32&style=for-the-badge
-[issues]: https://github.com/marksie1988/atomic_calendar_revive/issues
+[releases-shield]: https://img.shields.io/github/v/release/marksie1988/atomic-calendar-revive?color=32cd32&style=for-the-badge
+[releases]: https://github.com/marksie1988/atomic-calendar-revive/releases
+[issues-shield]: https://img.shields.io/github/issues/marksie1988/atomic-calendar-revive?color=32cd32&style=for-the-badge
+[issues]: https://github.com/marksie1988/atomic-calendar-revive/issues
