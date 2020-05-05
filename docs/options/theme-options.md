@@ -2,7 +2,7 @@
 layout: default
 title: Theme Options
 parent: Configuration Options
-nav_order: 1
+nav_order: 6
 ---
 
 If you don't set colors, default theme colors will be used. If you use automatic night/day modes, don't use manual color settings.
