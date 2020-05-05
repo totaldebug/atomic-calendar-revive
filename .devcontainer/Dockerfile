@@ -8,8 +8,8 @@ RUN apt install zsh -y
 
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
 
-#COPY package*.json ./
+COPY package*.json ./
 
-#RUN npm install
+RUN npm install
 
 CMD ["zsh"]
