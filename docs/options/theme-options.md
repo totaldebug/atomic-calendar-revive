@@ -27,6 +27,7 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | descSize | integer | v0.8.4 | `80` Description text size (percent of default font)
 | eventCalNameColor | string | v1.2.0 | `default text color` color of `eventCalName` if set
 | eventCalNameSize | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)
-| CalGridColor | string | v1.3.0 | `#DCDCDC` color of calendar grid border
-| CalDayColor | string | v1.3.0 | `#DCDCDC` background color of todays calendar date
+| CalGridColor | string | v1.3.0 | `rgba(86, 86, 86, .35)` color of calendar grid border
+| CalEventBackgroundColor | string | v1.3.0 | `rgba(86, 100, 86, .35)` background color of todays calendar date
 | calEventBulletColor | string | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day
+| CalEventWeekendColor | string | v1.3.0 | `rgba(86, 86, 86, .60)` Sets weekends to a different color

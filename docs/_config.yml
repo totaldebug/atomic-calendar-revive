@@ -6,7 +6,7 @@ description: A Home Assistant Plugin to add a nice calendar view
 # Specific to this theme
 search_enabled: true
 search_tokenizer_separator: /[\s/]+/
-ga_tracking: UA-XXXXX-Y
+ga_tracking: UA-149869416-2
 heading_anchors: true
 color_scheme: "dark"
 footer_content: "Copyright &copy; 2017-2020 Steven Marks. Distributed by an <a href=\"https://github.com/marksie1988/atomic-calendar-revive/tree/master/LICENSE.md\">MIT license.</a>"

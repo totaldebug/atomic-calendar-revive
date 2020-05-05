@@ -29,3 +29,10 @@ NOTE:
 If you don't see the notification, open the command pallet and select `Remote-Containers: Open Folder in Container`
 
 ---
+
+---
+
+NOTE:
+This devcontainer is configured to work with a remote docker server, if you need a local dockerserver you will need to modify the file `.devcontainer\devcontainer.json`
+
+---

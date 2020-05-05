@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0';
+const CARD_VERSION = '1.3.0-dev3';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -412,6 +412,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			showLocation: true, // show location (right side)
 			showMonth: false, // show month under day (left side)
+			showWeekDay: false, // show day name under day (left side)
 			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
 			showCurrentEventLine: false, // show a line between last and next event
 			showDate: false,
@@ -467,12 +468,14 @@ class AtomicCalendarRevive extends LitElement {
 			enableModeChange: false,
 			defaultMode: 1,
 
-			CalGridColor: '#DCDCDC',
-			CalDayColor: '#DCDCDC',
+			CalGridColor: 'rgba(86, 86, 86, .35)',
+
 			calEventBulletColor: '#cc5500',
 
-			CalEventBackgroundColor: '#ededed',
+			CalEventBackgroundColor: 'rgba(86, 100, 86, .35)',
 			CalEventBackgroundFilter: null,
+
+			CalEventWeekendColor: 'rgba(86, 86, 86, .60)',
 
 			CalEventHolidayColor: 'red',
 			CalEventHolidayFilter: null,
@@ -675,7 +678,7 @@ class AtomicCalendarRevive extends LitElement {
 						<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;"><div>
 								<div>${(i===0 && this._config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i===0 ? event.startTimeToShow.format('DD') : ''}</div>
-								<div>${i===0 ? event.startTimeToShow.format('ddd') : ''}</div>
+								<div>${(i===0 && this._config.showWeekDay) ? event.startTimeToShow.format('ddd') : ''}</div>
 						</td>
 						<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle} ">
 							<div>${currentEventLine}</div>
@@ -953,17 +956,19 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.CalDayColor};` : ``
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.CalEventBackgroundColor};` : ``
 			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ''
 			const dayBackgroundStyle = (day.daybackground && day.daybackground.length > 0) ? `background-color: ${this._config.CalEventBackgroundColor}; ` : ''
-			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
+			const dayStyleWeekend = (moment(day.date).isoWeekday() == 6 || moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.CalEventWeekendColor}; ` : ''
+			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
 			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
 
+			console.log(moment(day.date).isoWeekday())
 			if(i<35 || showLastRow)
 			return html `
-				${i % 7 === 0 ? html`<tr class="cal">` :''}
-					<td @click='${e => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor}; ${dayStyleOtherMonth} ${dayStyleToday} ${dayHolidayStyle} ${dayBackgroundStyle}">
+				${i % 7 === 0 ? html`<tr class="cal">` : ''}
+					<td @click='${e => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleWeekend}${dayBackgroundStyle}">
 							<div class="calDay" >
 							<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^/]0./, '')}
@@ -992,6 +997,7 @@ class AtomicCalendarRevive extends LitElement {
 		}
 		const month = this.month
 		var weekDays = moment.weekdaysMin(true)
+
 		const htmlDayNames = weekDays.map((day) => html `
 			<th class="cal" style="padding-bottom: 8px; color:  ${this._config.titleColor};">${day}</th>`)
 

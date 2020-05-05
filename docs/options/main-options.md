@@ -15,6 +15,7 @@ nav_order: 1
 | maxEventCount | integer | optional | v0.9.0 | `0` Maximum number of events to show; zero removes any limitation
 | showLocation | boolean | optional | v0.3.0 | `true` Show location link (right side)
 | showMonth | boolean | optional | v0.3.0 | `false` Show month under day (left side)
+| showWeekDay | boolean | optional | v1.3.0 | `false` Show week day under day (left side)
 | showLoader | boolean | optional | v0.7.0 | `true` Show animation, when events are being loaded from Google Calendar.
 | showDate | boolean | optional | v0.7.2 | `false` Show the date on the right side of the card name
 | startDaysAhead | integer | optional | v0.7.3 | `0` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow.
