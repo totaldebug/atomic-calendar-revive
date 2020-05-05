@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marksie1988/atomic_calendar_revive.git"
+    "url": "git+https://github.com/marksie1988/atomic-calendar-revive.git"
   },
   "author": "Steven Marks",
   "license": "ISC",
@@ -27,7 +27,7 @@
     "babel-loader": "^8.1.0",
     "babel-preset-minify": "^0.5.1",
     "eslint": "^6.8.0",
-    "rollup": "^2.7.5",
+    "rollup": "^2.7.6",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.6.0",
@@ -40,11 +40,11 @@
   "dependencies": {
     "@rollup/plugin-node-resolve": "^7.1.3",
     "lit-element": "^2.3.1",
-    "moment": "^2.24.0",
+    "moment": "^2.25.0",
     "node-google-calendar": "^1.1.1"
   },
   "bugs": {
-    "url": "https://github.com/marksie1988/atomic_calendar_revive/issues"
+    "url": "https://github.com/marksie1988/atomic-calendar-revive/issues"
   },
-  "homepage": "https://github.com/marksie1988/atomic_calendar_revive#readme"
+  "homepage": "https://github.com/marksie1988/atomic-calendar-revive#readme"
 }
