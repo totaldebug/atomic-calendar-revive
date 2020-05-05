@@ -14,9 +14,13 @@ An advanced calendar card for Home Assistant with Lovelace. (fixed to work with 
 
 [![Discord][discord-shield]][discord]
 
-## Support
+## Documentation
 
-Hey dude! Help me out for a couple of :beers: or a :coffee:!
+All documentation is now maintained [here](https://marksie1988.github.io/atomic-calendar-revive)
+
+## Contributions & Support
+
+Contributions & Support is welcomed.
 
 [![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/marksie1988)
 
@@ -63,10 +67,6 @@ The most important features:
 - You can set keywords to show only important things, like birthday
 
 If you have any suggestions about design or functionality, please let me know by opening an issue
-
-## Documentation
-
-All documentation is now maintained [here](https://marksie1988.github.io/atomic-calendar-revive)
 
 [commits-shield]: https://img.shields.io/github/commit-activity/y/marksie1988/atomic-calendar-revive?color=32cd32&style=for-the-badge
 [commits]: https://github.com/marksie1988/atomic-calendar-revive/commits/master
