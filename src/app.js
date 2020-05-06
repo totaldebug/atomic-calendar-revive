@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.0-dev3';
+const CARD_VERSION = '1.3.1';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
