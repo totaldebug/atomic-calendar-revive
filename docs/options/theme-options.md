@@ -30,4 +30,5 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | CalGridColor | string | v1.3.0 | `rgba(86, 86, 86, .35)` color of calendar grid border
 | CalEventBackgroundColor | string | v1.3.0 | `rgba(86, 100, 86, .35)` background color of todays calendar date
 | calEventBulletColor | string | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day
-| CalEventWeekendColor | string | v1.3.0 | `rgba(86, 86, 86, .60)` Sets weekends to a different color
+| CalEventSatColor | string | v1.3.0 | `rgba(86, 86, 86, .05)` Sets Saturday to a different color
+| CalEventSunColor | string | v1.3.0 | `rgba(255, 255,255, .15)` Sets Sunday to a different color

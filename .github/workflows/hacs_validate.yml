@@ -1,4 +1,4 @@
-name: Validate
+name: Validate HACS
 
 on:
   push:
