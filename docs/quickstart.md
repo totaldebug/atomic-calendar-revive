@@ -43,7 +43,7 @@ resources:
 6. If you are upgrading, try to reload your browser cache by pressing ctrl-shift-r or shift-F5.
 7. If you want to use `Calendar mode` follow the guide [here](#more-than-5), because by default HA only gets the 5 nearest events from Google Calendar.
 
-## How to show more than 5 events {: #more-than-5 }
+## Show more than 5 events
 In order to increase the amount of events that are shown you have to add `max_results` setting to `google_calendars.yaml` file
 
 For calendar mode we recommend that this is set to at least 30

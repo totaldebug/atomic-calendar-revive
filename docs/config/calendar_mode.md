@@ -9,7 +9,7 @@ nav_order: 2
 
 The second mode of view - calendar mode - Shows the full month calendar with simple events icons or colors, for the most important, infrequent events, like holiday or birthday.
 You can change the mode by clicking the card name, or even make it the default view.
-To make it work correctly you need to get more events than default 5 - you need to follow instruction [here](https://marksie1988.github.io/atomic-calendar-revive/quickstart.html#more-than-5) for this, and setup it for 20-30 events at least.
+To make it work correctly you need to get more events than default 5 - you need to follow instruction [here](/quickstart#Show-more-than-5-events) for this, and setup it for 20-30 events at least.
 
 There are four configurable possibilities for showing events occurring any day:
 - day number color - for example "14" will be red for Valentine's Day
