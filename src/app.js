@@ -343,8 +343,11 @@ class AtomicCalendarRevive extends LitElement {
 			.calTableContainer {
 				width: 100%;
 			}
+			.summary-event-div{
+				padding-top: 3px;
+			}
 
-			.bullet-item-div{
+			.bullet-event-div{
 				-webkit-border-radius: 8px;
 				border-radius: 8px;
 				border: 4px solid;
@@ -353,13 +356,13 @@ class AtomicCalendarRevive extends LitElement {
 				display: inline-block;
 				vertical-align: middle;
 			}
-			.bullet-item-span{
+			.bullet-event-span{
 				overflow: hidden;
 				white-space: nowrap;
 				display: inline-block;
 				vertical-align: middle;
+				margin: 0 5px
 			}
-
 
 			.calIcon {
 				width: 10px;
@@ -917,9 +920,9 @@ class AtomicCalendarRevive extends LitElement {
 
 		this.eventSummary = events.map((eventItem, i, arr)=> {
 			return html `
-				<div>
-					<div class="bullet-item-div" style="border-color: ${this._config.calEventBulletColor}"></div>
-					<span class="bullet-item-span">${eventItem}</span>
+				<div class="summary-event-div">
+					<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
+					<span class="bullet-event-span">${eventItem}</span>
 				</div>`
 		})
 
