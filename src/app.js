@@ -54,6 +54,13 @@ class AtomicCalendarRevive extends LitElement {
 		await import("./app-editor.js");
 		return document.createElement("atomic-calendar-revive-editor");
 	}
+	static getStubConfig() {
+		return {
+			name: "Calendar Card",
+			enableModeChange: true
+		}
+	}
+
 
 	updated() {}
 
@@ -304,7 +311,7 @@ class AtomicCalendarRevive extends LitElement {
 				float: left;
 				display: block;
 				margin-left: -14px;
-          	}
+      }
 
 			table.cal{
 				margin-left: 0px;
@@ -436,7 +443,6 @@ class AtomicCalendarRevive extends LitElement {
 			descColor: 'var(--primary-text-color)', // Description text color (left side)
 			descSize: 80, //Description text size (percent of standard text)
 
-
 			showNoEventsForToday: false,
 			noEventsForTodayText: 'No events for today',
 			noEventsForNextDaysText: 'No events in the next days',
@@ -487,7 +493,6 @@ class AtomicCalendarRevive extends LitElement {
 			CalEventIcon1: 'mdi:gift',
 			CalEventIcon1Color: 'var(--primary-text-color)',
 			CalEventIcon1Filter: null,
-
 
 			CalEventIcon2: 'mdi:home',
 			CalEventIcon2Color: 'var(--primary-text-color)',
@@ -1194,3 +1199,10 @@ class EventClass {
 		return this.eventClass.htmlLink
 	}
 }
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "atomic-calendar-revive",
+  name: "Atomic Calendar Revive",
+  preview: false, // Optional - defaults to false
+  description: "An advanced calendar card for Home Assistant with Lovelace." // Optional
+});
