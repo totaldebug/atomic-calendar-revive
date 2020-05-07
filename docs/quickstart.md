@@ -28,7 +28,7 @@ marksie1988/atomic-calendar-revive
 7. If you edit your files directly, add the below to the `ui-lovelace.yaml` file :
 ```yaml
 resources:
-  - url: /local/community/atomic-calendar-revive/atomic-calendar-revive.js
+  - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
     type: module
 ```
 
