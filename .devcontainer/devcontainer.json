@@ -2,12 +2,19 @@
     "name": "Atomic Calendar Revive",
     "dockerFile": "Dockerfile",
     "context": "..",
+    "appPort": ["5000:5000"],
+    "postCreateCommand": "npm install",
     "workspaceFolder": "/workspace",
     "workspaceMount": "type=bind,source=/home/${env:USERNAME}/repos/atomic-calendar-revive,target=/workspace",
     "extensions": [
-		"github.vscode-pull-request-github",
-		"esbenp.prettier-vscode",
-		"yzhang.markdown-all-in-one"
+      "github.vscode-pull-request-github",
+      "esbenp.prettier-vscode",
+      "yzhang.markdown-all-in-one",
+      "bierner.lit-html",
+      "runem.lit-plugin",
+      "auchenberg.vscode-browser-preview",
+      "davidanson.vscode-markdownlint",
+      "redhat.vscode-yaml"
     ],
     "settings": {
         "files.eol": "\n",
