@@ -25,6 +25,7 @@ It contains two types of views: `Events mode` and `Calendar mode`. You can switc
 
 ### New Features
 
+- Calendar view clicked date is highlighted
 - Added more appealing UI
 - Added the ability to display calendar names in event view
 - Added keyword whitelists

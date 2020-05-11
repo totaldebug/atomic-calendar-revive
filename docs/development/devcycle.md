@@ -47,6 +47,17 @@ The branch should have a relevant short name e.g. patch-1 or bugfix-67 where the
 
 ---
 
+## Make changes & Test
+
+Make the changes that you were planning in impelmenting
+
+If using DevContainer you can test the files with `npm start`, the file will be accessible on http://127.0.0.1:5000/app.js
+
+To add this to your Home assistant configuration add the following:
+```yaml
+- url: "http://127.0.0.1:5000/app.js"
+  type: module
+```
 
 ## Commit your changes
 

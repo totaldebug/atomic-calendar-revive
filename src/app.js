@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.1';
+const CARD_VERSION = '1.3.2';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -502,6 +502,8 @@ class AtomicCalendarRevive extends LitElement {
 			CalEventIcon3Color: 'var(--primary-text-color)',
 			CalEventIcon3Filter: null,
 
+			CalActiveEventBackgroundColor: 'rgba(255, 69, 255, .50)',
+
 			firstDayOfWeek: 1, // default 1 - monday
 			blacklist: null,
 			whitelist: null,
@@ -913,7 +915,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.selectedMonth = moment(this.selectedMonth).add(i, 'months');
 		this.monthToGet = this.selectedMonth.format("M");
 		this.eventSummary = html `&nbsp;`;
-		this.refreshCalEvents = true
+		this.refreshCalEvents = true;
 	}
 
 	/**
@@ -922,6 +924,9 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	handleEventSummary(day) {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
+
+		this.clickedDay = day.dayNumber;
+		console.log(day)
 
 		this.eventSummary = events.map((eventItem, i, arr)=> {
 			return html `
@@ -964,18 +969,18 @@ class AtomicCalendarRevive extends LitElement {
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
 			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.CalEventBackgroundColor};` : ``
-			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ''
-			const dayBackgroundStyle = (day.daybackground && day.daybackground.length > 0) ? `background-color: ${this._config.CalEventBackgroundColor}; ` : ''
-			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.CalEventSatColor}; ` : ''
-			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.CalEventSunColor}; ` : ''
+			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ``
+			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.CalEventSatColor}; ` : ``
+			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.CalEventSunColor}; ` : ``
+			const dayStyleClicked = (day.dayNumber == this.clickedDay) ? `background-color: ${this._config.CalActiveEventBackgroundColor};` : ``
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
-			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
-			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html `<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
+			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
+			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
 
 			if (i < 35 || showLastRow)
-				return html `
+				return html`
 				${i % 7 === 0 ? html`<tr class="cal">` : ''}
-					<td @click='${e => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayBackgroundStyle}">
+					<td @click='${(e) => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
 							<div class="calDay" >
 							<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^/]0./, '')}
@@ -987,6 +992,7 @@ class AtomicCalendarRevive extends LitElement {
 				${i && (i % 6 === 0) ? html`</tr>` :''}
 				`
 		})
+
 	}
 
 	/**
