@@ -55,7 +55,7 @@ If using DevContainer you can test the files with `npm start`, the file will be 
 
 To add this to your Home assistant configuration add the following:
 ```yaml
-- url: "http://127.0.0.1:5000/boilerplate-card.js"
+- url: "http://127.0.0.1:5000/app.js"
   type: module
 ```
 

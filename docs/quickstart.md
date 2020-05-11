@@ -14,21 +14,16 @@ This quick start guide will take you through the easiest ways to get up and runn
 
 Install using `HACS` component:
 1. You need HACS installed and configured
-2. Go to Community tab, Settings
-3. Paste this line into `Add custom repository` field:
+2. Go to plugins tab
+3. Search for `Atomic Calendar Revive`
+4. If you use the Lovelace Editor then add the follwoing to Configuration -> Lovelace Dashboards -> Resources
 ```
-marksie1988/atomic-calendar-revive
-```
-4. Choose type: Plugin
-5. The atomic calendar revive component will be available to install under the Plugins tab.
-6. If you use the Lovelace Editor then add the follwoing to Configuration -> Lovelace Dashboards -> Resources
-```
-/local/community/atomic-calendar-revive/atomic-calendar-revive.js
+/hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
 ```
 7. If you edit your files directly, add the below to the `ui-lovelace.yaml` file :
 ```yaml
 resources:
-  - url: /local/community/atomic-calendar-revive/atomic-calendar-revive.js
+  - url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js
     type: module
 ```
 
