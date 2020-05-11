@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.3.2';
+const CARD_VERSION = '1.4.1';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -484,6 +484,9 @@ class AtomicCalendarRevive extends LitElement {
 			CalEventBackgroundColor: 'rgba(86, 100, 86, .35)',
 			CalEventBackgroundFilter: null,
 
+			CalActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
+			CalActiveEventBackgroundFilter: null,
+
 			CalEventSatColor: 'rgba(255, 255, 255, .05)',
 			CalEventSunColor: 'rgba(255, 255, 255, .15)',
 
@@ -501,8 +504,6 @@ class AtomicCalendarRevive extends LitElement {
 			CalEventIcon3: 'mdi:star',
 			CalEventIcon3Color: 'var(--primary-text-color)',
 			CalEventIcon3Filter: null,
-
-			CalActiveEventBackgroundColor: 'rgba(255, 69, 255, .50)',
 
 			firstDayOfWeek: 1, // default 1 - monday
 			blacklist: null,
@@ -925,8 +926,7 @@ class AtomicCalendarRevive extends LitElement {
 	handleEventSummary(day) {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
 
-		this.clickedDay = day.dayNumber;
-		console.log(day)
+		this.clickedDate = day.date;
 
 		this.eventSummary = events.map((eventItem, i, arr)=> {
 			return html `
@@ -972,7 +972,7 @@ class AtomicCalendarRevive extends LitElement {
 			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ``
 			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.CalEventSatColor}; ` : ``
 			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.CalEventSunColor}; ` : ``
-			const dayStyleClicked = (day.dayNumber == this.clickedDay) ? `background-color: ${this._config.CalActiveEventBackgroundColor};` : ``
+			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.CalActiveEventBackgroundColor};` : ``
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
 			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
