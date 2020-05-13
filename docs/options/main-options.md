@@ -25,3 +25,4 @@ nav_order: 1
 | disableEventLink | boolean | optional | v0.10.0 | `false` disables links in event title.
 | disableLocationLink | boolean | optional | v0.10.0 | `false` disables links in event location.
 | linkTarget | string | optional | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.
+| showCalNameInEvent | string | optional | ? | `false` Shows the event calendar name
