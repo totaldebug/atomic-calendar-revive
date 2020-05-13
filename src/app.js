@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.4.1';
+const CARD_VERSION = '1.4.2';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -116,23 +116,33 @@ class AtomicCalendarRevive extends LitElement {
 
 	  ${this.setStyle()}
 
-	  <ha-card class="cal-card">
-		<div class="cal-nameContainer">
-			${this._config.name
-				? html`
-					<div  class="cal-name"  @click='${e => this.handleToggle()}'>
-					${this._config.name}
-					</div>
-			  	`
-				: ""}
+		<ha-card class="cal-card">
+		${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
+			? html`
+			<div class="cal-nameContainer">
+				${this._config.name
+					? html`
+						<div  class="cal-name"  @click='${e => this.handleToggle()}'>
+						${this._config.name}
+						</div>
+						`
+					: ""}
 
-			${(this.showLoader && this._config.showLoader) ? html`
-				<div  class="loader" ></div>` : ''
-			}
-			<div class="calDate">
-				${(this._config.showDate) ? this.getDate() : null}
+				${(this.showLoader && this._config.showLoader) ? html`
+					<div  class="loader" ></div>` : ''
+				}
+				${this._config.showDate
+					? html`
+					<div class="calDate">
+					${this.getDate()}
+					</div>
+					`
+				:""}
 			</div>
-		</div>
+			`
+			:""
+		}
+
 		<div style="padding-top: 4px;">
 			${this.content}
 		</div>
@@ -701,14 +711,12 @@ class AtomicCalendarRevive extends LitElement {
 								</div>
 								<div class="event-location">
 									${this.getLocationHTML(event)}
+									${eventCalName}
 								</div>
 							</div>
 							<div class="event-right">
 								<div class="event-main" >
 									${descHTML}
-								</div>
-								<div class="event-location">
-									${eventCalName}
 								</div>
 							</div>
 							${progressBar}
@@ -1075,6 +1083,7 @@ class CalendarDay {
 		return this._holiday;
 
 	}
+
 	set icon1(eventName) {
 		this._icon1 = eventName;
 	}
