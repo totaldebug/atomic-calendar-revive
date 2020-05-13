@@ -23,5 +23,12 @@ If applicable, add screenshots to help explain your problem.
  - Plugin Version
  - Browser & Version [e.g. chrome, safari, chrome mobile etc.]
 
+**Card Configuration**
+Please provice a copy of your card configuration inside the code block:
+
+```yaml
+
+```
+
 **Additional context**
 Add any other context about the problem here.
