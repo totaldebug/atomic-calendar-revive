@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.4.2';
+const CARD_VERSION = '1.5.2';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -334,7 +334,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			td.cal {
 				padding: 5px 5px 5px 5px;
-				border: 1px solid ${this._config.CalGridColor};
+				border: 1px solid ${this._config.calGridColor};
 				text-align: center;
 				vertical-align: middle;
 				width:100%;
@@ -487,33 +487,37 @@ class AtomicCalendarRevive extends LitElement {
 			enableModeChange: false,
 			defaultMode: 1,
 
-			CalGridColor: 'rgba(86, 86, 86, .35)',
+			// Calendar Mode Default Settings
+
+			calGridColor: 'rgba(86, 86, 86, .35)',
 
 			calEventBulletColor: '#cc5500',
 
-			CalEventBackgroundColor: 'rgba(86, 100, 86, .35)',
-			CalEventBackgroundFilter: null,
+			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
+			calEventBackgroundFilter: null,
 
-			CalActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-			CalActiveEventBackgroundFilter: null,
+			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
+			calActiveEventBackgroundFilter: null,
 
-			CalEventSatColor: 'rgba(255, 255, 255, .05)',
-			CalEventSunColor: 'rgba(255, 255, 255, .15)',
+			calEventSatColor: 'rgba(255, 255, 255, .05)',
+			calEventSunColor: 'rgba(255, 255, 255, .15)',
 
-			CalEventHolidayColor: 'red',
-			CalEventHolidayFilter: null,
+			calEventHolidayColor: 'red',
+			calEventHolidayFilter: null,
 
-			CalEventIcon1: 'mdi:gift',
-			CalEventIcon1Color: 'var(--primary-text-color)',
-			CalEventIcon1Filter: null,
+			calEventIcon1: 'mdi:gift',
+			calEventIcon1Color: 'var(--primary-text-color)',
+			calEventIcon1Filter: null,
 
-			CalEventIcon2: 'mdi:home',
-			CalEventIcon2Color: 'var(--primary-text-color)',
-			CalEventIcon2Filter: null,
+			calEventIcon2: 'mdi:home',
+			calEventIcon2Color: 'var(--primary-text-color)',
+			calEventIcon2Filter: null,
 
-			CalEventIcon3: 'mdi:star',
-			CalEventIcon3Color: 'var(--primary-text-color)',
-			CalEventIcon3Filter: null,
+			calEventIcon3: 'mdi:star',
+			calEventIcon3Color: 'var(--primary-text-color)',
+			calEventIcon3Filter: null,
+
+			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
 			blacklist: null,
@@ -758,16 +762,14 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	checkFilter(str, filter) {
 		if(typeof filter != 'undefined' && filter!=''){
-		const keywords = filter.split(',')
-		return (keywords.some((keyword) => {
-			if (RegExp('(?:^|\\s)' + keyword.trim(), 'i').test(str))
-				return true
-			else return false
-		}))
-	} else return false
-
+			const keywords = filter.split(',')
+			return (keywords.some((keyword) => {
+				if (RegExp('(?:^|\\s)' + keyword.trim(), 'i').test(str))
+					return true
+				else return false
+			}))
+		} else return false
 	}
-
 
 	/**
 	 * gets events from HA Calendar to Events mode
@@ -825,8 +827,6 @@ class AtomicCalendarRevive extends LitElement {
 		}
 	}
 
-
-
 	/**
 	 * gets events from HA to Calendar mode
 	 *
@@ -856,23 +856,31 @@ class AtomicCalendarRevive extends LitElement {
 						const calendarUrl = calendarUrlList[i][0]
 						const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
 						const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
+						var filteredEvents = eventsArray.filter(
+							function (event) {
+								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
+								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
+								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
+									return event
+							}
+						)
+						m['allEvents'].push(filteredEvents)
 						eventsArray.map((event) => {
 							const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-
 							if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 								//checking for calendar type (icons) and keywords
 								try {
 									if (this.checkFilter('icon1', calendarTypes)){
-										if (!this._config.CalEventIcon1Filter || this.checkFilter(event.summary, this._config.CalEventIcon1Filter))
+										if (!this._config.calEventIcon1Filter || this.checkFilter(event.summary, this._config.calEventIcon1Filter))
 											m['icon1'].push(event.summary)
 									}
 									if (this.checkFilter('icon2', calendarTypes)){
-										if (!this._config.CalEventIcon2Filter || this.checkFilter(event.summary, this._config.CalEventIcon2Filter))
+										if (!this._config.calEventIcon2Filter || this.checkFilter(event.summary, this._config.calEventIcon2Filter))
 											m['icon2'].push(event.summary)
 									}
 									if (this.checkFilter('icon3', calendarTypes)){
-										if (!this._config.CalEventIcon3Filter || this.checkFilter(event.summary, this._config.CalEventIcon3Filter))
+										if (!this._config.calEventIcon3Filter || this.checkFilter(event.summary, this._config.calEventIcon3Filter))
 											m['icon3'].push(event.summary)
 
 									}
@@ -933,19 +941,20 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	handleEventSummary(day) {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
-
 		this.clickedDate = day.date;
-
-		this.eventSummary = events.map((eventItem, i, arr)=> {
-			return html `
+		this.eventSummary = day._allEvents.map((events, i, arr) => {
+			return events.map((event, i, err) => {
+				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
+				console.log(event)
+				return html`
 				<div class="summary-event-div">
-					<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
-					<span class="bullet-event-span">${eventItem}</span>
+						<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
+						<span class="bullet-event-span">${StartTime} - ${event.summary}</span>
 				</div>`
+			})
 		})
 
 		this.requestUpdate()
-
 	}
 
 	/**
@@ -976,14 +985,14 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.CalEventBackgroundColor};` : ``
-			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.CalEventHolidayColor}; ` : ``
-			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.CalEventSatColor}; ` : ``
-			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.CalEventSunColor}; ` : ``
-			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.CalActiveEventBackgroundColor};` : ``
-			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon1Color};" icon="${this._config.CalEventIcon1}"></ha-icon></span>` : ''
-			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon2Color};" icon="${this._config.CalEventIcon2}"></ha-icon></span>` : ''
-			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.CalEventIcon3Color};" icon="${this._config.CalEventIcon3}"></ha-icon></span>` : ''
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``
+			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.calEventHolidayColor}; ` : ``
+			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.calEventSatColor}; ` : ``
+			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.calEventSunColor}; ` : ``
+			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``
+			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.calEventIcon1Color};" icon="${this._config.calEventIcon1}"></ha-icon></span>` : ''
+			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.calEventIcon2Color};" icon="${this._config.calEventIcon2}"></ha-icon></span>` : ''
+			const dayIcon3 = (day.icon3 && day.icon3.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.calEventIcon3Color};" icon="${this._config.calEventIcon3}"></ha-icon></span>` : ''
 
 			if (i < 35 || showLastRow)
 				return html`
@@ -1060,6 +1069,7 @@ class CalendarDay {
 		this._icon1 = [];
 		this._icon2 = [];
 		this._icon3 = [];
+		this._allEvents = [];
 		this._daybackground = [];
 	}
 
@@ -1099,7 +1109,13 @@ class CalendarDay {
 	get icon2() {
 		return this._icon2;
 	}
+	set allEvents(events) {
+		this._allEvents = events;
+	}
 
+	get allEvents() {
+		return this._allEvents;
+	}
 
 	set icon3(eventName) {
 		this._icon3 = eventName;

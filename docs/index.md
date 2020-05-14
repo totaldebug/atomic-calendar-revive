@@ -68,5 +68,5 @@ Contributions & Support welcomed.
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
 
-[buymeacoffee-shield]: https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg
+[buymeacoffee-shield]: https://cdn.buymeacoffee.com/buttons/default-orange.png
 [buymeacoffee]: https://www.buymeacoffee.com/marksie1988

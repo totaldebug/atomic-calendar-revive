@@ -22,7 +22,7 @@ All documentation is now maintained [here](https://marksie1988.github.io/atomic-
 
 Contributions & Support is welcomed.
 
-[![coffee](https://www.buymeacoffee.com/assets/img/custom_images/black_img.png)](https://www.buymeacoffee.com/marksie1988)
+[![coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/marksie1988)
 
 
 ## About
