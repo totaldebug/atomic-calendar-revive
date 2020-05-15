@@ -22,3 +22,5 @@ nav_order: 4
 | CalEventIcon3Filter | string | v0.7.0 | `null` List of comma separated keywords
 | showLastCalendarWeek  | boolean | v0.7.5 | `false` If true it will always show 6 lines. If false, the 6th line won't be displayed if not needed.
 | calEventTime | bool | v1.5.0 | `false` If true the time will be shown on the event summary for the selected day
+| disableCalEventLink | bool | v1.5.0 | `false` If true the link will be disabled on the event summary for the selected day
+| disableCalLocationLink | bool | v1.5.0 | `false` If true the link will be disabled on the event location icon for the selected day
