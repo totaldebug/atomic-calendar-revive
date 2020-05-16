@@ -500,7 +500,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			calGridColor: 'rgba(86, 86, 86, .35)',
 
-			calEventBulletColor: '#cc5500',
+			defaultCalColor: '#cc5500',
 
 			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
 			calEventBackgroundFilter: null,
@@ -866,9 +866,11 @@ class AtomicCalendarRevive extends LitElement {
 		let calendarUrlList = []
 		this._config.entities.map(entity => {
 			if (typeof entity.type != 'undefined') {
-				calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.type,
-				typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
-				typeof entity.whitelist != 'undefined' ? entity.whitelist : ''
+				calendarUrlList.push([
+					`calendars/${entity.entity}?start=${start}Z&end=${end}Z`, entity.type,
+					typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
+					typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
+					typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor
 				])
 			}
 		})
@@ -882,17 +884,18 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarUrl = calendarUrlList[i][0]
 							const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
 							const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
+							const calendarColor = (typeof calendarUrlList[i][4] != 'undefined') ? calendarUrlList[i][4] : this._config.defaultCalColor
 							var filteredEvents = eventsArray.filter(function (event) {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-
+								//if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !checkFilter(event.summary, calendarBlacklist))
 								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
 									return event
 							}
 							)
 							var filteredEvents = filteredEvents.map(event => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
-								event['_config'] = {}
+								event['_config'] = { "color": calendarColor }
 								return event
 							})
 							m['allEvents'].push(filteredEvents)
@@ -974,13 +977,13 @@ class AtomicCalendarRevive extends LitElement {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
 		this.clickedDate = day.date;
 		this.eventSummary = day._allEvents.map((events, i, arr) => {
-			console.log(events)
 			return events.map((event, i, err) => {
 				//const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+				const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
 				const titleColor = 'yellow'
 				if (event.isFullDayEvent) {
 					return html`
-						<div class="summary-fullday-div" tabindex="0" style="background-color: ${this._config.calEventBulletColor}">
+						<div class="summary-fullday-div" tabindex="0" style="background-color: ${calColor}">
 							<span aria-hidden="true" class="c1wk3e">
 								<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 							</span>
@@ -989,7 +992,7 @@ class AtomicCalendarRevive extends LitElement {
 					const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
 					return html`
 						<div class="summary-event-div">
-							<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
+							<div class="bullet-event-div" style="border-color: ${calColor}"></div>
 							<span class="bullet-event-span" style="color: ${titleColor}">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 						</div > `
 				}
