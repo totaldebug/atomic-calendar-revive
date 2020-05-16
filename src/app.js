@@ -378,8 +378,16 @@ class AtomicCalendarRevive extends LitElement {
 				white-space: nowrap;
 				display: inline-block;
 				vertical-align: middle;
-				margin: 0 5px
+				margin: 0 5px;
 				text-decoration: none!important;
+			}
+			.summary-fullday-div{
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+				padding: 0 4px;
+				margin: 5px 0;
+    		height: 18px;
+    		line-height: 16px;
 			}
 
 			.calIcon {
@@ -563,7 +571,7 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getTitleHTML(event) {
 		const titletext = (this._config.showCalNameInEvent) ? event.eventClass.organizer.displayName + ": " + event.title : event.title
-
+		const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
 		if (this._config.disableEventLink || (event.link === null)) return html`
 		<div class="event-title" style="font-size: ${this._config.titleSize}%;color: ${titleColor}">${titletext}</div>
 		`
@@ -719,7 +727,7 @@ class AtomicCalendarRevive extends LitElement {
 				return html`
 
 					<tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
-						<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;"><div>
+						<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
 								<div>${(i === 0 && this._config.showMonth) ? event.startTimeToShow.format('MMM') : ''}</div>
 								<div>${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>
 								<div>${(i === 0 && this._config.showWeekDay) ? event.startTimeToShow.format('ddd') : ''}</div>
@@ -874,13 +882,13 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarUrl = calendarUrlList[i][0]
 							const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
 							const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
-							var filteredEvents = eventsArray.filter(function(event) {
-									const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
-									const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
+							var filteredEvents = eventsArray.filter(function (event) {
+								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
+								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 
-									if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
-										return event
-								}
+								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
+									return event
+							}
 							)
 							var filteredEvents = filteredEvents.map(event => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
@@ -966,14 +974,16 @@ class AtomicCalendarRevive extends LitElement {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
 		this.clickedDate = day.date;
 		this.eventSummary = day._allEvents.map((events, i, arr) => {
+			console.log(events)
 			return events.map((event, i, err) => {
 				//const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
 				const titleColor = 'yellow'
 				if (event.isFullDayEvent) {
 					return html`
-						<div class="summary-event-div">
-							<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
-							<span class="bullet-event-span" style="color: ${titleColor}">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+						<div class="summary-fullday-div" tabindex="0" style="background-color: ${this._config.calEventBulletColor}">
+							<span aria-hidden="true" class="c1wk3e">
+								<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+							</span>
 						</div>`
 				} else {
 					const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
@@ -981,7 +991,7 @@ class AtomicCalendarRevive extends LitElement {
 						<div class="summary-event-div">
 							<div class="bullet-event-div" style="border-color: ${this._config.calEventBulletColor}"></div>
 							<span class="bullet-event-span" style="color: ${titleColor}">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
-						</div>`
+						</div > `
 				}
 
 			})
@@ -996,16 +1006,15 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarHeaderHTML() {
 		return html`
-			<div class="calTitle">
-				<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title="left"></paper-icon-button>
-				<div style="display: inline-block; min-width: 9em;  text-align: center;">
-					<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.titleColor}" target="${this._config.linkTarget}">
-					${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
-					</a>
-				</div>
-				<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title="right"></paper-icon-button>
-			</div>
-		`
+						<div class="calTitle">
+							<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></paper-icon-button>
+								<div style="display: inline-block; min-width: 9em;  text-align: center;">
+									<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.titleColor}" target="${this._config.linkTarget}">
+										${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
+									</a>
+								</div>
+								<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></paper-icon-button>
+			</div >`
 	}
 
 	/**
@@ -1019,9 +1028,9 @@ class AtomicCalendarRevive extends LitElement {
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`
 			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``
-			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.calEventHolidayColor}; ` : ``
-			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.calEventSatColor}; ` : ``
-			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.calEventSunColor}; ` : ``
+			const dayHolidayStyle = (day.holiday && day.holiday.length > 0) ? `color: ${this._config.calEventHolidayColor};` : ``
+			const dayStyleSat = (moment(day.date).isoWeekday() == 6) ? `background-color: ${this._config.calEventSatColor};` : ``
+			const dayStyleSun = (moment(day.date).isoWeekday() == 7) ? `background-color: ${this._config.calEventSunColor};` : ``
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``
 			const dayIcon1 = (day.icon1 && day.icon1.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.calEventIcon1Color};" icon="${this._config.calEventIcon1}"></ha-icon></span>` : ''
 			const dayIcon2 = (day.icon2 && day.icon2.length > 0) ? html`<span><ha-icon class="calIcon" style="color: ${this._config.calEventIcon2Color};" icon="${this._config.calEventIcon2}"></ha-icon></span>` : ''
@@ -1029,18 +1038,19 @@ class AtomicCalendarRevive extends LitElement {
 
 			if (i < 35 || showLastRow)
 				return html`
-				${i % 7 === 0 ? html`<tr class="cal">` : ''}
+					${ i % 7 === 0 ? html`<tr class="cal">` : ''}
 					<td @click='${(e) => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
-							<div class="calDay" >
+						<div class="calDay">
 							<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^/]0./, '')}
 							</div>
 							<div>
 								${dayIcon1} ${dayIcon2} ${dayIcon3}
 							</div>
+						</div>
 					</td>
-				${i && (i % 6 === 0) ? html`</tr>` : ''}
-				`
+					${i && (i % 6 === 0) ? html`</tr>` : ''}
+					`
 		})
 
 	}
@@ -1062,28 +1072,27 @@ class AtomicCalendarRevive extends LitElement {
 		var weekDays = moment.weekdaysMin(true)
 
 		const htmlDayNames = weekDays.map((day) => html`
-			<th class="cal" style="padding-bottom: 8px; color:  ${this._config.titleColor};">${day}</th>`)
+						<th class="cal" style = "padding-bottom: 8px; color:  ${this._config.titleColor};" > ${day}</th> `)
 
 		this.content = html`
-			<div  class="calTitleContainer">
-				${this.getCalendarHeaderHTML()}
-			</div>
-			<div class="calTableContainer">
-				<table class="cal" style="color: ${this._config.titleColor};">
-					<thead>  <tr>
-						${htmlDayNames}
-					</tr>  </thead>
-					<tbody>
-						${this.getCalendarDaysHTML(month)}
-					</tbody>
-				</table>
-			</div>
-			<div style="font-size: 90%;">
-					${this.eventSummary}
-			</div>
+							<div class="calTitleContainer">
+								${ this.getCalendarHeaderHTML()}
+			</div >
+						<div class="calTableContainer">
+							<table class="cal" style="color: ${this._config.titleColor};">
+								<thead>  <tr>
+									${htmlDayNames}
+								</tr>  </thead>
+								<tbody>
+									${this.getCalendarDaysHTML(month)}
+								</tbody>
+							</table>
+						</div>
+						<div style="font-size: 90%;">
+							${this.eventSummary}
+						</div>
 			`
 	}
-
 }
 
 customElements.define('atomic-calendar-revive', AtomicCalendarRevive);
