@@ -384,6 +384,8 @@ class AtomicCalendarRevive extends LitElement {
 			.summary-fullday-div{
 				-webkit-border-radius: 5px;
 				border-radius: 5px;
+				border: 2px solid;
+				border-left: 7px solid;
 				padding: 0 4px;
 				margin: 5px 0;
     		height: 18px;
@@ -895,7 +897,7 @@ class AtomicCalendarRevive extends LitElement {
 							)
 							var filteredEvents = filteredEvents.map(event => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
-								event['_config'] = { "color": calendarColor }
+								event['_config'] = { "color": calendarColor, "titleColor": this._config.titleColor }
 								return event
 							})
 							m['allEvents'].push(filteredEvents)
@@ -978,12 +980,12 @@ class AtomicCalendarRevive extends LitElement {
 		this.clickedDate = day.date;
 		this.eventSummary = day._allEvents.map((events, i, arr) => {
 			return events.map((event, i, err) => {
-				//const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+				const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
 				const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
-				const titleColor = 'yellow'
+				//const titleColor = 'yellow'
 				if (event.isFullDayEvent) {
 					return html`
-						<div class="summary-fullday-div" tabindex="0" style="background-color: ${calColor}">
+						<div class="summary-fullday-div" tabindex="0" style="border-color: ${calColor}; ">
 							<span aria-hidden="true" class="c1wk3e">
 								<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 							</span>
