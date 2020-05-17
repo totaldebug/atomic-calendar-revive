@@ -890,7 +890,7 @@ class AtomicCalendarRevive extends LitElement {
 							var filteredEvents = eventsArray.filter(function (event) {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-								//if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !checkFilter(event.summary, calendarBlacklist))
+								//if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
 									return event
 							}
@@ -982,7 +982,6 @@ class AtomicCalendarRevive extends LitElement {
 			return events.map((event, i, err) => {
 				const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
 				const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
-				//const titleColor = 'yellow'
 				if (event.isFullDayEvent) {
 					return html`
 						<div class="summary-fullday-div" tabindex="0" style="border-color: ${calColor}; ">
