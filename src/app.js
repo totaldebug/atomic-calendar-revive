@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.5.2';
+const CARD_VERSION = '1.5.0';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -892,12 +892,11 @@ class AtomicCalendarRevive extends LitElement {
 								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
 									return event
 							})
-							filteredEvents.map((event) => {
+							var filteredEvents = filteredEvents.map((event) => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
 								event['_config'] = { "color": calendarColor, "titleColor": this._config.titleColor }
-								return event
+								return m['allEvents'].push(event)
 							})
-							m['allEvents'].push(filteredEvents)
 							eventsArray.map((event) => {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
@@ -975,27 +974,29 @@ class AtomicCalendarRevive extends LitElement {
 	handleEventSummary(day) {
 		let events = ([','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]))
 		this.clickedDate = day.date;
-		this.eventSummary = day._allEvents.map((events, i, arr) => {
-			return events.map((event, i, err) => {
-				const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
-				const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
-				if (event.isFullDayEvent) {
-					return html`
-						<div class="summary-fullday-div" tabindex="0" style="border-color: ${calColor}; ">
-							<span aria-hidden="true" class="c1wk3e">
-								<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
-							</span>
-						</div>`
-				} else {
-					const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
-					return html`
-						<div class="summary-event-div">
-							<div class="bullet-event-div" style="border-color: ${calColor}"></div>
-							<span class="bullet-event-span" style="color: ${titleColor}">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
-						</div > `
-				}
-
-			})
+		day._allEvents.sort(function (a, b) {
+			const leftStartTime = a.start.dateTime ? moment(a.start.dateTime) : moment(a.start.date).startOf('day')
+			const rightStartTime = b.start.dateTime ? moment(b.start.dateTime) : moment(b.start.date).startOf('day')
+			return moment(leftStartTime).diff(moment(rightStartTime))
+		})
+		this.eventSummary = day._allEvents.map((event, i, arr) => {
+			const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+			const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
+			if (event.isFullDayEvent) {
+				return html`
+					<div class="summary-fullday-div" tabindex="0" style="border-color: ${calColor}; ">
+						<span aria-hidden="true" class="c1wk3e">
+							<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+						</span>
+					</div>`
+			} else {
+				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
+				return html`
+					<div class="summary-event-div">
+						<div class="bullet-event-div" style="border-color: ${calColor}"></div>
+						<span class="bullet-event-span" style="color: ${titleColor}">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+					</div > `
+			}
 		})
 
 		this.requestUpdate()
