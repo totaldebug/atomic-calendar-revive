@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Dev Container
-parent: Development
-nav_order: 4
+parent: Contribute
+nav_order: 5
 ---
 
 # Devcontainer

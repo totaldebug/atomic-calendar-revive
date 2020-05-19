@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Getting Started
-parent: Development
+parent: Contribute
 nav_order: 3
 ---
 
