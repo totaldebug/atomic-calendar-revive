@@ -734,7 +734,7 @@ class AtomicCalendarRevive extends LitElement {
 								<div>${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>
 								<div>${(i === 0 && this._config.showWeekDay) ? event.startTimeToShow.format('ddd') : ''}</div>
 						</td>
-						<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle} ">
+						<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
 							<div>${currentEventLine}</div>
 							<div class="event-right">
 								<div class="event-main" >
@@ -876,7 +876,6 @@ class AtomicCalendarRevive extends LitElement {
 				])
 			}
 		})
-
 		Promise.all(calendarUrlList.map(url =>
 			this.hass.callApi('get', url[0]))).then((result) => {
 				if (monthToGet == this.monthToGet)
@@ -887,15 +886,14 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
 							const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
 							const calendarColor = (typeof calendarUrlList[i][4] != 'undefined') ? calendarUrlList[i][4] : this._config.defaultCalColor
-							var filteredEvents = eventsArray.filter(function (event) {
+							var filteredEvents = eventsArray.filter((event)=> {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-								//if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
-								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
+								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
+								//if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes)
 									return event
-							}
-							)
-							var filteredEvents = filteredEvents.map(event => {
+							})
+							filteredEvents.map((event) => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
 								event['_config'] = { "color": calendarColor, "titleColor": this._config.titleColor }
 								return event
