@@ -7,28 +7,54 @@ assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+<!--
 
-**To Reproduce**
-Steps to reproduce the behavior.
+Have you read Atomic Calendar Revive's bug reporting guide? By filing an Issue, you are expected to comply with it, including treating everyone with respect: https://marksie1988.github.io/atomic-calendar-revive/contribute/reporting-bugs.html
+
+-->
+
+### Prerequisites
+
+* [ ] Put an X between the brackets on this line if you have done all of the following:
+  * Checked the Quick Start documentation page and confirmed configuration is correct: <https://marksie1988.github.io/atomic-calendar-revive/quickstart.html>
+  * Checked the FAQs on documentation page for common solutions: <https://marksie1988.github.io/atomic-calendar-revive/faq.html>
+  * Checked that your issue isn't already filed: <https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue>
+
+### Describe the bug
+
+<!--A clear and concise description of what the bug is.-->
+
+### Steps to Reproduce
+
+1. <!-- First Step -->
+2. <!-- Second Step -->
+3. <!-- and so on… -->
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+
+<!-- What you expect to happen -->
+
+**Actual behavior:**
+
+<!-- What actually happens -->
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
 
-**Setup Information (please complete the following information):**
- - Plugin Version
- - Browser & Version [e.g. chrome, safari, chrome mobile etc.]
+<!-- screenshots of Gifs of the issue -->
 
 **Card Configuration**
-Please provice a copy of your card configuration inside the code block:
+
+<!-- A copy of the card configuration you are using -->
 
 ```yaml
 
 ```
 
-**Additional context**
-Add any other context about the problem here.
+### Versions
+
+* HomeAssistant Version:
+* Plugin Version:
+
+### Additional Information
+
+<!-- Any additional information, configuration or data that might be necessary to reproduce the issue. -->
