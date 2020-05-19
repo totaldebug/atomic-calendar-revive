@@ -1,8 +1,8 @@
 ---
 layout: default
 title: Documentation
-parent: Development
-nav_order: 5
+parent: Contribute
+nav_order: 7
 ---
 
 # Documentation

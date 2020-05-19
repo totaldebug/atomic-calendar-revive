@@ -3,7 +3,6 @@ An advanced calendar card for Home Assistant with Lovelace. (fixed to work with 
 
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
 
-
 [![GitHub Release][releases-shield]][releases]
 [![License][license-shield]](LICENSE.md)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
@@ -23,7 +22,6 @@ All documentation is now maintained [here](https://marksie1988.github.io/atomic-
 Contributions & Support is welcomed.
 
 [![coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/marksie1988)
-
 
 ## About
 
