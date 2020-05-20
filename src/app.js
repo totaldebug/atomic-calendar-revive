@@ -2,7 +2,7 @@
 import moment from 'moment';
 import 'moment/min/locales';
 
-const CARD_VERSION = '1.5.0';
+const CARD_VERSION = '1.5.1';
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -257,8 +257,9 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.event-location-icon {
-			    height: 15px;
-                width: 15px;
+				--mdc-icon-size: 15px;
+				height: 15px;
+        width: 15px;
 				margin-top: -2px;
 			}
 
@@ -283,8 +284,9 @@ class AtomicCalendarRevive extends LitElement {
 				font-size: ${this._config.eventCalNameSize}%;
 			}
 			.event-cal-name-icon {
-			    height: 15px;
-                width: 15px;
+				15px;
+			  height: 15px;
+        width: 15px;
 			}
 
 			.eventBar {
@@ -316,6 +318,7 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.nextEventIcon{
+				--mdc-icon-size: 10px;
 				width: 10px;
 				height: 10px;
 				float: left;
@@ -393,6 +396,7 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.calIcon {
+				--mdc-icon-size: 10px;
 				width: 10px;
 				height:10px;
 				padding-top: 0px;
