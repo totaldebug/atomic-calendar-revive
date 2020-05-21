@@ -15,8 +15,8 @@ Before creating bug reports, please check [this list](#before-submitting-a-bug-r
 
 ## Before Submitting A Bug Report
 
-* **Check the [QucikStart Guide](/quickstart).** You may have miss-configured the plugin and this is resulting in the issue you see
-* **Check the [FAQs](/faq)** for a list of common questions and problems.
+* **Check the [QucikStart Guide](/atomic-calendar-revive/quickstart).** You may have miss-configured the plugin and this is resulting in the issue you see
+* **Check the [FAQs](/atomic-calendar-revive/faq)** for a list of common questions and problems.
 * **Perform a [cursory search](https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue)** to see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one.
 
 ## How Do I Submit A (Good) Bug Report?

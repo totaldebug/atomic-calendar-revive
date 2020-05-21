@@ -36,10 +36,13 @@ This example is the most basic implementation, it will just show you a list of e
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
       type: icon1
+      color: green
     - entity: calendar.YOUR_CALENDAR1_HERE
-	    type: icon2
+      type: icon2
+      color: red
     - entity: calendar.YOUR_CALENDAR2_HERE
       type: holiday
+      color: blue
   enableModeChange: true
 
 ```
