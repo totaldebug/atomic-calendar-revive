@@ -1,8 +1,9 @@
 ﻿import { LitElement, html } from 'lit-element';
 import moment from 'moment';
 import 'moment/min/locales';
+import pkg from '../package.json';
 
-const CARD_VERSION = '1.5.1';
+const CARD_VERSION = pkg.version;
 
 function hasConfigOrEntityChanged(element, changedProps) {
 	if (changedProps.has("_config")) {
@@ -344,7 +345,7 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.calDay {
-				height: 30px;
+				max-height: 38px;
 				font-size: 95%;
 				max-width: 38px;
 				margin: auto;
