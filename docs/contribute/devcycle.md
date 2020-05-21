@@ -47,9 +47,25 @@ The branch should have a relevant short name e.g. patch-1 or bugfix-67 where the
 
 ---
 
-## Make changes & Test
+## Install dependencies
 
-Make the changes that you were planning in impelmenting
+from within the clone repository run `npm install`
+
+## Make changes & build
+
+1. Make the changes that you were planning in impelmenting in the files under `src/`
+2. Update the version number in package.json
+3. Run the command `npm run build`
+4. Rename the files:
+  `dist/app-editor.js` to `dist/atomic-calendar-revive-editor.js`
+  `dist/app.js` to `dist/atomic-calendar-revive.js`
+5. Amend the file `dist/atomic-calendar-revive.js` search for the text `app-editor.js` and change it to `atomic-calendar-revive-editor.js`
+
+## Testing
+
+You can either upload the files to a test HA Server as normal or if using devcontainer see below.
+
+### Test from devcontainer
 
 If using DevContainer you can test the files with `npm start`, the file will be accessible on http://127.0.0.1:5000/app.js
 

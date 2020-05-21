@@ -3,6 +3,10 @@ remote_theme: pmarsceill/just-the-docs
 title: Atomic Calendar Revive
 description: A Home Assistant Plugin to add a nice calendar view
 
+plugins:
+  - jemoji
+
+
 # Specific to this theme
 search_enabled: true
 search_tokenizer_separator: /[\s/]+/
