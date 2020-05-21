@@ -16,7 +16,7 @@ There are two ways of contributing to the documentation:
 - Editing the files on github.
 - Locally changing
 
-[Instructions on development cycle](/development/devcycle)
+[Instructions on development cycle](/atomic-calendar-revive/development/devcycle)
 
 ## Contents
 

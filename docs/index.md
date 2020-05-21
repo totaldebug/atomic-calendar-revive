@@ -14,7 +14,6 @@ It loads calendar events from Home Assistant - Google calendar component.
 
 It contains two types of views: `Events mode` and `Calendar mode`. You can switch or select the default one.
 
-
 ## What Can You Find Around Here
 
 - Check out the [Quick Start Guide](https://marksie1988.github.io/atomic-calendar-revive/quickstart.html) to get up and running.
@@ -59,7 +58,6 @@ It contains two types of views: `Events mode` and `Calendar mode`. You can switc
 - Show a traditional calendar (a table with 42 days) with configurable events icons like holiday, birthday
 - Quick overview of the following months
 - You can set keywords to show only important things, like birthday
-
 
 ## Contributions & Support
 
