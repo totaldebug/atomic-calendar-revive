@@ -285,7 +285,7 @@ class AtomicCalendarRevive extends LitElement {
 				font-size: ${this._config.eventCalNameSize}%;
 			}
 			.event-cal-name-icon {
-				15px;
+				width: 15px;
 			  height: 15px;
         width: 15px;
 			}
@@ -356,10 +356,8 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			ha-icon-button {
-				--mdc-icon-size: 10px;
-				width: 30px;
-				height: 30px;
-				padding: 4px;
+				--mdc-icon-size: 20px;
+				--mdc-icon-button-size: 25px;
 			}
 
 			.calTableContainer {
