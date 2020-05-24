@@ -285,7 +285,7 @@ class AtomicCalendarRevive extends LitElement {
 				font-size: ${this._config.eventCalNameSize}%;
 			}
 			.event-cal-name-icon {
-				15px;
+				width: 15px;
 			  height: 15px;
         width: 15px;
 			}
@@ -345,7 +345,7 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.calDay {
-				max-height: 38px;
+				height: 38px;
 				font-size: 95%;
 				max-width: 38px;
 				margin: auto;
@@ -355,10 +355,9 @@ class AtomicCalendarRevive extends LitElement {
 				width: 100%;
 			}
 
-			paper-icon-button {
-				width: 30px;
-				height: 30px;
-				padding: 4px;
+			ha-icon-button {
+				--mdc-icon-size: 20px;
+				--mdc-icon-button-size: 25px;
 			}
 
 			.calTableContainer {
@@ -891,7 +890,7 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarBlacklist = (typeof calendarUrlList[i][2] != 'undefined') ? calendarUrlList[i][2] : ''
 							const calendarWhitelist = (typeof calendarUrlList[i][3] != 'undefined') ? calendarUrlList[i][3] : ''
 							const calendarColor = (typeof calendarUrlList[i][4] != 'undefined') ? calendarUrlList[i][4] : this._config.defaultCalColor
-							var filteredEvents = eventsArray.filter((event)=> {
+							var filteredEvents = eventsArray.filter((event) => {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
 								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
@@ -1014,13 +1013,13 @@ class AtomicCalendarRevive extends LitElement {
 	getCalendarHeaderHTML() {
 		return html`
 						<div class="calTitle">
-							<paper-icon-button icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></paper-icon-button>
+							<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></ha-icon-button>
 								<div style="display: inline-block; min-width: 9em;  text-align: center;">
 									<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.titleColor}" target="${this._config.linkTarget}">
 										${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
 									</a>
 								</div>
-								<paper-icon-button icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></paper-icon-button>
+								<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></ha-icon-button>
 			</div >`
 	}
 

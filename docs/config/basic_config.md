@@ -8,6 +8,7 @@ nav_order: 1
 # Basic Configuration
 
 This example is the most basic implementation, it will just show you a list of events
+
 ```yaml
 - type: "custom:atomic-calendar-revive"
   entities:
@@ -15,7 +16,6 @@ This example is the most basic implementation, it will just show you a list of e
 ```
 
 ![screenshot](../assets/img/screenshots/basic_config_example.png)
-
 
 ## With Name
 
@@ -49,8 +49,8 @@ This example is the most basic implementation, it will just show you a list of e
 
 ![screenshot](../assets/img/screenshots/basic_config_calendar_example.png)
 
+### With both Events mode and Calendar mode, calendar is default
 
-### With both Events mode and Calendar mode, calendar is default:
 ```yaml
 - type: "custom:atomic-calendar-revive"
   name: "Calendar"
@@ -62,7 +62,7 @@ This example is the most basic implementation, it will just show you a list of e
   - entity: calendar.YOUR_CALENDAR_HERE
     type: icon2
   - entity: calendar.YOUR_CALENDAR1_HERE
-	  type: icon1,icon2
+    type: icon1,icon2
   - entity: calendar.YOUR_CALENDAR2_HERE
     type: holiday
 ```
