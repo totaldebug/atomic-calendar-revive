@@ -345,7 +345,7 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.calDay {
-				height: 38px;
+				max-height: 38px;
 				font-size: 95%;
 				max-width: 38px;
 				margin: auto;
