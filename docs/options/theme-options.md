@@ -13,8 +13,8 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | dateSize                      | integer | v0.3.0 | `90` Date text size (percent of default font)                                       |
 | timeColor                     | string  | v0.3.0 | `default color` Color of time (under the event title)                               |
 | timeSize                      | integer | v0.3.0 | `90` Time text size (percent of default font)                                       |
-| titleColor                    | string  | v0.3.0 | `default text color` Color of event title                                           |
-| titleSize                     | integer | v0.3.0 | `100` Event title text size (percent of default font)                               |
+| eventTitleColor               | string  | v0.3.0 | `default text color` Color of event title                                           |
+| eventTitleSize                | integer | v0.3.0 | `100` Event title text size (percent of default font)                               |
 | locationLinkColor             | string  | v0.3.0 | `default text color` Color of location link (right side)                            |
 | locationTextSize              | integer | v0.3.0 | `90` Location text size (percent of default font)                                   |
 | locationIconColor             | string  | v0.3.0 | `rgb(230, 124, 115)` Color of location icon                                         |
@@ -27,13 +27,17 @@ If you don't set colors, default theme colors will be used. If you use automatic
 | descSize                      | integer | v0.8.4 | `80` Description text size (percent of default font)                                |
 | eventCalNameColor             | string  | v1.2.0 | `default text color` color of `eventCalName` if set                                 |
 | eventCalNameSize              | integer | v1.2.0 | `90` text size of `eventCalName` if set (percent of default font)                   |
-| CalGridColor                  | string  | v1.3.0 | `rgba(86, 86, 86, .35)` color of calendar grid border                               |
-| CalEventBackgroundColor       | string  | v1.3.0 | `rgba(86, 100, 86, .35)` background color of todays calendar date                   |
+| calGridColor                  | string  | v1.3.0 | `rgba(86, 86, 86, .35)` color of calendar grid border                               |
+| calEventBackgroundColor       | string  | v1.3.0 | `rgba(86, 100, 86, .35)` background color of todays calendar date                   |
 | calEventBulletColor           | string  | v1.3.0 | `#cc5500` Sets bullet color for events on calendar day                              |
-| CalEventSatColor              | string  | v1.3.0 | `rgba(86, 86, 86, .05)` Sets Saturday to a different color                          |
-| CalEventSunColor              | string  | v1.3.0 | `rgba(255, 255, 255, .15)` Sets Sunday to a different color                         |
+| calEventSatColor              | string  | v1.3.0 | `rgba(86, 86, 86, .05)` Sets Saturday to a different color                          |
+| calEventSunColor              | string  | v1.3.0 | `rgba(255, 255, 255, .15)` Sets Sunday to a different color                         |
 | calActiveEventBackgroundColor | string  | v1.4.0 | `rgba(86, 128, 86, .35)` Sets selected day to different color                       |
 | defaultCalColor               | string  | v1.5.0 | `#cc5500` Sets the default calendar color if not set under the entity               |
+| calDayColor                   | string  | v1.6.0 | `default text color` Sets the calendar day number color                             |
+| nameColor                     | string  | v1.6.0 | `default text color` Sets the card name color                                       |
+| calWeekDayColor               | string  | v1.6.0 | `default text color` Sets the weekday title color in calendar mode                  |
+| calDateColor                  | string  | v1.6.0 | `default text color` Sets the date selector color in calendar mode                  |
 
 ## Entity Specific
 

@@ -161,6 +161,139 @@ class AtomicCalendarRevive extends LitElement {
 		}
 	}
 
+	getDate() {
+		const date = moment().format(this._config.dateFormat)
+		return html`${date}`
+	}
+
+	setConfig(config) {
+		config = JSON.parse(JSON.stringify(config));
+		if (!config.entities) {
+			throw new Error('Please define atomic-calendar-revive card entity');
+		}
+		this._config = {
+			// text translations
+			fullDayEventText: 'All day', // "All day" custom text
+			untilText: 'Until', // "Until" custom text
+			language: '',
+
+			// main settings
+			showColors: true, // show calendar title colors, if set in config (each calendar separately)
+			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
+			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
+			showLoader: true, // show animation when loading events from Google calendar
+
+			showLocation: true, // show location (right side)
+			showMonth: false, // show month under day (left side)
+			showWeekDay: false, // show day name under day (left side)
+			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
+			showCurrentEventLine: false, // show a line between last and next event
+			showDate: false,
+			dateFormat: 'LL',
+			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
+			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
+			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
+			showCalNameInEvent: false,
+			sortByStartTime: false, // sort first by calendar, then by time
+			disableEventLink: false, // disables links to event calendar
+			disableLocationLink: false, // disables links to event calendar
+			linkTarget: '_blank', // Target for links, can use any HTML target type
+
+			// color and font settings
+			dateColor: 'var(--primary-text-color)', // Date text color (left side)
+			dateSize: 90, //Date text size (percent of standard text)
+
+			descColor: 'var(--primary-text-color)', // Description text color (left side)
+			descSize: 80, //Description text size (percent of standard text)
+
+			showNoEventsForToday: false,
+			noEventsForTodayText: 'No events for today',
+			noEventsForNextDaysText: 'No events in the next days',
+
+			timeColor: 'var(--primary-color)', // Time text color (center bottom)
+			timeSize: 90, //Time text size
+			showHours: true, //shows the bottom line (time, duration of event)
+
+			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
+			eventTitleSize: 100,
+
+			locationIconColor: 'rgb(230, 124, 115)', //Location link settings (right side)
+			locationLinkColor: 'var(--primary-text-color)',
+			locationTextSize: 90,
+
+			// finished events settings
+			hideFinishedEvents: false, // show finished events
+			dimFinishedEvents: true, // make finished events greyed out or set opacity
+			finishedEventOpacity: 0.6, // opacity level
+			finishedEventFilter: 'grayscale(100%)', // css filter
+
+			// days separating
+			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
+			eventBarColor: 'var(--primary-color)',
+
+			eventCalNameColor: 'var(--primary-text-color)',
+			eventCalNameSize: 90,
+
+			showProgressBar: true,
+			progressBarColor: 'var(--primary-color)',
+
+			enableModeChange: false,
+			defaultMode: 1,
+
+			// Calendar Mode Default Settings
+
+			calGridColor: 'rgba(86, 86, 86, .35)',
+			calDayColor: 'var(--primary-text-color)',
+			calWeekDayColor: 'var(--primary-text-color)',
+
+			defaultCalColor: '#cc5500',
+
+			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
+			calEventBackgroundFilter: null,
+
+			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
+			calActiveEventBackgroundFilter: null,
+
+			calEventSatColor: 'rgba(255, 255, 255, .05)',
+			calEventSunColor: 'rgba(255, 255, 255, .15)',
+
+			calEventHolidayColor: 'red',
+			calEventHolidayFilter: null,
+
+			calEventIcon1: 'mdi:gift',
+			calEventIcon1Color: 'var(--primary-text-color)',
+			calEventIcon1Filter: null,
+
+			calEventIcon2: 'mdi:home',
+			calEventIcon2Color: 'var(--primary-text-color)',
+			calEventIcon2Filter: null,
+
+			calEventIcon3: 'mdi:star',
+			calEventIcon3Color: 'var(--primary-text-color)',
+			calEventIcon3Filter: null,
+
+			calEventTime: false, // show calendar event summary time
+
+			firstDayOfWeek: 1, // default 1 - monday
+			blacklist: null,
+			whitelist: null,
+			...config
+		}
+
+		this.modeToggle = this._config.defaultMode
+
+		if (typeof this._config.entities === 'string')
+			this._config.entities = [{
+				entity: config.entities
+			}];
+		this._config.entities.forEach((entity, i) => {
+			if (typeof entity === 'string')
+				this._config.entities[i] = {
+					entity: entity
+				};
+		});
+	}
+
 	setStyle() {
 		return html`
 		<style>
@@ -171,7 +304,7 @@ class AtomicCalendarRevive extends LitElement {
 
 			.cal-name {
 				font-size: var(--paper-font-headline_-_font-size);
-				color: var(--primary-text-color);
+				color: ${this._config.nameColor};
 				padding: 4px 8px 12px 0px;
 				line-height: 40px;
 				cursor: default;
@@ -358,6 +491,7 @@ class AtomicCalendarRevive extends LitElement {
 			ha-icon-button {
 				--mdc-icon-size: 20px;
 				--mdc-icon-button-size: 25px;
+				color: ${this._config.calDateColor};
 			}
 
 			.calTableContainer {
@@ -423,138 +557,6 @@ class AtomicCalendarRevive extends LitElement {
 		`
 	}
 
-	getDate() {
-		const date = moment().format(this._config.dateFormat)
-		return html`${date}`
-	}
-
-	setConfig(config) {
-		config = JSON.parse(JSON.stringify(config));
-		if (!config.entities) {
-			throw new Error('Please define atomic-calendar-revive card entity');
-		}
-		this._config = {
-			// text translations
-			fullDayEventText: 'All day', // "All day" custom text
-			untilText: 'Until', // "Until" custom text
-			language: '',
-
-			// main settings
-			showColors: true, // show calendar title colors, if set in config (each calendar separately)
-			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
-			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
-			showLoader: true, // show animation when loading events from Google calendar
-
-			showLocation: true, // show location (right side)
-			showMonth: false, // show month under day (left side)
-			showWeekDay: false, // show day name under day (left side)
-			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
-			showCurrentEventLine: false, // show a line between last and next event
-			showDate: false,
-			dateFormat: 'LL',
-			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
-			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
-			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
-			showCalNameInEvent: false,
-			sortByStartTime: false, // sort first by calendar, then by time
-			disableEventLink: false, // disables links to event calendar
-			disableLocationLink: false, // disables links to event calendar
-			linkTarget: '_blank', // Target for links, can use any HTML target type
-
-			// color and font settings
-			dateColor: 'var(--primary-text-color)', // Date text color (left side)
-			dateSize: 90, //Date text size (percent of standard text)
-
-			descColor: 'var(--primary-text-color)', // Description text color (left side)
-			descSize: 80, //Description text size (percent of standard text)
-
-			showNoEventsForToday: false,
-			noEventsForTodayText: 'No events for today',
-			noEventsForNextDaysText: 'No events in the next days',
-
-			timeColor: 'var(--primary-color)', // Time text color (center bottom)
-			timeSize: 90, //Time text size
-			showHours: true, //shows the bottom line (time, duration of event)
-
-			titleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
-			titleSize: 100,
-
-			locationIconColor: 'rgb(230, 124, 115)', //Location link settings (right side)
-			locationLinkColor: 'var(--primary-text-color)',
-			locationTextSize: 90,
-
-			// finished events settings
-			hideFinishedEvents: false, // show finished events
-			dimFinishedEvents: true, // make finished events greyed out or set opacity
-			finishedEventOpacity: 0.6, // opacity level
-			finishedEventFilter: 'grayscale(100%)', // css filter
-
-			// days separating
-			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
-			eventBarColor: 'var(--primary-color)',
-
-			eventCalNameColor: 'var(--primary-text-color)',
-			eventCalNameSize: 90,
-
-			showProgressBar: true,
-			progressBarColor: 'var(--primary-color)',
-
-			enableModeChange: false,
-			defaultMode: 1,
-
-			// Calendar Mode Default Settings
-
-			calGridColor: 'rgba(86, 86, 86, .35)',
-
-			defaultCalColor: '#cc5500',
-
-			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
-			calEventBackgroundFilter: null,
-
-			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-			calActiveEventBackgroundFilter: null,
-
-			calEventSatColor: 'rgba(255, 255, 255, .05)',
-			calEventSunColor: 'rgba(255, 255, 255, .15)',
-
-			calEventHolidayColor: 'red',
-			calEventHolidayFilter: null,
-
-			calEventIcon1: 'mdi:gift',
-			calEventIcon1Color: 'var(--primary-text-color)',
-			calEventIcon1Filter: null,
-
-			calEventIcon2: 'mdi:home',
-			calEventIcon2Color: 'var(--primary-text-color)',
-			calEventIcon2Filter: null,
-
-			calEventIcon3: 'mdi:star',
-			calEventIcon3Color: 'var(--primary-text-color)',
-			calEventIcon3Filter: null,
-
-			calEventTime: false, // show calendar event summary time
-
-			firstDayOfWeek: 1, // default 1 - monday
-			blacklist: null,
-			whitelist: null,
-			...config
-		}
-
-		this.modeToggle = this._config.defaultMode
-
-		if (typeof this._config.entities === 'string')
-			this._config.entities = [{
-				entity: config.entities
-			}];
-		this._config.entities.forEach((entity, i) => {
-			if (typeof entity === 'string')
-				this._config.entities[i] = {
-					entity: entity
-				};
-		});
-
-
-	}
 	shouldUpdate(changedProps) {
 		return hasConfigOrEntityChanged(this, changedProps);
 	}
@@ -577,7 +579,7 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getTitleHTML(event) {
 		const titletext = (this._config.showCalNameInEvent) ? event.eventClass.organizer.displayName + ": " + event.title : event.title
-		const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+		const titleColor = (this._config.showColors && typeof event._config.eventTitleColor != 'undefined') ? event._config.eventTitleColor : this._config.eventTitleColor
 		if (this._config.disableEventLink || (event.link === null)) return html`
 		<div class="event-title" style="font-size: ${this._config.titleSize}%;color: ${titleColor}">${titletext}</div>
 		`
@@ -587,7 +589,7 @@ class AtomicCalendarRevive extends LitElement {
 		`
 	}
 	getCalTitleHTML(event) {
-		const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+		const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
 		//const titleColor = 'yellow'
 		if (this._config.disableCalEventLink || (event.htmlLink === null)) return html`
 		${event.summary}
@@ -898,7 +900,7 @@ class AtomicCalendarRevive extends LitElement {
 							})
 							var filteredEvents = filteredEvents.map((event) => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
-								event['_config'] = { "color": calendarColor, "titleColor": this._config.titleColor }
+								event['_config'] = { "color": calendarColor, "titleColor": this._config.eventTitleColor }
 								return m['allEvents'].push(event)
 							})
 							eventsArray.map((event) => {
@@ -984,7 +986,7 @@ class AtomicCalendarRevive extends LitElement {
 			return moment(leftStartTime).diff(moment(rightStartTime))
 		})
 		this.eventSummary = day._allEvents.map((event, i, arr) => {
-			const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.titleColor
+			const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
 			const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
 			if (event.isFullDayEvent) {
 				return html`
@@ -1015,7 +1017,7 @@ class AtomicCalendarRevive extends LitElement {
 						<div class="calTitle">
 							<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></ha-icon-button>
 								<div style="display: inline-block; min-width: 9em;  text-align: center;">
-									<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.titleColor}" target="${this._config.linkTarget}">
+									<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.calDateColor}" target="${this._config.linkTarget}">
 										${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
 									</a>
 								</div>
@@ -1045,7 +1047,7 @@ class AtomicCalendarRevive extends LitElement {
 			if (i < 35 || showLastRow)
 				return html`
 					${ i % 7 === 0 ? html`<tr class="cal">` : ''}
-					<td @click='${(e) => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.titleColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
+					<td @click='${(e) => this.handleEventSummary(day)}' class="cal" style="color: ${this._config.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
 						<div class="calDay">
 							<div style="position: relative; top: 5%; ">
 								${(day.dayNumber).replace(/^0|[^/]0./, '')}
@@ -1078,14 +1080,14 @@ class AtomicCalendarRevive extends LitElement {
 		var weekDays = moment.weekdaysMin(true)
 
 		const htmlDayNames = weekDays.map((day) => html`
-						<th class="cal" style = "padding-bottom: 8px; color:  ${this._config.titleColor};" > ${day}</th> `)
+						<th class="cal" style = "padding-bottom: 8px; color:  ${this._config.calWeekDayColor};" > ${day}</th> `)
 
 		this.content = html`
 							<div class="calTitleContainer">
 								${ this.getCalendarHeaderHTML()}
 			</div >
 						<div class="calTableContainer">
-							<table class="cal" style="color: ${this._config.titleColor};">
+							<table class="cal" style="color: ${this._config.eventTitleColor};">
 								<thead>  <tr>
 									${htmlDayNames}
 								</tr>  </thead>
@@ -1198,8 +1200,8 @@ class EventClass {
 	}
 
 	get titleColor() {
-		if (this._config.titleColor)
-			return this._config.titleColor;
+		if (this._config.eventTitleColor)
+			return this._config.eventTitleColor;
 		else return 'var(--primary-text-color)';
 	}
 

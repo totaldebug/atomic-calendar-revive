@@ -4,6 +4,7 @@ title: Advanced Config
 parent: Config Examples
 nav_order: 3
 ---
+
 # Advanced Config
 
 ## Advanced config with all options, colors changed and progress bar enabled:
@@ -12,9 +13,9 @@ nav_order: 3
 - type: "custom:atomic-calendar-revive"
   name: "Calendar"
   entities:
-  - entity: calendar.YOUR_CALENDARS_HERE
-  fullDayEventText: 'All day'
-  untilText: 'Until'
+    - entity: calendar.YOUR_CALENDARS_HERE
+  fullDayEventText: "All day"
+  untilText: "Until"
   showColors: true
   maxDaysToShow: 7
   showLocation: true
@@ -26,12 +27,12 @@ nav_order: 3
   timeSize: 90
   titleColor: black
   titleSize: 100
-  locationIconColor: 'rgb(230, 124, 115)'
+  locationIconColor: "rgb(230, 124, 115)"
   locationLinkColor: black
   locationTextSize: 90
   dimFinishedEvents: true
   finishedEventOpacity: 0.6
-  finishedEventFilter: 'grayscale(100%)'
+  finishedEventFilter: "grayscale(100%)"
   dayWrapperLineColor: black
   eventBarColor: blue
   showProgressBar: true
