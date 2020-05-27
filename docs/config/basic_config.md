@@ -44,7 +44,6 @@ This example is the most basic implementation, it will just show you a list of e
       type: holiday
       color: blue
   enableModeChange: true
-
 ```
 
 ![screenshot](../assets/img/screenshots/basic_config_calendar_example.png)
@@ -59,10 +58,10 @@ This example is the most basic implementation, it will just show you a list of e
   CalEventIcon1Filter: birthday
   CalEventIcon2Filter: waste,bills
   entities:
-  - entity: calendar.YOUR_CALENDAR_HERE
-    type: icon2
-  - entity: calendar.YOUR_CALENDAR1_HERE
-    type: icon1,icon2
-  - entity: calendar.YOUR_CALENDAR2_HERE
-    type: holiday
+    - entity: calendar.YOUR_CALENDAR_HERE
+      type: icon2
+    - entity: calendar.YOUR_CALENDAR1_HERE
+      type: icon1,icon2
+    - entity: calendar.YOUR_CALENDAR2_HERE
+      type: holiday
 ```

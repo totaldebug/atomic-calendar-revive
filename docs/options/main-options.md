@@ -8,7 +8,7 @@ nav_order: 1
 | Name                 |  Type   |   Default    |  Since  | Description                                                                                                                                              |
 | -------------------- | :-----: | :----------: | :-----: | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | type                 | string  | **required** | v0.3.0  | `custom:atomic-calendar`                                                                                                                                 |
-| entities             |  list   | **required** | v0.3.0  | One or more calendars, configured in HA [Google Calendar Component][GoogleCalComp]                                                                       |
+| entities             |  list   | **required** | v0.3.0  | One or more calendars, configured in HA [Google Calendar Component][googlecalcomp]                                                                       |
 | name                 | string  |   optional   | v0.12.0 | Card name.                                                                                                                                               |
 | showColors           | boolean |   optional   | v0.3.0  | `true` Show colors in events, configured in entities list                                                                                                |
 | maxDaysToShow        | integer |   optional   | v0.3.0  | `7` Maximum number of days to show; if set to zero will only display currently running events                                                            |
@@ -27,4 +27,4 @@ nav_order: 1
 | linkTarget           | string  |   optional   | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.                                                                                      |
 | showCalNameInEvent   | string  |   optional   |    ?    | `false` Shows the event calendar name                                                                                                                    |
 
-[GoogleCalComp]: https://www.home-assistant.io/components/calendar.google/
+[googlecalcomp]: https://www.home-assistant.io/components/calendar.google/
