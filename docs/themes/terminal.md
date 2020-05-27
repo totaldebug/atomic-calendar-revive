@@ -11,8 +11,7 @@ This color theme makes the calendar look like a terminal window.
 
 ## Screenshots
 
-![screenshot](../assets/img/screenshots/theme_terminal_event_view.png)
-![screenshot](../assets/img/screenshots/theme_terminal_cal_view.png)
+![screenshot](../assets/img/screenshots/theme_terminal_event_view.png) ![screenshot](../assets/img/screenshots/theme_terminal_cal_view.png)
 
 ## Code
 
