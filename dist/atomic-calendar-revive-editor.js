@@ -13,21 +13,21 @@ const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0==
 
           <h3>Basic Settings</h3>
           <ha-switch
-          aria-label=${`Toggle Loader ${this._showLoader?"off":"on"}`}
+          aria-label=${"Toggle Loader "+(this._showLoader?"off":"on")}
           .checked=${!1!==this._showLoader}
           .configValue=${"showLoader"}
           @change=${this._valueChanged}
           >Show Loader</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Date ${this._showDate?"on":"off"}`}
+          aria-label=${"Toggle Date "+(this._showDate?"on":"off")}
           .checked=${!1!==this._showDate}
           .configValue=${"showDate"}
           @change=${this._valueChanged}
           >Show Date</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Colors ${this._showColors?"off":"on"}`}
+          aria-label=${"Toggle Colors "+(this._showColors?"off":"on")}
           .checked=${!1!==this._showColors}
           .configValue=${"showColors"}
           @change=${this._valueChanged}
@@ -36,56 +36,56 @@ const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0==
 
           <h3>Event Mode</h3>
           <ha-switch
-          aria-label=${`Toggle Month ${this._showMonth?"on":"off"}`}
+          aria-label=${"Toggle Month "+(this._showMonth?"on":"off")}
           .checked=${!1!==this._showMonth}
           .configValue=${"showMonth"}
           @change=${this._valueChanged}
           >Show Month</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Week Day ${this._showWeekDay?"on":"off"}`}
+          aria-label=${"Toggle Week Day "+(this._showWeekDay?"on":"off")}
           .checked=${!1!==this._showWeekDay}
           .configValue=${"showWeekDay"}
           @change=${this._valueChanged}
           >Show Week Day</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Location ${this._showLocation?"off":"on"}`}
+          aria-label=${"Toggle Location "+(this._showLocation?"off":"on")}
           .checked=${!1!==this._showLocation}
           .configValue=${"showLocation"}
           @change=${this._valueChanged}
           >Show Location</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle No Events Today  ${this._showNoEventsForToday?"on":"off"}`}
+          aria-label=${"Toggle No Events Today  "+(this._showNoEventsForToday?"on":"off")}
           .checked=${!1!==this._showNoEventsForToday}
           .configValue=${"showNoEventsForToday"}
           @change=${this._valueChanged}
           >Show 'No Events Today'</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Description  ${this._showDescription?"on":"off"}`}
+          aria-label=${"Toggle Description  "+(this._showDescription?"on":"off")}
           .checked=${!1!==this._showDescription}
           .configValue=${"showDescription"}
           @change=${this._valueChanged}
           >Show Description</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle sort by start time  ${this._sortByStartTime?"on":"off"}`}
+          aria-label=${"Toggle sort by start time  "+(this._sortByStartTime?"on":"off")}
           .checked=${!1!==this._sortByStartTime}
           .configValue=${"sortByStartTime"}
           @change=${this._valueChanged}
           >Sort by Start Time</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle event link  ${this._disableEventLink?"on":"off"}`}
+          aria-label=${"Toggle event link  "+(this._disableEventLink?"on":"off")}
           .checked=${!1!==this._disableEventLink}
           .configValue=${"disableEventLink"}
           @change=${this._valueChanged}
           >Disable Event Link URL</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle location link  ${this._disableLocationLink?"on":"off"}`}
+          aria-label=${"Toggle location link  "+(this._disableLocationLink?"on":"off")}
           .checked=${!1!==this._disableLocationLink}
           .configValue=${"disableLocationLink"}
           @change=${this._valueChanged}
@@ -106,7 +106,7 @@ const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0==
             </div>
         </div>
       </div>
-    `:i``}_addEntity(t){const i=t.target;if(""===i.value)return;const o=this[`_${i.configValue}`].concat({entity:i.value});i.value="",e(this,"entities-changed",{entities:o})}_valueChanged(t){if(!this._config||!this.hass)return;const i=t.target;this[`_${i.configValue}`]!==i.value&&(i.configValue&&(""===i.value?delete this._config[i.configValue]:this._config={...this._config,[i.configValue]:void 0!==i.checked?i.checked:i.value}),e(this,"config-changed",{config:this._config}))}static get styles(){return o`
+    `:i``}_addEntity(t){const i=t.target;if(""===i.value)return;const o=this["_"+i.configValue].concat({entity:i.value});i.value="",e(this,"entities-changed",{entities:o})}_valueChanged(t){if(!this._config||!this.hass)return;const i=t.target;this["_"+i.configValue]!==i.value&&(i.configValue&&(""===i.value?delete this._config[i.configValue]:this._config={...this._config,[i.configValue]:void 0!==i.checked?i.checked:i.value}),e(this,"config-changed",{config:this._config}))}static get styles(){return o`
       ha-switch {
         padding-top: 16px;
       }
