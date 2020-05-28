@@ -200,6 +200,8 @@ class AtomicCalendarRevive extends LitElement {
 			linkTarget: '_blank', // Target for links, can use any HTML target type
 
 			// color and font settings
+			nameColor: 'var(--primary-text-color)', // Card Name color
+
 			dateColor: 'var(--primary-text-color)', // Date text color (left side)
 			dateSize: 90, //Date text size (percent of standard text)
 
@@ -217,7 +219,7 @@ class AtomicCalendarRevive extends LitElement {
 			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 			eventTitleSize: 100,
 
-			locationIconColor: 'rgb(230, 124, 115)', //Location link settings (right side)
+			locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
 			locationLinkColor: 'var(--primary-text-color)',
 			locationTextSize: 90,
 
@@ -245,8 +247,8 @@ class AtomicCalendarRevive extends LitElement {
 			calGridColor: 'rgba(86, 86, 86, .35)',
 			calDayColor: 'var(--primary-text-color)',
 			calWeekDayColor: 'var(--primary-text-color)',
-
-			defaultCalColor: '#cc5500',
+			calDateColor: 'var(--primary-text-color)',
+			defaultCalColor: 'var(--primary-text-color)',
 
 			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
 			calEventBackgroundFilter: null,
@@ -257,19 +259,20 @@ class AtomicCalendarRevive extends LitElement {
 			calEventSatColor: 'rgba(255, 255, 255, .05)',
 			calEventSunColor: 'rgba(255, 255, 255, .15)',
 
+
 			calEventHolidayColor: 'red',
 			calEventHolidayFilter: null,
 
 			calEventIcon1: 'mdi:gift',
-			calEventIcon1Color: 'var(--primary-text-color)',
+			calEventIcon1Color: 'var(--primary-color)',
 			calEventIcon1Filter: null,
 
 			calEventIcon2: 'mdi:home',
-			calEventIcon2Color: 'var(--primary-text-color)',
+			calEventIcon2Color: 'var(--primary-color)',
 			calEventIcon2Filter: null,
 
 			calEventIcon3: 'mdi:star',
-			calEventIcon3Color: 'var(--primary-text-color)',
+			calEventIcon3Color: 'var(--primary-color)',
 			calEventIcon3Filter: null,
 
 			calEventTime: false, // show calendar event summary time
@@ -428,37 +431,22 @@ class AtomicCalendarRevive extends LitElement {
 				margin-bottom: 0px;
 			}
 
-			hr.progress {
-				margin: -8px 0px 2px 0px;
-				border-width: 1px 0 0 0;
-			}
-
 			.progress-container {
 				margin-top: -5px;
 			}
 
 			.progress-circle {
-				width: 10px;
-				height: 10px;
+				--mdc-icon-size: 8px;
 				color: ${this._config.progressBarColor};
 				margin-left: -2px
 
 			}
 
-			.progressBar {
-				margin-top: -5px;
-				margin-bottom: -2px;
+			hr.progressBar {
+				margin: -10px 0px 2px 0px;
+				border-width: 1px 0 0 0;
 				border-color: ${this._config.progressBarColor};
 			}
-
-			.nextEventIcon{
-				--mdc-icon-size: 10px;
-				width: 10px;
-				height: 10px;
-				float: left;
-				display: block;
-				margin-left: -14px;
-      }
 
 			table.cal{
 				margin-left: 0px;
@@ -722,7 +710,7 @@ class AtomicCalendarRevive extends LitElement {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
 					let eventPercentProgress = Math.floor((eventProgress * 100) / eventDuration);
-					progressBar = html`<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progress" style="color: ${this._config.progressBarColor};border-color: ${this._config.progressBarColor};" /></div>`;
+					progressBar = html`<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progressBar" /></div>`;
 
 				}
 
