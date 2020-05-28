@@ -527,6 +527,12 @@ class AtomicCalendarRevive extends LitElement {
 				margin-left: -1px;
 			}
 
+			.calDateSelector {
+				display: inline-block;
+				min-width: 9em;
+				text-align: center;
+			}
+
 			.loader {
 				border: 4px solid #f3f3f3;
 				border-top: 4px solid grey;
@@ -1002,14 +1008,12 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarHeaderHTML() {
 		return html`
-						<div class="calTitle">
-							<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></ha-icon-button>
-								<div style="display: inline-block; min-width: 9em;  text-align: center;">
-									<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.calDateColor}" target="${this._config.linkTarget}">
-										${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
-									</a>
-								</div>
-								<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></ha-icon-button>
+			<div class="calDateSelector">
+				<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></ha-icon-button>
+				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.calDateColor};position:relative; top:3px;" target="${this._config.linkTarget}">
+					${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
+				</a>
+				<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></ha-icon-button>
 			</div >`
 	}
 
