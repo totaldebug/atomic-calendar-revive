@@ -237,6 +237,7 @@ class AtomicCalendarRevive extends LitElement {
 			eventCalNameSize: 90,
 
 			showProgressBar: true,
+			showFullDayProgress: false,
 			progressBarColor: 'var(--primary-color)',
 
 			enableModeChange: false,
@@ -712,7 +713,7 @@ class AtomicCalendarRevive extends LitElement {
 
 				//show current event progress bar
 				var progressBar = ``
-				if (di == 0 && this._config.showProgressBar && event.isEventRunning) {
+				if (di == 0 && this._config.showProgressBar && event.isEventRunning && (this._config.showFullDayProgress && event.isFullDayEvent)) {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
 					let eventPercentProgress = Math.floor((eventProgress * 100) / eventDuration);
@@ -1010,7 +1011,7 @@ class AtomicCalendarRevive extends LitElement {
 		return html`
 			<div class="calDateSelector">
 				<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click='${e => this.handleMonthChange(-1)}' title = "left" ></ha-icon-button>
-				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.calDateColor};position:relative; top:3px;" target="${this._config.linkTarget}">
+				<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1" style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;" target="${this._config.linkTarget}">
 					${moment(this.selectedMonth).locale(this.language).format('MMMM')}  ${moment(this.selectedMonth).format('YYYY')}
 				</a>
 				<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click='${e => this.handleMonthChange(1)}' title = "right" ></ha-icon-button>

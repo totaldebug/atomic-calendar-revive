@@ -52,8 +52,8 @@ Then you need to use:
 
 # New pages
 
-* Create a new .md file under the directory docs/ in a sub-directory if required that fits the purpose of the file.
-* At the top of all pages you should have this:
+- Create a new .md file under the directory docs/ in a sub-directory if required that fits the purpose of the file.
+- At the top of all pages you should have this:
 
 ```md
 ---

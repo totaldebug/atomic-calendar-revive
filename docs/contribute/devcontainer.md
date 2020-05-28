@@ -17,9 +17,9 @@ The easiest way to contribute is to spin up a devcontainer with Visual Studio Co
 
 # Fork the Repo
 
-* Fork the Atomic Calendar Repo
-* Clone the repository to your computer
-* Open the repository in VS Code
+- Fork the Atomic Calendar Repo
+- Clone the repository to your computer
+- Open the repository in VS Code
 
 When you open this repository with VS code you are asked to "Reopen in Container". This will start the build of the container.
 

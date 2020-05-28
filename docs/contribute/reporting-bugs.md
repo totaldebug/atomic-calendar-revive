@@ -15,9 +15,9 @@ Before creating bug reports, please check [this list](#before-submitting-a-bug-r
 
 ## Before Submitting A Bug Report
 
-* **Check the [QucikStart Guide](/atomic-calendar-revive/quickstart).** You may have miss-configured the plugin and this is resulting in the issue you see
-* **Check the [FAQs](/atomic-calendar-revive/faq)** for a list of common questions and problems.
-* **Perform a [cursory search](https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue)** to see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one.
+- **Check the [QucikStart Guide](/atomic-calendar-revive/quickstart).** You may have miss-configured the plugin and this is resulting in the issue you see
+- **Check the [FAQs](/atomic-calendar-revive/faq)** for a list of common questions and problems.
+- **Perform a [cursory search](https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue)** to see if the problem has already been reported. If it has **and the issue is still open**, add a comment to the existing issue instead of opening a new one.
 
 ## How Do I Submit A (Good) Bug Report?
 
@@ -25,17 +25,17 @@ Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 
 Explain the problem and include additional details to help maintainers reproduce the problem:
 
-* **Use a clear and descriptive title** for the issue to identify the problem.
-* **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you installed the plugin. When listing steps, **don't just say what you did, but explain how you did it**. For example, did you use the Lovelace Editor or do the change in YAML directly.
-* **Provide specific examples to demonstrate the steps**. Include screenshots, or copy/pasteable configuration snippets, which you use in those examples. If you're providing snippets in the issue, use [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
-* **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
-* **Explain which behavior you expected to see instead and why.**
-* **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem.
-* **If Chrome's developer tools pane is showing errors**, include these in your report
-* **If the problem wasn't triggered by a specific action**, describe what you were doing before the problem happened and share more information using the guidelines below.
+- **Use a clear and descriptive title** for the issue to identify the problem.
+- **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you installed the plugin. When listing steps, **don't just say what you did, but explain how you did it**. For example, did you use the Lovelace Editor or do the change in YAML directly.
+- **Provide specific examples to demonstrate the steps**. Include screenshots, or copy/pasteable configuration snippets, which you use in those examples. If you're providing snippets in the issue, use [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
+- **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
+- **Explain which behavior you expected to see instead and why.**
+- **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem.
+- **If Chrome's developer tools pane is showing errors**, include these in your report
+- **If the problem wasn't triggered by a specific action**, describe what you were doing before the problem happened and share more information using the guidelines below.
 
 Provide more context by answering these questions:
 
-* **Did the problem start happening recently** (e.g. after updating to a new version of HA / Atomic Calendar Revive) or was this always a problem?
-* If the problem started happening recently, **can you reproduce the problem in an older version of Atomic Calendar Revive?** What's the most recent version in which the problem doesn't happen? You can install older versions of Atomic Calendar Revive via HACS or from the releases page on github
-* **Can you reliably reproduce the issue?** If not, provide details about how often the problem happens and under which conditions it normally happens.
+- **Did the problem start happening recently** (e.g. after updating to a new version of HA / Atomic Calendar Revive) or was this always a problem?
+- If the problem started happening recently, **can you reproduce the problem in an older version of Atomic Calendar Revive?** What's the most recent version in which the problem doesn't happen? You can install older versions of Atomic Calendar Revive via HACS or from the releases page on github
+- **Can you reliably reproduce the issue?** If not, provide details about how often the problem happens and under which conditions it normally happens.
