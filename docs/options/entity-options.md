@@ -11,3 +11,9 @@ nav_order: 2
 | blacklist    | string | v0.7.9 | `null` List of comma separated blacklisted keywords. Events containing any of them will not be shown.  |
 | whitelist    | string | v1.1.0 | `null` List of comma separated whitelisted keywords. Only events containing any of them will be shown. |
 | eventCalName | string | v1.2.0 | `null` Add a calendar name to be shown with event.                                                     |
+
+## Color Options
+
+| Name  |  Type  | Since  | Description                         |
+| ----- | :----: | :----: | ----------------------------------- |
+| color | string | v1.5.0 | `defaultCalColor` Color of calendar |

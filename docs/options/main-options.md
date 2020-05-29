@@ -28,4 +28,17 @@ nav_order: 1
 | showCalNameInEvent   | string  |   optional   |    ?    | `false` Shows the event calendar name                                                                                                                    |
 | showFullDayProgress  | string  |   optional   | v1.7.0  | `false` Enables the progress bar for full day events                                                                                                     |
 
+# Color Options
+
+| Name                 |  Type   | Since  |                                     Description                                     |
+| -------------------- | :-----: | :----: | :---------------------------------------------------------------------------------: |
+| locationLinkColor    | string  | v0.3.0 |              `primary text color` Color of location link (right side)               |
+| locationTextSize     | integer | v0.3.0 |                  `90` Location text size (percent of default font)                  |
+| locationIconColor    | string  | v0.3.0 |                     `primary text color` Color of location icon                     |
+| hideFinishedEvents   | boolean | v0.9.0 |                        `false` Don't display finished events                        |
+| dimFinishedEvents    | boolean | v0.3.0 |             `true` Apply filters to finished events (configured below)              |
+| finishedEventOpacity |  float  | v0.3.0 |                       `0.6` Opacity level of finished events                        |
+| finishedEventFilter  | string  | v0.3.0 | `grayscale(100%)` additional css filter to of finished events (default - greyscale) |
+| nameColor            | string  | v1.6.0 |                    `primary text color` Sets the card name color                    |
+
 [googlecalcomp]: https://www.home-assistant.io/components/calendar.google/
