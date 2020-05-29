@@ -1,10 +1,8 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: "[BUG] "
 labels: bug
-assignees: ''
-
+assignees: ""
 ---
 
 <!--
@@ -15,10 +13,10 @@ Have you read Atomic Calendar Revive's bug reporting guide? By filing an Issue, 
 
 ### Prerequisites
 
-* [ ] Put an X between the brackets on this line if you have done all of the following:
-  * Checked the Quick Start documentation page and confirmed configuration is correct: <https://marksie1988.github.io/atomic-calendar-revive/quickstart.html>
-  * Checked the FAQs on documentation page for common solutions: <https://marksie1988.github.io/atomic-calendar-revive/faq.html>
-  * Checked that your issue isn't already filed: <https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue>
+- [ ] Put an X between the brackets on this line if you have done all of the following:
+  - Checked the Quick Start documentation page and confirmed configuration is correct: <https://marksie1988.github.io/atomic-calendar-revive/quickstart.html>
+  - Checked the FAQs on documentation page for common solutions: <https://marksie1988.github.io/atomic-calendar-revive/faq.html>
+  - Checked that your issue isn't already filed: <https://github.com/marksie1988/atomic-calendar-revive/issues?q=is%3Aissue>
 
 ### Describe the bug
 
@@ -52,8 +50,8 @@ Have you read Atomic Calendar Revive's bug reporting guide? By filing an Issue, 
 
 ### Versions
 
-* HomeAssistant Version:
-* Plugin Version:
+- HomeAssistant Version:
+- Plugin Version:
 
 ### Additional Information
 

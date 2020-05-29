@@ -265,15 +265,15 @@ class AtomicCalendarRevive extends LitElement {
 			calEventHolidayFilter: null,
 
 			calEventIcon1: 'mdi:gift',
-			calEventIcon1Color: 'var(--primary-color)',
+			calEventIcon1Color: 'var(--primary-text-color)',
 			calEventIcon1Filter: null,
 
 			calEventIcon2: 'mdi:home',
-			calEventIcon2Color: 'var(--primary-color)',
+			calEventIcon2Color: 'var(--primary-text-color)',
 			calEventIcon2Filter: null,
 
 			calEventIcon3: 'mdi:star',
-			calEventIcon3Color: 'var(--primary-color)',
+			calEventIcon3Color: 'var(--primary-text-color)',
 			calEventIcon3Filter: null,
 
 			calEventTime: false, // show calendar event summary time
@@ -436,16 +436,15 @@ class AtomicCalendarRevive extends LitElement {
 				margin-top: -5px;
 			}
 
-			.progress-circle {
-				--mdc-icon-size: 8px;
-				color: ${this._config.progressBarColor};
-				margin-left: -2px
-
+			.progress-inner {
+				background-color: ${this._config.progressBarColor};
+				margin-left: -2px;
+				height: 3px;
 			}
 
 			hr.progressBar {
-				margin: -10px 0px 2px 0px;
-				border-width: 1px 0 0 0;
+				margin: 5px 0px 2px 0px;
+				border-width: 3px 0 0 0;
 				border-color: ${this._config.progressBarColor};
 			}
 
@@ -713,11 +712,11 @@ class AtomicCalendarRevive extends LitElement {
 
 				//show current event progress bar
 				var progressBar = ``
-				if (di == 0 && this._config.showProgressBar && event.isEventRunning && (this._config.showFullDayProgress && event.isFullDayEvent)) {
+				if (di == 0 && ((event.isEventRunning && this._config.showFullDayProgress && event.isFullDayEvent) || (event.isEventRunning && !event.isFullDayEvent && this._config.showProgressBar))) {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
 					let eventPercentProgress = Math.floor((eventProgress * 100) / eventDuration);
-					progressBar = html`<div class="progress-container"><ha-icon icon="mdi:circle" class="progress-circle" 	style="margin-left:${eventPercentProgress}%;"></ha-icon><hr class="progressBar" /></div>`;
+					progressBar = html`<div class="progress-container"><div class="progress-inner" aria-label="${eventPercentProgress}%" style="float: left; width:${eventPercentProgress}%;"></div><hr class="progressBar" /></div>`;
 
 				}
 
