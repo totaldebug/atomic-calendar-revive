@@ -144,7 +144,7 @@ class AtomicCalendarRevive extends LitElement {
 				: ""
 			}
 
-		<div style="padding-top: 4px;">
+		<div class="cal-eventContainer" style="padding-top: 4px;">
 			${this.content}
 		</div>
 	  </ha-card>`
@@ -178,7 +178,6 @@ class AtomicCalendarRevive extends LitElement {
 			language: '',
 
 			// main settings
-			showColors: true, // show calendar title colors, if set in config (each calendar separately)
 			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
 			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
 			showLoader: true, // show animation when loading events from Google calendar
@@ -392,10 +391,12 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.event-title {
+				font-size: ${this._config.eventTitleSize}%;
 			}
 
 			.event-location-icon {
 				--mdc-icon-size: 15px;
+				color: ${this._config.locationIconColor};
 				height: 15px;
         width: 15px;
 				margin-top: -2px;
@@ -403,6 +404,8 @@ class AtomicCalendarRevive extends LitElement {
 
 			.location-link {
 				text-decoration: none;
+				color: ${this._config.locationLinkColor};
+				font-size: ${this._config.locationTextSize}%;
 			}
 
 			.event-circle {
@@ -573,17 +576,17 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getTitleHTML(event) {
 		const titletext = (this._config.showCalNameInEvent) ? event.eventClass.organizer.displayName + ": " + event.title : event.title
-		const titleColor = (this._config.showColors && typeof event._config.eventTitleColor != 'undefined') ? event._config.eventTitleColor : this._config.eventTitleColor
+		const titleColor = (typeof event._config.eventTitleColor != 'undefined') ? event._config.eventTitleColor : this._config.eventTitleColor
 		if (this._config.disableEventLink || (event.link === null)) return html`
-		<div class="event-title" style="font-size: ${this._config.titleSize}%;color: ${titleColor}">${titletext}</div>
+		<div class="event-title" style="color: ${titleColor}">${titletext}</div>
 		`
 		else return html`
 		<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
-		<div class="event-title" style="font-size: ${this._config.titleSize}%;color: ${titleColor}">${titletext}</div></a>
+		<div class="event-title" style="color: ${titleColor}">${titletext}</div></a>
 		`
 	}
 	getCalTitleHTML(event) {
-		const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
+		const titleColor = (typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
 		//const titleColor = 'yellow'
 		if (this._config.disableCalEventLink || (event.htmlLink === null)) return html`
 		${event.summary}
@@ -633,17 +636,17 @@ class AtomicCalendarRevive extends LitElement {
 
 		if (!event.location || !this._config.showLocation) return html``
 		else if (this._config.disableLocationLink) return html`
-		<div><ha-icon class="event-location-icon" style="color:${this._config.locationIconColor};" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
+		<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
 		`
 		else return html`
-			<div><a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link" style="color: ${this._config.locationLinkColor};font-size: ${this._config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this._config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
+			<div><a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link"><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a></div>
 		`
 	}
 	getCalLocationHTML(event) {
 
 		if (!event.location || !this._config.showLocation || this._config.disableCalLocationLink) return html``
 		else return html`
-			<a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link" style="color: ${this._config.locationLinkColor};font-size: ${this._config.locationTextSize}%;"><ha-icon class="event-location-icon" style="${this._config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;</a>
+			<a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link"><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a>
 		`
 	}
 
@@ -894,6 +897,7 @@ class AtomicCalendarRevive extends LitElement {
 							})
 							var filteredEvents = filteredEvents.map((event) => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
+								moment(this.endTime).isBefore(moment()) ? event['isEventFinished'] = false : event['isEventFinished'] = true
 								event['_config'] = { "color": calendarColor, "titleColor": this._config.eventTitleColor }
 								return m['allEvents'].push(event)
 							})
@@ -980,21 +984,22 @@ class AtomicCalendarRevive extends LitElement {
 			return moment(leftStartTime).diff(moment(rightStartTime))
 		})
 		this.eventSummary = day._allEvents.map((event, i, arr) => {
-			const titleColor = (this._config.showColors && typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
-			const calColor = (this._config.showColors && typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
+			const titleColor = (typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
+			const calColor = (typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
+			var finishedEventsStyle = (event.isEventFinished && this._config.dimFinishedEvents) ? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;` : ``
 			if (event.isFullDayEvent) {
 				return html`
-					<div class="summary-fullday-div" tabindex="0" style="border-color: ${calColor}; ">
-						<span aria-hidden="true" class="c1wk3e">
+					<div class="summary-fullday-div" style="border-color: ${calColor}; ${finishedEventsStyle}">
+						<span aria-hidden="true">
 							<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 						</span>
 					</div>`
 			} else {
 				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : ''
 				return html`
-					<div class="summary-event-div">
+					<div class="summary-event-div" style="${finishedEventsStyle}">
 						<div class="bullet-event-div" style="border-color: ${calColor}"></div>
-						<span class="bullet-event-span" style="color: ${titleColor}">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+						<span class="bullet-event-span" style="color: ${titleColor};">${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 					</div > `
 			}
 		})
