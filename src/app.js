@@ -897,7 +897,8 @@ class AtomicCalendarRevive extends LitElement {
 							})
 							var filteredEvents = filteredEvents.map((event) => {
 								(!event.start.dateTime && !event.end.dateTime) ? event['isFullDayEvent'] = true : event['isFullDayEvent'] = false
-								moment(this.endTime).isBefore(moment()) ? event['isEventFinished'] = false : event['isEventFinished'] = true
+								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date)
+								moment(endTime).isBefore(moment()) ? event['isEventFinished'] = true : event['isEventFinished'] = false
 								event['_config'] = { "color": calendarColor, "titleColor": this._config.eventTitleColor }
 								return m['allEvents'].push(event)
 							})
@@ -986,6 +987,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.eventSummary = day._allEvents.map((event, i, arr) => {
 			const titleColor = (typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
 			const calColor = (typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
+			console.log(event)
 			var finishedEventsStyle = (event.isEventFinished && this._config.dimFinishedEvents) ? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;` : ``
 			if (event.isFullDayEvent) {
 				return html`
