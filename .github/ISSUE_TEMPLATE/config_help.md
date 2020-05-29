@@ -1,9 +1,8 @@
 ---
 name: Configuration Help
 about: Create a request for assistance with your configuration
-title: "[CONFIG] "
 labels: Configuration Help
-assignees: ''
+assignees: ""
 ---
 
 <!--
