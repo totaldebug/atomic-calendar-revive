@@ -1,16 +1,16 @@
-const EDITOR_VERSION = '1.1.0-alpha';
+const EDITOR_VERSION = '1.1.1-alpha';
 
 const fireEvent = (node, type, detail, options) => {
-    options = options || {};
-    detail = detail === null || detail === undefined ? {} : detail;
-    const event = new Event(type, {
-      bubbles: options.bubbles === undefined ? true : options.bubbles,
-      cancelable: Boolean(options.cancelable),
-      composed: options.composed === undefined ? true : options.composed
-    });
-    event.detail = detail;
-    node.dispatchEvent(event);
-    return event;
+  options = options || {};
+  detail = detail === null || detail === undefined ? {} : detail;
+  const event = new Event(type, {
+    bubbles: options.bubbles === undefined ? true : options.bubbles,
+    cancelable: Boolean(options.cancelable),
+    composed: options.composed === undefined ? true : options.composed
+  });
+  event.detail = detail;
+  node.dispatchEvent(event);
+  return event;
 };
 
 if (!customElements.get("ha-switch") && customElements.get("paper-toggle-button")) {
@@ -33,7 +33,7 @@ export class AtomicCalendarReviveEditor extends LitElement {
       bubbles: true,
       composed: true
     });
-    event.detail = {config: newConfig};
+    event.detail = { config: newConfig };
     this.dispatchEvent(event);
   }
 
@@ -45,42 +45,42 @@ export class AtomicCalendarReviveEditor extends LitElement {
     return this._config.name || "";
   }
 
-  get _Entities(){
+  get _Entities() {
     if (this._config) {
       return this._config.entities;
     }
     return true;
   }
 
-  get _showColors(){
+  get _showColors() {
     if (this._config) {
       return this._config.showColors || true;
     }
     return true;
   }
 
-  get _showLocation(){
+  get _showLocation() {
     if (this._config) {
       return this._config.showLocation || true;
     }
     return true;
   }
 
-  get _showMonth(){
+  get _showMonth() {
     if (this._config) {
       return this._config.showMonth || false;
     }
     return false;
   }
 
-  get _showWeekDay(){
+  get _showWeekDay() {
     if (this._config) {
       return this._config.showWeekDay || false;
     }
     return false;
   }
 
-  get _showLoader(){
+  get _showLoader() {
     if (this._config) {
       return this._config.showLoader || true;
     }
@@ -94,14 +94,14 @@ export class AtomicCalendarReviveEditor extends LitElement {
     return false;
   }
 
-  get _showDescription(){
+  get _showDescription() {
     if (this._config) {
       return this._config.showDescription || false;
     }
     return false;
   }
 
-  get _showNoEventsForToday(){
+  get _showNoEventsForToday() {
     if (this._config) {
       return this._config.showNoEventsForToday || false;
     }
@@ -129,7 +129,7 @@ export class AtomicCalendarReviveEditor extends LitElement {
     return false;
   }
 
-  get _linkTarget(){
+  get _linkTarget() {
     if (this._config) {
       return this._config.linkTarget || '_blank';
     }
@@ -179,14 +179,14 @@ export class AtomicCalendarReviveEditor extends LitElement {
 
           <h3>Event Mode</h3>
           <ha-switch
-          aria-label=${`Toggle Month ${this._showMonth ? 'on' : 'off' }`}
+          aria-label=${`Toggle Month ${this._showMonth ? 'on' : 'off'}`}
           .checked=${this._showMonth !== false}
           .configValue=${'showMonth'}
           @change=${this._valueChanged}
           >Show Month</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Week Day ${this._showWeekDay ? 'on' : 'off' }`}
+          aria-label=${`Toggle Week Day ${this._showWeekDay ? 'on' : 'off'}`}
           .checked=${this._showWeekDay !== false}
           .configValue=${'showWeekDay'}
           @change=${this._valueChanged}
@@ -200,36 +200,36 @@ export class AtomicCalendarReviveEditor extends LitElement {
           >Show Location</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle No Events Today  ${this._showNoEventsForToday  ? 'on' : 'off'}`}
-          .checked=${this._showNoEventsForToday  !== false}
+          aria-label=${`Toggle No Events Today  ${this._showNoEventsForToday ? 'on' : 'off'}`}
+          .checked=${this._showNoEventsForToday !== false}
           .configValue=${'showNoEventsForToday'}
           @change=${this._valueChanged}
           >Show 'No Events Today'</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle Description  ${this._showDescription  ? 'on' : 'off'}`}
-          .checked=${this._showDescription  !== false}
+          aria-label=${`Toggle Description  ${this._showDescription ? 'on' : 'off'}`}
+          .checked=${this._showDescription !== false}
           .configValue=${'showDescription'}
           @change=${this._valueChanged}
           >Show Description</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle sort by start time  ${this._sortByStartTime  ? 'on' : 'off'}`}
-          .checked=${this._sortByStartTime  !== false}
+          aria-label=${`Toggle sort by start time  ${this._sortByStartTime ? 'on' : 'off'}`}
+          .checked=${this._sortByStartTime !== false}
           .configValue=${'sortByStartTime'}
           @change=${this._valueChanged}
           >Sort by Start Time</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle event link  ${this._disableEventLink  ? 'on' : 'off'}`}
-          .checked=${this._disableEventLink  !== false}
+          aria-label=${`Toggle event link  ${this._disableEventLink ? 'on' : 'off'}`}
+          .checked=${this._disableEventLink !== false}
           .configValue=${'disableEventLink'}
           @change=${this._valueChanged}
           >Disable Event Link URL</ha-switch
           >
           <ha-switch
-          aria-label=${`Toggle location link  ${this._disableLocationLink  ? 'on' : 'off'}`}
-          .checked=${this._disableLocationLink  !== false}
+          aria-label=${`Toggle location link  ${this._disableLocationLink ? 'on' : 'off'}`}
+          .checked=${this._disableLocationLink !== false}
           .configValue=${'disableLocationLink'}
           @change=${this._valueChanged}
           >Disable Location Link URL</ha-switch
@@ -242,10 +242,10 @@ export class AtomicCalendarReviveEditor extends LitElement {
               >
                 <paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
                   ${linkTargets.map(linkTarget => {
-                    return html`
+      return html`
                       <paper-item>${linkTarget}</paper-item>
                     `;
-                  })}
+    })}
                 </paper-listbox>
               </paper-dropdown-menu>
             </div>
@@ -303,3 +303,10 @@ export class AtomicCalendarReviveEditor extends LitElement {
   }
 }
 customElements.define("atomic-calendar-revive-editor", AtomicCalendarReviveEditor);
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "atomic-calendar-revive",
+  name: "Atomic Calendar Revive",
+  preview: false, // Optional - defaults to false
+  description: "An advanced calendar card for Home Assistant with Lovelace." // Optional
+});

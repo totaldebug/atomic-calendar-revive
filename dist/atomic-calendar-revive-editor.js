@@ -1,7 +1,7 @@
-const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0===o.bubbles||o.bubbles,cancelable:Boolean(o.cancelable),composed:void 0===o.composed||o.composed});return s.detail=i,e.dispatchEvent(s),s};!customElements.get("ha-switch")&&customElements.get("paper-toggle-button")&&customElements.define("ha-switch",customElements.get("paper-toggle-button"));const t=Object.getPrototypeOf(customElements.get("hui-view")),i=t.prototype.html,o=t.prototype.css;var s=["_blank","_self","_parent","_top"];class a extends t{setConfig(e){this._config={...e}}configChanged(e){const t=new Event("config-changed",{bubbles:!0,composed:!0});t.detail={config:e},this.dispatchEvent(t)}static get properties(){return{hass:{},_config:{}}}get _name(){return this._config.name||""}get _Entities(){return!this._config||this._config.entities}get _showColors(){return this._config&&this._config.showColors||!0}get _showLocation(){return this._config&&this._config.showLocation||!0}get _showMonth(){return this._config&&this._config.showMonth||!1}get _showWeekDay(){return this._config&&this._config.showWeekDay||!1}get _showLoader(){return this._config&&this._config.showLoader||!0}get _showDate(){return this._config&&this._config.showDate||!1}get _showDescription(){return this._config&&this._config.showDescription||!1}get _showNoEventsForToday(){return this._config&&this._config.showNoEventsForToday||!1}get _sortByStartTime(){return this._config&&this._config.sortByStartTime||!1}get _disableEventLink(){return this._config&&this._config.disableEventLink||!1}get _disableLocationLink(){return this._config&&this._config.disableLocationLink||!1}get _linkTarget(){return this._config&&this._config.linkTarget||"_blank"}render(){return this.hass?i`
+const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const a=new Event(t,{bubbles:void 0===o.bubbles||o.bubbles,cancelable:Boolean(o.cancelable),composed:void 0===o.composed||o.composed});return a.detail=i,e.dispatchEvent(a),a};!customElements.get("ha-switch")&&customElements.get("paper-toggle-button")&&customElements.define("ha-switch",customElements.get("paper-toggle-button"));const t=Object.getPrototypeOf(customElements.get("hui-view")),i=t.prototype.html,o=t.prototype.css;var a=["_blank","_self","_parent","_top"];class s extends t{setConfig(e){this._config={...e}}configChanged(e){const t=new Event("config-changed",{bubbles:!0,composed:!0});t.detail={config:e},this.dispatchEvent(t)}static get properties(){return{hass:{},_config:{}}}get _name(){return this._config.name||""}get _Entities(){return!this._config||this._config.entities}get _showColors(){return this._config&&this._config.showColors||!0}get _showLocation(){return this._config&&this._config.showLocation||!0}get _showMonth(){return this._config&&this._config.showMonth||!1}get _showWeekDay(){return this._config&&this._config.showWeekDay||!1}get _showLoader(){return this._config&&this._config.showLoader||!0}get _showDate(){return this._config&&this._config.showDate||!1}get _showDescription(){return this._config&&this._config.showDescription||!1}get _showNoEventsForToday(){return this._config&&this._config.showNoEventsForToday||!1}get _sortByStartTime(){return this._config&&this._config.sortByStartTime||!1}get _disableEventLink(){return this._config&&this._config.disableEventLink||!1}get _disableLocationLink(){return this._config&&this._config.disableLocationLink||!1}get _linkTarget(){return this._config&&this._config.linkTarget||"_blank"}render(){return this.hass?i`
       <div class="card-config">
         <div>
-          <span style="color:red;font-weight:bold">Editor Version: ${"1.1.0-alpha"}</span>
+          <span style="color:red;font-weight:bold">Editor Version: ${"1.1.1-alpha"}</span>
           <paper-input
             label="Name"
             .value="${this._name}"
@@ -97,8 +97,8 @@ const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0==
                 @value-changed=${this._valueChanged}
                 .configValue=${"linkTarget"}
               >
-                <paper-listbox slot="dropdown-content" .selected=${s.indexOf(this._linkTarget)}>
-                  ${s.map(e=>i`
+                <paper-listbox slot="dropdown-content" .selected=${a.indexOf(this._linkTarget)}>
+                  ${a.map(e=>i`
                       <paper-item>${e}</paper-item>
                     `)}
                 </paper-listbox>
@@ -117,4 +117,4 @@ const e=(e,t,i,o)=>{o=o||{},i=null==i?{}:i;const s=new Event(t,{bubbles:void 0==
         flex: 1;
         padding-right: 4px;
       }
-    `}}customElements.define("atomic-calendar-revive-editor",a);export{a as AtomicCalendarReviveEditor};
+    `}}customElements.define("atomic-calendar-revive-editor",s),window.customCards=window.customCards||[],window.customCards.push({type:"atomic-calendar-revive",name:"Atomic Calendar Revive",preview:!1,description:"An advanced calendar card for Home Assistant with Lovelace."});export{s as AtomicCalendarReviveEditor};
