@@ -21,8 +21,8 @@ There are four configurable possibilities for showing events occurring any day:
 If you want to use any calendar's events, you have to add one or more of types:
 
 ```yaml
-CalEventIcon1Filter: bills,waste # only events with those words will be shown
-CalEventIcon2Filter: cleaning # only events with those words will be shown
+calEventIcon1Filter: bills,waste # only events with those words will be shown
+calEventIcon2Filter: cleaning # only events with those words will be shown
 entities:
   - entity: calendar.YOUR_CALENDAR_HERE # no type, it won't be shown in calendar mode
   - type: holiday # events from this calendar will be red
@@ -42,8 +42,8 @@ entities:
   - entity: calendar.birthday
     type: icon1 # Icon1 has no filters, show all events from this calendar
   - entity: calendar.YOUR_CALENDAR2_HERE # no type, it won't be shown in calendar mode
-CalEventIcon1Filter: bills,waste # only events with those words will be shown
-CalEventIcon2Filter: cleaning # only events with those words will be shown
+calEventIcon1Filter: bills,waste # only events with those words will be shown
+calEventIcon2Filter: cleaning # only events with those words will be shown
 ```
 
 If you set filters (keywords) for any type, it will show an icon only when event summary contains one of keywords. If you don't set any filter, it will show icons for all days with any events.

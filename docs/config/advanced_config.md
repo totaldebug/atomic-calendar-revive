@@ -25,8 +25,8 @@ nav_order: 3
   dateSize: 90
   timeColor: blue
   timeSize: 90
-  titleColor: black
-  titleSize: 100
+  eventTitleColor: black
+  eventTitleSize: 100
   locationIconColor: "rgb(230, 124, 115)"
   locationLinkColor: black
   locationTextSize: 90

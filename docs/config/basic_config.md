@@ -55,8 +55,8 @@ This example is the most basic implementation, it will just show you a list of e
   name: "Calendar"
   enableModeChange: true
   defaultMode: 2
-  CalEventIcon1Filter: birthday
-  CalEventIcon2Filter: waste,bills
+  calEventIcon1Filter: birthday
+  calEventIcon2Filter: waste,bills
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
       type: icon2

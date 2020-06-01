@@ -1,6 +1,6 @@
 {
   "name": "atomic-calendar-revive",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "description": "Calendar Card for Home Assistant",
   "main": "atomic-calendar-revive.js",
   "scripts": {
@@ -24,11 +24,11 @@
     "@babel/plugin-proposal-class-properties": "^7.10.1",
     "@babel/plugin-proposal-decorators": "^7.10.1",
     "@babel/plugin-transform-template-literals": "^7.10.1",
-    "@babel/preset-env": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
     "babel-loader": "^8.1.0",
     "babel-preset-minify": "^0.5.1",
     "eslint": "^7.1.0",
-    "rollup": "^2.11.2",
+    "rollup": "^2.12.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.6.2",
@@ -41,6 +41,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@material/mwc-linear-progress": "^0.15.0",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "lit-element": "^2.3.1",
