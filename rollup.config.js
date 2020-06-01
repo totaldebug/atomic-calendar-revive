@@ -1,6 +1,8 @@
-import resolve from 'rollup-plugin-node-resolve';
-import { terser } from "rollup-plugin-terser";
+import typescript from 'rollup-plugin-typescript2';
 import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
+import { terser } from "rollup-plugin-terser";
 import serve from 'rollup-plugin-serve';
 import json from '@rollup/plugin-json'
 
@@ -12,28 +14,31 @@ const serveopts = {
     port: 5000,
     allowCrossOrigin: true,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': '*',
     },
 };
 
 const plugins = [
     resolve(),
     commonjs(),
+    typescript(),
+    json(),
+    babel({
+        exclude: 'node_modules/**',
+    }),
     dev && serve(serveopts),
     !dev && terser(),
-    json(),
 ];
 
 
 export default {
-    input: ['./src/app.js', './src/app-editor.js'],
+    input: ['src/index.ts'],
     output: {
         dir: 'dist',
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js'
+        format: 'es',
     },
-	watch: {
-    clearScreen: false
+    watch: {
+        clearScreen: false
     },
     plugins: [...plugins],
 };

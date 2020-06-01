@@ -1,8 +1,18 @@
-﻿import { LitElement, html, css } from 'lit-element';
+﻿import {  LitElement, html, customElement, property, TemplateResult, PropertyValues, css } from 'lit-element';
+import {
+	HomeAssistant,
+	hasAction,
+	handleAction,
+	LovelaceCardEditor,
+	domainIcon,
+	computeDomain,
+} from 'custom-card-helpers';
 import moment from 'moment';
 import 'moment/min/locales';
 import pkg from '../package.json';
 import "@material/mwc-linear-progress";
+
+import './index-editor'
 
 const CARD_VERSION = pkg.version;
 
@@ -36,9 +46,8 @@ class AtomicCalendarRevive extends LitElement {
 		this.language = '';
 	}
 
-	static async getConfigElement() {
-		await import("./app-editor.js");
-		return document.createElement("atomic-calendar-revive-editor");
+	public static async getConfigElement(): Promise<LovelaceCardEditor> {
+		return document.createElement('atomic-calendar-revive-editor') as LovelaceCardEditor;
 	}
 
 	static getStubConfig() {
@@ -197,7 +206,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		return html`
 
-	  ${this.setStyle()}
+		${this.setStyle()}
 
 		<ha-card class="cal-card">
 		${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
@@ -229,7 +238,7 @@ class AtomicCalendarRevive extends LitElement {
 		<div class="cal-eventContainer" style="padding-top: 4px;">
 			${this.content}
 		</div>
-	  </ha-card>`
+		</ha-card>`
 	}
 
 	async updateCard() {
@@ -307,15 +316,15 @@ class AtomicCalendarRevive extends LitElement {
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-			    vertical-align: middle;
+					vertical-align: middle;
 				align-items: center;
 				margin: 0 8px 0 2px;
 			}
 
 			.calDate {
-			    font-size: var(--paper-font-headline_-_font-size);
+					font-size: var(--paper-font-headline_-_font-size);
 				font-size: 1.3rem;
-    			font-weight: 400;
+					font-weight: 400;
 				color: var(--primary-text-color);
 				padding: 4px 8px 12px 0px;
 				line-height: 40px;
@@ -370,7 +379,7 @@ class AtomicCalendarRevive extends LitElement {
 			.event-main {
 				flex-direction:row nowrap;
 				display: inline-block;
-			    vertical-align: top;
+					vertical-align: top;
 			}
 
 			.event-location {
@@ -387,7 +396,7 @@ class AtomicCalendarRevive extends LitElement {
 				--mdc-icon-size: 15px;
 				color: ${this._config.locationIconColor};
 				height: 15px;
-        width: 15px;
+				width: 15px;
 				margin-top: -2px;
 			}
 
@@ -415,8 +424,8 @@ class AtomicCalendarRevive extends LitElement {
 			}
 			.event-cal-name-icon {
 				width: 15px;
-			  height: 15px;
-        width: 15px;
+				height: 15px;
+				width: 15px;
 			}
 
 			.eventBar {
@@ -425,13 +434,13 @@ class AtomicCalendarRevive extends LitElement {
 			}
 
 			.progress-bar {
-      	--mdc-linear-progress-buffer-color: ${this._config.progressBarColor};
-      }
+				--mdc-linear-progress-buffer-color: ${this._config.progressBarColor};
+			}
 
 			mwc-linear-progress {
-        width: 100%;
-        margin: auto;
-      }
+				width: 100%;
+				margin: auto;
+			}
 
 			table.cal{
 				margin-left: 0px;
@@ -498,8 +507,8 @@ class AtomicCalendarRevive extends LitElement {
 				border-left: 7px solid;
 				padding: 0 4px;
 				margin: 5px 0;
-    		height: 18px;
-    		line-height: 16px;
+				height: 18px;
+				line-height: 16px;
 			}
 
 			.calIcon {
@@ -1202,32 +1211,34 @@ class EventClass {
 	}
 
 	get endTime() {
-		return this._endTime
+		return this._endTime;
 	}
 
 	// is full day event
 	get isFullDayEvent() {
 		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime)
-			return true
-		else return false
+			return true;
+		else return false;
 	}
 	// is full day event, but only one day
 	get isFullOneDayEvent() {
 		if ((!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) || (
 			moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) && moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.end.dateTime).subtract(1, 'days'), 'day')
 
-		))
-			return true
-		else return false
+		)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	// is full day event, more days
 	get isFullMoreDaysEvent() {
 		if ((!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && !moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) || (
 			moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day')
-		))
-			return true
-		else return false
+		));
+			return true;
+		else return false;
 	}
 
 	// return YYYYMMDD for sorting
@@ -1236,11 +1247,11 @@ class EventClass {
 	}
 
 	get isEventRunning() {
-		return (moment(this.startTime).isBefore(moment()) && moment(this.endTime).isAfter(moment()))
+		return (moment(this.startTime).isBefore(moment()) && moment(this.endTime).isAfter(moment()));
 	}
 
 	get isEventFinished() {
-		return (moment(this.endTime).isBefore(moment()))
+		return (moment(this.endTime).isBefore(moment()));
 	}
 
 	get location() {
@@ -1248,10 +1259,10 @@ class EventClass {
 	}
 
 	get address() {
-		return this.eventClass.location ? this.eventClass.location.split(',')[0] : ''
+		return this.eventClass.location ? this.eventClass.location.split(',')[0] : '';
 	}
 
 	get link() {
-		return this.eventClass.htmlLink
+		return this.eventClass.htmlLink;
 	}
 }
