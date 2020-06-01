@@ -1,27 +1,21 @@
-﻿import { LitElement, html } from 'lit-element';
+﻿import { LitElement, html, css } from 'lit-element';
 import moment from 'moment';
 import 'moment/min/locales';
 import pkg from '../package.json';
+import "@material/mwc-linear-progress";
 
 const CARD_VERSION = pkg.version;
 
-function hasConfigOrEntityChanged(element, changedProps) {
-	if (changedProps.has("_config")) {
-		return true;
-	}
-
-	const oldHass = changedProps.get("hass");
-	if (oldHass) {
-		return (
-			oldHass.states[element._config.entity] !==
-			element.hass.states[element._config.entity]
-		);
-	}
-
-	return true;
-}
-
 class AtomicCalendarRevive extends LitElement {
+	static get properties() {
+		return {
+			hass: { type: Object },
+			_config: { type: Object },
+			content: { type: Object },
+			selectedMonth: { type: Object }
+		};
+	}
+
 	constructor() {
 		super();
 		this.lastCalendarUpdateTime;
@@ -42,19 +36,11 @@ class AtomicCalendarRevive extends LitElement {
 		this.language = '';
 	}
 
-	static get properties() {
-		return {
-			hass: {},
-			_config: {},
-			content: {},
-			selectedMonth: {}
-		}
-	}
-
 	static async getConfigElement() {
 		await import("./app-editor.js");
 		return document.createElement("atomic-calendar-revive-editor");
 	}
+
 	static getStubConfig() {
 		return {
 			name: "Calendar Card",
@@ -62,115 +48,12 @@ class AtomicCalendarRevive extends LitElement {
 		}
 	}
 
-
-	updated() { }
-
-	render() {
-		if (this.firstrun) {
-			console.info(
-				`%c atomic-calendar-revive %c Version: ${CARD_VERSION} `,
-				"color: white; background: #484848; font-weight: 700;",
-				"color: white; background: #cc5500; font-weight: 700;"
-			);
-		}
-		this.language = this._config.language != '' ? this._config.language : this.hass.language.toLowerCase()
-		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
-		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A'
-		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm'
-		else if (this._config.hoursFormat != 'default') timeFormat = this._config.hoursFormat
-		moment.updateLocale(this.language, {
-			week: {
-				dow: this._config.firstDayOfWeek
-			},
-			longDateFormat: {
-				LT: timeFormat
-			}
-		});
-		this.firstrun = false
-
-		if (!this.isUpdating && this.modeToggle == 1) {
-			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'minutes') > 15)
-				(async () => {
-					this.showLoader = true
-					this.isUpdating = true;
-					try {
-						this.events = await this.getEvents()
-					} catch (error) {
-						console.log(error)
-						this.errorMessage = 'The calendar can\'t be loaded from Home Assistant component'
-						this.showLoader = false
-					}
-
-					this.lastEventsUpdateTime = moment();
-					this.updateEventsHTML(this.events);
-					this.isUpdating = false;
-					this.showLoader = false
-				})()
-		}
-
-		if (this.modeToggle == 1)
-			this.updateEventsHTML(this.events);
-		else
-			this.updateCalendarHTML(this.events);
-
-		return html`
-
-	  ${this.setStyle()}
-
-		<ha-card class="cal-card">
-		${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html`
-			<div class="cal-nameContainer">
-				${this._config.name
-						? html`
-						<div  class="cal-name"  @click='${e => this.handleToggle()}'>
-						${this._config.name}
-						</div>
-						`
-						: ""}
-
-				${(this.showLoader && this._config.showLoader) ? html`
-					<div  class="loader" ></div>` : ''
-					}
-				${this._config.showDate
-						? html`
-					<div class="calDate">
-					${this.getDate()}
-					</div>
-					`
-						: ""}
-			</div>
-			`
-				: ""
-			}
-
-		<div class="cal-eventContainer" style="padding-top: 4px;">
-			${this.content}
-		</div>
-	  </ha-card>`
-	}
-
-	firstTimeConfig() {
-
-	}
-
-	handleToggle() {
-		if (this._config.enableModeChange) {
-			this.modeToggle == 1 ? this.modeToggle = 2 : this.modeToggle = 1
-			this.requestUpdate()
-		}
-	}
-
-	getDate() {
-		const date = moment().format(this._config.dateFormat)
-		return html`${date}`
-	}
-
 	setConfig(config) {
 		config = JSON.parse(JSON.stringify(config));
-		if (!config.entities) {
+		if (!config.entities || !config.entities.length) {
 			throw new Error('Please define atomic-calendar-revive card entity');
 		}
+
 		this._config = {
 			// text translations
 			fullDayEventText: 'All day', // "All day" custom text
@@ -295,6 +178,112 @@ class AtomicCalendarRevive extends LitElement {
 					entity: entity
 				};
 		});
+	}
+
+	updated() { }
+
+	render() {
+		if (this.firstrun) {
+			console.info(
+				`%c atomic-calendar-revive %c Version: ${CARD_VERSION} `,
+				"color: white; background: #484848; font-weight: 700;",
+				"color: white; background: #cc5500; font-weight: 700;"
+			);
+		}
+		if (!this._config || !this.hass) {
+			return html``;
+		}
+		this.updateCard();
+
+		return html`
+
+	  ${this.setStyle()}
+
+		<ha-card class="cal-card">
+		${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
+				? html`
+			<div class="cal-nameContainer">
+				${this._config.name
+						? html`
+						<div  class="cal-name"  @click='${e => this.handleToggle()}'>
+						${this._config.name}
+						</div>
+						`
+						: ""}
+
+				${(this.showLoader && this._config.showLoader) ? html`
+					<div  class="loader" ></div>` : ''
+					}
+				${this._config.showDate
+						? html`
+					<div class="calDate">
+					${this.getDate()}
+					</div>
+					`
+						: ""}
+			</div>
+			`
+				: ""
+			}
+
+		<div class="cal-eventContainer" style="padding-top: 4px;">
+			${this.content}
+		</div>
+	  </ha-card>`
+	}
+
+	async updateCard() {
+		this.language = this._config.language != '' ? this._config.language : this.hass.language.toLowerCase()
+		let timeFormat = moment.localeData(this.language).longDateFormat('LT')
+		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A'
+		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm'
+		else if (this._config.hoursFormat != 'default') timeFormat = this._config.hoursFormat
+		moment.updateLocale(this.language, {
+			week: {
+				dow: this._config.firstDayOfWeek
+			},
+			longDateFormat: {
+				LT: timeFormat
+			}
+		});
+		this.firstrun = false
+
+		// check if an update is needed
+		if (!this.isUpdating && this.modeToggle == 1) {
+			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > 60) {
+				this.showLoader = true
+				this.isUpdating = true;
+				try {
+					this.events = await this.getEvents()
+				} catch (error) {
+					console.log(error)
+					this.errorMessage = 'The calendar can\'t be loaded from Home Assistant component'
+					this.showLoader = false
+				}
+
+				this.lastEventsUpdateTime = moment();
+				this.updateEventsHTML(this.events);
+				this.isUpdating = false;
+				this.showLoader = false
+			}
+		}
+
+		if (this.modeToggle == 1)
+			this.updateEventsHTML(this.events);
+		else
+			this.updateCalendarHTML(this.events);
+	}
+
+	handleToggle() {
+		if (this._config.enableModeChange) {
+			this.modeToggle == 1 ? this.modeToggle = 2 : this.modeToggle = 1
+			this.requestUpdate()
+		}
+	}
+
+	getDate() {
+		const date = moment().format(this._config.dateFormat)
+		return html`${date}`
 	}
 
 	setStyle() {
@@ -435,21 +424,14 @@ class AtomicCalendarRevive extends LitElement {
 				margin-bottom: 0px;
 			}
 
-			.progress-container {
-				margin-top: -5px;
-			}
+			.progress-bar {
+      	--mdc-linear-progress-buffer-color: ${this._config.progressBarColor};
+      }
 
-			.progress-inner {
-				background-color: ${this._config.progressBarColor};
-				margin-left: -2px;
-				height: 3px;
-			}
-
-			hr.progressBar {
-				margin: 5px 0px 2px 0px;
-				border-width: 3px 0 0 0;
-				border-color: ${this._config.progressBarColor};
-			}
+			mwc-linear-progress {
+        width: 100%;
+        margin: auto;
+      }
 
 			table.cal{
 				margin-left: 0px;
@@ -552,10 +534,6 @@ class AtomicCalendarRevive extends LitElement {
 			}
 		</style>
 		`
-	}
-
-	shouldUpdate(changedProps) {
-		return hasConfigOrEntityChanged(this, changedProps);
 	}
 
 	// The height of your card. Home Assistant uses this to automatically
@@ -718,9 +696,8 @@ class AtomicCalendarRevive extends LitElement {
 				if (di == 0 && ((event.isEventRunning && this._config.showFullDayProgress && event.isFullDayEvent) || (event.isEventRunning && !event.isFullDayEvent && this._config.showProgressBar))) {
 					let eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					let eventProgress = moment().diff(event.startTime, 'minutes');
-					let eventPercentProgress = Math.floor((eventProgress * 100) / eventDuration);
-					progressBar = html`<div class="progress-container"><div class="progress-inner" aria-label="${eventPercentProgress}%" style="float: left; width:${eventPercentProgress}%;"></div><hr class="progressBar" /></div>`;
-
+					let eventPercentProgress = ((eventProgress * 100) / eventDuration) / 100;
+					progressBar = html`<mwc-linear-progress class="progress-bar"  determinate progress="${eventPercentProgress}" buffer="1"></mwc-linear-progress>`
 				}
 
 				var finishedEventsStyle = (event.isEventFinished && this._config.dimFinishedEvents) ? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;` : ``
@@ -987,7 +964,6 @@ class AtomicCalendarRevive extends LitElement {
 		this.eventSummary = day._allEvents.map((event, i, arr) => {
 			const titleColor = (typeof event._config.titleColor != 'undefined') ? event._config.titleColor : this._config.eventTitleColor
 			const calColor = (typeof event._config.color != 'undefined') ? event._config.color : this._config.defaultCalColor
-			console.log(event)
 			var finishedEventsStyle = (event.isEventFinished && this._config.dimFinishedEvents) ? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;` : ``
 			if (event.isFullDayEvent) {
 				return html`
@@ -1279,10 +1255,3 @@ class EventClass {
 		return this.eventClass.htmlLink
 	}
 }
-window.customCards = window.customCards || [];
-window.customCards.push({
-	type: "atomic-calendar-revive",
-	name: "Atomic Calendar Revive",
-	preview: false, // Optional - defaults to false
-	description: "An advanced calendar card for Home Assistant with Lovelace." // Optional
-});

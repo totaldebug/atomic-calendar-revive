@@ -1,6 +1,6 @@
 {
   "name": "atomic-calendar-revive",
-  "version": "1.8.6",
+  "version": "1.8.7",
   "description": "Calendar Card for Home Assistant",
   "main": "atomic-calendar-revive.js",
   "scripts": {
@@ -41,6 +41,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@material/mwc-linear-progress": "^0.15.0",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "lit-element": "^2.3.1",
