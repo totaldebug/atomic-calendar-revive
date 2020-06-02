@@ -1,4 +1,4 @@
-﻿import {  LitElement, html, customElement, property, TemplateResult, PropertyValues, css } from 'lit-element';
+﻿import { LitElement, html, customElement, property, TemplateResult, PropertyValues, css } from 'lit-element';
 import {
 	HomeAssistant,
 	hasAction,
@@ -7,24 +7,17 @@ import {
 	domainIcon,
 	computeDomain,
 } from 'custom-card-helpers';
-import moment from 'moment';
 import 'moment/min/locales';
-import pkg from '../package.json';
-import "@material/mwc-linear-progress";
-
-import './index-editor'
-
-const CARD_VERSION = pkg.version;
+import '@material/mwc-linear-progress';
+import { CARD_VERSION } from './const';
+import { atomicCardConfig } from './types';
+import './index-editor';
 
 class AtomicCalendarRevive extends LitElement {
-	static get properties() {
-		return {
-			hass: { type: Object },
-			_config: { type: Object },
-			content: { type: Object },
-			selectedMonth: { type: Object }
-		};
-	}
+	@property() public hass?: HomeAssistant;
+	@property() private _config!: atomicCardConfig;
+	@property() private content;
+	@property() private selectedMonth;
 
 	constructor() {
 		super();
@@ -38,7 +31,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.modeToggle = 0;
 		this.selectedMonth = moment();
 		this.refreshCalEvents = null;
-		this.monthToGet = moment().format("MM");
+		this.monthToGet = moment().format('MM');
 		this.month = [];
 		this.showLoader = false;
 		this.eventSummary = html`&nbsp;`;
@@ -52,12 +45,12 @@ class AtomicCalendarRevive extends LitElement {
 
 	static getStubConfig() {
 		return {
-			name: "Calendar Card",
-			enableModeChange: true
-		}
+			name: 'Calendar Card',
+			enableModeChange: true,
+		};
 	}
 
-	setConfig(config) {
+	setConfig(config: atomicCardConfig) : void {
 		config = JSON.parse(JSON.stringify(config));
 		if (!config.entities || !config.entities.length) {
 			throw new Error('Please define atomic-calendar-revive card entity');
@@ -151,7 +144,6 @@ class AtomicCalendarRevive extends LitElement {
 			calEventSatColor: 'rgba(255, 255, 255, .05)',
 			calEventSunColor: 'rgba(255, 255, 255, .15)',
 
-
 			calEventHolidayColor: 'red',
 			calEventHolidayFilter: null,
 
@@ -172,31 +164,31 @@ class AtomicCalendarRevive extends LitElement {
 			firstDayOfWeek: 1, // default 1 - monday
 			blacklist: null,
 			whitelist: null,
-			...config
-		}
+			...config,
+		};
 
-		this.modeToggle = this._config.defaultMode
+		this.modeToggle = this._config.defaultMode;
 
 		if (typeof this._config.entities === 'string')
-			this._config.entities = [{
-				entity: config.entities
-			}];
+			this._config.entities = [
+				{
+					entity: config.entities,
+				},
+			];
 		this._config.entities.forEach((entity, i) => {
 			if (typeof entity === 'string')
 				this._config.entities[i] = {
-					entity: entity
+					entity: entity,
 				};
 		});
 	}
-
-	updated() { }
 
 	render() {
 		if (this.firstrun) {
 			console.info(
 				`%c atomic-calendar-revive %c Version: ${CARD_VERSION} `,
-				"color: white; background: #484848; font-weight: 700;",
-				"color: white; background: #cc5500; font-weight: 700;"
+				'color: white; background: #484848; font-weight: 700;',
+				'color: white; background: #cc5500; font-weight: 700;'
 			);
 		}
 		if (!this._config || !this.hass) {
@@ -204,26 +196,21 @@ class AtomicCalendarRevive extends LitElement {
 		}
 		this.updateCard();
 
-		return html`
+		return html`${this.setStyle()}
 
-		${this.setStyle()}
-
-		<ha-card class="cal-card">
-		${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html`
-			<div class="cal-nameContainer">
-				${this._config.name
-						? html`
-						<div  class="cal-name"  @click='${e => this.handleToggle()}'>
-						${this._config.name}
-						</div>
-						`
-						: ""}
-
-				${(this.showLoader && this._config.showLoader) ? html`
-					<div  class="loader" ></div>` : ''
-					}
-				${this._config.showDate
+			<ha-card class="cal-card">
+				${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
+					? html`
+							<div class="cal-nameContainer">
+							${this._config.name
+									? html`
+										<div  class="cal-name"  @click="${e => this.handleToggle()}">
+											${this._config.name}
+										</div>
+									  `
+								: ""}
+							${(this.showLoader && this._config.showLoader) ? html`<div  class="loader" ></div>` : ''}
+						${this._config.showDate
 						? html`
 					<div class="calDate">
 					${this.getDate()}
@@ -1095,6 +1082,15 @@ customElements.define('atomic-calendar-revive', AtomicCalendarRevive);
  *
  */
 class CalendarDay {
+	calendarDay: any;
+	_lp: any;
+	ymd: any;
+	_holiday: never[];
+	_icon1: never[];
+	_icon2: never[];
+	_icon3: never[];
+	_allEvents: never[];
+	_daybackground: never[];
 	constructor(calendarDay, d) {
 		this.calendarDay = calendarDay
 		this._lp = d;
@@ -1174,6 +1170,12 @@ class CalendarDay {
  */
 
 class EventClass {
+	isEmpty: boolean;
+	eventClass: any;
+	_config: any;
+	_startTime: any;
+	_endTime: any;
+	isFinished: boolean;
 	constructor(eventClass, config) {
 		this.eventClass = eventClass;
 		this._config = config;
@@ -1236,7 +1238,7 @@ class EventClass {
 	get isFullMoreDaysEvent() {
 		if ((!this.eventClass.start.dateTime && !this.eventClass.end.dateTime && !moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) || (
 			moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) && moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day')
-		));
+		))
 			return true;
 		else return false;
 	}

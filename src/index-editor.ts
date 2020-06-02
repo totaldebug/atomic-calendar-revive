@@ -33,6 +33,7 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 				name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid,
 				checked: !!matchingConfigEnitity,
 			};
+			return entityOptions;
 		});
 
 		return entityOptions;
@@ -70,7 +71,7 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 													@value-changed="${this.entityNameChanged}"
 												></paper-input>
 											</div>
-									  `
+										`
 							: html``}
 							</div>
 						`;
