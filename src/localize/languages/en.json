@@ -1,0 +1,12 @@
+{
+	"common": {
+		"version": "Version",
+		"invalid_configuration": "Invalid Configuration",
+		"show_warning": "Show Warning",
+		"error": "Error"
+	},
+	"errors": {
+		"missing_entity": "Please define atomic-calendar-revive card entity",
+		"update_card": "The calendar can't be loaded from Home Assistant component"
+	}
+}

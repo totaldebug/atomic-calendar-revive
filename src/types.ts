@@ -1,6 +1,6 @@
 import { ActionConfig, LovelaceCardConfig } from 'custom-card-helpers';
+import { TemplateResult } from 'lit-element';
 
-// TODO Add your configuration elements here for type-checking
 export interface atomicCardConfig extends LovelaceCardConfig {
 	entity_config: boolean;
 	color: string;
@@ -25,4 +25,22 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	unit_of_measurement: string;
 	width: string;
 	language: string;
+}
+
+export interface LongDateFormatSpec {
+  LTS: string;
+  LT: string;
+  L: string;
+  LL: string;
+  LLL: string;
+  LLLL: string;
+
+ // lets forget for a sec that any upper/lower permutation will also work
+
+ lts?: string;
+ lt?: string;
+ l?: string;
+ ll?: string;
+ lll?: string;
+ llll?: string;
 }

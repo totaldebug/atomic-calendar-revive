@@ -71,8 +71,8 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 													@value-changed="${this.entityNameChanged}"
 												></paper-input>
 											</div>
-										`
-							: html``}
+									  `
+									: html``}
 							</div>
 						`;
 					})}
