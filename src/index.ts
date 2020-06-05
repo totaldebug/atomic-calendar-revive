@@ -728,8 +728,8 @@ class AtomicCalendarRevive extends LitElement {
 			};
 			const emptyEvent = new EventClass(emptyEv, '');
 			emptyEvent.isEmpty = true;
-			const d: string[] = [];
-			d[0] = emptyEvent;
+			const d: [] = [];
+			d.push[0] = emptyEvent;
 			days.unshift(d);
 		}
 
@@ -885,15 +885,15 @@ class AtomicCalendarRevive extends LitElement {
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
 
-		const calendarUrlList = [];
+		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
-			calendarUrlList.push([`calendars/${entity.entity}?start=${start}Z&end=${end}Z`]);
+			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
 		});
 		try {
 			return await Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result) => {
 				const singleEvents = [];
 				let eventCount = 0;
-				result.map((calendar, i) => {
+				result.map((calendar: any, i: number) => {
 					calendar.map((singleEvent) => {
 						const blacklist =
 							typeof this._config.entities[i]['blacklist'] != 'undefined' ? this._config.entities[i]['blacklist'] : '';
@@ -914,7 +914,7 @@ class AtomicCalendarRevive extends LitElement {
 				});
 
 				if (this._config.sortByStartTime) {
-					singleEvents.sort(function (a: string, b: string) {
+					singleEvents.sort(function (a, b) {
 						return moment(a.startTime).diff(moment(b.startTime));
 					});
 				}
