@@ -9,8 +9,10 @@ import {
 } from 'custom-card-helpers';
 import 'moment/min/locales';
 import '@material/mwc-linear-progress';
-import * as moment_ from 'moment';
-const moment = moment_;
+
+import * as temp from 'moment';
+const moment = temp["default"];
+
 import './index-editor';
 
 import { atomicCardConfig, LongDateFormatSpec} from './types';
@@ -217,7 +219,7 @@ class AtomicCalendarRevive extends LitElement {
 							<div class="cal-nameContainer">
 								${this._config.name
 									? html`
-											<div class="cal-name" @click="${(_e: any) => this.handleToggle()}">
+											<div class="cal-name" @click="${ _e => this.handleToggle()}">
 												${this._config.name}
 											</div>
 									  `
@@ -286,14 +288,14 @@ class AtomicCalendarRevive extends LitElement {
 		else this.updateCalendarHTML();
 	}
 
-	private handleToggle() {
+	handleToggle() {
 		if (this._config.enableModeChange) {
 			this.modeToggle == 1 ? (this.modeToggle = 2) : (this.modeToggle = 1);
 			this.requestUpdate();
 		}
 	}
 
-	private getDate() {
+	getDate() {
 		const date = moment().format(this._config.dateFormat);
 		return html`${date}`;
 	}
@@ -554,7 +556,7 @@ class AtomicCalendarRevive extends LitElement {
 
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.
-	public etCardSize() {
+	getCardSize() {
 		return this._config.entities.length + 1;
 	}
 
@@ -884,7 +886,7 @@ class AtomicCalendarRevive extends LitElement {
 			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
 		});
 		try {
-			return await Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result) => {
+			return await (Promise.all(calendarUrlList.map(url => this.hass.callApi('GET', url))).then((result) => {
 				const singleEvents: Array<any> = [];
 				let eventCount = 0;
 				result.map((calendar: any, i: number) => {
@@ -912,7 +914,7 @@ class AtomicCalendarRevive extends LitElement {
 						return moment(a.startTime).diff(moment(b.startTime));
 					});
 				}
-				const ev: never[] = [].concat(...singleEvents);
+				let ev: any[] = [].concat.apply([], singleEvents);
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a: {daysToSort: number}) {
 					r[a.daysToSort] = r[a.daysToSort] || [];
@@ -924,8 +926,9 @@ class AtomicCalendarRevive extends LitElement {
 					return groupsOfEvents[k];
 				});
 				this.showLoader = false;
+				console.log(days);
 				return days;
-			});
+			}));
 		} catch (error) {
 			this.showLoader = false;
 			throw error;
@@ -1126,26 +1129,26 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	getCalendarHeaderHTML() {
-		return html` <div class="calDateSelector">
+		return html`<div class="calDateSelector">
 			<ha-icon-button
 				class="ha-icon-button"
 				icon="mdi:chevron-left"
-				@click="${(_e) => this.handleMonthChange(-1)}"
+				@click="${ _e => this.handleMonthChange(-1)}"
 				title="left"
 			></ha-icon-button>
 			<a
-				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(
+				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth, 'YYYY')}/${moment(
 					this.selectedMonth,
 				).format('MM')}/1"
 				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
 				target="${this._config.linkTarget}"
 			>
-				${moment(this.selectedMonth).locale(this.language).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
+				${moment(this.selectedMonth, 'MMMM').locale(this.language)} ${moment(this.selectedMonth, 'YYYY')}
 			</a>
 			<ha-icon-button
 				class="ha-icon-button"
 				icon="mdi:chevron-right"
-				@click="${(_e) => this.handleMonthChange(1)}"
+				@click="${ _e => this.handleMonthChange(1)}"
 				title="right"
 			></ha-icon-button>
 		</div>`;
@@ -1209,7 +1212,7 @@ class AtomicCalendarRevive extends LitElement {
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
-						@click="${(_e) => this.handleEventSummary(day)}"
+						@click="${ _e => this.handleEventSummary(day)}"
 						class="cal"
 						style="color: ${this._config
 							.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
@@ -1290,8 +1293,8 @@ class CalendarDay {
 	_icon1: string[];
 	_icon2: string[];
 	_icon3: string[];
-	_allEvents: never[];
-	_daybackground: never[];
+	_allEvents: any[];
+	_daybackground: string[];
 	constructor(calendarDay, d) {
 		this.calendarDay = calendarDay;
 		this._lp = d;
