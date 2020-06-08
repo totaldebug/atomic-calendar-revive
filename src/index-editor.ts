@@ -146,7 +146,7 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 		let entityObjects = [...this.entities];
 
 		if (value) {
-			const originalEntity = this.hass.states[entityId];
+			const originalEntity = this.hass!.states[entityId];
 			entityObjects.push({ entity: entityId, name: originalEntity.attributes.friendly_name || entityId });
 		} else {
 			entityObjects = entityObjects.filter((entity) => entity.entity !== entityId);

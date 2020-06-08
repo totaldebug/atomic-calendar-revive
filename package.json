@@ -7,7 +7,7 @@
     "lint": "eslint src/*.ts | more ",
     "lintapp": "eslint src/app.js",
     "linteditor": "eslint src/app-editor.js",
-    "babel": "babel dist/app.js --out-file dist/app.js",
+    "babel": "babel dist/index.js --out-file dist/index.js",
     "rollup": "rollup -c",
     "start": "rollup -c --watch",
     "build": "npm run rollup  && npm run babel",

@@ -9,8 +9,8 @@ import {
 } from 'custom-card-helpers';
 import 'moment/min/locales';
 import '@material/mwc-linear-progress';
-import * as moment from 'moment';
-
+import * as moment_ from 'moment';
+const moment = moment_;
 import './index-editor';
 
 import { atomicCardConfig, LongDateFormatSpec } from './types';
@@ -30,9 +30,9 @@ class AtomicCalendarRevive extends LitElement {
 	shouldUpdateHtml: boolean;
 	errorMessage: string;
 	modeToggle: number;
-	refreshCalEvents: null;
+	refreshCalEvents: boolean;
 	monthToGet: string;
-	month: never[];
+	month: any[];
 	showLoader: boolean;
 	eventSummary: TemplateResult;
 	firstrun: boolean;
@@ -51,7 +51,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.errorMessage = '';
 		this.modeToggle = 0;
 		this.selectedMonth = moment();
-		this.refreshCalEvents = null;
+		this.refreshCalEvents = true;
 		this.monthToGet = moment().format('MM');
 		this.month = [];
 		this.showLoader = false;
@@ -71,12 +71,13 @@ class AtomicCalendarRevive extends LitElement {
 		};
 	}
 
-	setConfig(config: atomicCardConfig): void {
-		config = JSON.parse(JSON.stringify(config));
-		if (!config.entities || !config.entities.length) {
-			throw new Error(localize('errors.missing_entity'));
+	public setConfig(config: atomicCardConfig): void {
+
+		if (!config) {
+			throw new Error(localize('errors.invalid_configuration'));
 		}
 
+		let template: atomicCardConfig = JSON.parse(JSON.stringify(config));
 		this._config = {
 			// text translations
 			fullDayEventText: 'All day', // "All day" custom text
@@ -156,38 +157,29 @@ class AtomicCalendarRevive extends LitElement {
 			defaultCalColor: 'var(--primary-text-color)',
 
 			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
-			calEventBackgroundFilter: null,
 
 			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-			calActiveEventBackgroundFilter: null,
-
 			calEventSatColor: 'rgba(255, 255, 255, .05)',
 			calEventSunColor: 'rgba(255, 255, 255, .15)',
 
 			calEventHolidayColor: 'red',
-			calEventHolidayFilter: null,
 
 			calEventIcon1: 'mdi:gift',
 			calEventIcon1Color: 'var(--primary-text-color)',
-			calEventIcon1Filter: null,
 
 			calEventIcon2: 'mdi:home',
 			calEventIcon2Color: 'var(--primary-text-color)',
-			calEventIcon2Filter: null,
 
 			calEventIcon3: 'mdi:star',
 			calEventIcon3Color: 'var(--primary-text-color)',
-			calEventIcon3Filter: null,
 
 			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
-			blacklist: null,
-			whitelist: null,
-			...config,
+			...template,
 		};
 
-		this.modeToggle = this._config.defaultMode;
+		this.modeToggle = this._config.defaultMode!;
 
 		if (typeof this._config.entities === 'string')
 			this._config.entities = [
@@ -248,14 +240,15 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language = this._config.language != '' ? this._config.language : this.hass!.language.toLowerCase();
+		this.language = this._config.language != '' ? this._config.language! : this.hass!.language.toLowerCase();
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT');
 		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
 		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm';
-		else if (this._config.hoursFormat != 'default') timeFormat = this._config.hoursFormat;
+		else if (this._config.hoursFormat != 'default') timeFormat = this._config.hoursFormat!;
+
 		moment.updateLocale(this.language, {
 			week: {
-				dow: this._config.firstDayOfWeek,
+				dow: this._config.firstDayOfWeek!,
 			},
 			longDateFormat: {
 				LT: timeFormat,
@@ -619,7 +612,7 @@ class AtomicCalendarRevive extends LitElement {
 		// 2. Starts any day, ends later -> 'All day, end date'
 		else if (event.isFullMoreDaysEvent)
 			return html`<div>
-				${this._config.fullDayEventText}, ${this._config.untilText.toLowerCase()}
+				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
 			</div>`;
 		// 3. starts before today, ends after today -> 'date - date'
@@ -628,7 +621,7 @@ class AtomicCalendarRevive extends LitElement {
 			(moment(event.startTime).isBefore(today, 'day') || moment(event.endTime).isAfter(today, 'day'))
 		)
 			return html`<div>
-				${this._config.fullDayEventText}, ${this._config.untilText.toLowerCase()}
+				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
 			</div>`;
 		// events with hours set
@@ -641,7 +634,7 @@ class AtomicCalendarRevive extends LitElement {
 		//6. starts today or later, ends later -> 'hour - until date'
 		else if (!moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isAfter(event.startTime, 'day'))
 			return html`<div>
-				${event.startTime.format('LT')}, ${this._config.untilText.toLowerCase()}
+				${event.startTime.format('LT')}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
 			</div>`;
 		// 7. Normal one day event, with time set -> 'hour - hour'
@@ -880,7 +873,7 @@ class AtomicCalendarRevive extends LitElement {
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
 		const end = moment()
-			.add(this._config.maxDaysToShow + this._config.startDaysAhead, 'days')
+			.add(this._config.maxDaysToShow! + this._config.startDaysAhead!, 'days')
 			.endOf('day')
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
@@ -891,7 +884,7 @@ class AtomicCalendarRevive extends LitElement {
 		});
 		try {
 			return await Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result) => {
-				const singleEvents = [];
+				const singleEvents: Array<any> = [];
 				let eventCount = 0;
 				result.map((calendar: any, i: number) => {
 					calendar.map((singleEvent) => {
@@ -901,7 +894,7 @@ class AtomicCalendarRevive extends LitElement {
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
 						const singleAPIEvent = new EventClass(singleEvent, this._config.entities[i]);
 						if (
-							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount) &&
+							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount!) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
@@ -918,9 +911,9 @@ class AtomicCalendarRevive extends LitElement {
 						return moment(a.startTime).diff(moment(b.startTime));
 					});
 				}
-				const ev = [].concat(...singleEvents);
+				const ev: never[] = [].concat(...singleEvents);
 				// grouping events by days, returns object with days and events
-				const groupsOfEvents = ev.reduce(function (r, a) {
+				const groupsOfEvents = ev.reduce(function (r, a: {daysToSort: number}) {
 					r[a.daysToSort] = r[a.daysToSort] || [];
 					r[a.daysToSort].push(a);
 					return r;
@@ -948,7 +941,7 @@ class AtomicCalendarRevive extends LitElement {
 		const start = moment(startDay).startOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		const end = moment(endDay).endOf('day').add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		// calendarUrlList[url, type of event configured for this callendar,filters]
-		const calendarUrlList = [];
+		const calendarUrlList: any[] = [];
 		this._config.entities.map((entity) => {
 			if (typeof entity.type != 'undefined') {
 				calendarUrlList.push([
@@ -960,11 +953,11 @@ class AtomicCalendarRevive extends LitElement {
 				]);
 			}
 		});
-		Promise.all(calendarUrlList.map((url) => this.hass.callApi('GET', url[0])))
-			.then((result) => {
+		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0])))
+			.then((result: Array<any>) => {
 				if (monthToGet == this.monthToGet)
-					result.map((eventsArray, i) => {
-						this.month.map((m) => {
+					result.map((eventsArray, i: number) => {
+						this.month.map((m: {date: string}) => {
 							const calendarTypes = calendarUrlList[i][1];
 							const calendarUrl = calendarUrlList[i][0];
 							const calendarBlacklist = typeof calendarUrlList[i][2] != 'undefined' ? calendarUrlList[i][2] : '';
@@ -1063,13 +1056,14 @@ class AtomicCalendarRevive extends LitElement {
 		const dayOfWeekNumber = firstDay.day();
 		this.month = [];
 		let weekShift = 0;
-		dayOfWeekNumber - this._config.firstDayOfWeek >= 0 ? (weekShift = 0) : (weekShift = 7);
+		dayOfWeekNumber - this._config.firstDayOfWeek! >= 0 ? (weekShift = 0) : (weekShift = 7);
 		for (
-			let i = this._config.firstDayOfWeek - dayOfWeekNumber - weekShift;
-			i < 42 - dayOfWeekNumber + this._config.firstDayOfWeek - weekShift;
+			let i = this._config.firstDayOfWeek! - dayOfWeekNumber - weekShift;
+			i < 42 - dayOfWeekNumber + this._config.firstDayOfWeek! - weekShift;
 			i++
 		) {
-			this.month.push(new CalendarDay(moment(firstDay).add(i, 'days'), i));
+			const Calendar = new CalendarDay(moment(firstDay).add(i, 'days'), i);
+			this.month.push(Calendar);
 		}
 	}
 
@@ -1291,10 +1285,10 @@ class CalendarDay {
 	calendarDay: any;
 	_lp: any;
 	ymd: any;
-	_holiday: never[];
-	_icon1: never[];
-	_icon2: never[];
-	_icon3: never[];
+	_holiday: string[];
+	_icon1: string[];
+	_icon2: string[];
+	_icon3: string[];
 	_allEvents: never[];
 	_daybackground: never[];
 	constructor(calendarDay, d) {
