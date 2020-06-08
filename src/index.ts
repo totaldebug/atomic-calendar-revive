@@ -13,16 +13,17 @@ import * as moment_ from 'moment';
 const moment = moment_;
 import './index-editor';
 
-import { atomicCardConfig, LongDateFormatSpec } from './types';
+import { atomicCardConfig, LongDateFormatSpec} from './types';
 import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 
 class AtomicCalendarRevive extends LitElement {
-	@property() public hass?: HomeAssistant;
+	@property() public hass!: HomeAssistant;
 	@property() private _config!: atomicCardConfig;
 	@property() private content;
 	@property() private selectedMonth;
+
 	lastCalendarUpdateTime: any;
 	lastEventsUpdateTime: any;
 	lastHTMLUpdateTime: any;
@@ -64,7 +65,7 @@ class AtomicCalendarRevive extends LitElement {
 		return document.createElement('atomic-calendar-revive-editor') as LovelaceCardEditor;
 	}
 
-	static getStubConfig() {
+	public static getStubConfig() {
 		return {
 			name: 'Calendar Card',
 			enableModeChange: true,
@@ -72,12 +73,12 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	public setConfig(config: atomicCardConfig): void {
-
 		if (!config) {
 			throw new Error(localize('errors.invalid_configuration'));
 		}
 
-		let template: atomicCardConfig = JSON.parse(JSON.stringify(config));
+		let customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
+
 		this._config = {
 			// text translations
 			fullDayEventText: 'All day', // "All day" custom text
@@ -176,7 +177,7 @@ class AtomicCalendarRevive extends LitElement {
 			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
-			...template,
+			...customConfig,
 		};
 
 		this.modeToggle = this._config.defaultMode!;
@@ -195,7 +196,7 @@ class AtomicCalendarRevive extends LitElement {
 		});
 	}
 
-	render() {
+	protected render(): TemplateResult | void {
 		if (this.firstrun) {
 			console.info(
 				`%c atomic-calendar-revive %c ${localize('common.version')}: ${CARD_VERSION} `,
@@ -285,14 +286,14 @@ class AtomicCalendarRevive extends LitElement {
 		else this.updateCalendarHTML();
 	}
 
-	handleToggle() {
+	private handleToggle() {
 		if (this._config.enableModeChange) {
 			this.modeToggle == 1 ? (this.modeToggle = 2) : (this.modeToggle = 1);
 			this.requestUpdate();
 		}
 	}
 
-	getDate() {
+	private getDate() {
 		const date = moment().format(this._config.dateFormat);
 		return html`${date}`;
 	}
@@ -553,7 +554,7 @@ class AtomicCalendarRevive extends LitElement {
 
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.
-	getCardSize() {
+	public etCardSize() {
 		return this._config.entities.length + 1;
 	}
 

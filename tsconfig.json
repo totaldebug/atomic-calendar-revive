@@ -13,5 +13,8 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
-  }
+  },
+  "include": [
+    "src/*"
+  ]
 }

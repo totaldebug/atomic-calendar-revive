@@ -30,11 +30,10 @@ const plugins = [
     !dev && terser(),
 ];
 
-
 export default {
-    input: ['src/index.ts'],
+    input: 'src/index.ts',
     output: {
-        dir: 'dist',
+        dir: './dist',
         format: 'es',
     },
     watch: {

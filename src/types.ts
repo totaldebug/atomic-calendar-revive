@@ -1,4 +1,4 @@
-import { ActionConfig, LovelaceCardConfig } from 'custom-card-helpers';
+import { ActionConfig, LovelaceCardConfig, LovelaceCard } from 'custom-card-helpers';
 import { TemplateResult } from 'lit-element';
 
 export interface atomicCardConfig extends LovelaceCardConfig {
