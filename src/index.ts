@@ -10,8 +10,7 @@ import {
 import 'moment/min/locales';
 import '@material/mwc-linear-progress';
 
-import * as temp from 'moment';
-const moment = temp["default"];
+import moment from 'moment';
 
 import './index-editor';
 
@@ -926,7 +925,6 @@ class AtomicCalendarRevive extends LitElement {
 					return groupsOfEvents[k];
 				});
 				this.showLoader = false;
-				console.log(days);
 				return days;
 			}));
 		} catch (error) {
@@ -957,8 +955,7 @@ class AtomicCalendarRevive extends LitElement {
 				]);
 			}
 		});
-		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0])))
-			.then((result: Array<any>) => {
+		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result: Array<any>) => {
 				if (monthToGet == this.monthToGet)
 					result.map((eventsArray, i: number) => {
 						this.month.map((m: {date: string}) => {
@@ -1137,13 +1134,11 @@ class AtomicCalendarRevive extends LitElement {
 				title="left"
 			></ha-icon-button>
 			<a
-				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth, 'YYYY')}/${moment(
-					this.selectedMonth,
-				).format('MM')}/1"
+				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1"
 				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
 				target="${this._config.linkTarget}"
 			>
-				${moment(this.selectedMonth, 'MMMM').locale(this.language)} ${moment(this.selectedMonth, 'YYYY')}
+				${moment(this.selectedMonth).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
 			</a>
 			<ha-icon-button
 				class="ha-icon-button"
@@ -1249,7 +1244,6 @@ class AtomicCalendarRevive extends LitElement {
 		}
 		const month = this.month;
 		const weekDays = moment.weekdaysMin(true);
-
 		const htmlDayNames = weekDays.map(
 			(day) => html`
 				<th class="cal" style="padding-bottom: 8px; color:  ${this._config.calWeekDayColor};">${day}</th>
