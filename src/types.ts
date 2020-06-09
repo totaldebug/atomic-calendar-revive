@@ -111,3 +111,35 @@ export interface LongDateFormatSpec {
  lll?: string;
  llll?: string;
 }
+
+
+//EDITOR TYPES
+export interface EntityConfig {
+  entity: string;
+  type?: string;
+  name?: string;
+  icon?: string;
+}
+
+export interface ConfigEntity extends EntityConfig {
+  type?: string;
+  secondary_info?: "entity-id" | "last-changed";
+  action_name?: string;
+  service?: string;
+  service_data?: object;
+  url?: string;
+}
+
+export interface EntitiesEditorEvent {
+  detail?: {
+    entities?: EntityConfig[];
+  };
+  target?: EventTarget;
+}
+
+export interface EditorTarget extends EventTarget {
+  value?: string;
+  index?: number;
+  checked?: boolean;
+  configValue?: string;
+}

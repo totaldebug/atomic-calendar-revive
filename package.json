@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@material/mwc-linear-progress": "^0.15.0",
+    "@polymer/lit-element": "^0.7.1",
     "@rollup/plugin-json": "^4.0.3",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "custom-card-helpers": "^1.6.4",

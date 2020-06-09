@@ -7,5 +7,29 @@
 	"errors": {
 		"invalid_configuration": "Invalid Configuration",
 		"update_card": "The calendar can't be loaded from Home Assistant component"
+	},
+	"required":{
+		"name": "Reqired",
+		"secondary": "Required options for this card to function"
+	},
+	"main": {
+		"name": "Main Options",
+		"secondary": "Options that apply globally"
+	},
+	"main_fields": {
+		"name": "Name",
+		"showColors":"Show Colors"
+	},
+	"event":{
+		"name": "Event Mode",
+		"secondary": "Event Mode specific options"
+	},
+	"calendar":{
+		"name": "Calendar Mode",
+		"secondary": "Calendar Mode specific options"
+	},
+	"appearance":{
+		"name": "Appearance",
+		"secondary": "Customize the colors etc."
 	}
 }

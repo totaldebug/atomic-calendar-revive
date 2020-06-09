@@ -1,13 +1,39 @@
 import { LitElement, html, customElement, TemplateResult, CSSResult, property } from 'lit-element';
 import { HomeAssistant, fireEvent, LovelaceCardEditor, ActionConfig } from 'custom-card-helpers';
+import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';
 import { EDITOR_VERSION } from './const';
 
+const options = {
+	required: {
+		show: true
+	},
+	main: {
+		show: false
+	},
+	event: {
+		show: false
+	},
+	calendar: {
+		show: false
+	},
+	appearance: {
+		show: false,
+		options: {
+			tap: {
+				show: false
+			}
+
+		}
+	}
+
+};
+
 @customElement('atomic-calendar-revive-editor')
-export default class AtomicCalendarReviveEditor extends LitElement {
+export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCardEditor {
 	@property() public hass?: HomeAssistant;
-	@property() private _config;
+	@property() private _config?: atomicCardConfig;
 	@property() private _toggle?: boolean;
 
 	static get styles(): CSSResult {
@@ -15,28 +41,71 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 	}
 
 	public setConfig(config: atomicCardConfig): void {
-		this._config = { ...config };
+		this._config = config;
 	}
 
-	get entityOptions() {
-		//Restrict of domain type
-		const entities = Object.keys(this.hass!.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'calendar');
-		// Map entities
-		const entityOptions = entities.map((eid) => {
-			const matchingConfigEnitity = this._config.entities.find(
-				(entity) => ((entity && entity.entity) || entity) === eid,
-			);
-			const originalEntity = this.hass!.states[eid];
+	get _name(): string {
+		if (this._config) {
+			return this._config.name || '';
+		}
 
-			return {
-				entity: eid,
-				name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid,
-				checked: !!matchingConfigEnitity,
-			};
-			return entityOptions;
-		});
+		return '';
+	}
 
-		return entityOptions;
+	get _entity(): string {
+		if (this._config) {
+			return this._config.entity || '';
+		}
+
+		return '';
+	}
+
+	get _showColors(): boolean {
+		if (this._config) {
+			return this._config.showColors || true;
+		}
+
+		return false;
+	}
+
+	get _show_warning(): boolean {
+		if (this._config) {
+			return this._config.show_warning || false;
+		}
+
+		return false;
+	}
+
+	get _show_error(): boolean {
+		if (this._config) {
+			return this._config.show_error || false;
+		}
+
+		return false;
+	}
+
+	get _tap_action(): ActionConfig {
+		if (this._config) {
+			return this._config.tap_action || { action: 'more-info' };
+		}
+
+		return { action: 'more-info' };
+	}
+
+	get _hold_action(): ActionConfig {
+		if (this._config) {
+			return this._config.hold_action || { action: 'none' };
+		}
+
+		return { action: 'none' };
+	}
+
+	get _double_tap_action(): ActionConfig {
+		if (this._config) {
+			return this._config.double_tap_action || { action: 'none' };
+		}
+
+		return { action: 'none' };
 	}
 
 	protected render(): TemplateResult | void {
@@ -44,122 +113,163 @@ export default class AtomicCalendarReviveEditor extends LitElement {
 			return html``;
 		}
 
+		// You can restrict on domain type
+		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'sun');
+
 		return html`
-			<div class="card-config">
-				<span style="color:red;font-weight:bold">
-					Editor Version: ${EDITOR_VERSION}
-				</span>
-				<div class="entities">
-					<h3>Entities (Required)</h3>
-					${this.entityOptions.map((entity) => {
-						return html`
-							<div class="entity-select">
-								<paper-checkbox
-									@checked-changed="${this.entityChanged}"
-									.checked=${entity.checked}
-									.entityId="${entity.entity}"
-								>
-									${entity.entity}
-								</paper-checkbox>
-								${this._config.showEventOrigin
-									? html`
-											<div class="origin-calendar">
-												<paper-input
-													label="Calendar Origin"
-													.value="${entity.name}"
-													.entityId="${entity.entity}"
-													@value-changed="${this.entityNameChanged}"
-												></paper-input>
-											</div>
-									  `
-									: html``}
-							</div>
-						`;
-					})}
-				</div>
-			</div>
-		`;
+      <div class="card-config">
+        <div class="option" @click=${this._toggleOption} .option=${'required'}>
+          <div class="row">
+            <ha-icon .icon=${`mdi:tune`}></ha-icon>
+            <div class="title">${localize('required.name')}</div>
+          </div>
+          <div class="secondary">${localize('required.secondary')}</div>
+        </div>
+        ${options.required.show
+				? html`
+              <div class="values">
+                <paper-dropdown-menu
+                  label="Entity (Required)"
+                  @value-changed=${this._valueChanged}
+                  .configValue=${'entity'}
+                >
+                  <paper-listbox slot="dropdown-content" .selected=${entities.indexOf(this._entity)}>
+                    ${entities.map(entity => {
+					return html`
+                        <paper-item>${entity}</paper-item>
+                      `;
+				})}
+                  </paper-listbox>
+                </paper-dropdown-menu>
+              </div>
+            `
+				: ''}
+				<div class="option" @click=${this._toggleOption} .option=${'main'}>
+          <div class="row">
+            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <div class="title">${localize('main.name')}</div>
+          </div>
+          <div class="secondary">${localize('main.secondary')}</div>
+        </div>
+        ${options.main.show
+				? html`
+							<div class="values">
+								<paper-input
+									label="${localize('main_fields.name')}"
+									.value=${this._name}
+									.configValue=${'name'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<br />
+                <ha-switch
+                  aria-label=${`Toggle colors ${this._showColors ? 'on' : 'off'}`}
+                  .checked=${this._showColors !== false}
+                  .configValue=${'showColors'}
+                  @change=${this._valueChanged}
+                  >${localize('main_fields.showColors')}?</ha-switch
+                >
+                <ha-switch
+                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
+                  .checked=${this._show_error !== false}
+                  .configValue=${'show_error'}
+                  @change=${this._valueChanged}
+                  >Show Error?</ha-switch
+                >
+              </div>
+            `
+				: ''}
+        <div class="option" @click=${this._toggleOption} .option=${'calendar'}>
+          <div class="row">
+            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <div class="title">${localize('calendar.name')}</div>
+          </div>
+          <div class="secondary">${localize('calendar.secondary')}</div>
+        </div>
+        ${options.calendar.show
+				? html`
+                <ha-switch
+                  aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
+                  .checked=${this._show_warning !== false}
+                  .configValue=${'show_warning'}
+                  @change=${this._valueChanged}
+                  >Show Warning?</ha-switch
+                >
+                <ha-switch
+                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
+                  .checked=${this._show_error !== false}
+                  .configValue=${'show_error'}
+                  @change=${this._valueChanged}
+                  >Show Error?</ha-switch
+                >
+              </div>
+            `
+				: ''}
+        <div class="option" @click=${this._toggleOption} .option=${'appearance'}>
+          <div class="row">
+            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <div class="title">${localize('appearance.name')}</div>
+          </div>
+          <div class="secondary">${localize('appearance.secondary')}</div>
+        </div>
+        ${options.appearance.show
+				? html`
+                <ha-switch
+                  aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
+                  .checked=${this._show_warning !== false}
+                  .configValue=${'show_warning'}
+                  @change=${this._valueChanged}
+                  >Show Warning?</ha-switch
+                >
+                <ha-switch
+                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
+                  .checked=${this._show_error !== false}
+                  .configValue=${'show_error'}
+                  @change=${this._valueChanged}
+                  >Show Error?</ha-switch
+                >
+              </div>
+            `
+				: ''}
+      </div>
+    `;
 	}
-	/**
-	 * update config for a checkbox input
-	 * @param {*} ev
-	 */
-	checkboxChanged(ev) {
-		if (this.cantFireEvent) return;
-		const {
-			target: { configValue },
-			detail: { value },
-		} = ev;
 
-		this._config = Object.assign({}, this._config, { [configValue]: value });
-		fireEvent(this, 'config-changed', { config: this._config });
+	private _toggleAppearance(ev): void {
+		this._toggleThing(ev, options.appearance.options);
 	}
 
-	/**
-	 * change on text input
-	 * @param {*} ev
-	 */
-	inputChanged(ev) {
-		if (this.cantFireEvent) return;
-		const {
-			target: { configValue },
-			detail: { value },
-		} = ev;
-
-		this._config = Object.assign({}, this._config, { [configValue]: value });
-		fireEvent(this, 'config-changed', { config: this._config });
+	private _toggleOption(ev): void {
+		this._toggleThing(ev, options);
 	}
 
-	get entities() {
-		const entities = [...(this._config.entities || [])];
-
-		// convert any legacy entity strings into objects
-		const entityObjects = entities.map((entity) => {
-			if (entity.entity) return entity;
-			return { entity, name: entity };
-		});
-
-		return entityObjects;
-	}
-	/**
-	 * change the calendar name of an entity
-	 * @param {*} ev
-	 */
-	entityNameChanged({ target: { entityId }, detail: { value } }) {
-		if (this.cantFireEvent) return;
-		let entityObjects = [...this.entities];
-
-		entityObjects = entityObjects.map((entity) => {
-			if (entity.entity === entityId) entity.name = value || '';
-			return entity;
-		});
-
-		this._config = Object.assign({}, this._config, { entities: entityObjects });
-		fireEvent(this, 'config-changed', { config: this._config });
-	}
-	/**
-	 * add or remove calendar entities from config
-	 * @param {*} ev
-	 */
-	entityChanged({ target: { entityId }, detail: { value } }) {
-		if (this.cantFireEvent) return;
-		let entityObjects = [...this.entities];
-
-		if (value) {
-			const originalEntity = this.hass!.states[entityId];
-			entityObjects.push({ entity: entityId, name: originalEntity.attributes.friendly_name || entityId });
-		} else {
-			entityObjects = entityObjects.filter((entity) => entity.entity !== entityId);
+	private _toggleThing(ev, optionList): void {
+		const show = !optionList[ev.target.option].show;
+		for (const [key] of Object.entries(optionList)) {
+			optionList[key].show = false;
 		}
-
-		this._config = Object.assign({}, this._config, { entities: entityObjects });
-		fireEvent(this, 'config-changed', { config: this._config });
+		optionList[ev.target.option].show = show;
+		this._toggle = !this._toggle;
 	}
-	/**
-	 * stop events from firing if certains conditions not met
-	 */
-	get cantFireEvent() {
-		return !this._config || !this.hass;
+
+	private _valueChanged(ev): void {
+		if (!this._config || !this.hass) {
+			return;
+		}
+		const target = ev.target;
+		if (this[`_${target.configValue}`] === target.value) {
+			return;
+		}
+		if (target.configValue) {
+			if (target.value === '') {
+				delete this._config[target.configValue];
+			} else {
+				this._config = {
+					...this._config,
+					[target.configValue]: target.checked !== undefined ? target.checked : target.value,
+				};
+			}
+		}
+		fireEvent(this, 'config-changed', { config: this._config });
 	}
 }
 
