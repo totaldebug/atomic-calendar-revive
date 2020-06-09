@@ -1160,18 +1160,11 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day')
-				? `background-color: ${this._config.calEventBackgroundColor};`
-				: ``;
-			const dayHolidayStyle =
-				day.holiday && day.holiday.length > 0 ? `color: ${this._config.calEventHolidayColor};` : ``;
-			const dayStyleSat =
-				moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
-			const dayStyleSun =
-				moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
-			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day')
-				? `background-color: ${this._config.calActiveEventBackgroundColor};`
-				: ``;
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``;
+			const dayHolidayStyle = day.holiday && day.holiday.length > 0 ? `color: ${this._config.calEventHolidayColor};` : ``;
+			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
+			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
+			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
 			const dayIcon1 =
 				day.icon1 && day.icon1.length > 0
 					? html`<span
