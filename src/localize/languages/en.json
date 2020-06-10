@@ -14,11 +14,12 @@
 	},
 	"main": {
 		"name": "Main Options",
-		"secondary": "Options that apply globally"
-	},
-	"main_fields": {
-		"name": "Name",
-		"showColors":"Show Colors"
+		"secondary": "Options that apply globally",
+		"fields": {
+			"name": "Name",
+			"showColors": "Show Colors"
+
+		}
 	},
 	"event":{
 		"name": "Event Mode",

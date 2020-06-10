@@ -7,21 +7,27 @@ import { EDITOR_VERSION } from './const';
 
 const options = {
 	required: {
+		icon: 'tune',
 		show: true
 	},
 	main: {
+		icon: 'eye-settings',
 		show: false
 	},
 	event: {
+		icon: 'calendar-check',
 		show: false
 	},
 	calendar: {
+		icon: 'calendar-month-outline',
 		show: false
 	},
 	appearance: {
+		icon: 'palette',
 		show: false,
 		options: {
 			tap: {
+				icon: '',
 				show: false
 			}
 
@@ -120,7 +126,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
       <div class="card-config">
         <div class="option" @click=${this._toggleOption} .option=${'required'}>
           <div class="row">
-            <ha-icon .icon=${`mdi:tune`}></ha-icon>
+            <ha-icon .icon=${`mdi:${options.required.icon}`}></ha-icon>
             <div class="title">${localize('required.name')}</div>
           </div>
           <div class="secondary">${localize('required.secondary')}</div>
@@ -146,7 +152,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				: ''}
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
           <div class="row">
-            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <ha-icon .icon=${`mdi:${options.main.icon}`}></ha-icon>
             <div class="title">${localize('main.name')}</div>
           </div>
           <div class="secondary">${localize('main.secondary')}</div>
@@ -155,7 +161,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				? html`
 							<div class="values">
 								<paper-input
-									label="${localize('main_fields.name')}"
+									label="${localize('main.fields.name')}"
 									.value=${this._name}
 									.configValue=${'name'}
 									@value-changed=${this._valueChanged}
@@ -166,7 +172,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
                   .checked=${this._showColors !== false}
                   .configValue=${'showColors'}
                   @change=${this._valueChanged}
-                  >${localize('main_fields.showColors')}?</ha-switch
+                  >${localize('main.fields.showColors')}?</ha-switch
                 >
                 <ha-switch
                   aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
@@ -180,7 +186,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				: ''}
         <div class="option" @click=${this._toggleOption} .option=${'calendar'}>
           <div class="row">
-            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <ha-icon .icon=${`mdi:${options.calendar.icon}`}></ha-icon>
             <div class="title">${localize('calendar.name')}</div>
           </div>
           <div class="secondary">${localize('calendar.secondary')}</div>
@@ -206,7 +212,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				: ''}
         <div class="option" @click=${this._toggleOption} .option=${'appearance'}>
           <div class="row">
-            <ha-icon .icon=${`mdi:art`}></ha-icon>
+            <ha-icon .icon=${`mdi:${options.appearance.icon}`}></ha-icon>
             <div class="title">${localize('appearance.name')}</div>
           </div>
           <div class="secondary">${localize('appearance.secondary')}</div>
