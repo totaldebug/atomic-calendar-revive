@@ -17,13 +17,17 @@
 		"secondary": "Options that apply globally",
 		"fields": {
 			"name": "Name",
-			"showColors": "Show Colors"
-
+			"showColors": "Show Colors?",
+			"maxDaysToShow": "Max days to show"
 		}
 	},
 	"event":{
 		"name": "Event Mode",
-		"secondary": "Event Mode specific options"
+		"secondary": "Event Mode specific options",
+		"fields": {
+			"showCurrentEventLine": "Show line before event?",
+			"showProgressBar": "Show progress bar?"
+		}
 	},
 	"calendar":{
 		"name": "Calendar Mode",
