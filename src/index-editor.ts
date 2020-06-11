@@ -28,8 +28,8 @@ const options = {
 		icon: 'palette',
 		show: false,
 		options: {
-			tap: {
-				icon: '',
+			main: {
+				icon: 'eye-settings',
 				show: false
 			}
 
@@ -100,8 +100,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		if (this._config) {
 			return this._config.showLoader || true;
 		}
-
 		return false;
+	}
+	get _sortByStartTime(): boolean {
+		if (this._config) {
+			return this._config.sortByStartTime || false;
+		}
+		return true;
 	}
 	// MAIN SETTINGS END
 
@@ -151,6 +156,30 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return true;
 	}
+	get _showNoEventsForToday(): boolean {
+		if (this._config) {
+			return this._config.showNoEventsForToday || false;
+		}
+		return true;
+	}
+	get _showCalNameInEvent(): boolean {
+		if (this._config) {
+			return this._config.showCalNameInEvent || false;
+		}
+		return true;
+	}
+	get _showFullDayProgress(): boolean {
+		if (this._config) {
+			return this._config.showFullDayProgress || false;
+		}
+		return true;
+	}
+	get _hideFinishedEvents(): boolean {
+		if (this._config) {
+			return this._config.hideFinishedEvents || true;
+		}
+		return false;
+	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -167,48 +196,22 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
 	// APPEARENCE SETTINGS
 
+	get _locationLinkColor(): string {
+		if (this._config) {
+			return this._config.locationLinkColor || '';
+		}
+		return '';
+	}
+	get _dimFinishedEvents(): boolean {
+		if (this._config) {
+			return this._config.dimFinishedEvents || true;
+		}
+		return false;
+	}
 
 
 	// APPEARENCE SETTINGS END
-	get _show_warning(): boolean {
-		if (this._config) {
-			return this._config.show_warning || false;
-		}
 
-		return false;
-	}
-
-	get _show_error(): boolean {
-		if (this._config) {
-			return this._config.show_error || false;
-		}
-
-		return false;
-	}
-
-	get _tap_action(): ActionConfig {
-		if (this._config) {
-			return this._config.tap_action || { action: 'more-info' };
-		}
-
-		return { action: 'more-info' };
-	}
-
-	get _hold_action(): ActionConfig {
-		if (this._config) {
-			return this._config.hold_action || { action: 'none' };
-		}
-
-		return { action: 'none' };
-	}
-
-	get _double_tap_action(): ActionConfig {
-		if (this._config) {
-			return this._config.double_tap_action || { action: 'none' };
-		}
-
-		return { action: 'none' };
-	}
 
 	protected render(): TemplateResult | void {
 		if (!this.hass) {
@@ -277,7 +280,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.value=${this._maxDaysToShow}
 									.configValue=${'maxDaysToShow'}
 									@value-changed=${this._valueChanged}
-									>${localize('main.fields.maxDaysToShow')}?</ha-switch
 								></paper-input>
 								<ha-switch
 									aria-label=${`Toggle ${this._showLocation ? 'on' : 'off'}`}
@@ -389,21 +391,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				</div>
 				${options.calendar.show
 				? html`
-								<ha-switch
-									aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
-									.checked=${this._show_warning !== false}
-									.configValue=${'show_warning'}
-									@change=${this._valueChanged}
-									>Show Warning?</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
-									.checked=${this._show_error !== false}
-									.configValue=${'show_error'}
-									@change=${this._valueChanged}
-									>Show Error?</ha-switch
-								>
-							</div>
 						`
 			: ''}
 				<!-- CALENDAR SETTINGS END -->
@@ -416,24 +403,31 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('appearance.secondary')}</div>
 				</div>
 				${options.appearance.show
-				? html`
-								<ha-switch
-									aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
-									.checked=${this._show_warning !== false}
-									.configValue=${'show_warning'}
-									@change=${this._valueChanged}
-									>Show Warning?</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
-									.checked=${this._show_error !== false}
-									.configValue=${'show_error'}
-									@change=${this._valueChanged}
-									>Show Error?</ha-switch
-								>
-							</div>
-						`
-			: ''}
+			? html`
+				<div class="values"><div class="values">
+          <div class="option" @click=${this._toggleAppearance} .option=${'main'}>
+            <div class="row">
+              <ha-icon .icon=${`mdi:${options.appearance.options.main.icon}`}></ha-icon>
+              <div class="title">${localize('appearance.main.name')}</div>
+            </div>
+        		<div class="secondary">${localize('appearance.main.secondary')}</div>
+          </div>
+					${options.appearance.options.main.show
+            ? html`
+              <div class="values">
+								<paper-input
+									label="${localize('appearance.fields.locationLinkColor')}"
+									.value=${this._locationLinkColor}
+									.configValue=${'locationLinkColor'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+
+              </div>
+            `
+            : ''}
+					</div>
+				`
+				: ''}
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
 		`;

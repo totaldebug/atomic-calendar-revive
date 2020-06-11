@@ -35,7 +35,9 @@
 			"showWeekDay": "Show Week Day (left side)?",
 			"showDescription": "Show Description?",
 			"disableEventLink": "Disable links in event title?",
-			"disableLocationLink": "Disable links to location?"
+			"disableLocationLink": "Disable links to location?",
+			"showNoEventsForToday": "Show No Events Today text?",
+			"showCalNameInEvent": "Show calendar name next to event?"
 		}
 	},
 	"calendar":{
@@ -44,6 +46,13 @@
 	},
 	"appearance":{
 		"name": "Appearance",
-		"secondary": "Customize the colors etc."
+		"secondary": "Customize the colors etc.",
+		"main":{
+			"name": "Main",
+			"secondary": "Global Color Settings"
+		},
+		"fields": {
+			"locationLinkColor": "Location Link Color"
+		}
 	}
 }
