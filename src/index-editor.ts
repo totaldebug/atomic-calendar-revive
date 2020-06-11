@@ -84,12 +84,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 
 	get _linkTarget() {
-    if (this._config) {
-      return this._config.linkTarget || '_blank';
-    }
-    return '_blank';
-  }
+		if (this._config) {
+			return this._config.linkTarget || '_blank';
+		}
+		return '_blank';
+	}
 
+	get _showLocation(): boolean {
+		if (this._config) {
+			return this._config.showLocation || true;
+		}
+		return false;
+	}
+	get _showLoader(): boolean {
+		if (this._config) {
+			return this._config.showLoader || true;
+		}
+
+		return false;
+	}
 	// MAIN SETTINGS END
 
 	// EVENT SETTINGS
@@ -98,7 +111,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		if (this._config) {
 			return this._config.showCurrentEventLine || false;
 		}
-
 		return true;
 	}
 
@@ -106,15 +118,50 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		if (this._config) {
 			return this._config.showProgressBar || true;
 		}
-
 		return false;
 	}
 
+	get _showMonth(): boolean {
+		if (this._config) {
+			return this._config.showMonth || false;
+		}
+		return true;
+	}
+	get _showWeekDay(): boolean {
+		if (this._config) {
+			return this._config.showWeekDay || false;
+		}
+		return true;
+	}
+	get _showDescription(): boolean {
+		if (this._config) {
+			return this._config.showDescription || true;
+		}
+		return false;
+	}
+	get _disableEventLink(): boolean {
+		if (this._config) {
+			return this._config.disableEventLink || false;
+		}
+		return true;
+	}
+	get _disableLocationLink(): boolean {
+		if (this._config) {
+			return this._config.disableLocationLink || false;
+		}
+		return true;
+	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
 
+	get _showDate(): boolean {
+		if (this._config) {
+			return this._config.showDate || false;
+		}
 
+		return true;
+	}
 
 	// CALENDAR SETTINGS END
 
@@ -172,42 +219,42 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'sun');
 
 		return html`
-      <div class="card-config">
-        <div class="option" @click=${this._toggleOption} .option=${'required'}>
-          <div class="row">
-            <ha-icon .icon=${`mdi:${options.required.icon}`}></ha-icon>
-            <div class="title">${localize('required.name')}</div>
-          </div>
-          <div class="secondary">${localize('required.secondary')}</div>
-        </div>
-        ${options.required.show
+			<div class="card-config">
+				<div class="option" @click=${this._toggleOption} .option=${'required'}>
+					<div class="row">
+						<ha-icon .icon=${`mdi:${options.required.icon}`}></ha-icon>
+						<div class="title">${localize('required.name')}</div>
+					</div>
+					<div class="secondary">${localize('required.secondary')}</div>
+				</div>
+				${options.required.show
 				? html`
-              <div class="values">
-                <paper-dropdown-menu
-                  label="Entity (Required)"
-                  @value-changed=${this._valueChanged}
-                  .configValue=${'entity'}
-                >
-                  <paper-listbox slot="dropdown-content" .selected=${entities.indexOf(this._entity)}>
-                    ${entities.map(entity => {
+							<div class="values">
+								<paper-dropdown-menu
+									label="Entity (Required)"
+									@value-changed=${this._valueChanged}
+									.configValue=${'entity'}
+								>
+									<paper-listbox slot="dropdown-content" .selected=${entities.indexOf(this._entity)}>
+										${entities.map(entity => {
 					return html`
-                        <paper-item>${entity}</paper-item>
-                      `;
+												<paper-item>${entity}</paper-item>
+											`;
 				})}
-                  </paper-listbox>
-                </paper-dropdown-menu>
-              </div>
-            `
+									</paper-listbox>
+								</paper-dropdown-menu>
+							</div>
+						`
 			: ''}
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
-          <div class="row">
-            <ha-icon .icon=${`mdi:${options.main.icon}`}></ha-icon>
-            <div class="title">${localize('main.name')}</div>
-          </div>
-          <div class="secondary">${localize('main.secondary')}</div>
-        </div>
-        ${options.main.show
+					<div class="row">
+						<ha-icon .icon=${`mdi:${options.main.icon}`}></ha-icon>
+						<div class="title">${localize('main.name')}</div>
+					</div>
+					<div class="secondary">${localize('main.secondary')}</div>
+				</div>
+				${options.main.show
 				? html`
 							<div class="values">
 								<paper-input
@@ -217,122 +264,179 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@value-changed=${this._valueChanged}
 								></paper-input>
 								<br />
-                <ha-switch
-                  aria-label=${`Toggle colors ${this._showColors ? 'on' : 'off'}`}
-                  .checked=${this._showColors !== false}
-                  .configValue=${'showColors'}
-                  @change=${this._valueChanged}
-                  >${localize('main.fields.showColors')}</ha-switch
-                >
-                <paper-input
-                  label="${localize('main.fields.maxDaysToShow')}"
-                  .value=${this._maxDaysToShow}
-                  .configValue=${'maxDaysToShow'}
-                  @value-changed=${this._valueChanged}
-                  >${localize('main.fields.maxDaysToShow')}?</ha-switch
-                ></paper-input>
+								<ha-switch
+									aria-label=${`Toggle colors ${this._showColors ? 'on' : 'off'}`}
+									.checked=${this._showColors !== false}
+									.configValue=${'showColors'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.showColors')}</ha-switch
+								>
+								<paper-input
+									label="${localize('main.fields.maxDaysToShow')}"
+									type="number"
+									.value=${this._maxDaysToShow}
+									.configValue=${'maxDaysToShow'}
+									@value-changed=${this._valueChanged}
+									>${localize('main.fields.maxDaysToShow')}?</ha-switch
+								></paper-input>
+								<ha-switch
+									aria-label=${`Toggle ${this._showLocation ? 'on' : 'off'}`}
+									.checked=${this._showLocation !== false}
+									.configValue=${'showLocation'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.showLocation')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showLoader ? 'on' : 'off'}`}
+									.checked=${this._showLoader !== false}
+									.configValue=${'showLoader'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.showLoader')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showDate ? 'off' : 'on'}`}
+									.checked=${this._showDate !== false}
+									.configValue=${'showDate'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.showDate')}</ha-switch
+								>
 								<paper-dropdown-menu
-                	label="${localize('main.fields.link_target')}"
-                	@value-changed=${this._valueChanged}
-                	.configValue=${'linkTarget'}
-              		>
-                	<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
-                 		${linkTargets.map(linkTarget => {
-      								return html`
-                    	  <paper-item>${linkTarget}</paper-item>
-                  	  `;})}
-                	</paper-listbox>
-              	</paper-dropdown-menu>
-              </div>
-            `
+									label="${localize('main.fields.link_target')}"
+									@value-changed=${this._valueChanged}
+									.configValue=${'linkTarget'}
+									>
+									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
+								 		${linkTargets.map(linkTarget => {
+											return html`
+												<paper-item>${linkTarget}</paper-item>
+											`;})}
+									</paper-listbox>
+								</paper-dropdown-menu>
+							</div>
+						`
 			: ''}
 				<!-- MAIN SETTINGS END -->
 				<!-- EVENT SETTINGS -->
-        <div class="option" @click=${this._toggleOption} .option=${'event'}>
-          <div class="row">
-            <ha-icon .icon=${`mdi:${options.event.icon}`}></ha-icon>
-            <div class="title">${localize('event.name')}</div>
-          </div>
-          <div class="secondary">${localize('event.secondary')}</div>
-        </div>
-        ${options.event.show
+				<div class="option" @click=${this._toggleOption} .option=${'event'}>
+					<div class="row">
+						<ha-icon .icon=${`mdi:${options.event.icon}`}></ha-icon>
+						<div class="title">${localize('event.name')}</div>
+					</div>
+					<div class="secondary">${localize('event.secondary')}</div>
+				</div>
+				${options.event.show
 				? html`
-                <ha-switch
-                  aria-label=${`Toggle ${this._showCurrentEventLine ? 'off' : 'on'}`}
-                  .checked=${this._showCurrentEventLine !== false}
-                  .configValue=${'showCurrentEventLine'}
-                  @change=${this._valueChanged}
-                  >${localize('event.fields.showCurrentEventLine')}</ha-switch
-                >
-                <ha-switch
-                  aria-label=${`Toggle error ${this._showProgressBar ? 'on' : 'off'}`}
-                  .checked=${this._showProgressBar !== false}
-                  .configValue=${'showProgressBar'}
-                  @change=${this._valueChanged}
-                  >${localize('event.fields.showProgressBar')}</ha-switch
-                >
-              </div>
-            `
+								<ha-switch
+									aria-label=${`Toggle ${this._showCurrentEventLine ? 'off' : 'on'}`}
+									.checked=${this._showCurrentEventLine !== false}
+									.configValue=${'showCurrentEventLine'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showCurrentEventLine')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showProgressBar ? 'on' : 'off'}`}
+									.checked=${this._showProgressBar !== false}
+									.configValue=${'showProgressBar'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showProgressBar')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showMonth ? 'off' : 'on'}`}
+									.checked=${this._showMonth !== false}
+									.configValue=${'showMonth'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showMonth')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showWeekDay ? 'off' : 'on'}`}
+									.checked=${this._showWeekDay !== false}
+									.configValue=${'showWeekDay'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showWeekDay')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showDescription ? 'on' : 'off'}`}
+									.checked=${this._showDescription !== false}
+									.configValue=${'showDescription'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showDescription')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._disableEventLink ? 'off' : 'on'}`}
+									.checked=${this._disableEventLink !== false}
+									.configValue=${'disableEventLink'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.disableEventLink')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._disableLocationLink ? 'off' : 'on'}`}
+									.checked=${this._disableLocationLink !== false}
+									.configValue=${'disableLocationLink'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.disableLocationLink')}</ha-switch
+								>
+							</div>
+						`
 			: ''}
 				<!-- EVENT SETTINGS END -->
 				<!-- CALENDAR SETTINGS -->
-        <div class="option" @click=${this._toggleOption} .option=${'calendar'}>
-          <div class="row">
-            <ha-icon .icon=${`mdi:${options.calendar.icon}`}></ha-icon>
-            <div class="title">${localize('calendar.name')}</div>
-          </div>
-          <div class="secondary">${localize('calendar.secondary')}</div>
-        </div>
-        ${options.calendar.show
+				<div class="option" @click=${this._toggleOption} .option=${'calendar'}>
+					<div class="row">
+						<ha-icon .icon=${`mdi:${options.calendar.icon}`}></ha-icon>
+						<div class="title">${localize('calendar.name')}</div>
+					</div>
+					<div class="secondary">${localize('calendar.secondary')}</div>
+				</div>
+				${options.calendar.show
 				? html`
-                <ha-switch
-                  aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
-                  .checked=${this._show_warning !== false}
-                  .configValue=${'show_warning'}
-                  @change=${this._valueChanged}
-                  >Show Warning?</ha-switch
-                >
-                <ha-switch
-                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
-                  .checked=${this._show_error !== false}
-                  .configValue=${'show_error'}
-                  @change=${this._valueChanged}
-                  >Show Error?</ha-switch
-                >
-              </div>
-            `
+								<ha-switch
+									aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
+									.checked=${this._show_warning !== false}
+									.configValue=${'show_warning'}
+									@change=${this._valueChanged}
+									>Show Warning?</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
+									.checked=${this._show_error !== false}
+									.configValue=${'show_error'}
+									@change=${this._valueChanged}
+									>Show Error?</ha-switch
+								>
+							</div>
+						`
 			: ''}
 				<!-- CALENDAR SETTINGS END -->
 				<!-- APPEARANCE SETTINGS -->
-        <div class="option" @click=${this._toggleOption} .option=${'appearance'}>
-          <div class="row">
-            <ha-icon .icon=${`mdi:${options.appearance.icon}`}></ha-icon>
-            <div class="title">${localize('appearance.name')}</div>
-          </div>
-          <div class="secondary">${localize('appearance.secondary')}</div>
-        </div>
-        ${options.appearance.show
+				<div class="option" @click=${this._toggleOption} .option=${'appearance'}>
+					<div class="row">
+						<ha-icon .icon=${`mdi:${options.appearance.icon}`}></ha-icon>
+						<div class="title">${localize('appearance.name')}</div>
+					</div>
+					<div class="secondary">${localize('appearance.secondary')}</div>
+				</div>
+				${options.appearance.show
 				? html`
-                <ha-switch
-                  aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
-                  .checked=${this._show_warning !== false}
-                  .configValue=${'show_warning'}
-                  @change=${this._valueChanged}
-                  >Show Warning?</ha-switch
-                >
-                <ha-switch
-                  aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
-                  .checked=${this._show_error !== false}
-                  .configValue=${'show_error'}
-                  @change=${this._valueChanged}
-                  >Show Error?</ha-switch
-                >
-              </div>
-            `
+								<ha-switch
+									aria-label=${`Toggle warning ${this._show_warning ? 'off' : 'on'}`}
+									.checked=${this._show_warning !== false}
+									.configValue=${'show_warning'}
+									@change=${this._valueChanged}
+									>Show Warning?</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle error ${this._show_error ? 'off' : 'on'}`}
+									.checked=${this._show_error !== false}
+									.configValue=${'show_error'}
+									@change=${this._valueChanged}
+									>Show Error?</ha-switch
+								>
+							</div>
+						`
 			: ''}
 				<!-- APPEARANCE SETTINGS END -->
-      </div>
-    `;
+			</div>
+		`;
 	}
 
 	private _toggleAppearance(ev): void {
@@ -378,5 +482,5 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 (window as any).customCards.push({
 	type: 'atomic-calendar-revive',
 	name: 'Atomic Calendar Revive',
-	description: 'An advanced calendar card for Home Assistant with Lovelace.',
+	description: localize('common.description'),
 });

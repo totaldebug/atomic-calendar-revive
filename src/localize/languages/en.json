@@ -2,7 +2,8 @@
 	"common": {
 		"version": "Version",
 		"show_warning": "Show Warning",
-		"error": "Error"
+		"error": "Error",
+		"description": "An advanced calendar card for Home Assistant with Lovelace."
 	},
 	"errors": {
 		"invalid_configuration": "Invalid Configuration",
@@ -18,7 +19,10 @@
 		"fields": {
 			"name": "Name",
 			"showColors": "Show Colors?",
-			"maxDaysToShow": "Max days to show"
+			"maxDaysToShow": "Max days to show",
+			"showLocation": "Show location icon?",
+			"showLoader": "Show loader animation?",
+			"showDate": "Show date on card (top right)?"
 		}
 	},
 	"event":{
@@ -26,7 +30,12 @@
 		"secondary": "Event Mode specific options",
 		"fields": {
 			"showCurrentEventLine": "Show line before event?",
-			"showProgressBar": "Show progress bar?"
+			"showProgressBar": "Show progress bar?",
+			"showMonth": "Show month (left side)?",
+			"showWeekDay": "Show Week Day (left side)?",
+			"showDescription": "Show Description?",
+			"disableEventLink": "Disable links in event title?",
+			"disableLocationLink": "Disable links to location?"
 		}
 	},
 	"calendar":{
