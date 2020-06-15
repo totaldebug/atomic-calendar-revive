@@ -780,6 +780,17 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	/**
+	 * check if event was declined
+	 * @param {event} event data
+	 * @return {bool}
+	 */
+	checkDeclined(event) {
+		if(!event.attendees) { return false }
+		if(!event.attendees.length > 0) { return false }
+		return !!event.attendees.find(a => a.self == true && a.responseStatus == "declined")
+	}
+
+	/**
 	 * gets events from HA Calendar to Events mode
 	 *
 	 */
@@ -803,7 +814,17 @@ class AtomicCalendarRevive extends LitElement {
 							let blacklist = typeof this._config.entities[i]["blacklist"] != 'undefined' ? this._config.entities[i]["blacklist"] : ''
 							let whitelist = typeof this._config.entities[i]["whitelist"] != 'undefined' ? this._config.entities[i]["whitelist"] : ''
 							let singleAPIEvent = new EventClass(singleEvent, this._config.entities[i])
-							if ((this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount) && (blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) && (whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) && ((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) || !(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))) {
+							if (
+								(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount)
+								&&
+								(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist))
+								&&
+								(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist))
+								&&
+								!this.checkDeclined(singleEvent)
+								&&
+								((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) || !(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
+							) {
 								singleEvents.push(singleAPIEvent);
 								eventCount++;
 							}
@@ -869,7 +890,17 @@ class AtomicCalendarRevive extends LitElement {
 							var filteredEvents = eventsArray.filter((event) => {
 								const startTime = event.start.dateTime ? moment(event.start.dateTime) : moment(event.start.date).startOf('day')
 								const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date).subtract(1, 'days').endOf('day')
-								if (!moment(startTime).isAfter(m.date, 'day') && !moment(endTime).isBefore(m.date, 'day') && calendarTypes && !this.checkFilter(event.summary, calendarBlacklist))
+								if (
+									!moment(startTime).isAfter(m.date, 'day')
+									&&
+									!moment(endTime).isBefore(m.date, 'day')
+									&&
+									calendarTypes
+									&&
+									!this.checkDeclined(event)
+									&&
+									!this.checkFilter(event.summary, calendarBlacklist)
+								)
 									return event
 							})
 							var filteredEvents = filteredEvents.map((event) => {
