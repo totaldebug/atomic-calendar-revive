@@ -962,6 +962,7 @@ class AtomicCalendarRevive extends LitElement {
 				]);
 			}
 		});
+		console.log(calendarUrlList);
 		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result: Array<any>) => {
 				if (monthToGet == this.monthToGet)
 					result.map((eventsArray, i: number) => {
@@ -983,10 +984,12 @@ class AtomicCalendarRevive extends LitElement {
 									!moment(startTime).isAfter(m.date, 'day') &&
 									!moment(endTime).isBefore(m.date, 'day') &&
 									calendarTypes &&
-									!this.checkFilter(event.summary, calendarBlacklist)
+									!this.checkFilter(event.summary, calendarBlacklist) &&
+									!this.checkDeclined(event)
 								)
 									return event;
 							});
+							// Take filtered events and check if they are full day events or not
 							var filteredEvents = filteredEvents.map((event) => {
 								!event.start.dateTime && !event.end.dateTime
 									? (event['isFullDayEvent'] = true)
