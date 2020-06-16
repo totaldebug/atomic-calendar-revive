@@ -484,11 +484,12 @@ class AtomicCalendarRevive extends LitElement {
 				.calTableContainer {
 					width: 100%;
 				}
+
 				.summary-event-div {
 					padding-top: 3px;
 				}
 
-				.bullet-event-div {
+				.bullet-event-div-accepted {
 					-webkit-border-radius: 8px;
 					border-radius: 8px;
 					border: 4px solid;
@@ -497,6 +498,17 @@ class AtomicCalendarRevive extends LitElement {
 					display: inline-block;
 					vertical-align: middle;
 				}
+
+				.bullet-event-div-declined {
+					-webkit-border-radius: 8px;
+					border-radius: 8px;
+					border: 1px solid;
+					height: 6px;
+					width: 6px;
+					display: inline-block;
+					vertical-align: middle;
+				}
+
 				.bullet-event-span {
 					overflow: hidden;
 					white-space: nowrap;
@@ -505,11 +517,22 @@ class AtomicCalendarRevive extends LitElement {
 					margin: 0 5px;
 					text-decoration: none !important;
 				}
-				.summary-fullday-div {
+
+				.summary-fullday-div-accepted {
 					-webkit-border-radius: 5px;
 					border-radius: 5px;
 					border: 2px solid;
 					border-left: 7px solid;
+					padding: 0 4px;
+					margin: 5px 0;
+					height: 18px;
+					line-height: 16px;
+				}
+
+				.summary-fullday-div-declined {
+					-webkit-border-radius: 5px;
+					border-radius: 5px;
+					border: 1px solid;
 					padding: 0 4px;
 					margin: 5px 0;
 					height: 18px;
@@ -588,14 +611,14 @@ class AtomicCalendarRevive extends LitElement {
 			`;
 	}
 	getCalTitleHTML(event) {
-		const titleColor =
-			typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
+		const titleColor: string = typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
+		const textDecoration: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "line-through" : "none" ;
 
 		if (this._config.disableCalEventLink || event.htmlLink === null) return html`${event.summary}`;
 		else
 			return html`<a
 				href="${event.htmlLink}"
-				style="text-decoration: none;color: ${titleColor}"
+				style="text-decoration: ${textDecoration};color: ${titleColor}"
 				target="${this._config.linkTarget}"
 				>${event.summary}
 			</a>`;
@@ -962,7 +985,6 @@ class AtomicCalendarRevive extends LitElement {
 				]);
 			}
 		});
-		console.log(calendarUrlList);
 		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0]))).then((result: Array<any>) => {
 				if (monthToGet == this.monthToGet)
 					result.map((eventsArray, i: number) => {
@@ -1109,17 +1131,23 @@ class AtomicCalendarRevive extends LitElement {
 				event.isEventFinished && this._config.dimFinishedEvents
 					? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;`
 					: ``;
+
+			// is it a full day event? if so then use border instead of bullet else, use a bullet
 			if (event.isFullDayEvent) {
-				return html` <div class="summary-fullday-div" style="border-color: ${calColor}; ${finishedEventsStyle}">
+				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "summary-fullday-div-declined" : "summary-fullday-div-accepted";
+
+				return html` <div class="${bulletType}" style="border-color: ${calColor}; ${finishedEventsStyle}">
 					<span aria-hidden="true">
 						<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
 					</span>
 				</div>`;
 			} else {
 				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : '';
+				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "bullet-event-div-declined" : "bullet-event-div-accepted";
+
 				return html`
 					<div class="summary-event-div" style="${finishedEventsStyle}">
-						<div class="bullet-event-div" style="border-color: ${calColor}"></div>
+						<div class="${bulletType}" style="border-color: ${calColor}"></div>
 						<span class="bullet-event-span" style="color: ${titleColor};"
 							>${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span
 						>
