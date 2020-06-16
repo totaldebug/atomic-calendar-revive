@@ -105,6 +105,7 @@ class AtomicCalendarRevive extends LitElement {
 			disableEventLink: false, // disables links to event calendar
 			disableLocationLink: false, // disables links to event calendar
 			linkTarget: '_blank', // Target for links, can use any HTML target type
+			showDeclined: false, // Show declined events in the calendar
 
 			// color and font settings
 			nameColor: 'var(--primary-text-color)', // Card Name color
@@ -705,7 +706,6 @@ class AtomicCalendarRevive extends LitElement {
 				} else i++;
 			}
 		}
-
 		// check if no events for today and push a "no events" fake event
 		if (
 			this._config.showNoEventsForToday &&
@@ -863,6 +863,12 @@ class AtomicCalendarRevive extends LitElement {
 		} else return false;
 	}
 
+	checkDeclined(event) {
+		if (this._config.showDeclined == true) { return false };
+		if (!event.attendees) { return false };
+		return !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")
+	}
+
 	/**
 	 * gets events from HA Calendar to Events mode
 	 *
@@ -886,7 +892,7 @@ class AtomicCalendarRevive extends LitElement {
 		});
 		try {
 			return await (Promise.all(calendarUrlList.map(url => this.hass.callApi('GET', url))).then((result) => {
-				const singleEvents: Array<any> = [];
+				const singleEvents: any[] = [];
 				let eventCount = 0;
 				result.map((calendar: any, i: number) => {
 					calendar.map((singleEvent) => {
@@ -899,6 +905,7 @@ class AtomicCalendarRevive extends LitElement {
 							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount!) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
+							!this.checkDeclined(singleEvent) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
 								!(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
 						) {
