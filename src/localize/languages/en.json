@@ -3,7 +3,11 @@
 		"version": "Version",
 		"show_warning": "Show Warning",
 		"error": "Error",
-		"description": "An advanced calendar card for Home Assistant with Lovelace."
+		"description": "An advanced calendar card for Home Assistant with Lovelace.",
+		"fullDayEventText": "All Day",
+		"untilText": "Until",
+		"noEventsForTodayText": "No events for today!",
+		"noEventsForNextDaysText": "No events in the next few days"
 	},
 	"errors": {
 		"invalid_configuration": "Invalid Configuration",

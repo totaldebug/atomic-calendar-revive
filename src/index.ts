@@ -82,8 +82,8 @@ class AtomicCalendarRevive extends LitElement {
 
 		this._config = {
 			// text translations
-			fullDayEventText: 'All day', // "All day" custom text
-			untilText: 'Until', // "Until" custom text
+			fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
+			untilText: localize('untilText'), // "Until" custom text
 
 			// main settings
 			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
@@ -117,8 +117,8 @@ class AtomicCalendarRevive extends LitElement {
 			descSize: 80, //Description text size (percent of standard text)
 
 			showNoEventsForToday: false,
-			noEventsForTodayText: 'No events for today',
-			noEventsForNextDaysText: 'No events in the next days',
+			noEventsForTodayText: localize('common.noEventsForTodayText'),
+			noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
 
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
@@ -746,11 +746,10 @@ class AtomicCalendarRevive extends LitElement {
 			};
 			const emptyEvent = new EventClass(emptyEv, '');
 			emptyEvent.isEmpty = true;
-			const d: [] = [];
-			d.push[0] = emptyEvent;
+			const d: any[] = [];
+			d.push(emptyEvent);
 			days.unshift(d);
 		}
-
 		//loop through days
 		htmlDays = days.map((day, di) => {
 			//loop through events for each day
