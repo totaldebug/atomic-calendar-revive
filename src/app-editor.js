@@ -59,6 +59,13 @@ export class AtomicCalendarReviveEditor extends LitElement {
     return true;
   }
 
+  get _showDeclined() {
+    if (this._config) {
+      return this._config.showDeclined || false;
+    }
+    return false;
+  }
+
   get _showLocation() {
     if (this._config) {
       return this._config.showLocation || true;
@@ -175,6 +182,13 @@ export class AtomicCalendarReviveEditor extends LitElement {
           .configValue=${'showColors'}
           @change=${this._valueChanged}
           >Show Colors</ha-switch
+          >
+          <ha-switch
+          aria-label=${`Toggle Show Declined ${this._showDeclined ? 'off' : 'on'}`}
+          .checked=${this._showDeclined !== false}
+          .configValue=${'showDeclined'}
+          @change=${this._valueChanged}
+          >Show Declined</ha-switch
           >
 
           <h3>Event Mode</h3>

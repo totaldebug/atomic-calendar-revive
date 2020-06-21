@@ -122,6 +122,8 @@ class AtomicCalendarRevive extends LitElement {
 			showFullDayProgress: false,
 			progressBarColor: 'var(--primary-color)',
 
+			showDeclined: false,
+
 			enableModeChange: false,
 			defaultMode: 1,
 
@@ -782,7 +784,7 @@ class AtomicCalendarRevive extends LitElement {
 	/**
 	 * check if event was declined
 	 * @param {event} event data
-	 * @return {bool}
+	 * @return {bool} Returns true if the event was declined
 	 */
 	checkDeclined(event) {
 		if(!event.attendees) { return false }
@@ -821,7 +823,7 @@ class AtomicCalendarRevive extends LitElement {
 								&&
 								(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist))
 								&&
-								!this.checkDeclined(singleEvent)
+								(this._config.showDeclined || !this.checkDeclined(singleEvent))
 								&&
 								((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) || !(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
 							) {
@@ -897,7 +899,7 @@ class AtomicCalendarRevive extends LitElement {
 									&&
 									calendarTypes
 									&&
-									!this.checkDeclined(event)
+									(this._config.showDeclined || !this.checkDeclined(event))
 									&&
 									!this.checkFilter(event.summary, calendarBlacklist)
 								)
