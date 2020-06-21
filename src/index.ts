@@ -886,7 +886,6 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	checkDeclined(event) {
-		if (this._config.showDeclined == true) { return false };
 		if (!event.attendees) { return false };
 		return !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")
 	}
@@ -927,7 +926,7 @@ class AtomicCalendarRevive extends LitElement {
 							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount!) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
-							!this.checkDeclined(singleEvent) &&
+							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
 								!(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
 						) {
@@ -1006,7 +1005,7 @@ class AtomicCalendarRevive extends LitElement {
 									!moment(endTime).isBefore(m.date, 'day') &&
 									calendarTypes &&
 									!this.checkFilter(event.summary, calendarBlacklist) &&
-									!this.checkDeclined(event)
+									(this._config.showDeclined || !this.checkDeclined(event))
 								)
 									return event;
 							});
