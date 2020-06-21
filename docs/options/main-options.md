@@ -27,6 +27,8 @@ nav_order: 1
 | linkTarget           | string  |   optional   | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.                                                                                      |
 | showCalNameInEvent   | string  |   optional   |    ?    | `false` Shows the event calendar name                                                                                                                    |
 | showFullDayProgress  | string  |   optional   | v1.7.0  | `false` Enables the progress bar for full day events                                                                                                     |
+| showDeclined  | string  |   optional   | v1.9.0 | `false` Shows events that have been declined |
+
 
 # Color Options
 
