@@ -165,17 +165,6 @@ class AtomicCalendarRevive extends LitElement {
 			calEventSatColor: 'rgba(255, 255, 255, .05)',
 			calEventSunColor: 'rgba(255, 255, 255, .15)',
 
-			calEventHolidayColor: 'red',
-
-			calEventIcon1: 'mdi:gift',
-			calEventIcon1Color: 'var(--primary-text-color)',
-
-			calEventIcon2: 'mdi:home',
-			calEventIcon2Color: 'var(--primary-text-color)',
-
-			calEventIcon3: 'mdi:star',
-			calEventIcon3Color: 'var(--primary-text-color)',
-
 			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
@@ -973,10 +962,10 @@ class AtomicCalendarRevive extends LitElement {
 		// calendarUrlList[url, type of event configured for this callendar,filters]
 		const calendarUrlList: any[] = [];
 		this._config.entities.map((entity) => {
-			if (typeof entity.type != 'undefined') {
+			if (typeof entity.icon != 'undefined') {
 				calendarUrlList.push([
 					`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,
-					entity.type,
+					entity.icon,
 					typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
 					typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
 					typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor,
@@ -987,7 +976,7 @@ class AtomicCalendarRevive extends LitElement {
 				if (monthToGet == this.monthToGet)
 					result.map((eventsArray, i: number) => {
 						this.month.map((m: {date: string}) => {
-							const calendarTypes = calendarUrlList[i][1];
+							const calendarIcon = calendarUrlList[i][1];
 							const calendarUrl = calendarUrlList[i][0];
 							const calendarBlacklist = typeof calendarUrlList[i][2] != 'undefined' ? calendarUrlList[i][2] : '';
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
@@ -1003,7 +992,7 @@ class AtomicCalendarRevive extends LitElement {
 								if (
 									!moment(startTime).isAfter(m.date, 'day') &&
 									!moment(endTime).isBefore(m.date, 'day') &&
-									calendarTypes &&
+									calendarIcon &&
 									!this.checkFilter(event.summary, calendarBlacklist) &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								)
@@ -1018,51 +1007,12 @@ class AtomicCalendarRevive extends LitElement {
 								moment(endTime).isBefore(moment())
 									? (event['isEventFinished'] = true)
 									: (event['isEventFinished'] = false);
-								event['_config'] = { color: calendarColor, titleColor: this._config.eventTitleColor };
-								return m['allEvents'].push(event);
-							});
-							eventsArray.map((event) => {
-								const startTime = event.start.dateTime
-									? moment(event.start.dateTime)
-									: moment(event.start.date).startOf('day');
-								const endTime = event.end.dateTime
-									? moment(event.end.dateTime)
-									: moment(event.end.date).subtract(1, 'days').endOf('day');
-								if (
-									!moment(startTime).isAfter(m.date, 'day') &&
-									!moment(endTime).isBefore(m.date, 'day') &&
-									calendarTypes &&
-									!this.checkFilter(event.summary, calendarBlacklist)
-								)
-									//checking for calendar type (icons) and keywords
-									try {
-										if (this.checkFilter('icon1', calendarTypes)) {
-											if (
-												!this._config.calEventIcon1Filter ||
-												this.checkFilter(event.summary, this._config.calEventIcon1Filter)
-											)
-												m['icon1'].push(event.summary);
-										}
-										if (this.checkFilter('icon2', calendarTypes)) {
-											if (
-												!this._config.calEventIcon2Filter ||
-												this.checkFilter(event.summary, this._config.calEventIcon2Filter)
-											)
-												m['icon2'].push(event.summary);
-										}
-										if (this.checkFilter('icon3', calendarTypes)) {
-											if (
-												!this._config.calEventIcon3Filter ||
-												this.checkFilter(event.summary, this._config.calEventIcon3Filter)
-											)
-												m['icon3'].push(event.summary);
-										}
-										if (this.checkFilter('holiday', calendarTypes)) {
-											m['holiday'].push(event.summary);
-										}
-									} catch (e) {
-										console.log(localize('common.version') + ': ', e, calendarUrl);
-									}
+								try {
+									event['_config'] = { color: calendarColor, titleColor: this._config.eventTitleColor, icon: calendarIcon };
+									return m['allEvents'].push(event);
+								}catch (e) {
+									console.log(localize('common.version') + ': ', e, calendarUrl);
+								}
 							});
 						});
 						return month;
@@ -1114,7 +1064,6 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	handleEventSummary(day) {
-		const events = [','].concat.apply([], [day.holiday, day.daybackground, day.icon1, day.icon2, day.icon3]);
 		this.clickedDate = day.date;
 		day._allEvents.sort(function (a, b) {
 			const leftStartTime = a.start.dateTime ? moment(a.start.dateTime) : moment(a.start.date).startOf('day');
@@ -1155,6 +1104,32 @@ class AtomicCalendarRevive extends LitElement {
 		});
 
 		this.requestUpdate();
+	}
+
+	handleCalendarIcons(day) {
+		const allIcons: any[] = [];
+		const myIcons: any[] = [];
+		day._allEvents.map((event) => {
+			event._config.icon && event._config.icon.length > 0
+				?
+				myIcons.push([event._config.icon, event._config.color])
+				: '';
+		});
+		const uniqueSet = new Set(myIcons);
+		const uniqueIcons: string[] = [...uniqueSet];
+		const iconHtml = uniqueIcons.map((icon) => {
+			const dayIcon = html`<span
+					><ha-icon
+						class="calIcon"
+						style="color: ${icon[1]};"
+						icon="${icon[0]}"
+					></ha-icon
+				></span>`
+
+			allIcons.push(dayIcon);
+		});
+
+		return allIcons
 	}
 
 	/**
@@ -1201,36 +1176,6 @@ class AtomicCalendarRevive extends LitElement {
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
-			const dayIcon1 =
-				day.icon1 && day.icon1.length > 0
-					? html`<span
-							><ha-icon
-								class="calIcon"
-								style="color: ${this._config.calEventIcon1Color};"
-								icon="${this._config.calEventIcon1}"
-							></ha-icon
-					  ></span>`
-					: '';
-			const dayIcon2 =
-				day.icon2 && day.icon2.length > 0
-					? html`<span
-							><ha-icon
-								class="calIcon"
-								style="color: ${this._config.calEventIcon2Color};"
-								icon="${this._config.calEventIcon2}"
-							></ha-icon
-					  ></span>`
-					: '';
-			const dayIcon3 =
-				day.icon3 && day.icon3.length > 0
-					? html`<span
-							><ha-icon
-								class="calIcon"
-								style="color: ${this._config.calEventIcon3Color};"
-								icon="${this._config.calEventIcon3}"
-							></ha-icon
-					  ></span>`
-					: '';
 
 			if (i < 35 || showLastRow)
 				return html`
@@ -1246,7 +1191,7 @@ class AtomicCalendarRevive extends LitElement {
 								${day.dayNumber.replace(/^0|[^/]0./, '')}
 							</div>
 							<div>
-								${dayIcon1} ${dayIcon2} ${dayIcon3}
+							${this.handleCalendarIcons(day)}
 							</div>
 						</div>
 					</td>
@@ -1278,7 +1223,6 @@ class AtomicCalendarRevive extends LitElement {
 				<th class="cal" style="padding-bottom: 8px; color:  ${this._config.calWeekDayColor};">${day}</th>
 			`,
 		);
-
 		this.content = html`
 			<div class="calTitleContainer">
 				${this.getCalendarHeaderHTML()}
@@ -1312,20 +1256,12 @@ class CalendarDay {
 	calendarDay: any;
 	_lp: any;
 	ymd: any;
-	_holiday: string[];
-	_icon1: string[];
-	_icon2: string[];
-	_icon3: string[];
 	_allEvents: any[];
 	_daybackground: string[];
 	constructor(calendarDay, d) {
 		this.calendarDay = calendarDay;
 		this._lp = d;
 		this.ymd = moment(calendarDay).format('YYYY-MM-DD');
-		this._holiday = [];
-		this._icon1 = [];
-		this._icon2 = [];
-		this._icon3 = [];
 		this._allEvents = [];
 		this._daybackground = [];
 	}
@@ -1341,44 +1277,12 @@ class CalendarDay {
 	get monthNumber() {
 		return moment(this.calendarDay).month();
 	}
-
-	set holiday(eventName) {
-		this._holiday = eventName;
-	}
-
-	get holiday() {
-		return this._holiday;
-	}
-
-	set icon1(eventName) {
-		this._icon1 = eventName;
-	}
-
-	get icon1() {
-		return this._icon1;
-	}
-
-	set icon2(eventName) {
-		this._icon2 = eventName;
-	}
-
-	get icon2() {
-		return this._icon2;
-	}
 	set allEvents(events) {
 		this._allEvents = events;
 	}
 
 	get allEvents() {
 		return this._allEvents;
-	}
-
-	set icon3(eventName) {
-		this._icon3 = eventName;
-	}
-
-	get icon3() {
-		return this._icon3;
 	}
 
 	set daybackground(eventName) {

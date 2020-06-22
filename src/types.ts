@@ -2,6 +2,7 @@ import { ActionConfig, LovelaceCardConfig, LovelaceCard } from 'custom-card-help
 import { TemplateResult } from 'lit-element';
 
 export interface atomicCardConfig extends LovelaceCardConfig {
+	entities?: any;
 	type: string;
 	name?: string;
 	entity?: string;

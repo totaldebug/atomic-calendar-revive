@@ -10,7 +10,7 @@ nav_order: 1
 This example is the most basic implementation, it will just show you a list of events
 
 ```yaml
-- type: "custom:atomic-calendar-revive"
+- type: 'custom:atomic-calendar-revive'
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
 ```
@@ -20,8 +20,8 @@ This example is the most basic implementation, it will just show you a list of e
 ## With Name
 
 ```yaml
-- type: "custom:atomic-calendar-revive"
-  name: "My Calendar"
+- type: 'custom:atomic-calendar-revive'
+  name: 'My Calendar'
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
 ```
@@ -31,18 +31,17 @@ This example is the most basic implementation, it will just show you a list of e
 ## With Calendar Mode Enabled
 
 ```yaml
-- type: "custom:atomic-calendar-revive"
-  name: "My Calendar"
+- type: 'custom:atomic-calendar-revive'
+  name: 'My Calendar'
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
-      type: icon1
-      color: green
+      icon: 'mdi:home-heart'
+      color: 'red'
     - entity: calendar.YOUR_CALENDAR1_HERE
-      type: icon2
-      color: red
+      icon: 'mdi:account-plus'
+      color: 'blue'
     - entity: calendar.YOUR_CALENDAR2_HERE
-      type: holiday
-      color: blue
+      icon: 'mdi:account'
   enableModeChange: true
 ```
 
@@ -51,17 +50,17 @@ This example is the most basic implementation, it will just show you a list of e
 ### With both Events mode and Calendar mode, calendar is default
 
 ```yaml
-- type: "custom:atomic-calendar-revive"
-  name: "Calendar"
+- type: 'custom:atomic-calendar-revive'
+  name: 'Calendar'
   enableModeChange: true
   defaultMode: 2
-  calEventIcon1Filter: birthday
-  calEventIcon2Filter: waste,bills
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
-      type: icon2
+      icon: 'mdi:home-heart'
+      color: 'red'
     - entity: calendar.YOUR_CALENDAR1_HERE
-      type: icon1,icon2
+      icon: 'mdi:account-plus'
+      color: 'blue'
     - entity: calendar.YOUR_CALENDAR2_HERE
-      type: holiday
+      icon: 'mdi:account'
 ```
