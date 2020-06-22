@@ -26,7 +26,8 @@
 			"maxDaysToShow": "Max days to show",
 			"showLocation": "Show location icon?",
 			"showLoader": "Show loader animation?",
-			"showDate": "Show date on card (top right)?"
+			"showDate": "Show date on card (top right)?",
+			"showDeclined": "Show declined events?"
 		}
 	},
 	"event":{

@@ -108,6 +108,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return true;
 	}
+	get _showDeclined() {
+    if (this._config) {
+      return this._config.showDeclined || false;
+    }
+    return false;
+  }
 	// MAIN SETTINGS END
 
 	// EVENT SETTINGS
@@ -302,6 +308,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 									>${localize('main.fields.showDate')}</ha-switch
 								>
+								<ha-switch
+          				aria-label=${`Toggle Show Declined ${this._showDeclined ? 'off' : 'on'}`}
+          				.checked=${this._showDeclined !== false}
+          				.configValue=${'showDeclined'}
+          				@change=${this._valueChanged}
+          				>${localize('main.fields.showDeclined')}</ha-switch
+          			>
 								<paper-dropdown-menu
 									label="${localize('main.fields.link_target')}"
 									@value-changed=${this._valueChanged}
