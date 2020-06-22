@@ -17,4 +17,4 @@ nav_order: 2
 
 | Name  |  Type  | Since  | Description                         |
 | ----- | :----: | :----: | ----------------------------------- |
-| color | string | v1.5.0 | `defaultCalColor` Color of calendar |
+| color | string | v1.5.0 | `defaultCalColor` Color of calendar & Icon |
