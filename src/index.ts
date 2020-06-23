@@ -1110,19 +1110,21 @@ class AtomicCalendarRevive extends LitElement {
 		const allIcons: any[] = [];
 		const myIcons: any[] = [];
 		day._allEvents.map((event) => {
-			event._config.icon && event._config.icon.length > 0
-				?
-				myIcons.push([event._config.icon, event._config.color])
-				: '';
+			if (event._config.icon && event._config.icon.length > 0) {
+				var index = myIcons.findIndex(x => x.icon == event._config.icon)
+				if (index === -1) {
+					myIcons.push({ icon: event._config.icon, color: event._config.color });
+				}
+			}
+
 		});
-		const uniqueSet = new Set(myIcons);
-		const uniqueIcons: string[] = [...uniqueSet];
-		const iconHtml = uniqueIcons.map((icon) => {
+
+		const iconHtml = myIcons.map((icon) => {
 			const dayIcon = html`<span
 					><ha-icon
 						class="calIcon"
-						style="color: ${icon[1]};"
-						icon="${icon[0]}"
+						style="color: ${icon.color};"
+						icon="${icon.icon}"
 					></ha-icon
 				></span>`
 
