@@ -13,6 +13,13 @@ nav_order: 2
 | eventCalName | string | v1.2.0 | `null` Add a calendar name to be shown with event.                                                     |
 | icon         | string | v2.0.0 | `null` Add an icon to a calendar                                                                       |
 
+---
+**NOTE**
+
+It is not advised to use whitelist & Balcklist under the same entity.
+
+---
+
 ## Color Options
 
 | Name  |  Type  | Since  | Description                         |

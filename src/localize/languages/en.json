@@ -27,7 +27,9 @@
 			"showLocation": "Show location icon?",
 			"showLoader": "Show loader animation?",
 			"showDate": "Show date on card (top right)?",
-			"showDeclined": "Show declined events?"
+			"showDeclined": "Show declined events?",
+			"sortByStartTime": "Sort by start time?",
+			"hideFinishedEvents": "Hide finished events?"
 		}
 	},
 	"event":{
@@ -42,7 +44,7 @@
 			"disableEventLink": "Disable links in event title?",
 			"disableLocationLink": "Disable links to location?",
 			"showNoEventsForToday": "Show No Events Today text?",
-			"showCalNameInEvent": "Show calendar name next to event?"
+			"showFullDayProgress": "Show full day event progress?"
 		}
 	},
 	"calendar":{
@@ -57,7 +59,8 @@
 			"secondary": "Global Color Settings"
 		},
 		"fields": {
-			"locationLinkColor": "Location Link Color"
+			"locationLinkColor": "Location Link Color:",
+			"dimFinishedEvents": "Dim finished events?"
 		}
 	}
 }

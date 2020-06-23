@@ -100,7 +100,7 @@ class AtomicCalendarRevive extends LitElement {
 			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
 			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
-			showCalNameInEvent: false,
+
 			sortByStartTime: false, // sort first by calendar, then by time
 			disableEventLink: false, // disables links to event calendar
 			disableLocationLink: false, // disables links to event calendar
@@ -583,9 +583,9 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	getTitleHTML(event) {
-		const titletext = this._config.showCalNameInEvent
-			? event.eventClass.organizer.displayName + ': ' + event.title
-			: event.title;
+		console.log(event);
+		const titletext = event.title;
+
 		const titleColor =
 			typeof event._config.eventTitleColor != 'undefined'
 				? event._config.eventTitleColor
@@ -993,7 +993,8 @@ class AtomicCalendarRevive extends LitElement {
 									!moment(startTime).isAfter(m.date, 'day') &&
 									!moment(endTime).isBefore(m.date, 'day') &&
 									calendarIcon &&
-									!this.checkFilter(event.summary, calendarBlacklist) &&
+									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
+									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								)
 									return event;

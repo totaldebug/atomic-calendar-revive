@@ -182,9 +182,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 	get _hideFinishedEvents(): boolean {
 		if (this._config) {
-			return this._config.hideFinishedEvents || true;
+			return this._config.hideFinishedEvents || false;
 		}
-		return false;
+		return true;
 	}
 	// EVENT SETTINGS END
 
@@ -315,6 +315,20 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
           				@change=${this._valueChanged}
           				>${localize('main.fields.showDeclined')}</ha-switch
           			>
+								<ha-switch
+									aria-label=${`Toggle ${this._sortByStartTime ? 'off' : 'on'}`}
+									.checked=${this._sortByStartTime !== false}
+									.configValue=${'sortByStartTime'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.sortByStartTime')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._hideFinishedEvents ? 'on' : 'off'}`}
+									.checked=${this._hideFinishedEvents !== false}
+									.configValue=${'hideFinishedEvents'}
+									@change=${this._valueChanged}
+									>${localize('main.fields.hideFinishedEvents')}</ha-switch
+								>
 								<paper-dropdown-menu
 									label="${localize('main.fields.link_target')}"
 									@value-changed=${this._valueChanged}
@@ -390,6 +404,20 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 									>${localize('event.fields.disableLocationLink')}</ha-switch
 								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showNoEventsForToday ? 'off' : 'on'}`}
+									.checked=${this._showNoEventsForToday !== false}
+									.configValue=${'showNoEventsForToday'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showNoEventsForToday')}</ha-switch
+								>
+								<ha-switch
+									aria-label=${`Toggle ${this._showFullDayProgress ? 'off' : 'on'}`}
+									.checked=${this._showFullDayProgress !== false}
+									.configValue=${'showFullDayProgress'}
+									@change=${this._valueChanged}
+									>${localize('event.fields.showFullDayProgress')}</ha-switch
+								>
 							</div>
 						`
 			: ''}
@@ -434,6 +462,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.configValue=${'locationLinkColor'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
+								<ha-switch
+									aria-label=${`Toggle ${this._dimFinishedEvents ? 'off' : 'on'}`}
+									.checked=${this._dimFinishedEvents !== false}
+									.configValue=${'dimFinishedEvents'}
+									@change=${this._valueChanged}
+									>${localize('appearance.fields.dimFinishedEvents')}</ha-switch
+								>
 
               </div>
             `
