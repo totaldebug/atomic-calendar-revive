@@ -44,7 +44,11 @@
 			"disableEventLink": "Disable links in event title?",
 			"disableLocationLink": "Disable links to location?",
 			"showNoEventsForToday": "Show No Events Today text?",
-			"showFullDayProgress": "Show full day event progress?"
+			"showFullDayProgress": "Show full day event progress?",
+			"untilText": "until text:",
+			"noEventsForTodayText": "No events today text:",
+			"noEventsForNextDaysText": "No events in the next few days text:",
+			"fullDayEventText": "Full day event text:"
 		}
 	},
 	"calendar":{

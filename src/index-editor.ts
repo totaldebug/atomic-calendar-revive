@@ -83,7 +83,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return 7;
 	}
 
-	get _linkTarget() {
+	get _linkTarget(): string {
 		if (this._config) {
 			return this._config.linkTarget || '_blank';
 		}
@@ -108,7 +108,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return true;
 	}
-	get _showDeclined() {
+	get _showDeclined(): boolean {
     if (this._config) {
       return this._config.showDeclined || false;
     }
@@ -185,6 +185,30 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			return this._config.hideFinishedEvents || false;
 		}
 		return true;
+	}
+	get _untilText(): string {
+		if (this._config) {
+			return this._config.untilText || '';
+		}
+		return '';
+	}
+	get _fullDayEventText(): string {
+		if (this._config) {
+			return this._config.fullDayEventText || '';
+		}
+		return '';
+	}
+	get _noEventsForNextDaysText(): string {
+		if (this._config) {
+			return this._config.noEventsForNextDaysText || '';
+		}
+		return '';
+	}
+	get _noEventsForTodayText(): string {
+		if (this._config) {
+			return this._config.noEventsForTodayText || '';
+		}
+		return '';
 	}
 	// EVENT SETTINGS END
 
@@ -418,6 +442,34 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 									>${localize('event.fields.showFullDayProgress')}</ha-switch
 								>
+								<paper-input
+									label="${localize('event.fields.untilText')}"
+									type="text"
+									.value=${this._untilText}
+									.configValue=${'untilText'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('event.fields.fullDayEventText')}"
+									type="text"
+									.value=${this._fullDayEventText}
+									.configValue=${'fullDayEventText'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('event.fields.noEventsForNextDaysText')}"
+									type="text"
+									.value=${this._noEventsForNextDaysText}
+									.configValue=${'noEventsForNextDaysText'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('event.fields.noEventsForTodayText')}"
+									type="text"
+									.value=${this._noEventsForTodayText}
+									.configValue=${'noEventsForTodayText'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
 							</div>
 						`
 			: ''}
