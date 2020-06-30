@@ -14,6 +14,8 @@ nav_order: 3
   name: "Calendar"
   entities:
     - entity: calendar.YOUR_CALENDARS_HERE
+      startTimeFilter: '10:00'
+      endTimeFilter: '17:00'
   fullDayEventText: "All day"
   untilText: "Until"
   showColors: true

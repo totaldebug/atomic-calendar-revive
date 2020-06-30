@@ -583,7 +583,6 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	getTitleHTML(event) {
-		console.log(event);
 		const titletext = event.title;
 
 		const titleColor =
@@ -874,9 +873,16 @@ class AtomicCalendarRevive extends LitElement {
 		} else return false;
 	}
 
+	// if event is delclined return false
 	checkDeclined(event) {
 		if (!event.attendees) { return false };
-		return !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")
+		return !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined");
+	}
+
+	// if a time filter is set and entry is between the times, return true
+	checkTimeFilter(event, startFilter, endFilter) {
+		if (!event.start.dateTime && !event.start.dateTime) {return false;}
+		return (moment(event.start.dateTime).isAfter(startFilter, 'hour') && moment(event.start.dateTime).isBefore(endFilter, 'hour'));
 	}
 
 	/**
@@ -898,7 +904,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
-			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
+			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
 		});
 		try {
 			return await (Promise.all(calendarUrlList.map(url => this.hass.callApi('GET', url))).then((result) => {
@@ -911,8 +917,13 @@ class AtomicCalendarRevive extends LitElement {
 						const whitelist =
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
 						const singleAPIEvent = new EventClass(singleEvent, this._config.entities[i]);
+						const startTimeFilter =
+							typeof this._config.entities[i]['startTimeFilter'] != 'undefined' ? this._config.entities[i]['startTimeFilter'] : '';
+						const endTimeFilter =
+							typeof this._config.entities[i]['endTimeFilter'] != 'undefined' ? this._config.entities[i]['endTimeFilter'] : '';
 						if (
 							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount!) &&
+							(startTimeFilter == '' || endTimeFilter == '' || (this.checkTimeFilter(singleEvent, moment(startTimeFilter, 'HH:mm').subtract(1,'minute'), moment(endTimeFilter, 'HH:mm').add(1,'minute')))) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
 							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
@@ -969,6 +980,8 @@ class AtomicCalendarRevive extends LitElement {
 					typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
 					typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
 					typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor,
+					typeof entity.startTimeFilter != 'undefined' ? entity.startTimeFilter : '00:00:00',
+					typeof entity.endTimeFilter != 'undefined' ? entity.endTimeFilter : '0:00:00',
 				]);
 			}
 		});
@@ -982,6 +995,8 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
 							const calendarColor =
 								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
+							const calendarStartTimeFilter = typeof calendarUrlList[i][5] != 'undefined' ? calendarUrlList[i][5] : '';
+							const calendarEndTimeFilter = typeof calendarUrlList[i][6] != 'undefined' ? calendarUrlList[i][6] : '';
 							var filteredEvents = eventsArray.filter((event) => {
 								const startTime = event.start.dateTime
 									? moment(event.start.dateTime)
@@ -1175,7 +1190,6 @@ class AtomicCalendarRevive extends LitElement {
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
 			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``;
-			const dayHolidayStyle = day.holiday && day.holiday.length > 0 ? `color: ${this._config.calEventHolidayColor};` : ``;
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
@@ -1187,7 +1201,7 @@ class AtomicCalendarRevive extends LitElement {
 						@click="${ _e => this.handleEventSummary(day)}"
 						class="cal"
 						style="color: ${this._config
-							.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayHolidayStyle}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
+							.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
