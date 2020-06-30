@@ -29,7 +29,10 @@
 			"showDate": "Show date on card (top right)?",
 			"showDeclined": "Show declined events?",
 			"sortByStartTime": "Sort by start time?",
-			"hideFinishedEvents": "Hide finished events?"
+			"hideFinishedEvents": "Hide finished events?",
+			"dateFormat": "Date format",
+			"hoursFormat": "Hours format",
+			"defaultMode": "Set default mode"
 		}
 	},
 	"event":{

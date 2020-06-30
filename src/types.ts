@@ -65,7 +65,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	showFullDayProgress?: boolean;
 	progressBarColor?: string;
 	enableModeChange?: boolean;
-	defaultMode?: number;
+	defaultMode?: string;
 
 	// Calendar Mode Default Settings
 	calGridColor?: string;

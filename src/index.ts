@@ -31,16 +31,16 @@ class AtomicCalendarRevive extends LitElement {
 	events: any;
 	shouldUpdateHtml: boolean;
 	errorMessage: string;
-	modeToggle: number;
+	modeToggle: string;
 	refreshCalEvents: boolean;
 	monthToGet: string;
 	month: any[];
 	showLoader: boolean;
 	eventSummary: TemplateResult;
 	firstrun: boolean;
-	language: string;
 	isUpdating: any;
 	clickedDate: any;
+	language: string;
 
 	constructor() {
 		super();
@@ -51,7 +51,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.content = html``;
 		this.shouldUpdateHtml = true;
 		this.errorMessage = '';
-		this.modeToggle = 0;
+		this.modeToggle = '';
 		this.selectedMonth = moment();
 		this.refreshCalEvents = true;
 		this.monthToGet = moment().format('MM');
@@ -149,7 +149,7 @@ class AtomicCalendarRevive extends LitElement {
 			progressBarColor: 'var(--primary-color)',
 
 			enableModeChange: false,
-			defaultMode: 1,
+			defaultMode: 'Event',
 
 			// Calendar Mode Default Settings
 
@@ -232,7 +232,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language = this._config.language != '' ? this._config.language! : this.hass!.language.toLowerCase();
+		this.language = this.hass!.language.toLowerCase();
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT');
 		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
 		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm';
@@ -254,7 +254,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.firstrun = false;
 
 		// check if an update is needed
-		if (!this.isUpdating && this.modeToggle == 1) {
+		if (!this.isUpdating && this.modeToggle == 'Event') {
 			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > 60) {
 				this.showLoader = true;
 				this.isUpdating = true;
@@ -273,13 +273,13 @@ class AtomicCalendarRevive extends LitElement {
 			}
 		}
 
-		if (this.modeToggle == 1) this.updateEventsHTML(this.events);
+		if (this.modeToggle == 'Event') this.updateEventsHTML(this.events);
 		else this.updateCalendarHTML();
 	}
 
 	handleToggle() {
 		if (this._config.enableModeChange) {
-			this.modeToggle == 1 ? (this.modeToggle = 2) : (this.modeToggle = 1);
+			this.modeToggle == 'Event' ? (this.modeToggle = 'Calendar') : (this.modeToggle = 'Event');
 			this.requestUpdate();
 		}
 	}
