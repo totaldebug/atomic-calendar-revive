@@ -41,7 +41,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
-    "@material/mwc-linear-progress": "^0.15.0",
+    "@material/mwc-linear-progress": "^0.16.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.1.0",
     "lit-element": "^2.3.1",
