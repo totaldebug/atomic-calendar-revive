@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.10.3",
     "babel-loader": "^8.1.0",
     "babel-preset-minify": "^0.5.1",
-    "eslint": "^7.3.0",
+    "eslint": "^7.3.1",
     "rollup": "^2.18.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -43,7 +43,7 @@
   "dependencies": {
     "@material/mwc-linear-progress": "^0.15.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^8.0.1",
+    "@rollup/plugin-node-resolve": "^8.1.0",
     "lit-element": "^2.3.1",
     "moment": "^2.27.0",
     "node-google-calendar": "^1.1.1",
