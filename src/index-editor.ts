@@ -269,7 +269,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
 		// You can restrict on domain type
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'sun');
-
+		console.log(this._config);
 		return html`
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
@@ -278,14 +278,14 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 						<div class="title">${localize('required.name')}</div>
 					</div>
 					<div class="secondary">${localize('required.secondary')}</div>
-				</div><
+				</div>
 				${options.required.show
 				? html`
 							<div class="values">
 								<span>Entities and their options must be configured through code editor</span>
 							</div>
 						`
-			: ''}>
+			: ''}
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
 					<div class="row">
@@ -303,6 +303,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.configValue=${'name'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
+								<paper-input
+									label="${localize('main.fields.maxDaysToShow')}"
+									type="number"
+									.value=${this._maxDaysToShow}
+									.configValue=${'maxDaysToShow'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('main.fields.dateFormat')}"
+									.value=${this._dateFormat}
+									.configValue=${'dateFormat'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('main.fields.hoursFormat')}"
+									.value=${this._hoursFormat}
+									.configValue=${'hoursFormat'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
 								<paper-dropdown-menu
 									label="${localize('main.fields.defaultMode')}"
 									@value-changed=${this._valueChanged}
@@ -315,6 +334,18 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											`;})}
 									</paper-listbox>
 								</paper-dropdown-menu>
+								<paper-dropdown-menu
+									label="${localize('main.fields.linkTarget')}"
+									@value-changed=${this._valueChanged}
+									.configValue=${'linkTarget'}
+									>
+									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
+								 		${linkTargets.map(linkTarget => {
+											return html`
+												<paper-item>${linkTarget}</paper-item>
+											`;})}
+									</paper-listbox>
+								</paper-dropdown-menu>
 								<ha-switch
 									aria-label=${`Toggle colors ${this._showColors ? 'on' : 'off'}`}
 									.checked=${this._showColors !== false}
@@ -322,13 +353,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 									>${localize('main.fields.showColors')}</ha-switch
 								>
-								<paper-input
-									label="${localize('main.fields.maxDaysToShow')}"
-									type="number"
-									.value=${this._maxDaysToShow}
-									.configValue=${'maxDaysToShow'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
 								<ha-switch
 									aria-label=${`Toggle ${this._showLocation ? 'on' : 'off'}`}
 									.checked=${this._showLocation !== false}
@@ -371,30 +395,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 									>${localize('main.fields.hideFinishedEvents')}</ha-switch
 								>
-								<paper-input
-									label="${localize('main.fields.dateFormat')}"
-									.value=${this._dateFormat}
-									.configValue=${'dateFormat'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('main.fields.hoursFormat')}"
-									.value=${this._hoursFormat}
-									.configValue=${'hoursFormat'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-dropdown-menu
-									label="${localize('main.fields.link_target')}"
-									@value-changed=${this._valueChanged}
-									.configValue=${'linkTarget'}
-									>
-									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
-								 		${linkTargets.map(linkTarget => {
-											return html`
-												<paper-item>${linkTarget}</paper-item>
-											`;})}
-									</paper-listbox>
-								</paper-dropdown-menu>
+
 							</div>
 						`
 			: ''}
@@ -561,6 +562,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
 		`;
+
 	}
 
 	private _toggleAppearance(ev): void {
@@ -592,10 +594,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			if (target.value === '') {
 				delete this._config[target.configValue];
 			} else {
+
 				this._config = {
 					...this._config,
 					[target.configValue]: target.checked !== undefined ? target.checked : target.value,
 				};
+
 			}
 		}
 		fireEvent(this, 'config-changed', { config: this._config });

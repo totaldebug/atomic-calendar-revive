@@ -53,7 +53,7 @@ This example is the most basic implementation, it will just show you a list of e
 - type: 'custom:atomic-calendar-revive'
   name: 'Calendar'
   enableModeChange: true
-  defaultMode: 2
+  defaultMode: Calendar
   entities:
     - entity: calendar.YOUR_CALENDAR_HERE
       icon: 'mdi:home-heart'

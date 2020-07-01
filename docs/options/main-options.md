@@ -26,7 +26,8 @@ nav_order: 1
 | disableLocationLink  | boolean |   optional   | v0.10.0 | `false` disables links in event location.                                                                                                                |
 | linkTarget           | string  |   optional   | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.                                                                                      |
 | showFullDayProgress  | string  |   optional   | v1.7.0  | `false` Enables the progress bar for full day events                                                                                                     |
-| showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined |
+| showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined                                                                                                         |
+| defaultMode          | integer |   optional   | v2.0.0  | `Event` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default                                                            |
 
 # Color Options
 

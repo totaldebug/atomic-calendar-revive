@@ -22,17 +22,18 @@
 		"secondary": "Options that apply globally",
 		"fields": {
 			"name": "Name",
-			"showColors": "Show Colors?",
+			"showColors": "Show Colors",
 			"maxDaysToShow": "Max days to show",
-			"showLocation": "Show location icon?",
-			"showLoader": "Show loader animation?",
-			"showDate": "Show date on card (top right)?",
-			"showDeclined": "Show declined events?",
-			"sortByStartTime": "Sort by start time?",
-			"hideFinishedEvents": "Hide finished events?",
+			"showLocation": "Show location icon",
+			"showLoader": "Show loader animation",
+			"showDate": "Show date on card (top right)",
+			"showDeclined": "Show declined events",
+			"sortByStartTime": "Sort by start time",
+			"hideFinishedEvents": "Hide finished events",
 			"dateFormat": "Date format",
 			"hoursFormat": "Hours format",
-			"defaultMode": "Set default mode"
+			"defaultMode": "Default mode",
+			"linkTarget": "Link target"
 		}
 	},
 	"event":{
