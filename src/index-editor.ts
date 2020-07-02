@@ -269,7 +269,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
 		// You can restrict on domain type
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'sun');
-		console.log(this._config);
 		return html`
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
@@ -594,10 +593,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			if (target.value === '') {
 				delete this._config[target.configValue];
 			} else {
-
+				let value = target.value;
+				if (target.type ==="number") {
+  				value = Number(value);
+				}
 				this._config = {
 					...this._config,
-					[target.configValue]: target.checked !== undefined ? target.checked : target.value,
+					[target.configValue]: target.checked !== undefined ? target.checked : value,
 				};
 
 			}
@@ -605,10 +607,3 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		fireEvent(this, 'config-changed', { config: this._config });
 	}
 }
-
-(window as any).customCards = (window as any).customCards || [];
-(window as any).customCards.push({
-	type: 'atomic-calendar-revive',
-	name: 'Atomic Calendar Revive',
-	description: localize('common.description'),
-});

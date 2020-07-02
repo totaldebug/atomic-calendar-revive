@@ -1427,3 +1427,10 @@ class EventClass {
 		return this.eventClass.htmlLink;
 	}
 }
+
+(window as any).customCards = (window as any).customCards || [];
+(window as any).customCards.push({
+	type: 'atomic-calendar-revive',
+	name: 'Atomic Calendar Revive',
+	description: localize('common.description'),
+});
