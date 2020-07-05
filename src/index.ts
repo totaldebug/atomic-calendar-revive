@@ -135,7 +135,7 @@ class AtomicCalendarRevive extends LitElement {
 			hideFinishedEvents: false, // show finished events
 			dimFinishedEvents: true, // make finished events greyed out or set opacity
 			finishedEventOpacity: 0.6, // opacity level
-			finishedEventFilter: 'grayscale(100%)', // css filter
+			finishedEventFilter: 'grayscale(80%)', // css filter
 
 			// days separating
 			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
@@ -598,6 +598,7 @@ class AtomicCalendarRevive extends LitElement {
 				</a>
 			`;
 	}
+	// generate Calendar title
 	getCalTitleHTML(event) {
 		const titleColor: string = typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
 		const textDecoration: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "line-through" : "none" ;
@@ -1160,7 +1161,7 @@ class AtomicCalendarRevive extends LitElement {
 				class="ha-icon-button"
 				icon="mdi:chevron-left"
 				@click="${ _e => this.handleMonthChange(-1)}"
-				title="left"
+				title=${this.hass.localize("ui.common.previous")}
 			></ha-icon-button>
 			<a
 				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1"
@@ -1173,7 +1174,7 @@ class AtomicCalendarRevive extends LitElement {
 				class="ha-icon-button"
 				icon="mdi:chevron-right"
 				@click="${ _e => this.handleMonthChange(1)}"
-				title="right"
+				title=${this.hass.localize("ui.common.next")}
 			></ha-icon-button>
 		</div>`;
 	}

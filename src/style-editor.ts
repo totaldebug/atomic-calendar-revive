@@ -26,5 +26,17 @@ export const style = css`
   }
   ha-switch {
     padding-bottom: 8px;
+    padding-top: 16px;
+  }
+  .mdc-label {
+    margin-left: 12px;
+    vertical-align: text-bottom;
+  }
+  .side-by-side {
+    display: flex;
+  }
+  .side-by-side > * {
+    flex: 1;
+    padding-right: 4px;
   }
 `;

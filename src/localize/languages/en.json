@@ -9,6 +9,12 @@
 		"noEventsForTodayText": "No events for today!",
 		"noEventsForNextDaysText": "No events in the next few days"
 	},
+	"ui":{
+		"common": {
+			"previous": "Previous",
+			"next": "Next"
+		}
+	},
 	"errors": {
 		"invalid_configuration": "Invalid Configuration",
 		"update_card": "The calendar can't be loaded from Home Assistant component"
@@ -26,7 +32,7 @@
 			"maxDaysToShow": "Max days to show",
 			"showLocation": "Show location icon",
 			"showLoader": "Show loader animation",
-			"showDate": "Show date on card (top right)",
+			"showDate": "Show date on card",
 			"showDeclined": "Show declined events",
 			"sortByStartTime": "Sort by start time",
 			"hideFinishedEvents": "Hide finished events",
