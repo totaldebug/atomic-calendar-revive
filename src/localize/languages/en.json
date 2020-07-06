@@ -9,7 +9,7 @@
 		"noEventsForTodayText": "No events for today!",
 		"noEventsForNextDaysText": "No events in the next few days"
 	},
-	"ui":{
+	"ui": {
 		"common": {
 			"previous": "Previous",
 			"next": "Next"
@@ -19,7 +19,7 @@
 		"invalid_configuration": "Invalid Configuration",
 		"update_card": "The calendar can't be loaded from Home Assistant component"
 	},
-	"required":{
+	"required": {
 		"name": "Reqired",
 		"secondary": "Required options for this card to function"
 	},
@@ -42,18 +42,18 @@
 			"linkTarget": "Link target"
 		}
 	},
-	"event":{
+	"event": {
 		"name": "Event Mode",
 		"secondary": "Event Mode specific options",
 		"fields": {
 			"showCurrentEventLine": "Show line before event?",
 			"showProgressBar": "Show progress bar?",
-			"showMonth": "Show month (left side)?",
-			"showWeekDay": "Show Week Day (left side)?",
+			"showMonth": "Show month?",
+			"showWeekDay": "Show Week Day",
 			"showDescription": "Show Description?",
 			"disableEventLink": "Disable links in event title?",
 			"disableLocationLink": "Disable links to location?",
-			"showNoEventsForToday": "Show No Events Today text?",
+			"showNoEventsForToday": "Show No Events Today?",
 			"showFullDayProgress": "Show full day event progress?",
 			"untilText": "until text:",
 			"noEventsForTodayText": "No events today text:",
@@ -61,14 +61,14 @@
 			"fullDayEventText": "Full day event text:"
 		}
 	},
-	"calendar":{
+	"calendar": {
 		"name": "Calendar Mode",
 		"secondary": "Calendar Mode specific options"
 	},
-	"appearance":{
+	"appearance": {
 		"name": "Appearance",
 		"secondary": "Customize the colors etc.",
-		"main":{
+		"main": {
 			"name": "Main",
 			"secondary": "Global Color Settings"
 		},

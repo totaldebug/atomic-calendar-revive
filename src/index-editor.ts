@@ -116,10 +116,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return true;
 	}
 	get _showDeclined(): boolean {
-    if (this._config) {
-      return this._config.showDeclined || false;
-    }
-    return false;
+		if (this._config) {
+			return this._config.showDeclined || false;
+		}
+		return false;
 	}
 	get _dateFormat(): string {
 		if (this._config) {
@@ -284,7 +284,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								<span>Entities and their options must be configured through code editor</span>
 							</div>
 						`
-			: ''}
+				: ''}
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
 					<div class="row">
@@ -328,9 +328,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									>
 									<paper-listbox slot="dropdown-content" .selected=${defaultModes.indexOf(this._defaultMode)}>
 								 		${defaultModes.map(mode => {
-											return html`
+					return html`
 												<paper-item>${mode}</paper-item>
-											`;})}
+											`;
+				})}
 									</paper-listbox>
 								</paper-dropdown-menu>
 								<paper-dropdown-menu
@@ -340,9 +341,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									>
 									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
 								 		${linkTargets.map(linkTarget => {
-											return html`
+					return html`
 												<paper-item>${linkTarget}</paper-item>
-											`;})}
+											`;
+				})}
 									</paper-listbox>
 								</paper-dropdown-menu><br />
 								<div class="side-by-side">
@@ -415,7 +417,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								</div>
 							</div>
 						`
-			: ''}
+				: ''}
 				<!-- MAIN SETTINGS END -->
 				<!-- EVENT SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'event'}>
@@ -426,71 +428,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('event.secondary')}</div>
 				</div>
 				${options.event.show
-					? html`
+				? html`
 							<div class="values">
-								<ha-switch
-									aria-label=${`Toggle ${this._showCurrentEventLine ? 'off' : 'on'}`}
-									.checked=${this._showCurrentEventLine !== false}
-									.configValue=${'showCurrentEventLine'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showCurrentEventLine')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showProgressBar ? 'on' : 'off'}`}
-									.checked=${this._showProgressBar !== false}
-									.configValue=${'showProgressBar'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showProgressBar')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showMonth ? 'off' : 'on'}`}
-									.checked=${this._showMonth !== false}
-									.configValue=${'showMonth'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showMonth')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showWeekDay ? 'off' : 'on'}`}
-									.checked=${this._showWeekDay !== false}
-									.configValue=${'showWeekDay'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showWeekDay')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showDescription ? 'on' : 'off'}`}
-									.checked=${this._showDescription !== false}
-									.configValue=${'showDescription'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showDescription')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._disableEventLink ? 'off' : 'on'}`}
-									.checked=${this._disableEventLink !== false}
-									.configValue=${'disableEventLink'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.disableEventLink')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._disableLocationLink ? 'off' : 'on'}`}
-									.checked=${this._disableLocationLink !== false}
-									.configValue=${'disableLocationLink'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.disableLocationLink')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showNoEventsForToday ? 'off' : 'on'}`}
-									.checked=${this._showNoEventsForToday !== false}
-									.configValue=${'showNoEventsForToday'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showNoEventsForToday')}</ha-switch
-								>
-								<ha-switch
-									aria-label=${`Toggle ${this._showFullDayProgress ? 'off' : 'on'}`}
-									.checked=${this._showFullDayProgress !== false}
-									.configValue=${'showFullDayProgress'}
-									@change=${this._valueChanged}
-									>${localize('event.fields.showFullDayProgress')}</ha-switch
-								>
 								<paper-input
 									label="${localize('event.fields.untilText')}"
 									type="text"
@@ -519,9 +458,100 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.configValue=${'noEventsForTodayText'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showCurrentEventLine ? 'off' : 'on'}`}
+											.checked=${this._showCurrentEventLine !== false}
+											.configValue=${'showCurrentEventLine'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showCurrentEventLine')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showProgressBar ? 'on' : 'off'}`}
+											.checked=${this._showProgressBar !== false}
+											.configValue=${'showProgressBar'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showProgressBar')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showMonth ? 'off' : 'on'}`}
+											.checked=${this._showMonth !== false}
+											.configValue=${'showMonth'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showMonth')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showWeekDay ? 'off' : 'on'}`}
+											.checked=${this._showWeekDay !== false}
+											.configValue=${'showWeekDay'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showWeekDay')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showDescription ? 'on' : 'off'}`}
+											.checked=${this._showDescription !== false}
+											.configValue=${'showDescription'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showDescription')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._disableEventLink ? 'off' : 'on'}`}
+											.checked=${this._disableEventLink !== false}
+											.configValue=${'disableEventLink'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.disableEventLink')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._disableLocationLink ? 'off' : 'on'}`}
+											.checked=${this._disableLocationLink !== false}
+											.configValue=${'disableLocationLink'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.disableLocationLink')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showNoEventsForToday ? 'off' : 'on'}`}
+											.checked=${this._showNoEventsForToday !== false}
+											.configValue=${'showNoEventsForToday'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showNoEventsForToday')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showFullDayProgress ? 'off' : 'on'}`}
+											.checked=${this._showFullDayProgress !== false}
+											.configValue=${'showFullDayProgress'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showFullDayProgress')}</label>
+									</div>
+								</div>
 							</div>
 						`
-			: ''}
+				: ''}
 				<!-- EVENT SETTINGS END -->
 				<!-- CALENDAR SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'calendar'}>
@@ -534,7 +564,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				${options.calendar.show
 				? html`
 						`
-			: ''}
+				: ''}
 				<!-- CALENDAR SETTINGS END -->
 				<!-- APPEARANCE SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'appearance'}>
@@ -545,7 +575,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('appearance.secondary')}</div>
 				</div>
 				${options.appearance.show
-			? html`
+				? html`
 				<div class="values">
           <div class="option" @click=${this._toggleAppearance} .option=${'main'}>
             <div class="row">
@@ -555,7 +585,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
         		<div class="secondary">${localize('appearance.main.secondary')}</div>
           </div>
 					${options.appearance.options.main.show
-            ? html`
+						? html`
               <div class="values">
 								<paper-input
 									label="${localize('appearance.fields.locationLinkColor')}"
@@ -573,7 +603,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
               </div>
             `
-            : ''}
+						: ''}
 					</div>
 				`
 				: ''}
@@ -613,8 +643,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				delete this._config[target.configValue];
 			} else {
 				let value = target.value;
-				if (target.type ==="number") {
-  				value = Number(value);
+				if (target.type === "number") {
+					value = Number(value);
 				}
 				this._config = {
 					...this._config,
