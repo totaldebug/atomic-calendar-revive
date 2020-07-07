@@ -28,15 +28,7 @@ const options = {
 	appearance: {
 		icon: 'palette',
 		show: false,
-		options: {
-			main: {
-				icon: 'eye-settings',
-				show: false
-			}
-
-		}
 	}
-
 };
 
 @customElement('atomic-calendar-revive-editor')
@@ -67,14 +59,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			return this._config.name || '';
 		}
 		return '';
-	}
-
-	get _showColors(): boolean {
-		if (this._config) {
-			return this._config.showColors || true;
-		}
-
-		return false;
 	}
 
 	get _maxDaysToShow(): number {
@@ -368,24 +352,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								<div class="side-by-side">
 									<div>
 										<ha-switch
-											.checked=${this._showColors !== false}
-											.configValue=${'showColors'}
-											@change=${this._valueChanged}
-										></ha-switch>
-										<label class="mdc-label">${localize('main.fields.showColors')}</label>
-									</div>
-									<div>
-										<ha-switch
-											.checked=${this._showLocation !== false}
-											.configValue=${'showLocation'}
-											@change=${this._valueChanged}
-										></ha-switch>
-										<label class="mdc-label">${localize('main.fields.showLocation')}</label>
-									</div>
-								</div>
-								<div class="side-by-side">
-									<div>
-										<ha-switch
 											.checked=${this._showLoader !== false}
 											.configValue=${'showLoader'}
 											@change=${this._valueChanged}
@@ -431,6 +397,14 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('main.fields.hideFinishedEvents')}</label>
+									</div>
+									<div>
+										<ha-switch
+											.checked=${this._showLocation !== false}
+											.configValue=${'showLocation'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showLocation')}</label>
 									</div>
 								</div>
 							</div>
@@ -629,45 +603,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				</div>
 				${options.appearance.show
 				? html`
-				<div class="values">
-          <div class="option" @click=${this._toggleAppearance} .option=${'main'}>
-            <div class="row">
-              <ha-icon .icon=${`mdi:${options.appearance.options.main.icon}`}></ha-icon>
-              <div class="title">${localize('appearance.main.name')}</div>
-            </div>
-        		<div class="secondary">${localize('appearance.main.secondary')}</div>
-          </div>
-					${options.appearance.options.main.show
-						? html`
-              <div class="values">
-								<paper-input
-									label="${localize('appearance.fields.locationLinkColor')}"
-									.value=${this._locationLinkColor}
-									.configValue=${'locationLinkColor'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
+          <div class="values">
+						<div class="side-by-side">
+							<div>
 								<ha-switch
 									aria-label=${`Toggle ${this._dimFinishedEvents ? 'off' : 'on'}`}
 									.checked=${this._dimFinishedEvents !== false}
 									.configValue=${'dimFinishedEvents'}
 									@change=${this._valueChanged}
-									>${localize('appearance.fields.dimFinishedEvents')}</ha-switch
-								>
-
-              </div>
+								></ha-switch>
+								<label class="mdc-label">${localize('appearance.fields.dimFinishedEvents')}</label>
+							</div>
+						</div>
+          </div>
             `
-						: ''}
-					</div>
-				`
 				: ''}
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
 		`;
 
-	}
-
-	private _toggleAppearance(ev): void {
-		this._toggleThing(ev, options.appearance.options);
 	}
 
 	private _toggleOption(ev): void {

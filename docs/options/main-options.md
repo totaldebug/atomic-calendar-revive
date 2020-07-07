@@ -10,7 +10,6 @@ nav_order: 1
 | type                 | string  | **required** | v0.3.0  | `custom:atomic-calendar-revive`                                                                                                                          |
 | entities             |  list   | **required** | v0.3.0  | One or more calendars, configured in HA [Google Calendar Component][googlecalcomp]                                                                       |
 | name                 | string  |   optional   | v0.12.0 | Card name.                                                                                                                                               |
-| showColors           | boolean |   optional   | v0.3.0  | `true` Show colors in events, configured in entities list                                                                                                |
 | maxDaysToShow        | integer |   optional   | v0.3.0  | `7` Maximum number of days to show; if set to zero will only display currently running events                                                            |
 | maxEventCount        | integer |   optional   | v0.9.0  | `0` Maximum number of events to show; zero removes any limitation                                                                                        |
 | showLocation         | boolean |   optional   | v0.3.0  | `true` Show location link (right side)                                                                                                                   |

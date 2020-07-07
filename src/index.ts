@@ -759,9 +759,11 @@ class AtomicCalendarRevive extends LitElement {
 						  </div>`
 						: ``;
 
+				const calColor = typeof event._config.color != 'undefined' ? event._config.color : this._config.defaultCalColor;
+
 				//show calendar name
 				const eventCalName = event._config.eventCalName
-					? html`<div class="event-cal-name">
+					? html`<div class="event-cal-name" style="color: ${calColor};">
 							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
 					  </div>`
 					: ``;
