@@ -31,7 +31,7 @@ const plugins = [
 ];
 
 export default {
-    input: 'src/index.ts',
+    input: ['./src/index.ts'],
     output: {
         dir: './dist',
         format: 'es',

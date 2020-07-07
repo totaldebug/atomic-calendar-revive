@@ -63,7 +63,12 @@
 	},
 	"calendar": {
 		"name": "Calendar Mode",
-		"secondary": "Calendar Mode specific options"
+		"secondary": "Calendar Mode specific options",
+		"fields": {
+			"showLastCalendarWeek": "Show last calendar week",
+			"disableCalEventLink": "Disable calendar event link",
+			"disableCalLocationLink": "Disable calendar location link"
+		}
 	},
 	"appearance": {
 		"name": "Appearance",

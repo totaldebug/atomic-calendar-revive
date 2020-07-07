@@ -417,9 +417,7 @@ class AtomicCalendarRevive extends LitElement {
 					font-size: ${this._config.eventCalNameSize}%;
 				}
 				.event-cal-name-icon {
-					width: 15px;
-					height: 15px;
-					width: 15px;
+					--mdc-icon-size: 15px;
 				}
 
 				.eventBar {
