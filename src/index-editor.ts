@@ -133,6 +133,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return '';
 	}
+	get _showDate(): boolean {
+		if (this._config) {
+			return this._config.showDate || false;
+		}
+
+		return true;
+	}
 	// MAIN SETTINGS END
 
 	// EVENT SETTINGS
@@ -232,14 +239,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
-
-	get _showDate(): boolean {
+	get _showLastCalendarWeek(): boolean {
 		if (this._config) {
-			return this._config.showDate || false;
+			return this._config.showLastCalendarWeek || false;
 		}
-
 		return true;
 	}
+	get _disableCalEventLink(): boolean {
+		if (this._config) {
+			return this._config.disableCalEventLink || false;
+		}
+		return true;
+	}
+	get _disableCalLocationLink(): boolean {
+		if (this._config) {
+			return this._config.disableCalLocationLink || false;
+		}
+		return true;
+	}
+
 
 	// CALENDAR SETTINGS END
 
@@ -563,6 +581,41 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				</div>
 				${options.calendar.show
 				? html`
+						<div class="values">
+							<div calss="side-by-side">
+								<div>
+									<ha-switch
+										aria-label=${`Toggle ${this._showLastCalendarWeek ? 'off' : 'on'}`}
+										.checked=${this._showLastCalendarWeek !== false}
+										.configValue=${'showLastCalendarWeek'}
+										@change=${this._valueChanged}
+									></ha-switch>
+									<label class="mdc-label">${localize('calendar.fields.showLastCalendarWeek')}</label>
+								</div>
+								<div>
+									<ha-switch
+										aria-label=${`Toggle ${this._disableCalEventLink ? 'off' : 'on'}`}
+										.checked=${this._disableCalEventLink !== false}
+										.configValue=${'disableCalEventLink'}
+										@change=${this._valueChanged}
+									></ha-switch>
+									<label class="mdc-label">${localize('calendar.fields.disableCalEventLink')}</label>
+								</div>
+							</div>
+							<div calss="side-by-side">
+								<div>
+									<ha-switch
+										aria-label=${`Toggle ${this._disableCalLocationLink ? 'off' : 'on'}`}
+										.checked=${this._disableCalLocationLink !== false}
+										.configValue=${'disableCalLocationLink'}
+										@change=${this._valueChanged}
+									></ha-switch>
+									<label class="mdc-label">${localize('calendar.fields.disableCalLocationLink')}</label>
+								</div>
+								<div>
+								</div>
+							</div>
+						</div>
 						`
 				: ''}
 				<!-- CALENDAR SETTINGS END -->
