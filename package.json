@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.10.4",
     "babel-loader": "^8.1.0",
     "babel-preset-minify": "^0.5.1",
-    "eslint": "^7.4.0",
+    "eslint": "^7.5.0",
     "rollup": "^2.22.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
