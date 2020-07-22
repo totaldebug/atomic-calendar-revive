@@ -25,6 +25,6 @@ It is not advised to use whitelist & Balcklist under the same entity.
 
 ## Color Options
 
-| Name  |  Type  | Since  | Description                                |
-| ----- | :----: | :----: | ------------------------------------------ |
-| color | string | v1.5.0 | `defaultCalColor` Color of calendar & Icon |
+| Name  |  Type  | Since  | Description                                                               |
+| ----- | :----: | :----: | ------------------------------------------------------------------------- |
+| color | string | v1.5.0 | `defaultCalColor` Color of event title for specific calendar & Icon color |

@@ -581,12 +581,15 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	getTitleHTML(event) {
-		const titletext = event.title;
+		const titletext: string = event.title;
 
-		const titleColor =
-			typeof event._config.eventTitleColor != 'undefined'
-				? event._config.eventTitleColor
-				: this._config.eventTitleColor;
+		const titleColor: string =
+			typeof event._config.Color != 'undefined'
+				? event._config.Color
+				: event._config.eventTitleColor != 'undefined'
+					? event._config.eventTitleColor
+					: this._config.eventTitleColor;
+
 		if (this._config.disableEventLink || event.link === null)
 			return html` <div class="event-title" style="color: ${titleColor}">${titletext}</div> `;
 		else
@@ -1194,10 +1197,6 @@ class AtomicCalendarRevive extends LitElement {
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
-
-			if (moment(day.date).isSame(moment(), 'day')) {
-				this.handleEventSummary(day);
-			}
 
 			if (i < 35 || showLastRow)
 				return html`
