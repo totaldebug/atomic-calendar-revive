@@ -1,27 +1,28 @@
 {
-    "name": "Atomic Calendar Revive",
-    "dockerFile": "Dockerfile",
-    "context": "..",
-    "appPorts": [5000],
-    "postCreateCommand": "npm install",
-    "workspaceFolder": "/atomic-calendar-revive",
-    "workspaceMount": "type=bind,source=/home/stev2673/repos/atomic-calendar-revive,target=/atomic-calendar-revive",
-    "extensions": [
-      "github.vscode-pull-request-github",
-      "esbenp.prettier-vscode",
-      "yzhang.markdown-all-in-one",
-      "bierner.lit-html",
-      "runem.lit-plugin",
-      "davidanson.vscode-markdownlint",
-      "redhat.vscode-yaml"
-    ],
-    "settings": {
-        "files.eol": "\n",
-        "editor.tabSize": 2,
-        "terminal.integrated.shell.linux": "/bin/zsh",
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "files.trimTrailingWhitespace": true
-    }
+	"name": "Atomic Calendar Revive",
+	"dockerFile": "Dockerfile",
+	"context": "..",
+	"appPorts": [5000],
+	"postCreateCommand": "npm install",
+	"workspaceFolder": "/atomic-calendar-revive",
+	"workspaceMount": "type=bind,source=/home/stev2673/repos/atomic-calendar-revive,target=/atomic-calendar-revive",
+	"extensions": [
+		"github.vscode-pull-request-github",
+		"esbenp.prettier-vscode",
+		"yzhang.markdown-all-in-one",
+		"bierner.lit-html",
+		"runem.lit-plugin",
+		"davidanson.vscode-markdownlint",
+		"redhat.vscode-yaml",
+		"eamodio.gitlens"
+	],
+	"settings": {
+		"files.eol": "\n",
+		"editor.tabSize": 2,
+		"terminal.integrated.shell.linux": "/bin/zsh",
+		"editor.formatOnPaste": false,
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"files.trimTrailingWhitespace": true
+	}
 }

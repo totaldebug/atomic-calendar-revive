@@ -10,18 +10,11 @@ nav_order: 4
 | Name                   |  Type   | Since  | Description                                                                                           |
 | ---------------------- | :-----: | :----: | ----------------------------------------------------------------------------------------------------- |
 | enableModeChange       | boolean | v0.7.0 | `false` Set true to enable mode change (Calendar/Events) must have "name" set to toggle               |
-| defaultMode            | integer | v0.7.0 | `1` Set `1` to make Events default mode, set `2` to make Calendar mode default                        |
 | firstDayOfWeek         | integer | v0.7.0 | `1` First day of week, default 1 for Monday                                                           |
-| calEventIcon1          | string  | v0.7.0 | `mdi:gift` Icon for `type: icon1` calendar                                                            |
-| calEventIcon1Filter    | string  | v0.7.0 | `null` List of comma separated keywords                                                               |
-| calEventIcon2          | string  | v0.7.0 | `mdi:home` Icon for `type: icon2` calendar                                                            |
-| calEventIcon2Filter    | string  | v0.7.0 | `null` List of comma separated keywords                                                               |
-| calEventIcon3          | string  | v0.7.0 | `mdi:star` Icon for `type: icon3` calendar                                                            |
-| calEventIcon3Filter    | string  | v0.7.0 | `null` List of comma separated keywords                                                               |
 | showLastCalendarWeek   | boolean | v0.7.5 | `false` If true it will always show 6 lines. If false, the 6th line won't be displayed if not needed. |
-| calEventTime           |  bool   | v1.5.0 | `false` If true the time will be shown on the event summary for the selected day                      |
-| disableCalEventLink    |  bool   | v1.5.0 | `false` If true the link will be disabled on the event summary for the selected day                   |
-| disableCalLocationLink |  bool   | v1.5.0 | `false` If true the link will be disabled on the event location icon for the selected day             |
+| calEventTime           | boolean | v1.5.0 | `false` If true the time will be shown on the event summary for the selected day                      |
+| disableCalEventLink    | boolean | v1.5.0 | `false` If true the link will be disabled on the event summary for the selected day                   |
+| disableCalLocationLink | boolean | v1.5.0 | `false` If true the link will be disabled on the event location icon for the selected day             |
 
 ## Color Options
 

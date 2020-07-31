@@ -10,7 +10,6 @@ nav_order: 1
 | type                 | string  | **required** | v0.3.0  | `custom:atomic-calendar-revive`                                                                                                                          |
 | entities             |  list   | **required** | v0.3.0  | One or more calendars, configured in HA [Google Calendar Component][googlecalcomp]                                                                       |
 | name                 | string  |   optional   | v0.12.0 | Card name.                                                                                                                                               |
-| showColors           | boolean |   optional   | v0.3.0  | `true` Show colors in events, configured in entities list                                                                                                |
 | maxDaysToShow        | integer |   optional   | v0.3.0  | `7` Maximum number of days to show; if set to zero will only display currently running events                                                            |
 | maxEventCount        | integer |   optional   | v0.9.0  | `0` Maximum number of events to show; zero removes any limitation                                                                                        |
 | showLocation         | boolean |   optional   | v0.3.0  | `true` Show location link (right side)                                                                                                                   |
@@ -25,10 +24,9 @@ nav_order: 1
 | disableEventLink     | boolean |   optional   | v0.10.0 | `false` disables links in event title.                                                                                                                   |
 | disableLocationLink  | boolean |   optional   | v0.10.0 | `false` disables links in event location.                                                                                                                |
 | linkTarget           | string  |   optional   | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.                                                                                      |
-| showCalNameInEvent   | string  |   optional   |    ?    | `false` Shows the event calendar name                                                                                                                    |
 | showFullDayProgress  | string  |   optional   | v1.7.0  | `false` Enables the progress bar for full day events                                                                                                     |
-| showDeclined  | string  |   optional   | v1.9.0 | `false` Shows events that have been declined |
-
+| showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined                                                                                                         |
+| defaultMode          | integer |   optional   | v2.0.0  | `Event` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default                                                            |
 
 # Color Options
 

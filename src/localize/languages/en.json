@@ -1,0 +1,85 @@
+{
+	"common": {
+		"version": "Version",
+		"show_warning": "Show Warning",
+		"error": "Error",
+		"description": "An advanced calendar card for Home Assistant with Lovelace.",
+		"fullDayEventText": "All Day",
+		"untilText": "Until",
+		"noEventsForTodayText": "No events for today!",
+		"noEventsForNextDaysText": "No events in the next few days"
+	},
+	"ui": {
+		"common": {
+			"previous": "Previous",
+			"next": "Next"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Invalid Configuration",
+		"update_card": "The calendar can't be loaded from Home Assistant component"
+	},
+	"required": {
+		"name": "Reqired",
+		"secondary": "Required options for this card to function"
+	},
+	"main": {
+		"name": "Main Options",
+		"secondary": "Options that apply globally",
+		"fields": {
+			"name": "Name",
+			"showColors": "Show Colors",
+			"maxDaysToShow": "Max days to show",
+			"showLocation": "Show location icon",
+			"showLoader": "Show loader animation",
+			"showDate": "Show date on card",
+			"showDeclined": "Show declined events",
+			"sortByStartTime": "Sort by start time",
+			"hideFinishedEvents": "Hide finished events",
+			"dateFormat": "Date format",
+			"hoursFormat": "Hours format",
+			"defaultMode": "Default mode",
+			"linkTarget": "Link target"
+		}
+	},
+	"event": {
+		"name": "Event Mode",
+		"secondary": "Event Mode specific options",
+		"fields": {
+			"showCurrentEventLine": "Show line before event?",
+			"showProgressBar": "Show progress bar?",
+			"showMonth": "Show month?",
+			"showWeekDay": "Show Week Day",
+			"showDescription": "Show Description?",
+			"disableEventLink": "Disable links in event title?",
+			"disableLocationLink": "Disable links to location?",
+			"showNoEventsForToday": "Show No Events Today?",
+			"showFullDayProgress": "Show full day event progress?",
+			"untilText": "until text:",
+			"noEventsForTodayText": "No events today text:",
+			"noEventsForNextDaysText": "No events in the next few days text:",
+			"fullDayEventText": "Full day event text:"
+		}
+	},
+	"calendar": {
+		"name": "Calendar Mode",
+		"secondary": "Calendar Mode specific options",
+		"fields": {
+			"showLastCalendarWeek": "Show last calendar week",
+			"disableCalEventLink": "Disable calendar event link",
+			"disableCalLocationLink": "Disable calendar location link"
+		}
+	},
+	"appearance": {
+		"name": "Appearance",
+		"secondary": "Customize the colors etc.",
+		"main": {
+			"name": "Main",
+			"secondary": "Global Color Settings"
+		},
+		"fields": {
+			"locationLinkColor": "Location Link Color:",
+			"dimFinishedEvents": "Dim finished events?"
+		}
+	}
+}
