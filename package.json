@@ -35,7 +35,7 @@
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-babel": "^4.4.0",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^5.0.9"
