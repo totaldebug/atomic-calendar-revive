@@ -1,4 +1,9 @@
+# BREAKING CHANGES WITH v2.0.0
+
+Please be aware that if you are upgrading form a version prior to 2.0.0 you will most likely need to update your configuration
+
 # Atomic Calendar Revive
+
 An advanced calendar card for Home Assistant with Lovelace. (fixed to work with HA v106+)
 
 **If you already have Atomic Calendar Revive installed, please check the Releases Change Log before upgrading, there have been some breaking changes since I took on this development.**
@@ -34,6 +39,7 @@ It loads calendar events from Home Assistant - Google calendar component.
 It contains two types of views: `Events mode` and `Calendar mode`. You can switch or select the default one.
 
 New features that are only in Revive:
+
 - Added more appealing UI Look
 - Added the ability to display calendar names
 - Added keyword whitelists
@@ -45,6 +51,7 @@ New features that are only in Revive:
 - Multiple Bug Fixes
 
 The most important features:
+
 - No need to load external libraries (everything is included)
 - Custom colors and settings for different calendars, custom font sizes, colors of every text and line
 - All translations included, few of the words can be configured in settings
@@ -52,14 +59,16 @@ The most important features:
 - Fast switch between both modes, or make one of them default
 
 * Event mode:
+
 - Shows nearest events, one by one, day by day, time of events in a different way (dates, hours)
 - Moves today's completed events up and dim them
 - Highlights the next event, or show a progress bar
 - Shows event location link
 - Clicking on the event title will open a new window with Google Calendar (can be disabled)
-- Clicking on Location will open a window with this location on Google Maps  (can be disabled)
+- Clicking on Location will open a window with this location on Google Maps (can be disabled)
 
 * Calendar mode:
+
 - Show a traditional calendar (a table with 42 days) with configurable events icons like holiday, birthday
 - Quick overview of the following months
 - You can set keywords to show only important things, like birthday
