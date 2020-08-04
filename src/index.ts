@@ -458,6 +458,11 @@ class AtomicCalendarRevive extends LitElement {
 					margin: auto;
 				}
 
+				td.currentDay{
+					color: var(--paper-item-icon-active-color);
+					background-color: ${this._config.calEventBackgroundColor};
+				}
+
 				tr.cal {
 					width: 100%;
 				}
@@ -541,7 +546,6 @@ class AtomicCalendarRevive extends LitElement {
 					min-width: 9em;
 					text-align: center;
 				}
-
 				.loader {
 					border: 4px solid #f3f3f3;
 					border-top: 4px solid grey;
@@ -1193,7 +1197,8 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``;
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `border: 2px solid; background-color: ${this._config.calEventBackgroundColor};` : ``;
+			const dayClassToday = moment(day.date).isSame(moment(), 'day') ? `currentDay` : ``;
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
@@ -1203,9 +1208,9 @@ class AtomicCalendarRevive extends LitElement {
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
 						@click="${ _e => this.handleEventSummary(day)}"
-						class="cal"
+						class="cal ${dayClassToday}"
 						style="color: ${this._config
-						.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
+						.calDayColor};${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
