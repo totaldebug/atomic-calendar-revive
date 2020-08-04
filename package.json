@@ -26,7 +26,7 @@
 		"@babel/plugin-proposal-decorators": "^7.10.5",
 		"@babel/plugin-transform-template-literals": "^7.10.5",
 		"@babel/preset-env": "^7.11.0",
-		"@typescript-eslint/eslint-plugin": "^3.7.1",
+		"@typescript-eslint/eslint-plugin": "^3.8.0",
 		"@typescript-eslint/parser": "^3.8.0",
 		"babel-loader": "^8.1.0",
 		"babel-preset-minify": "^0.5.1",
@@ -44,10 +44,10 @@
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12",
 		"webpack-dev-server": "^3.11.0",
-		"webpack-merge": "^5.1.0"
+		"webpack-merge": "^5.1.1"
 	},
 	"dependencies": {
-		"@material/mwc-linear-progress": "^0.17.2",
+		"@material/mwc-linear-progress": "^0.18.0",
 		"@polymer/lit-element": "^0.7.1",
 		"@rollup/plugin-json": "^4.1.0",
 		"@rollup/plugin-node-resolve": "^8.4.0",
