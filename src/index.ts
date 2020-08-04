@@ -581,7 +581,6 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	getTitleHTML(event) {
-		console.log(event)
 		const titletext: string = event.title;
 
 		const titleColor: string =
@@ -591,7 +590,6 @@ class AtomicCalendarRevive extends LitElement {
 					? event._config.eventTitleColor
 					: this._config.eventTitleColor;
 
-		console.log(titleColor)
 		if (this._config.disableEventLink || event.link === null)
 			return html` <div class="event-title" style="color: ${titleColor}">${titletext}</div> `;
 		else
