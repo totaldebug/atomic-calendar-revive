@@ -1,9 +1,9 @@
 {
-  "atomic-calendar-revive": {
-    "updated_at": "2020-07-31",
-    "version": "2.0.0",
-    "remote_location": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest/dist/atomic-calendar-revive.js",
-    "visit_repo": "https://github.com/marksie1988/atomic-calendar-revive",
-    "changelog": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest"
-  }
+	"atomic-calendar-revive": {
+		"updated_at": "2020-08-04",
+		"version": "2.0.1",
+		"remote_location": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest/dist/atomic-calendar-revive.js",
+		"visit_repo": "https://github.com/marksie1988/atomic-calendar-revive",
+		"changelog": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest"
+	}
 }
