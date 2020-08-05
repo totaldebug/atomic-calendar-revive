@@ -370,6 +370,21 @@ class AtomicCalendarRevive extends LitElement {
 					display: flex;
 					justify-content: space-between;
 					padding: 0px 5px 0 5px;
+					color: ${this._config.descColor};
+					font-size: ${this._config.descSize}%;
+				}
+
+				.hoursHTML {
+					color: ${this._config.timeColor};
+					font-size: ${this._config.timeSize}%;
+					float: left;
+				}
+
+				.relativeTime {
+					color: ${this._config.timeColor};
+					font-size: ${this._config.timeSize}%;
+					float: right;
+					padding-left: 5px;
 				}
 
 				.event-main {
@@ -548,6 +563,7 @@ class AtomicCalendarRevive extends LitElement {
 					min-width: 9em;
 					text-align: center;
 				}
+
 				.loader {
 					border: 4px solid #f3f3f3;
 					border-top: 4px solid grey;
@@ -672,7 +688,7 @@ class AtomicCalendarRevive extends LitElement {
 		const today = moment();
 		if (event.isEmpty) return html``;
 		else if (!moment(event.startTime).isBefore(today,'day'))
-			return html`<div>${today.to(moment(event.startTime))}</div>`;
+			return html`(${today.to(moment(event.startTime))})`;
 	}
 
 	/**
@@ -816,7 +832,7 @@ class AtomicCalendarRevive extends LitElement {
 						: ``;
 
 				const hoursHTML = this._config.showHours
-					? html`<div style="color: ${this._config.timeColor}; font-size: ${this._config.timeSize}%;">
+					? html`<div class="hoursHTML">
 							${this.getHoursHTML(event)}
 					  </div>`
 					: '';
@@ -828,7 +844,6 @@ class AtomicCalendarRevive extends LitElement {
 				const descHTML = this._config.showDescription
 					? html`<div
 							class="event-description"
-							style="color: ${this._config.descColor};font-size: ${this._config.descSize}%;"
 					  >
 							${event.description}
 					  </div>`
@@ -845,7 +860,7 @@ class AtomicCalendarRevive extends LitElement {
 						<div>${currentEventLine}</div>
 						<div class="event-right">
 							<div class="event-main">
-								${this.getTitleHTML(event)} ${hoursHTML} - ${relativeTime}
+								${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
 							</div>
 							<div class="event-location">
 								${this.getLocationHTML(event)} ${eventCalName}
