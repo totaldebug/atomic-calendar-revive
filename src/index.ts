@@ -123,6 +123,7 @@ class AtomicCalendarRevive extends LitElement {
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
 			showHours: true, //shows the bottom line (time, duration of event)
+			showRelativeTime: true,
 
 			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 			eventTitleSize: 100,
@@ -168,6 +169,7 @@ class AtomicCalendarRevive extends LitElement {
 			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
+			refreshInterval: 60,
 			...customConfig,
 		};
 
@@ -255,7 +257,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		// check if an update is needed
 		if (!this.isUpdating && this.modeToggle == 'Event') {
-			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > 60) {
+			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > this._config.refreshInterval) {
 				this.showLoader = true;
 				this.isUpdating = true;
 				try {
@@ -368,6 +370,21 @@ class AtomicCalendarRevive extends LitElement {
 					display: flex;
 					justify-content: space-between;
 					padding: 0px 5px 0 5px;
+					color: ${this._config.descColor};
+					font-size: ${this._config.descSize}%;
+				}
+
+				.hoursHTML {
+					color: ${this._config.timeColor};
+					font-size: ${this._config.timeSize}%;
+					float: left;
+				}
+
+				.relativeTime {
+					color: ${this._config.timeColor};
+					font-size: ${this._config.timeSize}%;
+					float: right;
+					padding-left: 5px;
 				}
 
 				.event-main {
@@ -456,6 +473,11 @@ class AtomicCalendarRevive extends LitElement {
 					font-size: 95%;
 					max-width: 38px;
 					margin: auto;
+				}
+
+				td.currentDay{
+					color: var(--paper-item-icon-active-color);
+					background-color: ${this._config.calEventBackgroundColor};
 				}
 
 				tr.cal {
@@ -658,6 +680,18 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	/**
+	 * generate Event Relative Time HTML
+	 *
+	 */
+
+	getRelativeTime(event) {
+		const today = moment();
+		if (event.isEmpty) return html``;
+		else if (!moment(event.startTime).isBefore(today,'day'))
+			return html`(${today.to(moment(event.startTime))})`;
+	}
+
+	/**
 	 * generate Event Location link HTML
 	 *
 	 */
@@ -668,10 +702,12 @@ class AtomicCalendarRevive extends LitElement {
 				<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
 			`;
 		else
+			var loc: String = event.location;
+			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 			return html`
 				<div>
 					<a
-						href="https://maps.google.com/?q=${event.location}"
+						href=${location}
 						target="${this._config.linkTarget}"
 						class="location-link"
 					>
@@ -683,12 +719,15 @@ class AtomicCalendarRevive extends LitElement {
 	getCalLocationHTML(event) {
 		if (!event.location || !this._config.showLocation || this._config.disableCalLocationLink) return html``;
 		else
+			var loc: String = event.location;
+			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 			return html`
-				<a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link"
+				<a href=${location} target="${this._config.linkTarget}" class="location-link"
 					><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a
 				>
 			`;
 	}
+
 
 	/**
 	 * update Events main HTML
@@ -793,14 +832,18 @@ class AtomicCalendarRevive extends LitElement {
 						: ``;
 
 				const hoursHTML = this._config.showHours
-					? html`<div style="color: ${this._config.timeColor}; font-size: ${this._config.timeSize}%;">
+					? html`<div class="hoursHTML">
 							${this.getHoursHTML(event)}
 					  </div>`
+					: '';
+				const relativeTime = this._config.showRelativeTime
+					? html`<div class="relativeTime">
+							${this.getRelativeTime(event)}
+						</div>`
 					: '';
 				const descHTML = this._config.showDescription
 					? html`<div
 							class="event-description"
-							style="color: ${this._config.descColor};font-size: ${this._config.descSize}%;"
 					  >
 							${event.description}
 					  </div>`
@@ -817,7 +860,7 @@ class AtomicCalendarRevive extends LitElement {
 						<div>${currentEventLine}</div>
 						<div class="event-right">
 							<div class="event-main">
-								${this.getTitleHTML(event)} ${hoursHTML}
+								${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
 							</div>
 							<div class="event-location">
 								${this.getLocationHTML(event)} ${eventCalName}
@@ -1193,7 +1236,8 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `background-color: ${this._config.calEventBackgroundColor};` : ``;
+			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `border: 2px solid; background-color: ${this._config.calEventBackgroundColor};` : ``;
+			const dayClassToday = moment(day.date).isSame(moment(), 'day') ? `currentDay` : ``;
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
 			const dayStyleClicked = moment(day.date).isSame(moment(this.clickedDate), 'day') ? `background-color: ${this._config.calActiveEventBackgroundColor};` : ``;
@@ -1203,9 +1247,9 @@ class AtomicCalendarRevive extends LitElement {
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
 						@click="${ _e => this.handleEventSummary(day)}"
-						class="cal"
+						class="cal ${dayClassToday}"
 						style="color: ${this._config
-						.calDayColor};${dayStyleOtherMonth}${dayStyleToday}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
+						.calDayColor};${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
