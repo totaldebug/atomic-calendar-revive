@@ -123,7 +123,7 @@ class AtomicCalendarRevive extends LitElement {
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
 			showHours: true, //shows the bottom line (time, duration of event)
-			relativeTime: true,
+			showRelativeTime: true,
 
 			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 			eventTitleSize: 100,
@@ -836,7 +836,7 @@ class AtomicCalendarRevive extends LitElement {
 							${this.getHoursHTML(event)}
 					  </div>`
 					: '';
-				const relativeTime = this._config.relativeTime
+				const relativeTime = this._config.showRelativeTime
 					? html`<div class="relativeTime">
 							${this.getRelativeTime(event)}
 						</div>`

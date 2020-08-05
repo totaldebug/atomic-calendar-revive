@@ -28,7 +28,7 @@ nav_order: 1
 | showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined                                                                                                         |
 | defaultMode          | integer |   optional   | v2.0.0  | `Event` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default                                                            |
 | refreshInterval      | integer |   optional   | v2.1.0  | `60` Set how often the calendar should refresh data in seconds                                                                                           |
-| relativeTime | boolean | optional | v2.1.0 | `true` show relative time to event |
+| showRelativeTime | boolean | optional | v2.1.0 | `true` show relative time to event |
 
 # Color Options
 
