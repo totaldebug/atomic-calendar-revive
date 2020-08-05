@@ -123,6 +123,7 @@ class AtomicCalendarRevive extends LitElement {
 			timeColor: 'var(--primary-color)', // Time text color (center bottom)
 			timeSize: 90, //Time text size
 			showHours: true, //shows the bottom line (time, duration of event)
+			relativeTime: true,
 
 			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
 			eventTitleSize: 100,
@@ -663,6 +664,18 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	/**
+	 * generate Event Relative Time HTML
+	 *
+	 */
+
+	getRelativeTime(event) {
+		const today = moment();
+		if (event.isEmpty) return html``;
+		else if (!moment(event.startTime).isBefore(today,'day'))
+			return html`<div>${today.to(moment(event.startTime))}</div>`;
+	}
+
+	/**
 	 * generate Event Location link HTML
 	 *
 	 */
@@ -690,12 +703,15 @@ class AtomicCalendarRevive extends LitElement {
 	getCalLocationHTML(event) {
 		if (!event.location || !this._config.showLocation || this._config.disableCalLocationLink) return html``;
 		else
+			var loc: String = event.location;
+			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 			return html`
-				<a href="https://maps.google.com/?q=${event.location}" target="${this._config.linkTarget}" class="location-link"
+				<a href=${location} target="${this._config.linkTarget}" class="location-link"
 					><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a
 				>
 			`;
 	}
+
 
 	/**
 	 * update Events main HTML
@@ -804,6 +820,11 @@ class AtomicCalendarRevive extends LitElement {
 							${this.getHoursHTML(event)}
 					  </div>`
 					: '';
+				const relativeTime = this._config.relativeTime
+					? html`<div class="relativeTime">
+							${this.getRelativeTime(event)}
+						</div>`
+					: '';
 				const descHTML = this._config.showDescription
 					? html`<div
 							class="event-description"
@@ -824,7 +845,7 @@ class AtomicCalendarRevive extends LitElement {
 						<div>${currentEventLine}</div>
 						<div class="event-right">
 							<div class="event-main">
-								${this.getTitleHTML(event)} ${hoursHTML}
+								${this.getTitleHTML(event)} ${hoursHTML} - ${relativeTime}
 							</div>
 							<div class="event-location">
 								${this.getLocationHTML(event)} ${eventCalName}
