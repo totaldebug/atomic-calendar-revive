@@ -168,6 +168,7 @@ class AtomicCalendarRevive extends LitElement {
 			calEventTime: false, // show calendar event summary time
 
 			firstDayOfWeek: 1, // default 1 - monday
+			refreshInterval: 60,
 			...customConfig,
 		};
 
@@ -255,7 +256,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		// check if an update is needed
 		if (!this.isUpdating && this.modeToggle == 'Event') {
-			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > 60) {
+			if (!this.lastEventsUpdateTime || moment().diff(this.lastEventsUpdateTime, 'seconds') > this._config.refreshInterval) {
 				this.showLoader = true;
 				this.isUpdating = true;
 				try {
@@ -672,10 +673,12 @@ class AtomicCalendarRevive extends LitElement {
 				<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
 			`;
 		else
+			var loc: String = event.location;
+			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 			return html`
 				<div>
 					<a
-						href="https://maps.google.com/?q=${event.location}"
+						href=${location}
 						target="${this._config.linkTarget}"
 						class="location-link"
 					>

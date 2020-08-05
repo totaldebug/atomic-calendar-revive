@@ -27,6 +27,7 @@ nav_order: 1
 | showFullDayProgress  | string  |   optional   | v1.7.0  | `false` Enables the progress bar for full day events                                                                                                     |
 | showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined                                                                                                         |
 | defaultMode          | integer |   optional   | v2.0.0  | `Event` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default                                                            |
+| refreshInterval      | integer |   optional   | v2.1.0  | `60` Set how often the calendar should refresh data in seconds                                                                                           |
 
 # Color Options
 
