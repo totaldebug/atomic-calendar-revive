@@ -57,7 +57,7 @@
 		"node-google-calendar": "^1.1.1",
 		"npm": "^6.14.7",
 		"rollup-plugin-babel": "^4.4.0",
-		"rollup-plugin-typescript2": "^0.27.1",
+		"rollup-plugin-typescript2": "^0.27.2",
 		"typescript": "^3.9.7"
 	},
 	"bugs": {
