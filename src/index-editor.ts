@@ -107,19 +107,32 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 	get _dateFormat(): string {
 		if (this._config) {
-			return this._config.dateFormat || '';
+			return this._config.dateFormat || 'LL';
 		}
-		return '';
+		return 'LL';
 	}
 	get _hoursFormat(): string {
 		if (this._config) {
-			return this._config.hoursFormat || '';
+			return this._config.hoursFormat || 'default';
 		}
-		return '';
+		return 'default';
+	}
+	get _refreshInterval(): string {
+		if (this._config) {
+			return this._config.refreshInterval || '60';
+		}
+		return '60';
 	}
 	get _showDate(): boolean {
 		if (this._config) {
 			return this._config.showDate || false;
+		}
+
+		return true;
+	}
+	get _showRelativeTime(): boolean {
+		if (this._config) {
+			return this._config.showRelativeTime || false;
 		}
 
 		return true;
@@ -312,6 +325,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@value-changed=${this._valueChanged}
 								></paper-input>
 								<paper-input
+									label="${localize('main.fields.refreshInterval')}"
+									type="number"
+									.value=${this._refreshInterval}
+									.configValue=${'refreshInterval'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
 									label="${localize('main.fields.dateFormat')}"
 									.value=${this._dateFormat}
 									.configValue=${'dateFormat'}
@@ -405,6 +425,19 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('main.fields.showLocation')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showRelativeTime ? 'off' : 'on'}`}
+											.checked=${this._showRelativeTime !== false}
+											.configValue=${'showRelativeTime'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showRelativeTime')}</label>
+									</div>
+									<div>
 									</div>
 								</div>
 							</div>

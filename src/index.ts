@@ -604,13 +604,7 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getTitleHTML(event) {
 		const titletext: string = event.title;
-
-		const titleColor: string =
-			event._config.color != 'undefined'
-				? event._config.color
-				: event._config.eventTitleColor != 'undefined'
-					? event._config.eventTitleColor
-					: this._config.eventTitleColor;
+		const titleColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
 
 		if (this._config.disableEventLink || event.link === null)
 			return html` <div class="event-title" style="color: ${titleColor}">${titletext}</div> `;
