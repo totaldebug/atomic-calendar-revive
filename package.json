@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "2.1.0",
+	"version": "2.1.1",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
@@ -40,7 +40,7 @@
 		"rollup-plugin-node-resolve": "^5.2.0",
 		"rollup-plugin-serve": "^1.0.3",
 		"rollup-plugin-sourcemaps": "^0.6.2",
-		"rollup-plugin-terser": "^6.1.0",
+		"rollup-plugin-terser": "^7.0.0",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12",
 		"webpack-dev-server": "^3.11.0",
@@ -57,7 +57,7 @@
 		"node-google-calendar": "^1.1.1",
 		"npm": "^6.14.7",
 		"rollup-plugin-babel": "^4.4.0",
-		"rollup-plugin-typescript2": "^0.27.1",
+		"rollup-plugin-typescript2": "^0.27.2",
 		"typescript": "^3.9.7"
 	},
 	"bugs": {

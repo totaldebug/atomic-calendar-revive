@@ -39,7 +39,9 @@
 			"dateFormat": "Date format",
 			"hoursFormat": "Hours format",
 			"defaultMode": "Default mode",
-			"linkTarget": "Link target"
+			"linkTarget": "Link target",
+			"refreshInterval": "Refresh Interval",
+			"showRelativeTime": "Show Relative Time"
 		}
 	},
 	"event": {
