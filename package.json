@@ -50,7 +50,7 @@
 		"@material/mwc-linear-progress": "^0.18.0",
 		"@polymer/lit-element": "^0.7.1",
 		"@rollup/plugin-json": "^4.1.0",
-		"@rollup/plugin-node-resolve": "^8.4.0",
+		"@rollup/plugin-node-resolve": "^9.0.0",
 		"custom-card-helpers": "^1.6.5",
 		"lit-element": "^2.3.1",
 		"moment": "^2.27.0",
