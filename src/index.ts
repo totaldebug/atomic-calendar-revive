@@ -18,6 +18,7 @@ import { atomicCardConfig, LongDateFormatSpec } from './types';
 import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
+import defaultConfig from './defaults';
 
 class AtomicCalendarRevive extends LitElement {
 	@property() public hass!: HomeAssistant;
@@ -81,97 +82,7 @@ class AtomicCalendarRevive extends LitElement {
 		let customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
 		this._config = {
-			// text translations
-			fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
-			untilText: localize('common.untilText'), // "Until" custom text
-
-			// main settings
-			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
-			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
-			showLoader: true, // show animation when loading events from Google calendar
-
-			showLocation: true, // show location (right side)
-			showMonth: false, // show month under day (left side)
-			showWeekDay: false, // show day name under day (left side)
-			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
-			showCurrentEventLine: false, // show a line between last and next event
-			showDate: false,
-			dateFormat: 'LL',
-			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
-			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
-			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
-
-			sortByStartTime: false, // sort first by calendar, then by time
-			disableEventLink: false, // disables links to event calendar
-			disableLocationLink: false, // disables links to event calendar
-			linkTarget: '_blank', // Target for links, can use any HTML target type
-			showDeclined: false, // Show declined events in the calendar
-
-			// color and font settings
-			nameColor: 'var(--primary-text-color)', // Card Name color
-
-			dateColor: 'var(--primary-text-color)', // Date text color (left side)
-			dateSize: 90, //Date text size (percent of standard text)
-
-			descColor: 'var(--primary-text-color)', // Description text color (left side)
-			descSize: 80, //Description text size (percent of standard text)
-
-			showNoEventsForToday: false,
-			noEventsForTodayText: localize('common.noEventsForTodayText'),
-			noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
-
-			timeColor: 'var(--primary-color)', // Time text color (center bottom)
-			timeSize: 90, //Time text size
-			showHours: true, //shows the bottom line (time, duration of event)
-			showRelativeTime: true,
-
-			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
-			eventTitleSize: 100,
-
-			locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
-			locationLinkColor: 'var(--primary-text-color)',
-			locationTextSize: 90,
-
-			// finished events settings
-			hideFinishedEvents: false, // show finished events
-			dimFinishedEvents: true, // make finished events greyed out or set opacity
-			finishedEventOpacity: 0.6, // opacity level
-			finishedEventFilter: 'grayscale(80%)', // css filter
-
-			// days separating
-			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
-			eventBarColor: 'var(--primary-color)',
-
-			eventCalNameColor: 'var(--primary-text-color)',
-			eventCalNameSize: 90,
-
-			showProgressBar: true,
-			showFullDayProgress: false,
-			progressBarColor: 'var(--primary-color)',
-
-			enableModeChange: false,
-			defaultMode: 'Event',
-
-			// Calendar Mode Default Settings
-
-			calGridColor: 'rgba(86, 86, 86, .35)',
-			calDayColor: 'var(--primary-text-color)',
-			calWeekDayColor: 'var(--primary-text-color)',
-			calDateColor: 'var(--primary-text-color)',
-			defaultCalColor: 'var(--primary-text-color)',
-
-			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
-
-			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-			calEventSatColor: 'rgba(255, 255, 255, .05)',
-			calEventSunColor: 'rgba(255, 255, 255, .15)',
-
-			calEventTime: false, // show calendar event summary time
-
-			firstDayOfWeek: 1, // default 1 - monday
-			refreshInterval: 60,
-			...customConfig,
-		};
+			...defaultConfig, ...customConfig };
 
 		this.modeToggle = this._config.defaultMode!;
 
@@ -958,6 +869,7 @@ class AtomicCalendarRevive extends LitElement {
 						const whitelist =
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
 						const singleAPIEvent = new EventClass(singleEvent, this._config.entities[i]);
+						console.log(singleAPIEvent)
 						const startTimeFilter =
 							typeof this._config.entities[i]['startTimeFilter'] != 'undefined' ? this._config.entities[i]['startTimeFilter'] : '';
 						const endTimeFilter =
@@ -1370,10 +1282,10 @@ class EventClass {
 		this._config = config;
 		this._startTime = this.eventClass.start.dateTime
 			? moment(this.eventClass.start.dateTime)
-			: moment(this.eventClass.start.date).startOf('day');
+			: this.eventClass.start.date ? moment(this.eventClass.start.date).startOf('day') : moment(this.eventClass.start);
 		this._endTime = this.eventClass.end.dateTime
 			? moment(this.eventClass.end.dateTime)
-			: moment(this.eventClass.end.date).subtract(1, 'days').endOf('day');
+			: this.eventClass.start.date ? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day') : moment(this.eventClass.end);
 		this.isFinished = false;
 		this.isEmpty = false;
 	}
@@ -1400,7 +1312,7 @@ class EventClass {
 	get startTimeToShow() {
 		const time = this.eventClass.start.dateTime
 			? moment(this.eventClass.start.dateTime)
-			: moment(this.eventClass.start.date).startOf('day');
+			: this.eventClass.start.date ? moment(this.eventClass.start.date).startOf('day') : moment(this.eventClass.start).startOf('day');
 		if (moment(time).isBefore(moment().startOf('day'))) return moment().startOf('day');
 		else return time;
 	}
@@ -1411,8 +1323,13 @@ class EventClass {
 
 	// is full day event
 	get isFullDayEvent() {
-		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime) return true;
-		else return false;
+		if (
+			(this.eventClass.start.date && this.eventClass.end.date) ||
+			(moment(this.eventClass.start).hours() === 0 && moment(this.eventClass.end).hours() === 0)
+		)
+			return true;
+		else
+			return false;
 	}
 	// is full day event, but only one day
 	get isFullOneDayEvent() {
@@ -1423,11 +1340,10 @@ class EventClass {
 			(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
 				moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
 				moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.end.dateTime).subtract(1, 'days'), 'day'))
-		) {
+		)
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
 
 	// is full day event, more days
@@ -1441,7 +1357,8 @@ class EventClass {
 				moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
 		)
 			return true;
-		else return false;
+		else
+			return false;
 	}
 
 	// return YYYYMMDD for sorting
