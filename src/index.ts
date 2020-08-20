@@ -550,7 +550,7 @@ class AtomicCalendarRevive extends LitElement {
 		if (event.isEmpty) return html`<div>&nbsp;</div>`;
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
-		if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today, 'day')))
+		if (event.isFullDayEvent && moment(event.endTime).isSame(today, 'day'))
 			return html`<div>${this._config.fullDayEventText}</div>`;
 		// 2. Starts any day, ends later -> 'All day, end date'
 		else if (event.isFullMoreDaysEvent)
@@ -1285,7 +1285,7 @@ class EventClass {
 			: this.eventClass.start.date ? moment(this.eventClass.start.date).startOf('day') : moment(this.eventClass.start);
 		this._endTime = this.eventClass.end.dateTime
 			? moment(this.eventClass.end.dateTime)
-			: this.eventClass.start.date ? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day') : moment(this.eventClass.end);
+			: this.eventClass.end.date ? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day') : moment(this.eventClass.end);
 		this.isFinished = false;
 		this.isEmpty = false;
 	}
@@ -1303,44 +1303,34 @@ class EventClass {
 		return this.eventClass.description;
 	}
 
-	//true start time
+	//get the start time for an event
 	get startTime() {
-		return this._startTime;
+		if (this._startTime === undefined) {
+			const date = this.eventClass.start && this.eventClass.start.date || this.eventClass.start.startTime || this.eventClass.start || '';
+			this._startTime = moment(date);
+		}
+		return this._startTime.clone();
 	}
 
 	//start time, returns today if before today
 	get startTimeToShow() {
-		const time = this.eventClass.start.dateTime
-			? moment(this.eventClass.start.dateTime)
-			: this.eventClass.start.date ? moment(this.eventClass.start.date).startOf('day') : moment(this.eventClass.start).startOf('day');
+		const time = this._startTime
 		if (moment(time).isBefore(moment().startOf('day'))) return moment().startOf('day');
 		else return time;
 	}
 
+	//get the end time for an event
 	get endTime() {
-		return this._endTime;
+		if (this._endTime === undefined) {
+			const date = this.eventClass.end && this.eventClass.end.date || this.eventClass.end.endTime || this.eventClass.end || '';
+			this._endTime = moment(date);
+		}
+		return this._endTime.clone();
 	}
 
 	// is full day event
 	get isFullDayEvent() {
-		if (
-			(this.eventClass.start.date && this.eventClass.end.date) ||
-			(moment(this.eventClass.start).hours() === 0 && moment(this.eventClass.end).hours() === 0)
-		)
-			return true;
-		else
-			return false;
-	}
-	// is full day event, but only one day
-	get isFullOneDayEvent() {
-		if (
-			(!this.eventClass.start.dateTime &&
-				!this.eventClass.end.dateTime &&
-				moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
-			(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
-				moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.end.dateTime).subtract(1, 'days'), 'day'))
-		)
+		if (moment(this._startTime).hours() === 0 && moment(this._endTime).hours() === 0)
 			return true;
 		else
 			return false;
@@ -1348,17 +1338,19 @@ class EventClass {
 
 	// is full day event, more days
 	get isFullMoreDaysEvent() {
-		if (
-			(!this.eventClass.start.dateTime &&
-				!this.eventClass.end.dateTime &&
-				!moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
-			(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
-		)
-			return true;
-		else
-			return false;
+		if (this.isFullDayEvent)
+			if (
+				(!this.eventClass.start.dateTime &&
+					!this.eventClass.end.dateTime &&
+					!moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
+				(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
+					moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
+					moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
+			)
+				return true;
+			else
+				return false;
+		else return false;
 	}
 
 	// return YYYYMMDD for sorting
