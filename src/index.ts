@@ -145,7 +145,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language = this.hass!.language.toLowerCase();
+		this.language = this._config.language != '' ? this._config.language! : this.hass.language.toLowerCase();
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT');
 		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
 		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm';
