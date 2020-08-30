@@ -1,0 +1,85 @@
+{
+	"common": {
+		"version": "Version",
+		"show_warning": "Visa varning",
+		"error": "Fel",
+		"description": "Ett avancerat kalenderkort för Home Assistant med Lovelace",
+		"fullDayEventText": "Heldag",
+		"untilText": "Tills",
+		"noEventsForTodayText": "Inga händelser idag!",
+		"noEventsForNextDaysText": "Inga händelser de närmaste dagarna"
+	},
+	"ui": {
+		"common": {
+			"previous": "Föregående",
+			"next": "Nästa"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Ogiltig konfiguration",
+		"update_card": "Kalendern kan inte laddas från Home Assistant-komponenten"
+	},
+	"required": {
+		"name": "Nödvändig",
+		"secondary": "Nödvändiga optioner för att detta kort ska fungera"
+	},
+	"main": {
+		"name": "Huvud-ptioner",
+		"secondary": "Globala Optioner",
+		"fields": {
+			"name": "Namn",
+			"showColors": "Visa färger",
+			"maxDaysToShow": "Max antal dagar att visa",
+			"showLocation": "Visa plats-ikon",
+			"showLoader": "Visa animation för laddning",
+			"showDate": "Visa datum på kortet",
+			"showDeclined": "Visa nekade händelser",
+			"sortByStartTime": "Sortera efter starttid",
+			"hideFinishedEvents": "Hide finished events Dölj avslutade händelser",
+			"dateFormat": "Datumformat",
+			"hoursFormat": "Timformat",
+			"defaultMode": "Standard-mode",
+			"linkTarget": "Länkmål"
+		}
+	},
+	"event": {
+		"name": "Händelse-mode",
+		"secondary": "Optioner för händelse-mode",
+		"fields": {
+			"showCurrentEventLine": "Visa länk före händelsen?",
+			"showProgressBar": "Visa förlopp?",
+			"showMonth": "Visa månad?",
+			"showWeekDay": "Visa veckodag?",
+			"showDescription": "Visa beskrivning?",
+			"disableEventLink": "Inaktivera länkar i händelsetitel?",
+			"disableLocationLink": "Inaktivera länkar till plats?",
+			"showNoEventsForToday": "Visa inga händelser idag?",
+			"showFullDayProgress": "Visa förlopp för heldagshändelser?",
+			"untilText": "Text för Tills:",
+			"noEventsForTodayText": "Text för INga händelser idag:",
+			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
+			"fullDayEventText": "Text för Heldagshändelse:"
+		}
+	},
+	"calendar": {
+		"name": "Kalender-mode",
+		"secondary": "Optioner för kalender-mode",
+		"fields": {
+			"showLastCalendarWeek": "Visa sista veckan",
+			"disableCalEventLink": "Inaktivera länk till händelse",
+			"disableCalLocationLink": "Inaktivera länk till plats"
+		}
+	},
+	"appearance": {
+		"name": "Utseende",
+		"secondary": "Personliga färger etc.",
+		"main": {
+			"name": "Huvid",
+			"secondary": "Globala färginställningar"
+		},
+		"fields": {
+			"locationLinkColor": "Färg för platslänk:",
+			"dimFinishedEvents": "Dimma slutförda händelser?"
+		}
+	}
+}

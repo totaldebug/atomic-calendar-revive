@@ -869,7 +869,6 @@ class AtomicCalendarRevive extends LitElement {
 						const whitelist =
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
 						const singleAPIEvent = new EventClass(singleEvent, this._config.entities[i]);
-						console.log(singleAPIEvent)
 						const startTimeFilter =
 							typeof this._config.entities[i]['startTimeFilter'] != 'undefined' ? this._config.entities[i]['startTimeFilter'] : '';
 						const endTimeFilter =
