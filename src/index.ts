@@ -610,10 +610,12 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 
 	getRelativeTime(event) {
-		const today = moment();
+		const timeOffset = moment().utcOffset();
+		const today = moment()
+			.add(timeOffset, 'minutes');
 		if (event.isEmpty) return html``;
 		else if (!moment(event.startTime).isBefore(today,'day'))
-			return html`(${today.to(moment(event.startTime))})`;
+			return html`(${today.to(moment(event.startTime).add(timeOffset, 'minutes'))})`;
 	}
 
 	/**
