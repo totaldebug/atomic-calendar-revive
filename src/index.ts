@@ -518,7 +518,6 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	getEventIcon(event) {
-		console.log(event);
 		const iconColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
 
 		if (this._config.showEventIcon && event._config.icon != 'undefined')
@@ -863,6 +862,7 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	async getEvents() {
+		const daysToShow = this._config.maxDaysToShow! == 0 ? this._config.maxDaysToShow! : (this._config.maxDaysToShow! - 1);
 		const timeOffset = -moment().utcOffset();
 		const start = moment()
 			.add(this._config.startDaysAhead, 'days')
@@ -870,7 +870,7 @@ class AtomicCalendarRevive extends LitElement {
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
 		const end = moment()
-			.add(this._config.maxDaysToShow! + this._config.startDaysAhead!, 'days')
+			.add(daysToShow + this._config.startDaysAhead!, 'days')
 			.endOf('day')
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
