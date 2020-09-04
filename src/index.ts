@@ -779,9 +779,8 @@ class AtomicCalendarRevive extends LitElement {
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
 					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div>${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>
-						<div>${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>
-						<div>${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD')+' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>
 					</td>
 					<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
 						<div>${currentEventLine}</div>
