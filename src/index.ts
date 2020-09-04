@@ -469,6 +469,14 @@ class AtomicCalendarRevive extends LitElement {
 					margin-left: -1px;
 				}
 
+				.eventIcon {
+					--mdc-icon-size: 15px !important;
+					padding-top: 0px;
+					margin-top: -10px;
+					margin-right: -1px;
+					margin-left: -1px;
+				}
+
 				.calDateSelector {
 					display: inline-block;
 					min-width: 9em;
@@ -509,6 +517,18 @@ class AtomicCalendarRevive extends LitElement {
 		});
 	}
 
+	getEventIcon(event) {
+		console.log(event);
+		const iconColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+
+		if (this._config.showEventIcon && event._config.icon != 'undefined')
+			return html`<ha-icon
+				class="eventIcon"
+				style="color: ${iconColor};"
+				icon="${event._config.icon}"
+				></ha-icon>`;
+
+	}
 	/**
 	 * generate Event Title (summary) HTML
 	 *
@@ -516,13 +536,14 @@ class AtomicCalendarRevive extends LitElement {
 	getTitleHTML(event) {
 		const titletext: string = event.title;
 		const titleColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+		const entityIcon: string = event._config.icon
 
-		if (this._config.disableEventLink || event.link === null)
-			return html` <div class="event-title" style="color: ${titleColor}">${titletext}</div> `;
+		if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
+			return html` <div class="event-title" style="color: ${titleColor}">${this.getEventIcon(event)} ${titletext}</div> `;
 		else
 			return html`
 				<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
-					<div class="event-title" style="color: ${titleColor}">${titletext}</div>
+					<div class="event-title">${this.getEventIcon(event)} <span style="color: ${titleColor}">${titletext}</span></div>
 				</a>
 			`;
 	}

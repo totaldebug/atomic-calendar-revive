@@ -58,7 +58,8 @@
 			"untilText": "Text för Tills:",
 			"noEventsForTodayText": "Text för INga händelser idag:",
 			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
-			"fullDayEventText": "Text för Heldagshändelse:"
+			"fullDayEventText": "Text för Heldagshändelse:",
+			"showEventIcon": "Show Event Icon"
 		}
 	},
 	"calendar": {

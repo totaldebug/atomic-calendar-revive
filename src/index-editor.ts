@@ -209,6 +209,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return true;
 	}
+	get _showEventIcon(): boolean {
+		if (this._config) {
+			return this._config.showEventIcon || false;
+		}
+		return true;
+	}
 	get _untilText(): string {
 		if (this._config) {
 			return this._config.untilText || '';
@@ -572,6 +578,15 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showFullDayProgress')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showEventIcon ? 'off' : 'on'}`}
+											.checked=${this._showEventIcon !== false}
+											.configValue=${'showEventIcon'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showEventIcon')}</label>
 									</div>
 								</div>
 							</div>

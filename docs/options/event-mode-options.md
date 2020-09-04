@@ -11,6 +11,7 @@ nav_order: 3
 | -------------------- | :-----: | :----: | --------------------------------------------------------------------------------------------------- |
 | showCurrentEventLine | boolean | v0.3.0 | `false` Show line before next event. Don't enable when showProgressBar is true - will look bad      |
 | showProgressBar      | boolean | v0.5.5 | `true` Show event progress with moving icon. Don't enable when showCurrentEventLine - will look bad |
+| showEventIcon        | boolean | v2.2.3 | `false` Show the entity icon before the event title |
 
 ## Color Options
 

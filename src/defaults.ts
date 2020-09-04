@@ -90,4 +90,6 @@ export default {
 
 	firstDayOfWeek: 1, // default 1 - monday
 	refreshInterval: 60,
+
+	showEventIcon: false,
 };
