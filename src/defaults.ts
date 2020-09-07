@@ -92,4 +92,5 @@ export default {
 	refreshInterval: 60,
 
 	showEventIcon: false,
+	europeanDate: false,
 };

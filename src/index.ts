@@ -201,6 +201,10 @@ class AtomicCalendarRevive extends LitElement {
 		const date = moment().format(this._config.dateFormat);
 		return html`${date}`;
 	}
+	getEventDate() {
+		const date = moment().format(this._config.eventDateFormat);
+		return html`${date}`;
+	}
 
 	setStyle() {
 		return html`
@@ -775,12 +779,16 @@ class AtomicCalendarRevive extends LitElement {
 							${event.description}
 					  </div>`
 					: '';
-
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
+
+				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>`
+					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM')+' ' : ''}${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>`
+
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
 					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
 						<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
-						<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD')+' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>
+						${eventDateFormat}
+
 					</td>
 					<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
 						<div>${currentEventLine}</div>
