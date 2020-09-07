@@ -29,7 +29,7 @@
 		"@rollup/plugin-babel": "^5.2.0",
 		"@rollup/plugin-commonjs": "^15.0.0",
 		"@rollup/plugin-node-resolve": "^9.0.0",
-		"@typescript-eslint/eslint-plugin": "^3.9.0",
+		"@typescript-eslint/eslint-plugin": "^4.0.0",
 		"@typescript-eslint/parser": "^3.9.0",
 		"babel-loader": "^8.1.0",
 		"babel-preset-minify": "^0.5.1",
