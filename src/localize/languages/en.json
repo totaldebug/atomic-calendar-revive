@@ -60,7 +60,8 @@
 			"untilText": "until text:",
 			"noEventsForTodayText": "No events today text:",
 			"noEventsForNextDaysText": "No events in the next few days text:",
-			"fullDayEventText": "Full day event text:"
+			"fullDayEventText": "Full day event text:",
+			"showEventIcon": "Show Event Icon"
 		}
 	},
 	"calendar": {

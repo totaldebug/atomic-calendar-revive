@@ -18,6 +18,7 @@ import { atomicCardConfig, LongDateFormatSpec } from './types';
 import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
+import defaultConfig from './defaults';
 
 class AtomicCalendarRevive extends LitElement {
 	@property() public hass!: HomeAssistant;
@@ -81,97 +82,7 @@ class AtomicCalendarRevive extends LitElement {
 		let customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
 		this._config = {
-			// text translations
-			fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
-			untilText: localize('common.untilText'), // "Until" custom text
-
-			// main settings
-			maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
-			maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
-			showLoader: true, // show animation when loading events from Google calendar
-
-			showLocation: true, // show location (right side)
-			showMonth: false, // show month under day (left side)
-			showWeekDay: false, // show day name under day (left side)
-			fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
-			showCurrentEventLine: false, // show a line between last and next event
-			showDate: false,
-			dateFormat: 'LL',
-			hoursFormat: 'default', // 12h / 24h / default time format. Default is HA language setting.
-			startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
-			showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
-
-			sortByStartTime: false, // sort first by calendar, then by time
-			disableEventLink: false, // disables links to event calendar
-			disableLocationLink: false, // disables links to event calendar
-			linkTarget: '_blank', // Target for links, can use any HTML target type
-			showDeclined: false, // Show declined events in the calendar
-
-			// color and font settings
-			nameColor: 'var(--primary-text-color)', // Card Name color
-
-			dateColor: 'var(--primary-text-color)', // Date text color (left side)
-			dateSize: 90, //Date text size (percent of standard text)
-
-			descColor: 'var(--primary-text-color)', // Description text color (left side)
-			descSize: 80, //Description text size (percent of standard text)
-
-			showNoEventsForToday: false,
-			noEventsForTodayText: localize('common.noEventsForTodayText'),
-			noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
-
-			timeColor: 'var(--primary-color)', // Time text color (center bottom)
-			timeSize: 90, //Time text size
-			showHours: true, //shows the bottom line (time, duration of event)
-			showRelativeTime: true,
-
-			eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
-			eventTitleSize: 100,
-
-			locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
-			locationLinkColor: 'var(--primary-text-color)',
-			locationTextSize: 90,
-
-			// finished events settings
-			hideFinishedEvents: false, // show finished events
-			dimFinishedEvents: true, // make finished events greyed out or set opacity
-			finishedEventOpacity: 0.6, // opacity level
-			finishedEventFilter: 'grayscale(80%)', // css filter
-
-			// days separating
-			dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
-			eventBarColor: 'var(--primary-color)',
-
-			eventCalNameColor: 'var(--primary-text-color)',
-			eventCalNameSize: 90,
-
-			showProgressBar: true,
-			showFullDayProgress: false,
-			progressBarColor: 'var(--primary-color)',
-
-			enableModeChange: false,
-			defaultMode: 'Event',
-
-			// Calendar Mode Default Settings
-
-			calGridColor: 'rgba(86, 86, 86, .35)',
-			calDayColor: 'var(--primary-text-color)',
-			calWeekDayColor: 'var(--primary-text-color)',
-			calDateColor: 'var(--primary-text-color)',
-			defaultCalColor: 'var(--primary-text-color)',
-
-			calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
-
-			calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-			calEventSatColor: 'rgba(255, 255, 255, .05)',
-			calEventSunColor: 'rgba(255, 255, 255, .15)',
-
-			calEventTime: false, // show calendar event summary time
-
-			firstDayOfWeek: 1, // default 1 - monday
-			refreshInterval: 60,
-			...customConfig,
-		};
+			...defaultConfig, ...customConfig };
 
 		this.modeToggle = this._config.defaultMode!;
 
@@ -234,7 +145,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language = this.hass!.language.toLowerCase();
+		this.language = this._config.language != '' ? this._config.language! : this.hass.language.toLowerCase();
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT');
 		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
 		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm';
@@ -288,6 +199,10 @@ class AtomicCalendarRevive extends LitElement {
 
 	getDate() {
 		const date = moment().format(this._config.dateFormat);
+		return html`${date}`;
+	}
+	getEventDate() {
+		const date = moment().format(this._config.eventDateFormat);
 		return html`${date}`;
 	}
 
@@ -558,6 +473,14 @@ class AtomicCalendarRevive extends LitElement {
 					margin-left: -1px;
 				}
 
+				.eventIcon {
+					--mdc-icon-size: 15px !important;
+					padding-top: 0px;
+					margin-top: -10px;
+					margin-right: -1px;
+					margin-left: -1px;
+				}
+
 				.calDateSelector {
 					display: inline-block;
 					min-width: 9em;
@@ -598,6 +521,17 @@ class AtomicCalendarRevive extends LitElement {
 		});
 	}
 
+	getEventIcon(event) {
+		const iconColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+
+		if (this._config.showEventIcon && event._config.icon != 'undefined')
+			return html`<ha-icon
+				class="eventIcon"
+				style="color: ${iconColor};"
+				icon="${event._config.icon}"
+				></ha-icon>`;
+
+	}
 	/**
 	 * generate Event Title (summary) HTML
 	 *
@@ -605,13 +539,14 @@ class AtomicCalendarRevive extends LitElement {
 	getTitleHTML(event) {
 		const titletext: string = event.title;
 		const titleColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+		const entityIcon: string = event._config.icon
 
-		if (this._config.disableEventLink || event.link === null)
-			return html` <div class="event-title" style="color: ${titleColor}">${titletext}</div> `;
+		if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
+			return html` <div class="event-title" style="color: ${titleColor}">${this.getEventIcon(event)} ${titletext}</div> `;
 		else
 			return html`
 				<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
-					<div class="event-title" style="color: ${titleColor}">${titletext}</div>
+					<div class="event-title">${this.getEventIcon(event)} <span style="color: ${titleColor}">${titletext}</span></div>
 				</a>
 			`;
 	}
@@ -639,7 +574,7 @@ class AtomicCalendarRevive extends LitElement {
 		if (event.isEmpty) return html`<div>&nbsp;</div>`;
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
-		if (event.isFullOneDayEvent || (event.isFullMoreDaysEvent && moment(event.endTime).isSame(today, 'day')))
+		if (event.isFullDayEvent && moment(event.endTime).isSame(today, 'day'))
 			return html`<div>${this._config.fullDayEventText}</div>`;
 		// 2. Starts any day, ends later -> 'All day, end date'
 		else if (event.isFullMoreDaysEvent)
@@ -679,10 +614,12 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 
 	getRelativeTime(event) {
-		const today = moment();
+		const timeOffset = moment().utcOffset();
+		const today = moment()
+			.add(timeOffset, 'minutes');
 		if (event.isEmpty) return html``;
 		else if (!moment(event.startTime).isBefore(today,'day'))
-			return html`(${today.to(moment(event.startTime))})`;
+			return html`(${today.to(moment(event.startTime).add(timeOffset, 'minutes'))})`;
 	}
 
 	/**
@@ -842,13 +779,16 @@ class AtomicCalendarRevive extends LitElement {
 							${event.description}
 					  </div>`
 					: '';
-
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
+
+				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>`
+					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM')+' ' : ''}${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>`
+
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
 					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div>${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>
-						<div>${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>
-						<div>${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						${eventDateFormat}
+
 					</td>
 					<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
 						<div>${currentEventLine}</div>
@@ -931,6 +871,7 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	async getEvents() {
+		const daysToShow = this._config.maxDaysToShow! == 0 ? this._config.maxDaysToShow! : (this._config.maxDaysToShow! - 1);
 		const timeOffset = -moment().utcOffset();
 		const start = moment()
 			.add(this._config.startDaysAhead, 'days')
@@ -938,7 +879,7 @@ class AtomicCalendarRevive extends LitElement {
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
 		const end = moment()
-			.add(this._config.maxDaysToShow! + this._config.startDaysAhead!, 'days')
+			.add(daysToShow + this._config.startDaysAhead!, 'days')
 			.endOf('day')
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
@@ -1370,10 +1311,10 @@ class EventClass {
 		this._config = config;
 		this._startTime = this.eventClass.start.dateTime
 			? moment(this.eventClass.start.dateTime)
-			: moment(this.eventClass.start.date).startOf('day');
+			: this.eventClass.start.date ? moment(this.eventClass.start.date).startOf('day') : moment(this.eventClass.start);
 		this._endTime = this.eventClass.end.dateTime
 			? moment(this.eventClass.end.dateTime)
-			: moment(this.eventClass.end.date).subtract(1, 'days').endOf('day');
+			: this.eventClass.end.date ? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day') : moment(this.eventClass.end);
 		this.isFinished = false;
 		this.isEmpty = false;
 	}
@@ -1391,56 +1332,53 @@ class EventClass {
 		return this.eventClass.description;
 	}
 
-	//true start time
+	//get the start time for an event
 	get startTime() {
-		return this._startTime;
+		if (this._startTime === undefined) {
+			const date = this.eventClass.start && this.eventClass.start.date || this.eventClass.start.startTime || this.eventClass.start || '';
+			this._startTime = moment(date);
+		}
+		return this._startTime.clone();
 	}
 
 	//start time, returns today if before today
 	get startTimeToShow() {
-		const time = this.eventClass.start.dateTime
-			? moment(this.eventClass.start.dateTime)
-			: moment(this.eventClass.start.date).startOf('day');
+		const time = this._startTime
 		if (moment(time).isBefore(moment().startOf('day'))) return moment().startOf('day');
 		else return time;
 	}
 
+	//get the end time for an event
 	get endTime() {
-		return this._endTime;
+		if (this._endTime === undefined) {
+			const date = this.eventClass.end && this.eventClass.end.date || this.eventClass.end.endTime || this.eventClass.end || '';
+			this._endTime = moment(date);
+		}
+		return this._endTime.clone();
 	}
 
 	// is full day event
 	get isFullDayEvent() {
-		if (!this.eventClass.start.dateTime && !this.eventClass.end.dateTime) return true;
-		else return false;
-	}
-	// is full day event, but only one day
-	get isFullOneDayEvent() {
-		if (
-			(!this.eventClass.start.dateTime &&
-				!this.eventClass.end.dateTime &&
-				moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
-			(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
-				moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.end.dateTime).subtract(1, 'days'), 'day'))
-		) {
+		if (moment(this._startTime).hours() === 0 && moment(this._endTime).hours() === 0)
 			return true;
-		} else {
+		else
 			return false;
-		}
 	}
 
 	// is full day event, more days
 	get isFullMoreDaysEvent() {
-		if (
-			(!this.eventClass.start.dateTime &&
-				!this.eventClass.end.dateTime &&
-				!moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
-			(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
-				moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
-		)
-			return true;
+		if (this.isFullDayEvent)
+			if (
+				(!this.eventClass.start.dateTime &&
+					!this.eventClass.end.dateTime &&
+					!moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
+				(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
+					moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
+					moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
+			)
+				return true;
+			else
+				return false;
 		else return false;
 	}
 

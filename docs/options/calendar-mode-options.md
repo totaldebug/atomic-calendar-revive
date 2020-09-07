@@ -22,10 +22,6 @@ If you don't set colors, default theme colors will be used. If you use automatic
 
 | Name                          |  Type  | Since  | Description                                                                      |
 | ----------------------------- | :----: | :----: | -------------------------------------------------------------------------------- |
-| calEventHolidayColor          | string | v0.7.0 | `red` Color of day for `type: holiday` calendar                                  |
-| calEventIcon1Color            | string | v0.7.0 | `primary color` Color of icon for `type: icon1` calendar                         |
-| calEventIcon2Color            | string | v0.7.0 | `primary color` Color of icon for `type: icon2` calendar                         |
-| calEventIcon3Color            | string | v0.7.0 | `primary color` Color of icon for `type: icon3` calendar                         |
 | calGridColor                  | string | v1.3.0 | `rgba(86, 86, 86, .35)` color of calendar grid border                            |
 | calEventBackgroundColor       | string | v1.3.0 | `rgba(86, 100, 86, .35)` background color of todays calendar date                |
 | calEventSatColor              | string | v1.3.0 | `rgba(86, 86, 86, .05)` Sets Saturday to a different color                       |
