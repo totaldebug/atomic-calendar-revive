@@ -39,7 +39,10 @@
 			"dateFormat": "Datumformat",
 			"hoursFormat": "Timformat",
 			"defaultMode": "Standard-mode",
-			"linkTarget": "Länkmål"
+			"linkTarget": "Länkmål",
+			"refreshInterval": "Refresh Interval",
+			"showRelativeTime": "Show Relative Time",
+			"firstDayOfWeek": "First Day of Week 0-6"
 		}
 	},
 	"event": {

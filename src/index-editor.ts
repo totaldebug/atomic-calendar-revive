@@ -61,6 +61,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return '';
 	}
 
+	get _firstDayOfWeek(): number {
+		if (this._config) {
+			return this._config.firstDayOfWeek || 1;
+		}
+		return 7;
+	}
+
 	get _maxDaysToShow(): number {
 		if (this._config) {
 			return this._config.maxDaysToShow || 7;
@@ -323,13 +330,26 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.configValue=${'name'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
-								<paper-input
-									label="${localize('main.fields.maxDaysToShow')}"
-									type="number"
-									.value=${this._maxDaysToShow}
-									.configValue=${'maxDaysToShow'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
+								<div class="side-by-side">
+									<div>
+										<paper-input
+											label="${localize('main.fields.firstDayOfWeek')}"
+											type="number"
+											.value=${this._firstDayOfWeek}
+											.configValue=${'firstDayOfWeek'}
+											@value-changed=${this._valueChanged}
+										></paper-input>
+									</div>
+									<div>
+										<paper-input
+											label="${localize('main.fields.maxDaysToShow')}"
+											type="number"
+											.value=${this._maxDaysToShow}
+											.configValue=${'maxDaysToShow'}
+											@value-changed=${this._valueChanged}
+										></paper-input>
+									</div>
+								</div>
 								<paper-input
 									label="${localize('main.fields.refreshInterval')}"
 									type="number"
@@ -436,7 +456,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								<div class="side-by-side">
 									<div>
 										<ha-switch
-											aria-label=${`Toggle ${this._showRelativeTime ? 'off' : 'on'}`}
+											aria-label=${`Toggle ${this._showRelativeTime ? 'on' : 'off'}`}
 											.checked=${this._showRelativeTime !== false}
 											.configValue=${'showRelativeTime'}
 											@change=${this._valueChanged}

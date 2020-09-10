@@ -82,7 +82,8 @@ class AtomicCalendarRevive extends LitElement {
 		let customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
 		this._config = {
-			...defaultConfig, ...customConfig };
+			...defaultConfig, ...customConfig
+		};
 
 		this.modeToggle = this._config.defaultMode!;
 
@@ -145,12 +146,11 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language = this._config.language != '' ? this._config.language! : this.hass.language.toLowerCase();
+		this.language = typeof this._config.language != 'undefined' ? this._config.language! : this.hass.language.toLowerCase();
 		let timeFormat = moment.localeData(this.language).longDateFormat('LT');
 		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
 		else if (this._config.hoursFormat == '24h') timeFormat = 'H:mm';
 		else if (this._config.hoursFormat != 'default') timeFormat = this._config.hoursFormat!;
-
 		moment.updateLocale(this.language, {
 			week: {
 				dow: this._config.firstDayOfWeek!,
@@ -618,7 +618,7 @@ class AtomicCalendarRevive extends LitElement {
 		const today = moment()
 			.add(timeOffset, 'minutes');
 		if (event.isEmpty) return html``;
-		else if (!moment(event.startTime).isBefore(today,'day'))
+		else if (!moment(event.startTime).isBefore(today, 'day'))
 			return html`(${today.to(moment(event.startTime).add(timeOffset, 'minutes'))})`;
 	}
 
@@ -634,8 +634,8 @@ class AtomicCalendarRevive extends LitElement {
 			`;
 		else
 			var loc: String = event.location;
-			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
-			return html`
+		const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
+		return html`
 				<div>
 					<a
 						href=${location}
@@ -651,8 +651,8 @@ class AtomicCalendarRevive extends LitElement {
 		if (!event.location || !this._config.showLocation || this._config.disableCalLocationLink) return html``;
 		else
 			var loc: String = event.location;
-			const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
-			return html`
+		const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
+		return html`
 				<a href=${location} target="${this._config.linkTarget}" class="location-link"
 					><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a
 				>
@@ -782,7 +782,7 @@ class AtomicCalendarRevive extends LitElement {
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
 				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>`
-					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM')+' ' : ''}${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>`
+					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>`
 
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
 					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
@@ -1217,7 +1217,10 @@ class AtomicCalendarRevive extends LitElement {
 			this.showLoader = false;
 		}
 		const month = this.month;
+
 		const weekDays = moment.weekdaysMin(true);
+		console.log(weekDays);
+
 		const htmlDayNames = weekDays.map(
 			(day) => html`
 				<th class="cal" style="padding-bottom: 8px; color:  ${this._config.calWeekDayColor};">${day}</th>
