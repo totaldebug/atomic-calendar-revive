@@ -1217,10 +1217,7 @@ class AtomicCalendarRevive extends LitElement {
 			this.showLoader = false;
 		}
 		const month = this.month;
-
 		const weekDays = moment.weekdaysMin(true);
-		console.log(weekDays);
-
 		const htmlDayNames = weekDays.map(
 			(day) => html`
 				<th class="cal" style="padding-bottom: 8px; color:  ${this._config.calWeekDayColor};">${day}</th>
@@ -1362,7 +1359,7 @@ class EventClass {
 
 	// is full day event
 	get isFullDayEvent() {
-		if (moment(this._startTime).hours() === 0 && moment(this._endTime).hours() === 0)
+		if (moment(this._startTime).isSame(moment(this._startTime).startOf('day')) && moment(this._endTime).isSame(moment(this._endTime).endOf('day')))
 			return true;
 		else
 			return false;
