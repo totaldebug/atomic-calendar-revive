@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "2.2.6",
+	"version": "2.2.7",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
