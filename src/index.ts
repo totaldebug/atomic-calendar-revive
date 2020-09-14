@@ -116,33 +116,33 @@ class AtomicCalendarRevive extends LitElement {
 
 		return html`${this.setStyle()}
 
-			<ha-card class="cal-card">
-				${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
+<ha-card class="cal-card">
+	${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html`
-							<div class="cal-nameContainer">
-								${this._config.name
+	<div class="cal-nameContainer">
+		${this._config.name
 						? html`
-											<div class="cal-name" @click="${ _e => this.handleToggle()}">
-												${this._config.name}
-											</div>
-									  `
+		<div class="cal-name" @click="${_e => this.handleToggle()}">
+			${this._config.name}
+		</div>
+		`
 						: ''}
-								${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
-								${this._config.showDate
+		${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
+		${this._config.showDate
 						? html`
-											<div class="calDate">
-												${this.getDate()}
-											</div>
-									  `
+		<div class="calDate">
+			${this.getDate()}
+		</div>
+		`
 						: ''}
-							</div>
-					  `
+	</div>
+	`
 				: ''}
 
-				<div class="cal-eventContainer" style="padding-top: 4px;">
-					${this.content}
-				</div>
-			</ha-card>`;
+	<div class="cal-eventContainer" style="padding-top: 4px;">
+		${this.content}
+	</div>
+</ha-card>`;
 	}
 
 	async updateCard() {
@@ -525,11 +525,7 @@ class AtomicCalendarRevive extends LitElement {
 		const iconColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
 
 		if (this._config.showEventIcon && event._config.icon != 'undefined')
-			return html`<ha-icon
-				class="eventIcon"
-				style="color: ${iconColor};"
-				icon="${event._config.icon}"
-				></ha-icon>`;
+			return html`<ha-icon class="eventIcon" style="color: ${iconColor};" icon="${event._config.icon}"></ha-icon>`;
 
 	}
 	/**
@@ -542,7 +538,7 @@ class AtomicCalendarRevive extends LitElement {
 		const entityIcon: string = event._config.icon
 
 		if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
-			return html` <div class="event-title" style="color: ${titleColor}">${this.getEventIcon(event)} ${titletext}</div> `;
+			return html`<div class="event-title" style="color: ${titleColor}">${this.getEventIcon(event)} ${titletext}</div>`;
 		else
 			return html`
 				<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
@@ -557,12 +553,9 @@ class AtomicCalendarRevive extends LitElement {
 
 		if (this._config.disableCalEventLink || event.htmlLink === null) return html`${event.summary}`;
 		else
-			return html`<a
-				href="${event.htmlLink}"
-				style="text-decoration: ${textDecoration};color: ${titleColor}"
-				target="${this._config.linkTarget}"
-				>${event.summary}
-			</a>`;
+			return html`<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};color: ${titleColor}"
+	target="${this._config.linkTarget}">${event.summary}
+</a>`;
 	}
 
 	/**
@@ -574,23 +567,23 @@ class AtomicCalendarRevive extends LitElement {
 		if (event.isEmpty) return html`<div>&nbsp;</div>`;
 		// full day events, no hours set
 		// 1. One day only, or multiple day ends today -> 'All day'
-		if (event.isFullDayEvent && moment(event.endTime).isSame(today, 'day'))
+		if (event.isFullDayEvent)
 			return html`<div>${this._config.fullDayEventText}</div>`;
 		// 2. Starts any day, ends later -> 'All day, end date'
 		else if (event.isFullMoreDaysEvent)
 			return html`<div>
-				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
-				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+	${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
+	${this.getCurrDayAndMonth(moment(event.endTime))}
+</div>`;
 		// 3. starts before today, ends after today -> 'date - date'
 		else if (
 			event.isFullMoreDaysEvent &&
 			(moment(event.startTime).isBefore(today, 'day') || moment(event.endTime).isAfter(today, 'day'))
 		)
 			return html`<div>
-				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
-				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+	${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
+	${this.getCurrDayAndMonth(moment(event.endTime))}
+</div>`;
 		// events with hours set
 		//4. long term event, ends later -> 'until date'
 		else if (moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isAfter(today, 'day'))
@@ -601,9 +594,9 @@ class AtomicCalendarRevive extends LitElement {
 		//6. starts today or later, ends later -> 'hour - until date'
 		else if (!moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isAfter(event.startTime, 'day'))
 			return html`<div>
-				${event.startTime.format('LT')}, ${this._config.untilText!.toLowerCase()}
-				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+	${event.startTime.format('LT')}, ${this._config.untilText!.toLowerCase()}
+	${this.getCurrDayAndMonth(moment(event.endTime))}
+</div>`;
 		// 7. Normal one day event, with time set -> 'hour - hour'
 		else return html`<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`;
 	}
@@ -630,20 +623,18 @@ class AtomicCalendarRevive extends LitElement {
 		if (!event.location || !this._config.showLocation) return html``;
 		else if (this._config.disableLocationLink)
 			return html`
-				<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
+				<div>
+					<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}
+				</div>
 			`;
 		else
 			var loc: String = event.location;
 		const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 		return html`
 				<div>
-					<a
-						href=${location}
-						target="${this._config.linkTarget}"
-						class="location-link"
-					>
-						<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</a
-					>
+					<a href=${location} target="${this._config.linkTarget}" class="location-link">
+						<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}
+					</a>
 				</div>
 			`;
 	}
@@ -653,9 +644,9 @@ class AtomicCalendarRevive extends LitElement {
 			var loc: String = event.location;
 		const location: String = loc.startsWith("http") ? loc : "https://maps.google.com/?q=" + loc;
 		return html`
-				<a href=${location} target="${this._config.linkTarget}" class="location-link"
-					><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a
-				>
+				<a href=${location} target="${this._config.linkTarget}" class="location-link">
+					<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;
+				</a>
 			`;
 	}
 
@@ -725,9 +716,9 @@ class AtomicCalendarRevive extends LitElement {
 				const currentEventLine =
 					this._config.showCurrentEventLine && isEventNext
 						? html`<div class="eventBar">
-								<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
-								<hr class="event" />
-						  </div>`
+	<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
+	<hr class="event" />
+</div>`
 						: ``;
 
 				const calColor = typeof event._config.color != 'undefined' ? event._config.color : this._config.defaultCalColor;
@@ -735,8 +726,8 @@ class AtomicCalendarRevive extends LitElement {
 				//show calendar name
 				const eventCalName = event._config.eventCalName
 					? html`<div class="event-cal-name" style="color: ${calColor};">
-							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
-					  </div>`
+	<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
+</div>`
 					: ``;
 
 				//show current event progress bar
@@ -749,12 +740,8 @@ class AtomicCalendarRevive extends LitElement {
 					const eventDuration = event.endTime.diff(event.startTime, 'minutes');
 					const eventProgress = moment().diff(event.startTime, 'minutes');
 					const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
-					progressBar = html`<mwc-linear-progress
-						class="progress-bar"
-						determinate
-						progress="${eventPercentProgress}"
-						buffer="1"
-					></mwc-linear-progress>`;
+					progressBar = html`<mwc-linear-progress class="progress-bar" determinate progress="${eventPercentProgress}" buffer="1">
+</mwc-linear-progress>`;
 				}
 
 				const finishedEventsStyle =
@@ -764,59 +751,59 @@ class AtomicCalendarRevive extends LitElement {
 
 				const hoursHTML = this._config.showHours
 					? html`<div class="hoursHTML">
-							${this.getHoursHTML(event)}
-					  </div>`
+	${this.getHoursHTML(event)}
+</div>`
 					: '';
 				const relativeTime = this._config.showRelativeTime
 					? html`<div class="relativeTime">
-							${this.getRelativeTime(event)}
-						</div>`
+	${this.getRelativeTime(event)}
+</div>`
 					: '';
 				const descHTML = this._config.showDescription
-					? html`<div
-							class="event-description"
-					  >
-							${event.description}
-					  </div>`
+					? html`<div class="event-description">
+	${event.description}
+</div>`
 					: '';
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
-				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') : ''}</div>`
-					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ? event.startTimeToShow.format('DD') : ''}</div>`
+				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ?
+					event.startTimeToShow.format('MMM') : ''}</div>`
+					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ?
+						event.startTimeToShow.format('DD') : ''}</div>`
 
-				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
-					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
-						${eventDateFormat}
+				return html`<tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
+	<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+		<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+		${eventDateFormat}
 
-					</td>
-					<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
-						<div>${currentEventLine}</div>
-						<div class="event-right">
-							<div class="event-main">
-								${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
-							</div>
-							<div class="event-location">
-								${this.getLocationHTML(event)} ${eventCalName}
-							</div>
-						</div>
-						<div class="event-right">
-							<div class="event-main">
-								${descHTML}
-							</div>
-						</div>
-						${progressBar}
-					</td>
-				</tr>`;
+	</td>
+	<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
+		<div>${currentEventLine}</div>
+		<div class="event-right">
+			<div class="event-main">
+				${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
+			</div>
+			<div class="event-location">
+				${this.getLocationHTML(event)} ${eventCalName}
+			</div>
+		</div>
+		<div class="event-right">
+			<div class="event-main">
+				${descHTML}
+			</div>
+		</div>
+		${progressBar}
+	</td>
+</tr>`;
 			});
 
 			return htmlEvents;
 		});
 		this.content = html`<table>
-			<tbody>
-				${htmlDays}
-			</tbody>
-		</table>`;
+	<tbody>
+		${htmlDays}
+	</tbody>
+</table>`;
 	}
 
 	/**
@@ -1081,11 +1068,11 @@ class AtomicCalendarRevive extends LitElement {
 			if (event.isFullDayEvent) {
 				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "summary-fullday-div-declined" : "summary-fullday-div-accepted";
 
-				return html` <div class="${bulletType}" style="border-color: ${calColor}; ${finishedEventsStyle}">
-					<span aria-hidden="true">
-						<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
-					</span>
-				</div>`;
+				return html`<div class="${bulletType}" style="border-color: ${calColor}; ${finishedEventsStyle}">
+	<span aria-hidden="true">
+		<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+	</span>
+</div>`;
 			} else {
 				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : '';
 				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "bullet-event-div-declined" : "bullet-event-div-accepted";
@@ -1093,9 +1080,8 @@ class AtomicCalendarRevive extends LitElement {
 				return html`
 					<div class="summary-event-div" style="${finishedEventsStyle}">
 						<div class="${bulletType}" style="border-color: ${calColor}"></div>
-						<span class="bullet-event-span" style="color: ${titleColor};"
-							>${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span
-						>
+						<span class="bullet-event-span" style="color: ${titleColor};">${StartTime} - ${this.getCalTitleHTML(event)}
+							${this.getCalLocationHTML(event)}</span>
 					</div>
 				`;
 			}
@@ -1118,13 +1104,9 @@ class AtomicCalendarRevive extends LitElement {
 		});
 
 		const iconHtml = myIcons.map((icon) => {
-			const dayIcon = html`<span
-					><ha-icon
-						class="calIcon"
-						style="color: ${icon.color};"
-						icon="${icon.icon}"
-					></ha-icon
-				></span>`
+			const dayIcon = html`<span>
+	<ha-icon class="calIcon" style="color: ${icon.color};" icon="${icon.icon}"></ha-icon>
+</span>`
 
 			allIcons.push(dayIcon);
 		});
@@ -1138,26 +1120,16 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarHeaderHTML() {
 		return html`<div class="calDateSelector">
-			<ha-icon-button
-				class="ha-icon-button"
-				icon="mdi:chevron-left"
-				@click="${ _e => this.handleMonthChange(-1)}"
-				title=${this.hass.localize("ui.common.previous")}
-			></ha-icon-button>
-			<a
-				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1"
-				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
-				target="${this._config.linkTarget}"
-			>
-				${moment(this.selectedMonth).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
-			</a>
-			<ha-icon-button
-				class="ha-icon-button"
-				icon="mdi:chevron-right"
-				@click="${ _e => this.handleMonthChange(1)}"
-				title=${this.hass.localize("ui.common.next")}
-			></ha-icon-button>
-		</div>`;
+	<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click="${_e => this.handleMonthChange(-1)}"
+		title=${this.hass.localize("ui.common.previous")}></ha-icon-button>
+	<a href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(this.selectedMonth).format('MM')}/1"
+		style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
+		target="${this._config.linkTarget}">
+		${moment(this.selectedMonth).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
+	</a>
+	<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click="${_e => this.handleMonthChange(1)}"
+		title=${this.hass.localize("ui.common.next")}></ha-icon-button>
+</div>`;
 	}
 
 	/**
@@ -1180,18 +1152,14 @@ class AtomicCalendarRevive extends LitElement {
 			if (i < 35 || showLastRow)
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
-					<td
-						@click="${ _e => this.handleEventSummary(day)}"
-						class="cal ${dayClassToday}"
-						style="color: ${this._config
-						.calDayColor};${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
-					>
+					<td @click="${_e => this.handleEventSummary(day)}" class="cal ${dayClassToday}"
+						style="color: ${this._config.calDayColor};${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
 								${day.dayNumber.replace(/^0|[^/]0./, '')}
 							</div>
 							<div>
-							${this.handleCalendarIcons(day)}
+								${this.handleCalendarIcons(day)}
 							</div>
 						</div>
 					</td>
@@ -1359,7 +1327,11 @@ class EventClass {
 
 	// is full day event
 	get isFullDayEvent() {
+		//1. check if google calendar all day event
 		if (moment(this._startTime).isSame(moment(this._startTime).startOf('day')) && moment(this._endTime).isSame(moment(this._endTime).endOf('day')))
+			return true;
+		//2. check if CalDav all day event
+		else if (moment(this._startTime).hours() === 0 && moment(this._startTime).isSame(moment(this._endTime).subtract(1, 'day')) && moment(this._endTime).hours() === 0)
 			return true;
 		else
 			return false;

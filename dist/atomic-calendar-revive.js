@@ -1045,29 +1045,29 @@ const xe=ie`@keyframes mdc-linear-progress-primary-indeterminate-translate{0%{tr
             `:""}
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
-		`}_toggleOption(e){this._toggleThing(e,ut)}_toggleThing(e,t){const a=!t[e.target.option].show;for(const[e]of Object.entries(t))t[e].show=!1;t[e.target.option].show=a,this._toggle=!this._toggle}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target;if(this["_"+t.configValue]!==t.value){if(t.configValue)if(""===t.value)delete this._config[t.configValue];else{let e=t.value;"number"===t.type&&(e=Number(e)),this._config=Object.assign(Object.assign({},this._config),{[t.configValue]:void 0!==t.checked?t.checked:e})}!function(e,t,a,s){s=s||{},a=null==a?{}:a;var n=new Event(t,{bubbles:void 0===s.bubbles||s.bubbles,cancelable:Boolean(s.cancelable),composed:void 0===s.composed||s.composed});n.detail=a,e.dispatchEvent(n)}(this,"config-changed",{config:this._config})}}};a([X()],ht.prototype,"hass",void 0),a([X()],ht.prototype,"_config",void 0),a([X()],ht.prototype,"_toggle",void 0),ht=a([Z("atomic-calendar-revive-editor")],ht);var ct={fullDayEventText:ot("common.fullDayEventText"),untilText:ot("common.untilText"),maxDaysToShow:7,maxEventCount:0,showLoader:!0,showLocation:!0,showMonth:!1,showWeekDay:!1,fullTextTime:!0,showCurrentEventLine:!1,showDate:!1,dateFormat:"LL",hoursFormat:"default",startDaysAhead:0,showLastCalendarWeek:!1,sortByStartTime:!1,disableEventLink:!1,disableLocationLink:!1,linkTarget:"_blank",showDeclined:!1,nameColor:"var(--primary-text-color)",dateColor:"var(--primary-text-color)",dateSize:90,descColor:"var(--primary-text-color)",descSize:80,showNoEventsForToday:!1,noEventsForTodayText:ot("common.noEventsForTodayText"),noEventsForNextDaysText:ot("common.noEventsForNextDaysText"),timeColor:"var(--primary-color)",timeSize:90,showHours:!0,showRelativeTime:!0,eventTitleColor:"var(--primary-text-color)",eventTitleSize:100,locationIconColor:"rgb(--primary-text-color)",locationLinkColor:"var(--primary-text-color)",locationTextSize:90,hideFinishedEvents:!1,dimFinishedEvents:!0,finishedEventOpacity:.6,finishedEventFilter:"grayscale(80%)",dayWrapperLineColor:"var(--primary-text-color)",eventBarColor:"var(--primary-color)",eventCalNameColor:"var(--primary-text-color)",eventCalNameSize:90,showProgressBar:!0,showFullDayProgress:!1,progressBarColor:"var(--primary-color)",enableModeChange:!1,defaultMode:"Event",calGridColor:"rgba(86, 86, 86, .35)",calDayColor:"var(--primary-text-color)",calWeekDayColor:"var(--primary-text-color)",calDateColor:"var(--primary-text-color)",defaultCalColor:"var(--primary-text-color)",calEventBackgroundColor:"rgba(86, 100, 86, .35)",calActiveEventBackgroundColor:"rgba(86, 128, 86, .35)",calEventSatColor:"rgba(255, 255, 255, .05)",calEventSunColor:"rgba(255, 255, 255, .15)",calEventTime:!1,firstDayOfWeek:1,refreshInterval:60,showEventIcon:!1,europeanDate:!1};class Mt extends de{constructor(){super(),this.lastCalendarUpdateTime,this.lastEventsUpdateTime,this.lastHTMLUpdateTime,this.events,this.content=$``,this.shouldUpdateHtml=!0,this.errorMessage="",this.modeToggle="",this.selectedMonth=le(),this.refreshCalEvents=!0,this.monthToGet=le().format("MM"),this.month=[],this.showLoader=!1,this.eventSummary=$`&nbsp;`,this.firstrun=!0,this.language=""}static async getConfigElement(){return document.createElement("atomic-calendar-revive-editor")}static getStubConfig(){return{name:"Calendar Card",enableModeChange:!0}}setConfig(e){if(!e)throw new Error(ot("errors.invalid_configuration"));let t=JSON.parse(JSON.stringify(e));this._config=Object.assign(Object.assign({},ct),t),this.modeToggle=this._config.defaultMode,"string"==typeof this._config.entities&&(this._config.entities=[{entity:e.entities}]),this._config.entities.forEach((e,t)=>{"string"==typeof e&&(this._config.entities[t]={entity:e})})}render(){return this.firstrun&&console.info(`%c atomic-calendar-revive %c ${ot("common.version")}: 2.2.6 `,"color: white; background: #484848; font-weight: 700;","color: white; background: #cc5500; font-weight: 700;"),this._config&&this.hass?(this.updateCard(),$`${this.setStyle()}
+		`}_toggleOption(e){this._toggleThing(e,ut)}_toggleThing(e,t){const a=!t[e.target.option].show;for(const[e]of Object.entries(t))t[e].show=!1;t[e.target.option].show=a,this._toggle=!this._toggle}_valueChanged(e){if(!this._config||!this.hass)return;const t=e.target;if(this["_"+t.configValue]!==t.value){if(t.configValue)if(""===t.value)delete this._config[t.configValue];else{let e=t.value;"number"===t.type&&(e=Number(e)),this._config=Object.assign(Object.assign({},this._config),{[t.configValue]:void 0!==t.checked?t.checked:e})}!function(e,t,a,s){s=s||{},a=null==a?{}:a;var n=new Event(t,{bubbles:void 0===s.bubbles||s.bubbles,cancelable:Boolean(s.cancelable),composed:void 0===s.composed||s.composed});n.detail=a,e.dispatchEvent(n)}(this,"config-changed",{config:this._config})}}};a([X()],ht.prototype,"hass",void 0),a([X()],ht.prototype,"_config",void 0),a([X()],ht.prototype,"_toggle",void 0),ht=a([Z("atomic-calendar-revive-editor")],ht);var ct={fullDayEventText:ot("common.fullDayEventText"),untilText:ot("common.untilText"),maxDaysToShow:7,maxEventCount:0,showLoader:!0,showLocation:!0,showMonth:!1,showWeekDay:!1,fullTextTime:!0,showCurrentEventLine:!1,showDate:!1,dateFormat:"LL",hoursFormat:"default",startDaysAhead:0,showLastCalendarWeek:!1,sortByStartTime:!1,disableEventLink:!1,disableLocationLink:!1,linkTarget:"_blank",showDeclined:!1,nameColor:"var(--primary-text-color)",dateColor:"var(--primary-text-color)",dateSize:90,descColor:"var(--primary-text-color)",descSize:80,showNoEventsForToday:!1,noEventsForTodayText:ot("common.noEventsForTodayText"),noEventsForNextDaysText:ot("common.noEventsForNextDaysText"),timeColor:"var(--primary-color)",timeSize:90,showHours:!0,showRelativeTime:!0,eventTitleColor:"var(--primary-text-color)",eventTitleSize:100,locationIconColor:"rgb(--primary-text-color)",locationLinkColor:"var(--primary-text-color)",locationTextSize:90,hideFinishedEvents:!1,dimFinishedEvents:!0,finishedEventOpacity:.6,finishedEventFilter:"grayscale(80%)",dayWrapperLineColor:"var(--primary-text-color)",eventBarColor:"var(--primary-color)",eventCalNameColor:"var(--primary-text-color)",eventCalNameSize:90,showProgressBar:!0,showFullDayProgress:!1,progressBarColor:"var(--primary-color)",enableModeChange:!1,defaultMode:"Event",calGridColor:"rgba(86, 86, 86, .35)",calDayColor:"var(--primary-text-color)",calWeekDayColor:"var(--primary-text-color)",calDateColor:"var(--primary-text-color)",defaultCalColor:"var(--primary-text-color)",calEventBackgroundColor:"rgba(86, 100, 86, .35)",calActiveEventBackgroundColor:"rgba(86, 128, 86, .35)",calEventSatColor:"rgba(255, 255, 255, .05)",calEventSunColor:"rgba(255, 255, 255, .15)",calEventTime:!1,firstDayOfWeek:1,refreshInterval:60,showEventIcon:!1,europeanDate:!1};class Mt extends de{constructor(){super(),this.lastCalendarUpdateTime,this.lastEventsUpdateTime,this.lastHTMLUpdateTime,this.events,this.content=$``,this.shouldUpdateHtml=!0,this.errorMessage="",this.modeToggle="",this.selectedMonth=le(),this.refreshCalEvents=!0,this.monthToGet=le().format("MM"),this.month=[],this.showLoader=!1,this.eventSummary=$`&nbsp;`,this.firstrun=!0,this.language=""}static async getConfigElement(){return document.createElement("atomic-calendar-revive-editor")}static getStubConfig(){return{name:"Calendar Card",enableModeChange:!0}}setConfig(e){if(!e)throw new Error(ot("errors.invalid_configuration"));let t=JSON.parse(JSON.stringify(e));this._config=Object.assign(Object.assign({},ct),t),this.modeToggle=this._config.defaultMode,"string"==typeof this._config.entities&&(this._config.entities=[{entity:e.entities}]),this._config.entities.forEach((e,t)=>{"string"==typeof e&&(this._config.entities[t]={entity:e})})}render(){return this.firstrun&&console.info(`%c atomic-calendar-revive %c ${ot("common.version")}: 2.2.7 `,"color: white; background: #484848; font-weight: 700;","color: white; background: #cc5500; font-weight: 700;"),this._config&&this.hass?(this.updateCard(),$`${this.setStyle()}
 
-			<ha-card class="cal-card">
-				${this._config.name||this._config.showDate||this.showLoader&&this._config.showLoader?$`
-							<div class="cal-nameContainer">
-								${this._config.name?$`
-											<div class="cal-name" @click="${e=>this.handleToggle()}">
-												${this._config.name}
-											</div>
-									  `:""}
-								${this.showLoader&&this._config.showLoader?$`<div class="loader"></div>`:""}
-								${this._config.showDate?$`
-											<div class="calDate">
-												${this.getDate()}
-											</div>
-									  `:""}
-							</div>
-					  `:""}
+<ha-card class="cal-card">
+	${this._config.name||this._config.showDate||this.showLoader&&this._config.showLoader?$`
+	<div class="cal-nameContainer">
+		${this._config.name?$`
+		<div class="cal-name" @click="${e=>this.handleToggle()}">
+			${this._config.name}
+		</div>
+		`:""}
+		${this.showLoader&&this._config.showLoader?$`<div class="loader"></div>`:""}
+		${this._config.showDate?$`
+		<div class="calDate">
+			${this.getDate()}
+		</div>
+		`:""}
+	</div>
+	`:""}
 
-				<div class="cal-eventContainer" style="padding-top: 4px;">
-					${this.content}
-				</div>
-			</ha-card>`):$``}async updateCard(){this.language=void 0!==this._config.language?this._config.language:this.hass.language.toLowerCase();let e=le.localeData(this.language).longDateFormat("LT");if("12h"==this._config.hoursFormat?e="h:mm A":"24h"==this._config.hoursFormat?e="H:mm":"default"!=this._config.hoursFormat&&(e=this._config.hoursFormat),le.updateLocale(this.language,{week:{dow:this._config.firstDayOfWeek},longDateFormat:{LT:e,LTS:"HH:mm:ss",L:"DD/MM/YYYY",LL:"D MMMM YYYY",LLL:"MMM D YYYY HH:mm",LLLL:"dddd, D MMMM YYYY HH:mm"}}),this.firstrun=!1,!this.isUpdating&&"Event"==this.modeToggle&&(!this.lastEventsUpdateTime||le().diff(this.lastEventsUpdateTime,"seconds")>this._config.refreshInterval)){this.showLoader=!0,this.isUpdating=!0;try{this.events=await this.getEvents()}catch(e){console.log(e),this.errorMessage=ot("errors.update_card"),this.showLoader=!1}this.lastEventsUpdateTime=le(),this.updateEventsHTML(this.events),this.isUpdating=!1,this.showLoader=!1}"Event"==this.modeToggle?this.updateEventsHTML(this.events):this.updateCalendarHTML()}handleToggle(){this._config.enableModeChange&&("Event"==this.modeToggle?this.modeToggle="Calendar":this.modeToggle="Event",this.requestUpdate())}getDate(){const e=le().format(this._config.dateFormat);return $`${e}`}getEventDate(){const e=le().format(this._config.eventDateFormat);return $`${e}`}setStyle(){return $`
+	<div class="cal-eventContainer" style="padding-top: 4px;">
+		${this.content}
+	</div>
+</ha-card>`):$``}async updateCard(){this.language=void 0!==this._config.language?this._config.language:this.hass.language.toLowerCase();let e=le.localeData(this.language).longDateFormat("LT");if("12h"==this._config.hoursFormat?e="h:mm A":"24h"==this._config.hoursFormat?e="H:mm":"default"!=this._config.hoursFormat&&(e=this._config.hoursFormat),le.updateLocale(this.language,{week:{dow:this._config.firstDayOfWeek},longDateFormat:{LT:e,LTS:"HH:mm:ss",L:"DD/MM/YYYY",LL:"D MMMM YYYY",LLL:"MMM D YYYY HH:mm",LLLL:"dddd, D MMMM YYYY HH:mm"}}),this.firstrun=!1,!this.isUpdating&&"Event"==this.modeToggle&&(!this.lastEventsUpdateTime||le().diff(this.lastEventsUpdateTime,"seconds")>this._config.refreshInterval)){this.showLoader=!0,this.isUpdating=!0;try{this.events=await this.getEvents()}catch(e){console.log(e),this.errorMessage=ot("errors.update_card"),this.showLoader=!1}this.lastEventsUpdateTime=le(),this.updateEventsHTML(this.events),this.isUpdating=!1,this.showLoader=!1}"Event"==this.modeToggle?this.updateEventsHTML(this.events):this.updateCalendarHTML()}handleToggle(){this._config.enableModeChange&&("Event"==this.modeToggle?this.modeToggle="Calendar":this.modeToggle="Event",this.requestUpdate())}getDate(){const e=le().format(this._config.dateFormat);return $`${e}`}getEventDate(){const e=le().format(this._config.eventDateFormat);return $`${e}`}setStyle(){return $`
 			<style>
 				.cal-card {
 					cursor: default;
@@ -1366,136 +1366,103 @@ const xe=ie`@keyframes mdc-linear-progress-primary-indeterminate-translate{0%{tr
 					}
 				}
 			</style>
-		`}getCardSize(){return this._config.entities.length+1}_toggle(e){this.hass.callService("homeassistant","toggle",{entity_id:e.entity_id})}getEventIcon(e){const t=void 0!==e._config.color?e._config.color:this._config.eventTitleColor;if(this._config.showEventIcon&&"undefined"!=e._config.icon)return $`<ha-icon
-				class="eventIcon"
-				style="color: ${t};"
-				icon="${e._config.icon}"
-				></ha-icon>`}getTitleHTML(e){const t=e.title,a=void 0!==e._config.color?e._config.color:this._config.eventTitleColor;e._config.icon;return this._config.disableEventLink||"undefined"==e.link||null===e.link?$` <div class="event-title" style="color: ${a}">${this.getEventIcon(e)} ${t}</div> `:$`
+		`}getCardSize(){return this._config.entities.length+1}_toggle(e){this.hass.callService("homeassistant","toggle",{entity_id:e.entity_id})}getEventIcon(e){const t=void 0!==e._config.color?e._config.color:this._config.eventTitleColor;if(this._config.showEventIcon&&"undefined"!=e._config.icon)return $`<ha-icon class="eventIcon" style="color: ${t};" icon="${e._config.icon}"></ha-icon>`}getTitleHTML(e){const t=e.title,a=void 0!==e._config.color?e._config.color:this._config.eventTitleColor;e._config.icon;return this._config.disableEventLink||"undefined"==e.link||null===e.link?$`<div class="event-title" style="color: ${a}">${this.getEventIcon(e)} ${t}</div>`:$`
 				<a href="${e.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
 					<div class="event-title">${this.getEventIcon(e)} <span style="color: ${a}">${t}</span></div>
 				</a>
-			`}getCalTitleHTML(e){const t=void 0!==e._config.titleColor?e._config.titleColor:this._config.eventTitleColor,a=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"line-through":"none";return this._config.disableCalEventLink||null===e.htmlLink?$`${e.summary}`:$`<a
-				href="${e.htmlLink}"
-				style="text-decoration: ${a};color: ${t}"
-				target="${this._config.linkTarget}"
-				>${e.summary}
-			</a>`}getHoursHTML(e){const t=le();return e.isEmpty?$`<div>&nbsp;</div>`:e.isFullDayEvent&&le(e.endTime).isSame(t,"day")?$`<div>${this._config.fullDayEventText}</div>`:e.isFullMoreDaysEvent||e.isFullMoreDaysEvent&&(le(e.startTime).isBefore(t,"day")||le(e.endTime).isAfter(t,"day"))?$`<div>
-				${this._config.fullDayEventText}, ${this._config.untilText.toLowerCase()}
-				${this.getCurrDayAndMonth(le(e.endTime))}
-			</div>`:le(e.startTime).isBefore(t,"day")&&le(e.endTime).isAfter(t,"day")?$`<div>${this._config.untilText} ${this.getCurrDayAndMonth(le(e.endTime))}</div>`:le(e.startTime).isBefore(t,"day")&&le(e.endTime).isSame(t,"day")?$`<div>${this._config.untilText} ${e.endTime.format("LT")}</div>`:!le(e.startTime).isBefore(t,"day")&&le(e.endTime).isAfter(e.startTime,"day")?$`<div>
-				${e.startTime.format("LT")}, ${this._config.untilText.toLowerCase()}
-				${this.getCurrDayAndMonth(le(e.endTime))}
-			</div>`:$`<div>${e.startTime.format("LT")} - ${e.endTime.format("LT")}</div>`}getRelativeTime(e){const t=le().utcOffset(),a=le().add(t,"minutes");return e.isEmpty?$``:le(e.startTime).isBefore(a,"day")?void 0:$`(${a.to(le(e.startTime).add(t,"minutes"))})`}getLocationHTML(e){if(!e.location||!this._config.showLocation)return $``;if(this._config.disableLocationLink)return $`
-				<div><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${e.address}</div>
+			`}getCalTitleHTML(e){const t=void 0!==e._config.titleColor?e._config.titleColor:this._config.eventTitleColor,a=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"line-through":"none";return this._config.disableCalEventLink||null===e.htmlLink?$`${e.summary}`:$`<a href="${e.htmlLink}" style="text-decoration: ${a};color: ${t}"
+	target="${this._config.linkTarget}">${e.summary}
+</a>`}getHoursHTML(e){const t=le();return e.isEmpty?$`<div>&nbsp;</div>`:e.isFullDayEvent?$`<div>${this._config.fullDayEventText}</div>`:e.isFullMoreDaysEvent||e.isFullMoreDaysEvent&&(le(e.startTime).isBefore(t,"day")||le(e.endTime).isAfter(t,"day"))?$`<div>
+	${this._config.fullDayEventText}, ${this._config.untilText.toLowerCase()}
+	${this.getCurrDayAndMonth(le(e.endTime))}
+</div>`:le(e.startTime).isBefore(t,"day")&&le(e.endTime).isAfter(t,"day")?$`<div>${this._config.untilText} ${this.getCurrDayAndMonth(le(e.endTime))}</div>`:le(e.startTime).isBefore(t,"day")&&le(e.endTime).isSame(t,"day")?$`<div>${this._config.untilText} ${e.endTime.format("LT")}</div>`:!le(e.startTime).isBefore(t,"day")&&le(e.endTime).isAfter(e.startTime,"day")?$`<div>
+	${e.startTime.format("LT")}, ${this._config.untilText.toLowerCase()}
+	${this.getCurrDayAndMonth(le(e.endTime))}
+</div>`:$`<div>${e.startTime.format("LT")} - ${e.endTime.format("LT")}</div>`}getRelativeTime(e){const t=le().utcOffset(),a=le().add(t,"minutes");return e.isEmpty?$``:le(e.startTime).isBefore(a,"day")?void 0:$`(${a.to(le(e.startTime).add(t,"minutes"))})`}getLocationHTML(e){if(!e.location||!this._config.showLocation)return $``;if(this._config.disableLocationLink)return $`
+				<div>
+					<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${e.address}
+				</div>
 			`;var t=e.location;const a=t.startsWith("http")?t:"https://maps.google.com/?q="+t;return $`
 				<div>
-					<a
-						href=${a}
-						target="${this._config.linkTarget}"
-						class="location-link"
-					>
-						<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${e.address}</a
-					>
+					<a href=${a} target="${this._config.linkTarget}" class="location-link">
+						<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${e.address}
+					</a>
 				</div>
 			`}getCalLocationHTML(e){if(!e.location||!this._config.showLocation||this._config.disableCalLocationLink)return $``;var t=e.location;const a=t.startsWith("http")?t:"https://maps.google.com/?q="+t;return $`
-				<a href=${a} target="${this._config.linkTarget}" class="location-link"
-					><ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;</a
-				>
+				<a href=${a} target="${this._config.linkTarget}" class="location-link">
+					<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;
+				</a>
 			`}updateEventsHTML(e){let t="";if(e)if(0!=e.length){if(le(e[0][0]).isSame(le(),"day")&&e[0].length>1){let t=1;for(;t<e[0].length;)e[0][t].isEventFinished&&!e[0][t-1].isEventFinished?([e[0][t],e[0][t-1]]=[e[0][t-1],e[0][t]],t>1&&t--):t++}if(this._config.showNoEventsForToday&&le(e[0][0].startTime).isAfter(le(),"day")&&e[0].length>0){const t={eventClass:"",config:"",start:{dateTime:le().endOf("day")},end:{dateTime:le().endOf("day")},summary:this._config.noEventsForTodayText,isFinished:!1,htmlLink:"https://calendar.google.com/calendar/r/day?sf=true"},a=new ft(t,"");a.isEmpty=!0;const s=[];s.push(a),e.unshift(s)}t=e.map((e,t)=>e.map((e,a,s)=>{const n=0==a&&t>0?"daywrap":"",i=!(0!=t||!le(e.startTime).isAfter(le())||0!=a&&le(s[a-1].startTime).isAfter(le())),r=this._config.showCurrentEventLine&&i?$`<div class="eventBar">
-								<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
-								<hr class="event" />
-						  </div>`:"",d=void 0!==e._config.color?e._config.color:this._config.defaultCalColor,o=e._config.eventCalName?$`<div class="event-cal-name" style="color: ${d};">
-							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${e._config.eventCalName}
-					  </div>`:"";let _=$``;if(0==t&&(e.isEventRunning&&this._config.showFullDayProgress&&e.isFullDayEvent||e.isEventRunning&&!e.isFullDayEvent&&this._config.showProgressBar)){const t=e.endTime.diff(e.startTime,"minutes"),a=le().diff(e.startTime,"minutes");_=$`<mwc-linear-progress
-						class="progress-bar"
-						determinate
-						progress="${100*a/t/100}"
-						buffer="1"
-					></mwc-linear-progress>`}const l=e.isEventFinished&&this._config.dimFinishedEvents?"opacity: "+this._config.finishedEventOpacity+"; filter: "+this._config.finishedEventFilter+";":"",m=this._config.showHours?$`<div class="hoursHTML">
-							${this.getHoursHTML(e)}
-					  </div>`:"",u=this._config.showRelativeTime?$`<div class="relativeTime">
-							${this.getRelativeTime(e)}
-						</div>`:"",h=this._config.showDescription?$`<div
-							class="event-description"
-					  >
-							${e.description}
-					  </div>`:"",c=a==s.length-1?"padding-bottom: 8px;":"",M=1==this._config.europeanDate?$`<div style="width:40px">${0===a?e.startTimeToShow.format("DD")+" ":""}${0===a&&this._config.showMonth?e.startTimeToShow.format("MMM"):""}</div>`:$`<div style="width:40px">${0===a&&this._config.showMonth?e.startTimeToShow.format("MMM")+" ":""}${0===a?e.startTimeToShow.format("DD"):""}</div>`;return $` <tr class="${n}" style="color: ${this._config.dayWrapperLineColor};">
-					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div style="width:40px">${0===a&&this._config.showWeekDay?e.startTimeToShow.format("ddd"):""}</div>
-						${M}
+	<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
+	<hr class="event" />
+</div>`:"",d=void 0!==e._config.color?e._config.color:this._config.defaultCalColor,o=e._config.eventCalName?$`<div class="event-cal-name" style="color: ${d};">
+	<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${e._config.eventCalName}
+</div>`:"";let _=$``;if(0==t&&(e.isEventRunning&&this._config.showFullDayProgress&&e.isFullDayEvent||e.isEventRunning&&!e.isFullDayEvent&&this._config.showProgressBar)){const t=e.endTime.diff(e.startTime,"minutes"),a=le().diff(e.startTime,"minutes");_=$`<mwc-linear-progress class="progress-bar" determinate progress="${100*a/t/100}" buffer="1">
+</mwc-linear-progress>`}const l=e.isEventFinished&&this._config.dimFinishedEvents?"opacity: "+this._config.finishedEventOpacity+"; filter: "+this._config.finishedEventFilter+";":"",m=this._config.showHours?$`<div class="hoursHTML">
+	${this.getHoursHTML(e)}
+</div>`:"",u=this._config.showRelativeTime?$`<div class="relativeTime">
+	${this.getRelativeTime(e)}
+</div>`:"",h=this._config.showDescription?$`<div class="event-description">
+	${e.description}
+</div>`:"",c=a==s.length-1?"padding-bottom: 8px;":"",M=1==this._config.europeanDate?$`<div style="width:40px">${0===a?e.startTimeToShow.format("DD")+" ":""}${0===a&&this._config.showMonth?e.startTimeToShow.format("MMM"):""}</div>`:$`<div style="width:40px">${0===a&&this._config.showMonth?e.startTimeToShow.format("MMM")+" ":""}${0===a?e.startTimeToShow.format("DD"):""}</div>`;return $`<tr class="${n}" style="color: ${this._config.dayWrapperLineColor};">
+	<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+		<div style="width:40px">${0===a&&this._config.showWeekDay?e.startTimeToShow.format("ddd"):""}</div>
+		${M}
 
-					</td>
-					<td style="width: 100%; ${l} ${c}">
-						<div>${r}</div>
-						<div class="event-right">
-							<div class="event-main">
-								${this.getTitleHTML(e)} ${m} ${u}
-							</div>
-							<div class="event-location">
-								${this.getLocationHTML(e)} ${o}
-							</div>
-						</div>
-						<div class="event-right">
-							<div class="event-main">
-								${h}
-							</div>
-						</div>
-						${_}
-					</td>
-				</tr>`})),this.content=$`<table>
-			<tbody>
-				${t}
-			</tbody>
-		</table>`}else this.content=this._config.noEventsForNextDaysText;else this.content=$`${this.errorMessage}`}getCurrDayAndMonth(e){return e.format("LL").replace(e.format("YYYY"),"").replace(/\s\s+/g," ").trim().replace(/[??]\./,"").replace(/de$/,"").replace(/b\.$/,"").trim().replace(/,$/g,"")}checkFilter(e,t){if(void 0!==t&&""!=t){return t.split(",").some(t=>!!RegExp("(?:^|\\s)"+t.trim(),"i").test(e))}return!1}checkDeclined(e){return!!e.attendees&&!!e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)}checkTimeFilter(e,t,a){return!(!e.start.dateTime&&!e.start.dateTime)&&(le(e.start.dateTime).isAfter(t,"hour")&&le(e.start.dateTime).isBefore(a,"hour"))}async getEvents(){const e=0==this._config.maxDaysToShow?this._config.maxDaysToShow:this._config.maxDaysToShow-1,t=-le().utcOffset(),a=le().add(this._config.startDaysAhead,"days").startOf("day").add(t,"minutes").format("YYYY-MM-DDTHH:mm:ss"),s=le().add(e+this._config.startDaysAhead,"days").endOf("day").add(t,"minutes").format("YYYY-MM-DDTHH:mm:ss"),n=[];this._config.entities.map(e=>{n.push(`calendars/${e.entity}?start=${a}Z&end=${s}Z`)});try{return await Promise.all(n.map(e=>this.hass.callApi("GET",e))).then(e=>{const t=[];let a=0;e.map((e,s)=>{e.map(e=>{const n=void 0!==this._config.entities[s].blacklist?this._config.entities[s].blacklist:"",i=void 0!==this._config.entities[s].whitelist?this._config.entities[s].whitelist:"",r=new ft(e,this._config.entities[s]),d=void 0!==this._config.entities[s].startTimeFilter?this._config.entities[s].startTimeFilter:"",o=void 0!==this._config.entities[s].endTimeFilter?this._config.entities[s].endTimeFilter:"";!(0===this._config.maxEventCount||a<this._config.maxEventCount)||""!=d&&""!=o&&!this.checkTimeFilter(e,le(d,"HH:mm").subtract(1,"minute"),le(o,"HH:mm").add(1,"minute"))||""!=n&&this.checkFilter(e.summary,n)||""!=i&&!this.checkFilter(e.summary,i)||!this._config.showDeclined&&this.checkDeclined(e)||(0!==this._config.maxDaysToShow||!r.isEventRunning)&&this._config.hideFinishedEvents&&r.isEventFinished||(t.push(r),a++)})}),this._config.sortByStartTime&&t.sort((function(e,t){return le(e.startTime).diff(le(t.startTime))}));const s=[].concat.apply([],t).reduce((function(e,t){return e[t.daysToSort]=e[t.daysToSort]||[],e[t.daysToSort].push(t),e}),{}),n=Object.keys(s).map((function(e){return s[e]}));return this.showLoader=!1,n})}catch(e){throw this.showLoader=!1,e}}getCalendarEvents(e,t,a,s){this.refreshCalEvents=!1;const n=(new Date).getTimezoneOffset(),i=le(e).startOf("day").add(n,"minutes").format("YYYY-MM-DDTHH:mm:ss"),r=le(t).endOf("day").add(n,"minutes").format("YYYY-MM-DDTHH:mm:ss"),d=[];this._config.entities.map(e=>{void 0!==e.icon&&d.push([`calendars/${e.entity}?start=${i}Z&end=${r}Z`,e.icon,void 0!==e.blacklist?e.blacklist:"",void 0!==e.whitelist?e.whitelist:"",void 0!==e.color?e.color:this._config.defaultCalColor,void 0!==e.startTimeFilter?e.startTimeFilter:"00:00:00",void 0!==e.endTimeFilter?e.endTimeFilter:"0:00:00"])}),Promise.all(d.map(e=>this.hass.callApi("GET",e[0]))).then(e=>{a==this.monthToGet&&e.map((e,t)=>(this.month.map(a=>{const s=d[t][1],n=d[t][0],i=void 0!==d[t][2]?d[t][2]:"",r=void 0!==d[t][3]?d[t][3]:"",o=void 0!==d[t][4]?d[t][4]:this._config.defaultCalColor;void 0!==d[t][5]&&d[t][5],void 0!==d[t][6]&&d[t][6];e.filter(e=>{const t=e.start.dateTime?le(e.start.dateTime):le(e.start.date).startOf("day"),n=e.end.dateTime?le(e.end.dateTime):le(e.end.date).subtract(1,"days").endOf("day");if(!le(t).isAfter(a.date,"day")&&!le(n).isBefore(a.date,"day")&&s&&(""==i||!this.checkFilter(e.summary,i))&&(""==r||this.checkFilter(e.summary,r))&&(this._config.showDeclined||!this.checkDeclined(e)))return e}).map(e=>{e.start.dateTime||e.end.dateTime?e.isFullDayEvent=!1:e.isFullDayEvent=!0;const t=e.end.dateTime?le(e.end.dateTime):le(e.end.date);le(t).isBefore(le())?e.isEventFinished=!0:e.isEventFinished=!1;try{return e._config={color:o,titleColor:this._config.eventTitleColor,icon:s},a.allEvents.push(e)}catch(e){console.log(ot("common.version")+": ",e,n)}})}),s)),a==this.monthToGet&&(this.showLoader=!1),this.refreshCalEvents=!1,this.requestUpdate()}).catch(e=>{this.refreshCalEvents=!1,console.log(ot("common.version")+": ",e),this.showLoader=!1})}buildCalendar(e){const t=le(e).startOf("month"),a=t.day();this.month=[];let s=0;s=a-this._config.firstDayOfWeek>=0?0:7;for(let e=this._config.firstDayOfWeek-a-s;e<42-a+this._config.firstDayOfWeek-s;e++){const a=new yt(le(t).add(e,"days"),e);this.month.push(a)}}handleMonthChange(e){this.selectedMonth=le(this.selectedMonth).add(e,"months"),this.monthToGet=this.selectedMonth.format("M"),this.eventSummary=$`&nbsp;`,this.refreshCalEvents=!0}handleEventSummary(e){this.clickedDate=e.date,e._allEvents.sort((function(e,t){const a=e.start.dateTime?le(e.start.dateTime):le(e.start.date).startOf("day"),s=t.start.dateTime?le(t.start.dateTime):le(t.start.date).startOf("day");return le(a).diff(le(s))})),this.eventSummary=e._allEvents.map(e=>{const t=void 0!==e._config.titleColor?e._config.titleColor:this._config.eventTitleColor,a=void 0!==e._config.color?e._config.color:this._config.defaultCalColor,s=e.isEventFinished&&this._config.dimFinishedEvents?"opacity: "+this._config.finishedEventOpacity+"; filter: "+this._config.finishedEventFilter+";":"";if(e.isFullDayEvent){const t=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"summary-fullday-div-declined":"summary-fullday-div-accepted";return $` <div class="${t}" style="border-color: ${a}; ${s}">
-					<span aria-hidden="true">
-						<span class="bullet-event-span">${this.getCalTitleHTML(e)} ${this.getCalLocationHTML(e)}</span>
-					</span>
-				</div>`}{const n=this._config.showHours?le(e.start.dateTime).format("LT"):"",i=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"bullet-event-div-declined":"bullet-event-div-accepted";return $`
+	</td>
+	<td style="width: 100%; ${l} ${c}">
+		<div>${r}</div>
+		<div class="event-right">
+			<div class="event-main">
+				${this.getTitleHTML(e)} ${m} ${u}
+			</div>
+			<div class="event-location">
+				${this.getLocationHTML(e)} ${o}
+			</div>
+		</div>
+		<div class="event-right">
+			<div class="event-main">
+				${h}
+			</div>
+		</div>
+		${_}
+	</td>
+</tr>`})),this.content=$`<table>
+	<tbody>
+		${t}
+	</tbody>
+</table>`}else this.content=this._config.noEventsForNextDaysText;else this.content=$`${this.errorMessage}`}getCurrDayAndMonth(e){return e.format("LL").replace(e.format("YYYY"),"").replace(/\s\s+/g," ").trim().replace(/[??]\./,"").replace(/de$/,"").replace(/b\.$/,"").trim().replace(/,$/g,"")}checkFilter(e,t){if(void 0!==t&&""!=t){return t.split(",").some(t=>!!RegExp("(?:^|\\s)"+t.trim(),"i").test(e))}return!1}checkDeclined(e){return!!e.attendees&&!!e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)}checkTimeFilter(e,t,a){return!(!e.start.dateTime&&!e.start.dateTime)&&(le(e.start.dateTime).isAfter(t,"hour")&&le(e.start.dateTime).isBefore(a,"hour"))}async getEvents(){const e=0==this._config.maxDaysToShow?this._config.maxDaysToShow:this._config.maxDaysToShow-1,t=-le().utcOffset(),a=le().add(this._config.startDaysAhead,"days").startOf("day").add(t,"minutes").format("YYYY-MM-DDTHH:mm:ss"),s=le().add(e+this._config.startDaysAhead,"days").endOf("day").add(t,"minutes").format("YYYY-MM-DDTHH:mm:ss"),n=[];this._config.entities.map(e=>{n.push(`calendars/${e.entity}?start=${a}Z&end=${s}Z`)});try{return await Promise.all(n.map(e=>this.hass.callApi("GET",e))).then(e=>{const t=[];let a=0;e.map((e,s)=>{e.map(e=>{const n=void 0!==this._config.entities[s].blacklist?this._config.entities[s].blacklist:"",i=void 0!==this._config.entities[s].whitelist?this._config.entities[s].whitelist:"",r=new ft(e,this._config.entities[s]),d=void 0!==this._config.entities[s].startTimeFilter?this._config.entities[s].startTimeFilter:"",o=void 0!==this._config.entities[s].endTimeFilter?this._config.entities[s].endTimeFilter:"";!(0===this._config.maxEventCount||a<this._config.maxEventCount)||""!=d&&""!=o&&!this.checkTimeFilter(e,le(d,"HH:mm").subtract(1,"minute"),le(o,"HH:mm").add(1,"minute"))||""!=n&&this.checkFilter(e.summary,n)||""!=i&&!this.checkFilter(e.summary,i)||!this._config.showDeclined&&this.checkDeclined(e)||(0!==this._config.maxDaysToShow||!r.isEventRunning)&&this._config.hideFinishedEvents&&r.isEventFinished||(t.push(r),a++)})}),this._config.sortByStartTime&&t.sort((function(e,t){return le(e.startTime).diff(le(t.startTime))}));const s=[].concat.apply([],t).reduce((function(e,t){return e[t.daysToSort]=e[t.daysToSort]||[],e[t.daysToSort].push(t),e}),{}),n=Object.keys(s).map((function(e){return s[e]}));return this.showLoader=!1,n})}catch(e){throw this.showLoader=!1,e}}getCalendarEvents(e,t,a,s){this.refreshCalEvents=!1;const n=(new Date).getTimezoneOffset(),i=le(e).startOf("day").add(n,"minutes").format("YYYY-MM-DDTHH:mm:ss"),r=le(t).endOf("day").add(n,"minutes").format("YYYY-MM-DDTHH:mm:ss"),d=[];this._config.entities.map(e=>{void 0!==e.icon&&d.push([`calendars/${e.entity}?start=${i}Z&end=${r}Z`,e.icon,void 0!==e.blacklist?e.blacklist:"",void 0!==e.whitelist?e.whitelist:"",void 0!==e.color?e.color:this._config.defaultCalColor,void 0!==e.startTimeFilter?e.startTimeFilter:"00:00:00",void 0!==e.endTimeFilter?e.endTimeFilter:"0:00:00"])}),Promise.all(d.map(e=>this.hass.callApi("GET",e[0]))).then(e=>{a==this.monthToGet&&e.map((e,t)=>(this.month.map(a=>{const s=d[t][1],n=d[t][0],i=void 0!==d[t][2]?d[t][2]:"",r=void 0!==d[t][3]?d[t][3]:"",o=void 0!==d[t][4]?d[t][4]:this._config.defaultCalColor;void 0!==d[t][5]&&d[t][5],void 0!==d[t][6]&&d[t][6];e.filter(e=>{const t=e.start.dateTime?le(e.start.dateTime):le(e.start.date).startOf("day"),n=e.end.dateTime?le(e.end.dateTime):le(e.end.date).subtract(1,"days").endOf("day");if(!le(t).isAfter(a.date,"day")&&!le(n).isBefore(a.date,"day")&&s&&(""==i||!this.checkFilter(e.summary,i))&&(""==r||this.checkFilter(e.summary,r))&&(this._config.showDeclined||!this.checkDeclined(e)))return e}).map(e=>{e.start.dateTime||e.end.dateTime?e.isFullDayEvent=!1:e.isFullDayEvent=!0;const t=e.end.dateTime?le(e.end.dateTime):le(e.end.date);le(t).isBefore(le())?e.isEventFinished=!0:e.isEventFinished=!1;try{return e._config={color:o,titleColor:this._config.eventTitleColor,icon:s},a.allEvents.push(e)}catch(e){console.log(ot("common.version")+": ",e,n)}})}),s)),a==this.monthToGet&&(this.showLoader=!1),this.refreshCalEvents=!1,this.requestUpdate()}).catch(e=>{this.refreshCalEvents=!1,console.log(ot("common.version")+": ",e),this.showLoader=!1})}buildCalendar(e){const t=le(e).startOf("month"),a=t.day();this.month=[];let s=0;s=a-this._config.firstDayOfWeek>=0?0:7;for(let e=this._config.firstDayOfWeek-a-s;e<42-a+this._config.firstDayOfWeek-s;e++){const a=new yt(le(t).add(e,"days"),e);this.month.push(a)}}handleMonthChange(e){this.selectedMonth=le(this.selectedMonth).add(e,"months"),this.monthToGet=this.selectedMonth.format("M"),this.eventSummary=$`&nbsp;`,this.refreshCalEvents=!0}handleEventSummary(e){this.clickedDate=e.date,e._allEvents.sort((function(e,t){const a=e.start.dateTime?le(e.start.dateTime):le(e.start.date).startOf("day"),s=t.start.dateTime?le(t.start.dateTime):le(t.start.date).startOf("day");return le(a).diff(le(s))})),this.eventSummary=e._allEvents.map(e=>{const t=void 0!==e._config.titleColor?e._config.titleColor:this._config.eventTitleColor,a=void 0!==e._config.color?e._config.color:this._config.defaultCalColor,s=e.isEventFinished&&this._config.dimFinishedEvents?"opacity: "+this._config.finishedEventOpacity+"; filter: "+this._config.finishedEventFilter+";":"";if(e.isFullDayEvent){const t=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"summary-fullday-div-declined":"summary-fullday-div-accepted";return $`<div class="${t}" style="border-color: ${a}; ${s}">
+	<span aria-hidden="true">
+		<span class="bullet-event-span">${this.getCalTitleHTML(e)} ${this.getCalLocationHTML(e)}</span>
+	</span>
+</div>`}{const n=this._config.showHours?le(e.start.dateTime).format("LT"):"",i=void 0!==e.attendees&&e.attendees.find(e=>1==e.self&&"declined"==e.responseStatus)?"bullet-event-div-declined":"bullet-event-div-accepted";return $`
 					<div class="summary-event-div" style="${s}">
 						<div class="${i}" style="border-color: ${a}"></div>
-						<span class="bullet-event-span" style="color: ${t};"
-							>${n} - ${this.getCalTitleHTML(e)} ${this.getCalLocationHTML(e)}</span
-						>
+						<span class="bullet-event-span" style="color: ${t};">${n} - ${this.getCalTitleHTML(e)}
+							${this.getCalLocationHTML(e)}</span>
 					</div>
-				`}}),this.requestUpdate()}handleCalendarIcons(e){const t=[],a=[];e._allEvents.map(e=>{e._config.icon&&e._config.icon.length>0&&(-1===a.findIndex(t=>t.icon==e._config.icon)&&a.push({icon:e._config.icon,color:e._config.color}))});a.map(e=>{const a=$`<span
-					><ha-icon
-						class="calIcon"
-						style="color: ${e.color};"
-						icon="${e.icon}"
-					></ha-icon
-				></span>`;t.push(a)});return t}getCalendarHeaderHTML(){return $`<div class="calDateSelector">
-			<ha-icon-button
-				class="ha-icon-button"
-				icon="mdi:chevron-left"
-				@click="${e=>this.handleMonthChange(-1)}"
-				title=${this.hass.localize("ui.common.previous")}
-			></ha-icon-button>
-			<a
-				href="https://calendar.google.com/calendar/r/month/${le(this.selectedMonth).format("YYYY")}/${le(this.selectedMonth).format("MM")}/1"
-				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
-				target="${this._config.linkTarget}"
-			>
-				${le(this.selectedMonth).format("MMMM")} ${le(this.selectedMonth).format("YYYY")}
-			</a>
-			<ha-icon-button
-				class="ha-icon-button"
-				icon="mdi:chevron-right"
-				@click="${e=>this.handleMonthChange(1)}"
-				title=${this.hass.localize("ui.common.next")}
-			></ha-icon-button>
-		</div>`}getCalendarDaysHTML(e){let t=!0;return this._config.showLastCalendarWeek||le(e[35].date).isSame(this.selectedMonth,"month")||(t=!1),e.map((e,a)=>{const s=le(e.date).isSame(le(this.selectedMonth),"month")?"":"opacity: .35;",n=(le(e.date).isSame(le(),"day")&&this._config.calEventBackgroundColor,le(e.date).isSame(le(),"day")?"currentDay":""),i=6==le(e.date).isoWeekday()?`background-color: ${this._config.calEventSatColor};`:"",r=7==le(e.date).isoWeekday()?`background-color: ${this._config.calEventSunColor};`:"",d=le(e.date).isSame(le(this.clickedDate),"day")?`background-color: ${this._config.calActiveEventBackgroundColor};`:"";if(a<35||t)return $`
+				`}}),this.requestUpdate()}handleCalendarIcons(e){const t=[],a=[];e._allEvents.map(e=>{e._config.icon&&e._config.icon.length>0&&(-1===a.findIndex(t=>t.icon==e._config.icon)&&a.push({icon:e._config.icon,color:e._config.color}))});a.map(e=>{const a=$`<span>
+	<ha-icon class="calIcon" style="color: ${e.color};" icon="${e.icon}"></ha-icon>
+</span>`;t.push(a)});return t}getCalendarHeaderHTML(){return $`<div class="calDateSelector">
+	<ha-icon-button class="ha-icon-button" icon="mdi:chevron-left" @click="${e=>this.handleMonthChange(-1)}"
+		title=${this.hass.localize("ui.common.previous")}></ha-icon-button>
+	<a href="https://calendar.google.com/calendar/r/month/${le(this.selectedMonth).format("YYYY")}/${le(this.selectedMonth).format("MM")}/1"
+		style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
+		target="${this._config.linkTarget}">
+		${le(this.selectedMonth).format("MMMM")} ${le(this.selectedMonth).format("YYYY")}
+	</a>
+	<ha-icon-button class="ha-icon-button" icon="mdi:chevron-right" @click="${e=>this.handleMonthChange(1)}"
+		title=${this.hass.localize("ui.common.next")}></ha-icon-button>
+</div>`}getCalendarDaysHTML(e){let t=!0;return this._config.showLastCalendarWeek||le(e[35].date).isSame(this.selectedMonth,"month")||(t=!1),e.map((e,a)=>{const s=le(e.date).isSame(le(this.selectedMonth),"month")?"":"opacity: .35;",n=(le(e.date).isSame(le(),"day")&&this._config.calEventBackgroundColor,le(e.date).isSame(le(),"day")?"currentDay":""),i=6==le(e.date).isoWeekday()?`background-color: ${this._config.calEventSatColor};`:"",r=7==le(e.date).isoWeekday()?`background-color: ${this._config.calEventSunColor};`:"",d=le(e.date).isSame(le(this.clickedDate),"day")?`background-color: ${this._config.calActiveEventBackgroundColor};`:"";if(a<35||t)return $`
 					${a%7==0?$`<tr class="cal"></tr>`:""}
-					<td
-						@click="${t=>this.handleEventSummary(e)}"
-						class="cal ${n}"
-						style="color: ${this._config.calDayColor};${s}${i}${r}${d}"
-					>
+					<td @click="${t=>this.handleEventSummary(e)}" class="cal ${n}"
+						style="color: ${this._config.calDayColor};${s}${i}${r}${d}">
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
 								${e.dayNumber.replace(/^0|[^/]0./,"")}
 							</div>
 							<div>
-							${this.handleCalendarIcons(e)}
+								${this.handleCalendarIcons(e)}
 							</div>
 						</div>
 					</td>
@@ -1521,4 +1488,4 @@ const xe=ie`@keyframes mdc-linear-progress-primary-indeterminate-translate{0%{tr
 			<div style="font-size: 90%;">
 				${this.eventSummary}
 			</div>
-		`}}a([X()],Mt.prototype,"hass",void 0),a([X()],Mt.prototype,"_config",void 0),a([X()],Mt.prototype,"content",void 0),a([X()],Mt.prototype,"selectedMonth",void 0),customElements.define("atomic-calendar-revive",Mt);class yt{constructor(e,t){this.calendarDay=e,this._lp=t,this.ymd=le(e).format("YYYY-MM-DD"),this._allEvents=[],this._daybackground=[]}get date(){return le(this.calendarDay)}get dayNumber(){return le(this.calendarDay).format("DD")}get monthNumber(){return le(this.calendarDay).month()}set allEvents(e){this._allEvents=e}get allEvents(){return this._allEvents}set daybackground(e){this._daybackground=e}get daybackground(){return this._daybackground}}class ft{constructor(e,t){this.eventClass=e,this._config=t,this._startTime=this.eventClass.start.dateTime?le(this.eventClass.start.dateTime):this.eventClass.start.date?le(this.eventClass.start.date).startOf("day"):le(this.eventClass.start),this._endTime=this.eventClass.end.dateTime?le(this.eventClass.end.dateTime):this.eventClass.end.date?le(this.eventClass.end.date).subtract(1,"days").endOf("day"):le(this.eventClass.end),this.isFinished=!1,this.isEmpty=!1}get titleColor(){return this._config.eventTitleColor?this._config.eventTitleColor:"var(--primary-text-color)"}get title(){return this.eventClass.summary}get description(){return this.eventClass.description}get startTime(){if(void 0===this._startTime){const e=this.eventClass.start&&this.eventClass.start.date||this.eventClass.start.startTime||this.eventClass.start||"";this._startTime=le(e)}return this._startTime.clone()}get startTimeToShow(){const e=this._startTime;return le(e).isBefore(le().startOf("day"))?le().startOf("day"):e}get endTime(){if(void 0===this._endTime){const e=this.eventClass.end&&this.eventClass.end.date||this.eventClass.end.endTime||this.eventClass.end||"";this._endTime=le(e)}return this._endTime.clone()}get isFullDayEvent(){return!(!le(this._startTime).isSame(le(this._startTime).startOf("day"))||!le(this._endTime).isSame(le(this._endTime).endOf("day")))}get isFullMoreDaysEvent(){return!!this.isFullDayEvent&&!((this.eventClass.start.dateTime||this.eventClass.end.dateTime||le(this.eventClass.start.date).isSame(le(this.eventClass.end.date).subtract(1,"days"),"day"))&&!(le(this.eventClass.start.dateTime).isSame(le(this.eventClass.start.dateTime).startOf("day"))&&le(this.eventClass.end.dateTime).isSame(le(this.eventClass.end.dateTime).startOf("day"))&&le(this.eventClass.end.dateTime).isAfter(le(this.eventClass.start.dateTime).subtract(1,"days"),"day")))}get daysToSort(){return le(this.startTimeToShow).format("YYYYMMDD")}get isEventRunning(){return le(this.startTime).isBefore(le())&&le(this.endTime).isAfter(le())}get isEventFinished(){return le(this.endTime).isBefore(le())}get location(){return this.eventClass.location?this.eventClass.location.split(" ").join("+"):""}get address(){return this.eventClass.location?this.eventClass.location.split(",")[0]:""}get link(){return this.eventClass.htmlLink}}window.customCards=window.customCards||[],window.customCards.push({type:"atomic-calendar-revive",name:"Atomic Calendar Revive",description:ot("common.description")});
+		`}}a([X()],Mt.prototype,"hass",void 0),a([X()],Mt.prototype,"_config",void 0),a([X()],Mt.prototype,"content",void 0),a([X()],Mt.prototype,"selectedMonth",void 0),customElements.define("atomic-calendar-revive",Mt);class yt{constructor(e,t){this.calendarDay=e,this._lp=t,this.ymd=le(e).format("YYYY-MM-DD"),this._allEvents=[],this._daybackground=[]}get date(){return le(this.calendarDay)}get dayNumber(){return le(this.calendarDay).format("DD")}get monthNumber(){return le(this.calendarDay).month()}set allEvents(e){this._allEvents=e}get allEvents(){return this._allEvents}set daybackground(e){this._daybackground=e}get daybackground(){return this._daybackground}}class ft{constructor(e,t){this.eventClass=e,this._config=t,this._startTime=this.eventClass.start.dateTime?le(this.eventClass.start.dateTime):this.eventClass.start.date?le(this.eventClass.start.date).startOf("day"):le(this.eventClass.start),this._endTime=this.eventClass.end.dateTime?le(this.eventClass.end.dateTime):this.eventClass.end.date?le(this.eventClass.end.date).subtract(1,"days").endOf("day"):le(this.eventClass.end),this.isFinished=!1,this.isEmpty=!1}get titleColor(){return this._config.eventTitleColor?this._config.eventTitleColor:"var(--primary-text-color)"}get title(){return this.eventClass.summary}get description(){return this.eventClass.description}get startTime(){if(void 0===this._startTime){const e=this.eventClass.start&&this.eventClass.start.date||this.eventClass.start.startTime||this.eventClass.start||"";this._startTime=le(e)}return this._startTime.clone()}get startTimeToShow(){const e=this._startTime;return le(e).isBefore(le().startOf("day"))?le().startOf("day"):e}get endTime(){if(void 0===this._endTime){const e=this.eventClass.end&&this.eventClass.end.date||this.eventClass.end.endTime||this.eventClass.end||"";this._endTime=le(e)}return this._endTime.clone()}get isFullDayEvent(){return!(!le(this._startTime).isSame(le(this._startTime).startOf("day"))||!le(this._endTime).isSame(le(this._endTime).endOf("day")))||!(0!==le(this._startTime).hours()||!le(this._startTime).isSame(le(this._endTime).subtract(1,"day"))||0!==le(this._endTime).hours())}get isFullMoreDaysEvent(){return!!this.isFullDayEvent&&!((this.eventClass.start.dateTime||this.eventClass.end.dateTime||le(this.eventClass.start.date).isSame(le(this.eventClass.end.date).subtract(1,"days"),"day"))&&!(le(this.eventClass.start.dateTime).isSame(le(this.eventClass.start.dateTime).startOf("day"))&&le(this.eventClass.end.dateTime).isSame(le(this.eventClass.end.dateTime).startOf("day"))&&le(this.eventClass.end.dateTime).isAfter(le(this.eventClass.start.dateTime).subtract(1,"days"),"day")))}get daysToSort(){return le(this.startTimeToShow).format("YYYYMMDD")}get isEventRunning(){return le(this.startTime).isBefore(le())&&le(this.endTime).isAfter(le())}get isEventFinished(){return le(this.endTime).isBefore(le())}get location(){return this.eventClass.location?this.eventClass.location.split(" ").join("+"):""}get address(){return this.eventClass.location?this.eventClass.location.split(",")[0]:""}get link(){return this.eventClass.htmlLink}}window.customCards=window.customCards||[],window.customCards.push({type:"atomic-calendar-revive",name:"Atomic Calendar Revive",description:ot("common.description")});
