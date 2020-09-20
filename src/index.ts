@@ -271,6 +271,9 @@ class AtomicCalendarRevive extends LitElement {
 					vertical-align: top;
 				}
 
+				.event-leftCurrentDay {
+				}
+
 				.daywrap > td {
 					padding-top: 8px;
 				}
@@ -315,6 +318,10 @@ class AtomicCalendarRevive extends LitElement {
 				}
 
 				.event-title {
+					font-size: ${this._config.eventTitleSize}%;
+				}
+
+				.event-titleRunning {
 					font-size: ${this._config.eventTitleSize}%;
 				}
 
@@ -536,13 +543,18 @@ class AtomicCalendarRevive extends LitElement {
 		const titletext: string = event.title;
 		const titleColor: string = typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
 		const entityIcon: string = event._config.icon
+		const dayClassEventRunning = event.isEventRunning ? `event-titleRunning` : `event-title`;
 
 		if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
-			return html`<div class="event-title" style="color: ${titleColor}">${this.getEventIcon(event)} ${titletext}</div>`;
+			return html` <div style="color: ${titleColor}">
+				<div class="${dayClassEventRunning}">${this.getEventIcon(event)} ${titletext}</div>
+				</div> `;
 		else
 			return html`
 				<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
-					<div class="event-title">${this.getEventIcon(event)} <span style="color: ${titleColor}">${titletext}</span></div>
+				<div style="color: ${titleColor}">
+					<div class="${dayClassEventRunning}">${this.getEventIcon(event)} <span>${titletext}</span></div>
+				</div>
 				</a>
 			`;
 	}
@@ -770,13 +782,13 @@ class AtomicCalendarRevive extends LitElement {
 					event.startTimeToShow.format('MMM') : ''}</div>`
 					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ?
 						event.startTimeToShow.format('DD') : ''}</div>`
+				const dayClassTodayEvent = moment(event.startTime).isSame(moment(), 'day') ? `event-leftCurrentDay` : ``;
 
-				return html`<tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
-	<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-		<div style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
-		${eventDateFormat}
-
-	</td>
+				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
+					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+						<div class=${dayClassTodayEvent} style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
+					</td>
 	<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
 		<div>${currentEventLine}</div>
 		<div class="event-right">
