@@ -5,7 +5,7 @@
 	"appPorts": [5000],
 	"postCreateCommand": "npm install",
 	"workspaceFolder": "/atomic-calendar-revive",
-	"workspaceMount": "type=bind,source=/home/stev2673/repos/atomic-calendar-revive,target=/atomic-calendar-revive",
+	"workspaceMount": "type=bind,source=${localWorkspaceFolder},target=/atomic-calendar-revive",
 	"extensions": [
 		"github.vscode-pull-request-github",
 		"esbenp.prettier-vscode",
