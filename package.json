@@ -52,7 +52,7 @@
 		"@rollup/plugin-json": "^4.1.0",
 		"custom-card-helpers": "^1.6.5",
 		"lit-element": "^2.4.0",
-		"moment": "^2.27.0",
+		"moment": "^2.29.0",
 		"node-google-calendar": "^1.1.1",
 		"npm": "^6.14.8",
 		"rollup-plugin-typescript2": "^0.27.2",
