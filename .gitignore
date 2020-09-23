@@ -1,6 +1,12 @@
 dist/*
 !dist/atomic-calendar-revive.js
 
+.devcontainer/*
+!.devcontainer/recommended-devcontainer.json
+!.devcontainer/recommended-Dockerfile
+
+.vscode/*
+
 # Logs
 logs
 *.log
