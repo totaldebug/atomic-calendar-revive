@@ -272,6 +272,7 @@ class AtomicCalendarRevive extends LitElement {
 				}
 
 				.event-leftCurrentDay {
+					width: 40px;
 				}
 
 				.daywrap > td {
@@ -778,15 +779,15 @@ class AtomicCalendarRevive extends LitElement {
 					: '';
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
-				const eventDateFormat = this._config.europeanDate == true ? html`<div style="width:40px">${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ?
-					event.startTimeToShow.format('MMM') : ''}</div>`
-					: html`<div style="width:40px">${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ?
-						event.startTimeToShow.format('DD') : ''}</div>`
+				const eventDateFormat = this._config.europeanDate == true ? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ?
+					event.startTimeToShow.format('MMM') : ''}`
+					: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ?
+						event.startTimeToShow.format('DD') : ''}`
 				const dayClassTodayEvent = moment(event.startTime).isSame(moment(), 'day') ? `event-leftCurrentDay` : ``;
 
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
 					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div class=${dayClassTodayEvent} style="width:40px">${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+						<div class=${dayClassTodayEvent}>${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
 						<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
 					</td>
 	<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
