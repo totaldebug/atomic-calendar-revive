@@ -1,0 +1,90 @@
+
+{
+	"common": {
+		"version": "Versjon",
+		"show_warning": "Vis advarsel",
+		"error": "Error",
+		"description": "Et avansert kalenderkort for Home Assistant med Lovelace.",
+		"fullDayEventText": "Hele Dagen",
+		"untilText": "Før",
+		"noEventsForTodayText": "Ingen arrangementer i dag!",
+		"noEventsForNextDaysText": "Ingen arrangementer de neste dagene"
+	},
+	"ui": {
+		"common": {
+			"previous": "Tidligere",
+			"next": "Neste"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Ugyldig konfigurasjon",
+		"update_card": "Kalenderen kan ikke lastes inn fra Home Assistant komponenten"
+	},
+	"required": {
+		"name": "Påkrevd",
+		"secondary": "Nødvendige alternativer for at dette kortet skal fungere"
+	},
+	"main": {
+		"name": "Hovedalternativer",
+		"secondary": "Alternativer som gjelder globalt",
+		"fields": {
+			"name": "navn",
+			"showColors": "Vis Farger",
+			"maxDaysToShow": "Maks dager å vise",
+			"showLocation": "Vis posisjonsikon",
+			"showLoader": "Vis lasteranimasjon",
+			"showDate": "Vis dato på kort",
+			"showDeclined": "Vis avviste hendelser",
+			"sortByStartTime": "Sorter etter starttid",
+			"hideFinishedEvents": "Skjul ferdige hendelser",
+			"dateFormat": "Datoformat",
+			"hoursFormat": "Timeformat",
+			"defaultMode": "Standardmodus",
+			"linkTarget": "Koblingsmål",
+			"refreshInterval": "Oppdater intervall",
+			"showRelativeTime": "Vis relativ tid",
+			"firstDayOfWeek": "Første dag i uke 0-6"
+		}
+	},
+	"event": {
+		"name": "Hendelsesmodus",
+		"secondary": "Event Mode spesifikke alternativer",
+		"fields": {
+			"showCurrentEventLine": "Vis linje før arrangement?",
+			"showProgressBar": "Vis fremdriftslinje?",
+			"showMonth": "Vis måned?",
+			"showWeekDay": "Vis ukesdag",
+			"showDescription": "Vis beskrivelse?",
+			"disableEventLink": "Deaktiver lenker i tittelen på arrangementet?",
+			"disableLocationLink": "Vil du deaktivere koblinger til sted?",
+			"showNoEventsForToday": "Vis ingen arrangementer i dag?",
+			"showFullDayProgress": "Vil du vise fremdriften for begivenheter for hel dag?",
+			"untilText": "til tekst:",
+			"noEventsForTodayText": "Ingen hendelser i dag tekst:",
+			"noEventsForNextDaysText": "Ingen hendelser de neste dagene tekst:",
+			"fullDayEventText": "Heldags begivenhetstekst:",
+			"showEventIcon": "Vis hendelsesikon"
+		}
+	},
+	"calendar": {
+		"name": "Kalendermodus",
+		"secondary": "Kalendermodus spesifikke alternativer",
+		"fields": {
+			"showLastCalendarWeek": "Vis siste kalenderuke",
+			"disableCalEventLink": "Deaktiver kobling for kalenderhendelse",
+			"disableCalLocationLink": "Deaktiver kobling for kalenderposisjon"
+		}
+	},
+	"appearance": {
+		"name": "Utseende",
+		"secondary": "Tilpass fargene osv.",
+		"main": {
+			"name": "Hoved",
+			"secondary": "Globale fargeinnstillinger"
+		},
+		"fields": {
+			"locationLinkColor": "Plasseringskoblingsfarge:",
+			"dimFinishedEvents": "Dim ferdige arrangementer?"
+		}
+	}
+}
