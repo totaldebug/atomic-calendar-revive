@@ -71,7 +71,8 @@
 		"fields": {
 			"showLastCalendarWeek": "Visa sista veckan",
 			"disableCalEventLink": "Inaktivera länk till händelse",
-			"disableCalLocationLink": "Inaktivera länk till plats"
+			"disableCalLocationLink": "Inaktivera länk till plats",
+			"calShowDescription": "Visa beskrivning?"
 		}
 	},
 	"appearance": {

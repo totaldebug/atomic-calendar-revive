@@ -267,7 +267,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return true;
 	}
-
+	get _calShowDescription(): boolean {
+		if (this._config) {
+			return this._config.calShowDescription || false;
+		}
+		return true;
+	}
 
 	// CALENDAR SETTINGS END
 
@@ -624,6 +629,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				${options.calendar.show
 				? html`
 						<div class="values">
+								<ha-switch
+									aria-label=${`Toggle ${this._calShowDescription ? 'off' : 'on'}`}
+									.checked=${this._calShowDescription !== false}
+									.configValue=${'calShowDescription'}
+									@change=${this._valueChanged}
+								></ha-switch>
+								<label class="mdc-label">${localize('calendar.fields.calShowDescription')}</label>
 							<div calss="side-by-side">
 								<div>
 									<ha-switch

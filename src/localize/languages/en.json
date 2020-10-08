@@ -71,7 +71,8 @@
 		"fields": {
 			"showLastCalendarWeek": "Show last calendar week",
 			"disableCalEventLink": "Disable calendar event link",
-			"disableCalLocationLink": "Disable calendar location link"
+			"disableCalLocationLink": "Disable calendar location link",
+			"calShowDescription": "Show Description"
 		}
 	},
 	"appearance": {

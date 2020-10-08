@@ -1,2 +1,2 @@
-export const CARD_VERSION = '2.4.0';
-export const EDITOR_VERSION = '1.2.0';
+export const CARD_VERSION = '2.5.0';
+export const EDITOR_VERSION = '1.3.0';

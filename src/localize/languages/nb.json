@@ -1,4 +1,3 @@
-
 {
 	"common": {
 		"version": "Versjon",
@@ -72,7 +71,8 @@
 		"fields": {
 			"showLastCalendarWeek": "Vis siste kalenderuke",
 			"disableCalEventLink": "Deaktiver kobling for kalenderhendelse",
-			"disableCalLocationLink": "Deaktiver kobling for kalenderposisjon"
+			"disableCalLocationLink": "Deaktiver kobling for kalenderposisjon",
+			"calShowDescription": "Vis beskrivelse?"
 		}
 	},
 	"appearance": {
