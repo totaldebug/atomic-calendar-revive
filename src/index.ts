@@ -457,7 +457,6 @@ class AtomicCalendarRevive extends LitElement {
 					border-left: 7px solid;
 					padding: 0 4px;
 					margin: 5px 0;
-					height: 18px;
 					line-height: 16px;
 				}
 
@@ -469,6 +468,14 @@ class AtomicCalendarRevive extends LitElement {
 					margin: 5px 0;
 					height: 18px;
 					line-height: 16px;
+				}
+
+				.calDescription {
+					display: flex;
+					justify-content: space-between;
+					padding: 0px 5px 0 5px;
+					color: ${this._config.descColor};
+					font-size: ${this._config.descSize}%;
 				}
 
 				.calIcon {
@@ -567,8 +574,13 @@ class AtomicCalendarRevive extends LitElement {
 		if (this._config.disableCalEventLink || event.htmlLink === null) return html`${event.summary}`;
 		else
 			return html`<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};color: ${titleColor}"
-	target="${this._config.linkTarget}">${event.summary}
-</a>`;
+				target="${this._config.linkTarget}">${event.summary}
+			</a>`;
+	}
+	// generate Calendar description
+	getCalDescHTML(event) {
+		if (event.description)
+			return html`<span class="calDescription"> - ${event.description}</span>`;
 	}
 
 	/**
@@ -1088,8 +1100,10 @@ class AtomicCalendarRevive extends LitElement {
 
 				return html`<div class="${bulletType}" style="border-color: ${calColor}; ${finishedEventsStyle}">
 	<span aria-hidden="true">
-		<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</span>
+		<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}<br/> ${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</span>
+
 	</span>
+
 </div>`;
 			} else {
 				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : '';
@@ -1099,7 +1113,8 @@ class AtomicCalendarRevive extends LitElement {
 					<div class="summary-event-div" style="${finishedEventsStyle}">
 						<div class="${bulletType}" style="border-color: ${calColor}"></div>
 						<span class="bullet-event-span" style="color: ${titleColor};">${StartTime} - ${this.getCalTitleHTML(event)}
-							${this.getCalLocationHTML(event)}</span>
+							${this.getCalLocationHTML(event)}<br/>${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</span>
+
 					</div>
 				`;
 			}
