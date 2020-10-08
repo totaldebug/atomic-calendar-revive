@@ -77,6 +77,20 @@ To add this to your Home assistant configuration add the following:
   type: module
 ```
 
+## Versioning
+
+This project follows [semantic versioning](http://semver.org/).
+
+**MAJOR.MINOR.PATCH**
+
+In the context of semantic versioning, the following should apply:
+
+- **Major** - A breaking change that requires user intervention, or a change to a default value.
+- **Minor** - A change that does not require user intervention, or adds additional functionality in a backwards compatible manner.
+- **Patch** - A change that resolves a specific bug
+
+All changes are tracked in the [Release Notes](https://github.com/marksie1988/atomic-calendar-revive/releases)
+
 ## Commit your changes
 
 Once you are happy with your work, commit your changes:

@@ -905,7 +905,6 @@ class AtomicCalendarRevive extends LitElement {
 						const endTimeFilter =
 							typeof this._config.entities[i]['endTimeFilter'] != 'undefined' ? this._config.entities[i]['endTimeFilter'] : '';
 						if (
-							(this._config.maxEventCount === 0 || eventCount < this._config.maxEventCount!) &&
 							(startTimeFilter == '' || endTimeFilter == '' || (this.checkTimeFilter(singleEvent, moment(startTimeFilter, 'HH:mm').subtract(1, 'minute'), moment(endTimeFilter, 'HH:mm').add(1, 'minute')))) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
@@ -924,6 +923,11 @@ class AtomicCalendarRevive extends LitElement {
 						return moment(a.startTime).diff(moment(b.startTime));
 					});
 				}
+
+				if (this._config.maxEventCount) {
+					singleEvents.length = this._config.maxEventCount;
+				}
+
 				let ev: any[] = [].concat.apply([], singleEvents);
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
