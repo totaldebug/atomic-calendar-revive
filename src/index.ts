@@ -936,7 +936,7 @@ class AtomicCalendarRevive extends LitElement {
 					});
 				}
 
-				if (this._config.maxEventCount) {
+				if (this._config.maxEventCount && (this._config.maxEventCount < singleEvents.length)) {
 					singleEvents.length = this._config.maxEventCount;
 				}
 
