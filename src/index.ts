@@ -478,6 +478,12 @@ class AtomicCalendarRevive extends LitElement {
 					font-size: ${this._config.descSize}%;
 				}
 
+				.calMain {
+					flex-direction: row nowrap;
+					display: inline-block;
+					vertical-align: top;
+				}
+
 				.calIcon {
 					--mdc-icon-size: 10px;
 					width: 10px;
@@ -580,7 +586,7 @@ class AtomicCalendarRevive extends LitElement {
 	// generate Calendar description
 	getCalDescHTML(event) {
 		if (event.description)
-			return html`<span class="calDescription"> - ${event.description}</span>`;
+			return html`<div class="calDescription"> - ${event.description}</div>`;
 	}
 
 	/**
@@ -1099,12 +1105,11 @@ class AtomicCalendarRevive extends LitElement {
 				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "summary-fullday-div-declined" : "summary-fullday-div-accepted";
 
 				return html`<div class="${bulletType}" style="border-color: ${calColor}; ${finishedEventsStyle}">
-	<span aria-hidden="true">
-		<span class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}<br/> ${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</span>
-
-	</span>
-
-</div>`;
+								<div aria-hidden="true">
+									<div class="bullet-event-span">${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}</div>
+									<div class="calMain">${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</div>
+								</div>
+							</div>`;
 			} else {
 				const StartTime = this._config.showHours ? moment(event.start.dateTime).format('LT') : '';
 				const bulletType: string = (typeof event.attendees != 'undefined' && !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined")) ? "bullet-event-div-declined" : "bullet-event-div-accepted";
@@ -1112,8 +1117,10 @@ class AtomicCalendarRevive extends LitElement {
 				return html`
 					<div class="summary-event-div" style="${finishedEventsStyle}">
 						<div class="${bulletType}" style="border-color: ${calColor}"></div>
-						<span class="bullet-event-span" style="color: ${titleColor};">${StartTime} - ${this.getCalTitleHTML(event)}
-							${this.getCalLocationHTML(event)}<br/>${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</span>
+						<div class="bullet-event-span" style="color: ${titleColor};">
+							${StartTime} - ${this.getCalTitleHTML(event)} ${this.getCalLocationHTML(event)}
+						</div>
+						<div class="calMain">${this._config.calShowDescription ? this.getCalDescHTML(event) : ''}</div>
 
 					</div>
 				`;
