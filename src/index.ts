@@ -697,9 +697,11 @@ class AtomicCalendarRevive extends LitElement {
 		}
 
 		// TODO write something if no events
-		if (days.length == 0) {
-			this.content = this._config.noEventsForNextDaysText;
+		if (days.length == 0 && this._config.maxDaysToShow == 1) {
+			this.content = this._config.noEventsForTodayText;
 			return;
+		} else if (days.length == 0) {
+			this.content = this._config.noEventsForNextDaysText;
 		}
 
 		// move today's finished events up
