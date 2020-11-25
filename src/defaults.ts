@@ -68,6 +68,7 @@ export default {
 	showProgressBar: true,
 	showFullDayProgress: false,
 	progressBarColor: 'var(--primary-color)',
+	progressBarBufferColor: 'var(--secondary-color)',
 
 	enableModeChange: false,
 	defaultMode: 'Event',
