@@ -1026,7 +1026,14 @@ class AtomicCalendarRevive extends LitElement {
 							!event.start.dateTime && !event.end.dateTime
 								? (event['isFullDayEvent'] = true)
 								: (event['isFullDayEvent'] = false);
-							const endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date);
+							event.start.dateTime == event.end.dateTime
+								? (event['isFullDayEvent'] = true)
+								: (event['isFullDayEvent'] = false);
+							if (moment(event.start.dateTime) == moment(event.end.dateTime)) {
+								var endTime = moment(event.end.dateTime, 'day')
+							} else {
+								var endTime = event.end.dateTime ? moment(event.end.dateTime) : moment(event.end.date);
+							}
 							moment(endTime).isBefore(moment())
 								? (event['isEventFinished'] = true)
 								: (event['isEventFinished'] = false);
