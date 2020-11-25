@@ -366,7 +366,8 @@ class AtomicCalendarRevive extends LitElement {
 				}
 
 				.progress-bar {
-					--mdc-linear-progress-buffer-color: ${this._config.progressBarColor};
+					--mdc-theme-primary: ${this._config.progressBarColor};
+					--mdc-linear-progress-buffer-color: ${this._config.progressBarBufferColor};
 				}
 
 				mwc-linear-progress {
