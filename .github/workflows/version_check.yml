@@ -1,0 +1,15 @@
+name: Check Package Version
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  checkVersion:
+    name: Check package version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Use this GitHub Action
+      - name: Check package version
+        uses: technote-space/package-version-check-action@v1
