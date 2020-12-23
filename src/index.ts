@@ -1393,7 +1393,7 @@ class EventClass {
 			if (
 				(!this.eventClass.start.dateTime &&
 					!this.eventClass.end.dateTime &&
-					!moment(this.eventClass.start.date).isSame(moment(this.eventClass.end.date).subtract(1, 'days'), 'day')) ||
+					!moment(this.eventClass.start).isSame(moment(this.eventClass.end).subtract(1, 'days'), 'day')) ||
 				(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
 					moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
 					moment(this.eventClass.end.dateTime).isAfter(moment(this.eventClass.start.dateTime).subtract(1, 'days'), 'day'))
