@@ -1,2 +1,4 @@
-export const CARD_VERSION = '2.5.5';
-export const EDITOR_VERSION = '1.3.0';
+import { version, editor_version } from '../package.json';
+
+export const CARD_VERSION = version;
+export const EDITOR_VERSION = editor_version;
