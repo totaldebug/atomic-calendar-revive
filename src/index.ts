@@ -390,6 +390,7 @@ class AtomicCalendarRevive extends LitElement {
 					text-align: center;
 					vertical-align: middle;
 					width: 100%;
+					color: ${this._config.calDayColor}
 				}
 
 				.calDay {
@@ -1199,7 +1200,6 @@ class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day, i) => {
 			const dayStyleOtherMonth = moment(day.date).isSame(moment(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
-			const dayStyleToday = moment(day.date).isSame(moment(), 'day') ? `border: 2px solid; background-color: ${this._config.calEventBackgroundColor};` : ``;
 			const dayClassToday = moment(day.date).isSame(moment(), 'day') ? `currentDay` : ``;
 			const dayStyleSat = moment(day.date).isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
 			const dayStyleSun = moment(day.date).isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
@@ -1209,7 +1209,7 @@ class AtomicCalendarRevive extends LitElement {
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td @click="${_e => this.handleEventSummary(day)}" class="cal ${dayClassToday}"
-						style="color: ${this._config.calDayColor};${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
+						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}">
 						<div class="calDay">
 							<div style="position: relative; top: 5%;">
 								${day.dayNumber.replace(/^0|[^/]0./, '')}
