@@ -730,7 +730,7 @@ class AtomicCalendarRevive extends LitElement {
 				isFinished: false,
 				htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
 			};
-			const emptyEvent = new EventClass(emptyEv, '');
+			const emptyEvent = new EventClass(emptyEv, this._config, '');
 			emptyEvent.isEmpty = true;
 			const d: any[] = [];
 			d.push(emptyEvent);
@@ -784,27 +784,33 @@ class AtomicCalendarRevive extends LitElement {
 						? `opacity: ` + this._config.finishedEventOpacity + `; filter: ` + this._config.finishedEventFilter + `;`
 						: ``;
 
+				// Show the hours
 				const hoursHTML = this._config.showHours
 					? html`<div class="hoursHTML">
 	${this.getHoursHTML(event)}
 </div>`
 					: '';
+
+				// Show the relative time
 				const relativeTime = this._config.showRelativeTime
 					? html`<div class="relativeTime">
 	${this.getRelativeTime(event)}
 </div>`
 					: '';
+
+				// Show the description
 				const descHTML = this._config.showDescription
 					? html`<div class="event-description">
 	${event.description}
 </div>`
 					: '';
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
-
+				// check and set the date format
 				const eventDateFormat = this._config.europeanDate == true ? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth ?
 					event.startTimeToShow.format('MMM') : ''}`
 					: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0 ?
 						event.startTimeToShow.format('DD') : ''}`
+
 				const dayClassTodayEvent = moment(event.startTime).isSame(moment(), 'day') ? `event-leftCurrentDay` : ``;
 
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
@@ -876,7 +882,7 @@ class AtomicCalendarRevive extends LitElement {
 		} else return false;
 	}
 
-	// if event is delclined return false
+	// if event is declined return false
 	checkDeclined(event) {
 		if (!event.attendees) { return false };
 		return !!event.attendees.find(attendee => attendee.self == true && attendee.responseStatus == "declined");
@@ -889,7 +895,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	/**
-	 * gets events from HA Calendar to Events mode
+	 * gets events from HA to Events mode
 	 *
 	 */
 	async getEvents() {
@@ -905,7 +911,6 @@ class AtomicCalendarRevive extends LitElement {
 			.endOf('day')
 			.add(timeOffset, 'minutes')
 			.format('YYYY-MM-DDTHH:mm:ss');
-
 		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
 			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`)
@@ -920,7 +925,7 @@ class AtomicCalendarRevive extends LitElement {
 							typeof this._config.entities[i]['blacklist'] != 'undefined' ? this._config.entities[i]['blacklist'] : '';
 						const whitelist =
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
-						const singleAPIEvent = new EventClass(singleEvent, this._config.entities[i]);
+						const singleAPIEvent = new EventClass(singleEvent, this._config, this._config.entities[i]);
 						const startTimeFilter =
 							typeof this._config.entities[i]['startTimeFilter'] != 'undefined' ? this._config.entities[i]['startTimeFilter'] : '';
 						const endTimeFilter =
@@ -1320,12 +1325,14 @@ class CalendarDay {
 class EventClass {
 	isEmpty: boolean;
 	eventClass: any;
+	_globalConfig: any;
 	_config: any;
 	_startTime: any;
 	_endTime: any;
 	isFinished: boolean;
-	constructor(eventClass, config) {
+	constructor(eventClass, globalConfig, config) {
 		this.eventClass = eventClass;
+		this._globalConfig = globalConfig;
 		this._config = config;
 		this._startTime = this.eventClass.start.dateTime
 			? moment(this.eventClass.start.dateTime)
@@ -1362,7 +1369,7 @@ class EventClass {
 	//start time, returns today if before today
 	get startTimeToShow() {
 		const time = this._startTime
-		if (moment(time).isBefore(moment().startOf('day'))) return moment().startOf('day');
+		if (moment(time).isBefore(moment().startOf('day')) && !(this._globalConfig.startDaysAhead < 0)) return moment().startOf('day');
 		else return time;
 	}
 
