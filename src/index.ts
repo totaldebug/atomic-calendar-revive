@@ -698,11 +698,12 @@ class AtomicCalendarRevive extends LitElement {
 		}
 
 		// TODO write something if no events
-		if (days.length == 0 && this._config.maxDaysToShow == 1) {
+		if (days.length === 0 && this._config.maxDaysToShow == 1) {
 			this.content = this._config.noEventsForTodayText;
 			return;
-		} else if (days.length == 0) {
+		} else if (days.length === 0) {
 			this.content = this._config.noEventsForNextDaysText;
+			return;
 		}
 
 		// move today's finished events up
@@ -1368,7 +1369,7 @@ class EventClass {
 
 	//start time, returns today if before today
 	get startTimeToShow() {
-		const time = this._startTime
+		const time = this.startTime
 		if (moment(time).isBefore(moment().startOf('day')) && !(this._globalConfig.startDaysAhead < 0)) return moment().startOf('day');
 		else return time;
 	}
