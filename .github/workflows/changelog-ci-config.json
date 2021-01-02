@@ -1,0 +1,28 @@
+{
+    "header_prefix": "Version:",
+    "commit_changelog": true,
+    "comment_changelog": true,
+    "pull_request_title_regex": "^Release",
+    "group_config": [
+      {
+        "title": "Breaking Changes",
+        "labels": ["breaking"]
+      },
+      {
+        "title": "Bug Fixes",
+        "labels": ["bug"]
+      },
+      {
+        "title": "Code Improvements",
+        "labels": ["improvements", "enhancement"]
+      },
+      {
+        "title": "New Features",
+        "labels": ["feature"]
+      },
+      {
+        "title": "Documentation Updates",
+        "labels": ["docs", "documentation", "doc"]
+      }
+    ]
+  }
