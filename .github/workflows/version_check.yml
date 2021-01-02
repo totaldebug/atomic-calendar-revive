@@ -6,10 +6,14 @@ on:
 
 jobs:
   checkVersion:
-    name: Check package version
+    name: Check version updated
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
       # Use this GitHub Action
       - name: Check package version
-        uses: technote-space/package-version-check-action@v1
+        uses: dudo/tag_check@v1.0.0
+        with:
+          git_tag_prefix: v
