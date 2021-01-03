@@ -37,6 +37,7 @@ class AtomicCalendarRevive extends LitElement {
 	monthToGet: string;
 	month: any[];
 	showLoader: boolean;
+	hiddenEvents: boolean;
 	eventSummary: TemplateResult;
 	firstrun: boolean;
 	isUpdating: any;
@@ -61,6 +62,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.eventSummary = html`&nbsp;`;
 		this.firstrun = true;
 		this.language = '';
+		this.hiddenEvents = false;
 	}
 
 	public static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -291,6 +293,9 @@ class AtomicCalendarRevive extends LitElement {
 					padding: 0px 5px 0 5px;
 					color: ${this._config.descColor};
 					font-size: ${this._config.descSize}%;
+				}
+				.hidden-events {
+					color: var(--primary-text-color);
 				}
 
 				.hoursHTML {
@@ -753,9 +758,9 @@ class AtomicCalendarRevive extends LitElement {
 				const currentEventLine =
 					this._config.showCurrentEventLine && isEventNext
 						? html`<div class="eventBar">
-	<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
-	<hr class="event" />
-</div>`
+								<ha-icon icon="mdi:circle" class="event-circle" style="color: ${this._config.eventBarColor};"></ha-icon>
+								<hr class="event" />
+							</div>`
 						: ``;
 
 				const calColor = typeof event._config.color != 'undefined' ? event._config.color : this._config.defaultCalColor;
@@ -763,8 +768,8 @@ class AtomicCalendarRevive extends LitElement {
 				//show calendar name
 				const eventCalName = event._config.eventCalName
 					? html`<div class="event-cal-name" style="color: ${calColor};">
-	<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
-</div>`
+							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
+						</div>`
 					: ``;
 
 				//show current event progress bar
@@ -778,7 +783,7 @@ class AtomicCalendarRevive extends LitElement {
 					const eventProgress = moment().diff(event.startTime, 'minutes');
 					const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
 					progressBar = html`<mwc-linear-progress class="progress-bar" determinate progress="${eventPercentProgress}" buffer="1">
-</mwc-linear-progress>`;
+						</mwc-linear-progress>`;
 				}
 
 				const finishedEventsStyle =
@@ -789,22 +794,22 @@ class AtomicCalendarRevive extends LitElement {
 				// Show the hours
 				const hoursHTML = this._config.showHours
 					? html`<div class="hoursHTML">
-	${this.getHoursHTML(event)}
-</div>`
+							${this.getHoursHTML(event)}
+						</div>`
 					: '';
 
 				// Show the relative time
 				const relativeTime = this._config.showRelativeTime
 					? html`<div class="relativeTime">
-	${this.getRelativeTime(event)}
-</div>`
+							${this.getRelativeTime(event)}
+						</div>`
 					: '';
 
 				// Show the description
 				const descHTML = this._config.showDescription
 					? html`<div class="event-description">
-	${event.description}
-</div>`
+							${event.description}
+						</div>`
 					: '';
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 				// check and set the date format
@@ -816,37 +821,40 @@ class AtomicCalendarRevive extends LitElement {
 				const dayClassTodayEvent = moment(event.startTime).isSame(moment(), 'day') ? `event-leftCurrentDay` : ``;
 
 				return html` <tr class="${dayWrap}" style="color: ${this._config.dayWrapperLineColor};">
-					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div class=${dayClassTodayEvent}>${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
-						<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
-					</td>
-	<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
-		<div>${currentEventLine}</div>
-		<div class="event-right">
-			<div class="event-main">
-				${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
-			</div>
-			<div class="event-location">
-				${this.getLocationHTML(event)} ${eventCalName}
-			</div>
-		</div>
-		<div class="event-right">
-			<div class="event-main">
-				${descHTML}
-			</div>
-		</div>
-		${progressBar}
-	</td>
-</tr>`;
+							<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+								<div class=${dayClassTodayEvent}>${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}</div>
+								<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
+							</td>
+							<td style="width: 100%; ${finishedEventsStyle} ${lastEventStyle}">
+								<div>${currentEventLine}</div>
+								<div class="event-right">
+									<div class="event-main">
+										${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}
+									</div>
+									<div class="event-location">
+										${this.getLocationHTML(event)} ${eventCalName}
+									</div>
+								</div>
+								<div class="event-right">
+									<div class="event-main">
+										${descHTML}
+									</div>
+								</div>
+								${progressBar}
+							</td>
+						</tr>`;
 			});
 
 			return htmlEvents;
 		});
+		const eventnotice = this.hiddenEvents ? "There are hidden events" : "";
 		this.content = html`<table>
-	<tbody>
-		${htmlDays}
-	</tbody>
-</table>`;
+								<tbody>
+									${htmlDays}
+
+								</tbody>
+
+							</table> <span class="hidden-events">${eventnotice}</span>`;
 	}
 
 	/**
@@ -952,14 +960,16 @@ class AtomicCalendarRevive extends LitElement {
 					});
 				}
 
+				// Check maxEventCount and softLimit
 				if (this._config.maxEventCount) {
 					if ((!this._config.softLimit && (this._config.maxEventCount < singleEvents.length)) || (this._config.softLimit && (singleEvents.length > (this._config.maxEventCount + this._config.softLimit)))) {
+						this.hiddenEvents = true;
 						singleEvents.length = this._config.maxEventCount
 					}
 				}
 
 				let ev: any[] = [].concat.apply([], singleEvents);
-				console.log(ev)
+
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
 					r[a.daysToSort] = r[a.daysToSort] || [];
@@ -970,6 +980,7 @@ class AtomicCalendarRevive extends LitElement {
 				const days = Object.keys(groupsOfEvents).map(function (k) {
 					return groupsOfEvents[k];
 				});
+				console.log(days)
 				this.showLoader = false;
 				return days;
 			}));
