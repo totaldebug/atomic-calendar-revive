@@ -952,11 +952,14 @@ class AtomicCalendarRevive extends LitElement {
 					});
 				}
 
-				if (this._config.maxEventCount && (this._config.maxEventCount < singleEvents.length)) {
-					singleEvents.length = this._config.maxEventCount;
+				if (this._config.maxEventCount) {
+					if ((!this._config.softLimit && (this._config.maxEventCount < singleEvents.length)) || (this._config.softLimit && (singleEvents.length > (this._config.maxEventCount + this._config.softLimit)))) {
+						singleEvents.length = this._config.maxEventCount
+					}
 				}
 
 				let ev: any[] = [].concat.apply([], singleEvents);
+				console.log(ev)
 				// grouping events by days, returns object with days and events
 				const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
 					r[a.daysToSort] = r[a.daysToSort] || [];
