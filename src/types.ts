@@ -31,6 +31,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	disableLocationLink?: boolean;
 	linkTarget?: string;
 	showDeclined?: boolean;
+	softLimit?: number;
 
 	// color and font settings
 	nameColor?: string;

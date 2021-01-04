@@ -4,6 +4,7 @@ export default {
 	// text translations
 	fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
 	untilText: localize('common.untilText'), // "Until" custom text
+	hiddenEventText: localize('common.hiddenEventText'), // "Until" custom text
 
 	// main settings
 	maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
