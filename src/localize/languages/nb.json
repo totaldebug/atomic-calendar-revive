@@ -7,7 +7,8 @@
 		"fullDayEventText": "Hele Dagen",
 		"untilText": "Før",
 		"noEventsForTodayText": "Ingen arrangementer i dag!",
-		"noEventsForNextDaysText": "Ingen arrangementer de neste dagene"
+		"noEventsForNextDaysText": "Ingen arrangementer de neste dagene",
+		"hiddenEventText": "hendelser er skjult"
 	},
 	"ui": {
 		"common": {

@@ -7,7 +7,8 @@
 		"fullDayEventText": "All Day",
 		"untilText": "Until",
 		"noEventsForTodayText": "No events for today!",
-		"noEventsForNextDaysText": "No events in the next few days"
+		"noEventsForNextDaysText": "No events in the next few days",
+		"hiddenEventText": "events are hidden"
 	},
 	"ui": {
 		"common": {

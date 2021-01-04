@@ -37,7 +37,7 @@ class AtomicCalendarRevive extends LitElement {
 	monthToGet: string;
 	month: any[];
 	showLoader: boolean;
-	hiddenEvents: boolean;
+	hiddenEvents: number;
 	eventSummary: TemplateResult;
 	firstrun: boolean;
 	isUpdating: any;
@@ -62,7 +62,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.eventSummary = html`&nbsp;`;
 		this.firstrun = true;
 		this.language = '';
-		this.hiddenEvents = false;
+		this.hiddenEvents = 0;
 	}
 
 	public static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -847,14 +847,13 @@ class AtomicCalendarRevive extends LitElement {
 
 			return htmlEvents;
 		});
-		const eventnotice = this.hiddenEvents ? "There are hidden events" : "";
+		const eventnotice = this.hiddenEvents > 0 ? this.hiddenEvents + " " + localize('common.hiddenEventText') : "";
 		this.content = html`<table>
 								<tbody>
 									${htmlDays}
-
 								</tbody>
-
-							</table> <span class="hidden-events">${eventnotice}</span>`;
+							</table>
+							<span class="hidden-events">${eventnotice}</span>`;
 	}
 
 	/**
@@ -963,7 +962,7 @@ class AtomicCalendarRevive extends LitElement {
 				// Check maxEventCount and softLimit
 				if (this._config.maxEventCount) {
 					if ((!this._config.softLimit && (this._config.maxEventCount < singleEvents.length)) || (this._config.softLimit && (singleEvents.length > (this._config.maxEventCount + this._config.softLimit)))) {
-						this.hiddenEvents = true;
+						this.hiddenEvents += singleEvents.length - this._config.maxEventCount;
 						singleEvents.length = this._config.maxEventCount
 					}
 				}
@@ -980,7 +979,6 @@ class AtomicCalendarRevive extends LitElement {
 				const days = Object.keys(groupsOfEvents).map(function (k) {
 					return groupsOfEvents[k];
 				});
-				console.log(days)
 				this.showLoader = false;
 				return days;
 			}));
