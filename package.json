@@ -6,8 +6,9 @@
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
 		"lint": "eslint src/*.ts | more ",
-		"lintapp": "eslint src/app.js",
-		"linteditor": "eslint src/app-editor.js",
+		"lintindex": "eslint src/index.ts | more",
+		"lintindexfix": "eslint src/index.ts --fix",
+		"linteditor": "eslint src/index-editor.ts",
 		"babel": "babel dist/index.js --out-file dist/atomic-calendar-revive.js",
 		"rollup": "rollup -c",
 		"start": "rollup -c --watch",
