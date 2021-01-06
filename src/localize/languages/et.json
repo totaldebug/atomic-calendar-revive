@@ -1,0 +1,91 @@
+{
+	"common": {
+		"version": "Versioon",
+		"show_warning": "Näita hoiatusi",
+		"error": "Viga",
+		"description": "Lisa mugandatav kalender kasutajaliidesesse.",
+		"fullDayEventText": "Terve päev",
+		"untilText": "Kuni",
+		"noEventsForTodayText": "Täna pole sündmusi!",
+		"noEventsForNextDaysText": "Paari järgmise päeva sündmusi pole",
+		"hiddenEventText": "sündmused on varjatud"
+	},
+	"ui": {
+		"common": {
+			"previous": "Eelmine",
+			"next": "Järgminet"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Sätetes on viga",
+		"update_card": "Kalendri laadimine nurjus"
+	},
+	"required": {
+		"name": "Vajalikud",
+		"secondary": "Selle kaardi toimiseks oluline teave"
+	},
+	"main": {
+		"name": "Üleüldised valikud",
+		"secondary": "Valikud kõigi kaardi olemite jaoks",
+		"fields": {
+			"name": "Pealkiri",
+			"showColors": "Kasuta värve",
+			"maxDaysToShow": "Mitu päeva kuvada",
+			"showLocation": "Kuva asukoha ikooni",
+			"showLoader": "Kuva laadimisel animatsiooni",
+			"showDate": "Kuva tänane kuupäev",
+			"showDeclined": "Kuva summutatud sündmused",
+			"sortByStartTime": "Järjesta ajaliselt",
+			"hideFinishedEvents": "Peida lõppenud sündmused",
+			"dateFormat": "Kuupäeva vorming",
+			"hoursFormat": "Kellaaja vorming",
+			"defaultMode": "Vaikerežiim",
+			"linkTarget": "Viite tüüp",
+			"refreshInterval": "Värskendussagedus",
+			"showRelativeTime": "Kuva suhtelist aega",
+			"firstDayOfWeek": "Nädala esimene päev (0-6)"
+		}
+	},
+	"event": {
+		"name": "Sündmuste vaade",
+		"secondary": "Sündmuste vaate valikud",
+		"fields": {
+			"showCurrentEventLine": "Kas kuvada sündmuse ees eraldaja",
+			"showProgressBar": "Kas kuvada edenemise riba?",
+			"showMonth": "Kas kuvada kuu?",
+			"showWeekDay": "Kuva nädalapäev",
+			"showDescription": "Kas kuvada kirjeldust?",
+			"disableEventLink": "Kas keelata viited sündmuse päises?",
+			"disableLocationLink": "Kas keelata asukoha viited?",
+			"showNoEventsForToday": "Kas kuvada tänaste sündmuste puudumist?",
+			"showFullDayProgress": "Kas kuvada terve päeva sündmuste edenemist?",
+			"untilText": "Kestab kuni tekst:",
+			"noEventsForTodayText": "Tänased sündmused puuduvad tekst:",
+			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
+			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
+			"showEventIcon": "Kuva sündmuse ikooni"
+		}
+	},
+	"calendar": {
+		"name": "Kalendrivaade",
+		"secondary": "Kalendrivaate valikud",
+		"fields": {
+			"showLastCalendarWeek": "Kuva kalendri viimane nädal",
+			"disableCalEventLink": "Keela kalendrisündmuse viide",
+			"disableCalLocationLink": "Keela sündmuse asukoha viide",
+			"calShowDescription": "Kirjelduse kuvamine"
+		}
+	},
+	"appearance": {
+		"name": "Välimus",
+		"secondary": "Muganda värve jms.",
+		"main": {
+			"name": "Peamine",
+			"secondary": "Üldised värvuse sätted"
+		},
+		"fields": {
+			"locationLinkColor": "Asukohaviite värv:",
+			"dimFinishedEvents": "Kas tumendada lõppenud sündmused?"
+		}
+	}
+}

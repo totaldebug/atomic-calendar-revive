@@ -7,7 +7,8 @@
 		"fullDayEventText": "Heldag",
 		"untilText": "Tills",
 		"noEventsForTodayText": "Inga händelser idag!",
-		"noEventsForNextDaysText": "Inga händelser de närmaste dagarna"
+		"noEventsForNextDaysText": "Inga händelser de närmaste dagarna",
+		"hiddenEventText": "händelser är dolda"
 	},
 	"ui": {
 		"common": {
