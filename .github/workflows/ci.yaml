@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
       # Use this GitHub Action
       - name: Check package version
-        uses: dudo/tag_check@v1.0.0
+        uses: dudo/tag_check@latest
         with:
           git_tag_prefix: v
 
