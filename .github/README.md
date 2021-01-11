@@ -51,11 +51,11 @@ You can switch between the two and select a default mode.
 This is an updated version of [atomic7777's atomic-calendar](https://github.com/atomic7777/atomic_calendar).
 
 <div align=center>
-     <img src="/.github/img/no-events.png" alt="No Events" width="100" />
-     <img src="/.github/img/events-mode.png" alt="Event Mode" width="100" />
+     <img src="/.github/img/no-events.png" alt="No Events" width="300" />
+     <img src="/.github/img/events-mode.png" alt="Event Mode" width="300" />
      <br>
-     <img src="/.github/img/calendar-mode-today.png" alt="Calendar Mode Today" width="100" />
-     <img src="/.github/img/calendar-mode-allday.png" alt="Calendar Mode All Day" width="100" />
+     <img src="/.github/img/calendar-mode-today.png" alt="Calendar Mode Today" width="300" />
+     <img src="/.github/img/calendar-mode-allday.png" alt="Calendar Mode All Day" width="300" />
 </div >
 
 <p align="right">
