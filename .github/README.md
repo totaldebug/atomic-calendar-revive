@@ -48,7 +48,7 @@ There are two main views:
 
 You can switch between the two and select a default mode.
 
-This is an updated version of [atomic7777's atomic-calendar](https://github.com/atomic7777/atomic-calendar).
+This is an updated version of [atomic7777's atomic-calendar](https://github.com/atomic7777/atomic_calendar).
 
 </td>
 </tr>
@@ -64,7 +64,8 @@ This is an updated version of [atomic7777's atomic-calendar](https://github.com/
 
 |                  |   🔰 Revive |  Original |
 | -----------------| :---------: | :---------: |
-| New UI |   ✔️   | ❌ |
+| HACS Support | ✔️ | ❌ |
+| New UI | ✔️ | ❌ |
 | See Calendar Names | ✔️ | ❌ |
 | Keyword Whitelist      | ✔️ | ❌|
 | Keyword Blacklist | ✔️ | ✔️ |
@@ -92,8 +93,8 @@ Got **something interesting** you'd like to **share**? Learn about [contributing
 ## Author
 
 | [![TotalDebug](https://totaldebug.uk/assets/images/logo.png)](https://linkedin.com/in/marksie1988) 	|
-|:---------------------------------------------------------------------------------------------------------:	|
-|                                            **marksie1988 (Steven Marks)**                                            	|
+|:-------------------------:     |
+| **marksie1988 (Steven Marks)** |
 
 ## Support
 
@@ -106,7 +107,7 @@ Reach out to me at one of the following places:
 
 ## Donate
 
-Please consider sponsoring this project, or just donating a little via [our sponsor page](https://github.com/sponsors/marksie1988)
+Please consider supporting this project by sponsoring, or just donating a little via [our sponsor page](https://github.com/sponsors/marksie1988)
 
 ## Credits
  - [atomic7777](https://github.com/atomic7777) Original Author
