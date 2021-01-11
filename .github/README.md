@@ -50,10 +50,14 @@ You can switch between the two and select a default mode.
 
 This is an updated version of [atomic7777's atomic-calendar](https://github.com/atomic7777/atomic_calendar).
 
-![No Events](/.github/img/no-events.png?raw=true "No Events")
-![Event Mode](/.github/img/events-mode.png?raw=true "Event Mode")<br>
-![Calendar Mode Today](/.github/img/calendar-mode-today.png?raw=true "Calendar Mode Today")
-![Calendar Mode All Day](/.github/img/calendar-mode-allday.png?raw=true "Calendar Mode All Day")
+<div align=center>
+     <img src="/.github/img/no-events.png" alt="No Events" width="100" />
+     <img src="/.github/img/events-mode.png" alt="Event Mode" width="100" />
+     <br>
+     <img src="/.github/img/calendar-mode-today.png" alt="Calendar Mode Today" width="100" />
+     <img src="/.github/img/calendar-mode-allday.png" alt="Calendar Mode All Day" width="100" />
+</div >
+
 <p align="right">
 <sub>(Preview)</sub>
 
