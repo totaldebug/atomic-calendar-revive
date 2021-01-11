@@ -16,55 +16,39 @@ It contains two types of views: `Events mode` and `Calendar mode`. You can switc
 
 ## What Can You Find Around Here
 
-- Check out the [Quick Start Guide](https://marksie1988.github.io/atomic-calendar-revive/quickstart.html) to get up and running.
-- All of the possible configurable options for the plugin
-- Any known issues are listed with the [bug label](https://github.com/marksie1988/PyArr/issues?q=is%3Aissue+is%3Aopen+label%3Abug).
+- [Quick Start Guide](https://marksie1988.github.io/atomic-calendar-revive/quickstart.html) to get up and running
+- All of the possible configurable options for the card
+- Any known issues are listed with the [bug label](https://github.com/marksie1988/PyArr/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
 
 ## Some of the features
 
-### New Features
-
-- Calendar view clicked date is highlighted
-- Added more appealing UI
-- Added the ability to display calendar names in event view
-- Added keyword whitelists
-- Added linkTarget option to allow selecting specific action when clicking link
-- Added ability to disable Event and Location Links
-- Added first version of Lovelace UI Editor (not all options are in yet)
-- Hide finished events
-- Sort events by start time
-- Shows currently running events.
-- Limit total number of events
-- Resolved issue with 106 showing error
-- Multiple Bug Fixes
-
-### Original features
-
-- No need to load external libraries (everything is included)
-- Custom colors and settings for different calendars, custom font sizes, colors of every text and line
-- All translations included, few of the words can be configured in settings
-- Compatible with all day and multiple day events
-- Fast switch between both modes, or make one of them default
-
-* Event mode:
-- Shows nearest events, one by one, day by day, time of events in a different way (dates, hours)
-- Moves today's completed events up and dim them
-- Highlights the next event, or show a progress bar
-- Shows event location link
-- Clicking on the event title will open a new window with Google Calendar (can be disabled)
-- Clicking on Location will open a window with this location on Google Maps  (can be disabled)
-
-* Calendar mode:
-- Show a traditional calendar (a table with 42 days) with configurable events icons like holiday, birthday
-- Quick overview of the following months
-- You can set keywords to show only important things, like birthday
+|                  |   🔰 Revive |  Original |
+| -----------------| :---------: | :---------: |
+| HACS Support | ✔️ | ❌ |
+| New UI | ✔️ | ❌ |
+| See Calendar Names | ✔️ | ❌ |
+| Keyword Whitelist      | ✔️ | ❌|
+| Keyword Blacklist | ✔️ | ✔️ |
+| Disable Calendar Links | ✔️ | ❌ |
+| Lovelace UI Editor | ✔️ | ❌ |
+| Hide finished events | ✔️ | ❌ |
+| Sort by start time | ✔️ | ❌ |
+| Relative time to event | ✔️ | ❌ |
+| Limit total number of events | ✔️ | ❌ |
+| Soft Event Limit | ✔️ | ❌ |
+| No external libraries | ✔️ | ❌ |
+| Translations Included | ✔️ | ❌ (Partial) |
+| All Day & Multi-Day Events | ✔️ | ✔️ |
+| Events List | ✔️ | ✔️ |
+| Calendar List | ✔️ | ✔️ |
+| Dim expired events | ✔️ | ✔️ |
+| Custom Icon Support | ✔️ | ❌ (Limited) |
+| Event Progress Bars | ✔️ | ✔️ |
+| Many more features | ✔️ | ✔️ |
 
 ## Contributions & Support
 
-Contributions & Support welcomed.
+Got **something interesting** you'd like to **share**? Learn about [contributing](https://github.com/marksie1988/.github/blob/main/.github/CONTRIBUTING.md).
+## Donate
 
-[![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
-
-
-[buymeacoffee-shield]: https://cdn.buymeacoffee.com/buttons/default-orange.png
-[buymeacoffee]: https://www.buymeacoffee.com/marksie1988
+Please consider supporting this project by sponsoring, or just donating a little via [our sponsor page](https://github.com/sponsors/marksie1988)
