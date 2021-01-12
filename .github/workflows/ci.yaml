@@ -2,10 +2,13 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*'
   pull_request:
+  schedule:
+    - cron: "0 0 1 * *"
 
 jobs:
   checkVersion:
@@ -19,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       # Use this GitHub Action
       - name: Check package version
-        uses: dudo/tag_check@latest
+        uses: dudo/tag_check@master
         with:
           git_tag_prefix: v
 
