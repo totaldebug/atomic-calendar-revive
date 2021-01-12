@@ -1,3 +1,8 @@
+<h1 align="center">
+  <br>
+  <img src="/.github/img/atomic_calendar_revive.png" alt="Atomic Calendar Revive">
+</h1>
+
 <h4 align="center">An advanced calendar card for Home Assistant Lovelace.</h4>
 
 <p align="center">
