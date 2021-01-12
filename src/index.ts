@@ -1431,6 +1431,13 @@ class EventClass {
 		return this._endTime.clone();
 	}
 
+	get isGoogleCal() {
+		if (
+			(this.eventClass.htmlLink).includes("google")
+		) return true
+		else return false
+	}
+
 	// is full day event
 	get isFullDayEvent() {
 		//1. check if google calendar all day event
@@ -1453,18 +1460,19 @@ class EventClass {
 	get isFullMoreDaysEvent() {
 		if (this.isFullDayEvent)
 			if (
-				(!this.eventClass.start.dateTime &&
-					!this.eventClass.end.dateTime &&
-					!moment(this.eventClass.start).isSame(moment(this.eventClass.end).subtract(1, 'days'), 'day')) ||
-				(moment(this.eventClass.start.dateTime).isSame(moment(this.eventClass.start.dateTime).startOf('day')) &&
-					moment(this.eventClass.end.dateTime).isSame(moment(this.eventClass.end.dateTime).startOf('day')) &&
-					moment(this.eventClass.end.dateTime).isAfter(
-						moment(this.eventClass.start.dateTime).subtract(1, 'days'),
-						'day',
-					))
+				(
+					!this._startTime &&
+					!this._endTime &&
+					!moment(this._startTime).isSame(moment(this._endTime).subtract(1, 'days'), 'day')
+				) ||
+				(
+					moment(this._startTime).isSame(moment(this._startTime).startOf('day')) &&
+					moment(this._endTime).isSame(moment(this._endTime).startOf('day')) &&
+					moment(this._endTime).subtract(1, 'days').isAfter(moment(this._startTime), 'day')
+				)
 			)
-				return true;
-			else return false;
+				return true
+			else return false
 		else return false;
 	}
 
