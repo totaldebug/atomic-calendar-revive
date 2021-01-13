@@ -1,0 +1,91 @@
+{
+	"common": {
+		"version": "Version",
+		"show_warning": "Afficher l'avertissement",
+		"error": "Erreur",
+		"description": "Une carte avancée pour le calendrier dans Home Assistant avec Lovelace.",
+		"fullDayEventText": "Toute la journée",
+		"untilText": "Jusqu'au",
+		"noEventsForTodayText": "Aucun événement aujourd'hui!",
+		"noEventsForNextDaysText": "Aucun événement dans les prochains jours",
+		"hiddenEventText": "les événements sont masqués"
+	},
+	"ui": {
+		"common": {
+			"previous": "Précédent",
+			"next": "Suivant"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Configuration invalide",
+		"update_card": "Le calendrier ne peut pas être chargé depuis le composant Home Assistant"
+	},
+	"required": {
+		"name": "Requis",
+		"secondary": "Options requises pour que la carte fonctionne"
+	},
+	"main": {
+		"name": "Options principales",
+		"secondary": "Options appliquées globalement",
+		"fields": {
+			"name": "Nom",
+			"showColors": "Afficher les couleurs",
+			"maxDaysToShow": "Max jours affichés",
+			"showLocation": "Afficher l'icone de lieu",
+			"showLoader": "Afficher l'animation de chargement",
+			"showDate": "Afficher la date sur la carte",
+			"showDeclined": "Afficher les événements déclinés",
+			"sortByStartTime": "Trier par date de début",
+			"hideFinishedEvents": "Cacher les événements terminés",
+			"dateFormat": "Format de date",
+			"hoursFormat": "Format des heures",
+			"defaultMode": "Mode par défaut",
+			"linkTarget": "Lien cible",
+			"refreshInterval": "Interval de raffraîchissement",
+			"showRelativeTime": "Afficher l'heure relative",
+			"firstDayOfWeek": "Premier jour de la semaine 0-6"
+		}
+	},
+	"event": {
+		"name": "Mode événement",
+		"secondary": "Options spécifiques du mode événement",
+		"fields": {
+			"showCurrentEventLine": "Afficher une ligne avant l'événement?",
+			"showProgressBar": "Afficher la barre de progression?",
+			"showMonth": "Afficher le mois?",
+			"showWeekDay": "Afficher le jour de la semaine?",
+			"showDescription": "Afficher la description?",
+			"disableEventLink": "Désactiver les liens dans les titres d'événements?",
+			"disableLocationLink": "Désactiver les liens vers le lieu?",
+			"showNoEventsForToday": "Afficher Aucun événement aujourd'hui?",
+			"showFullDayProgress": "Afficher la progression des événements sur une journée?",
+			"untilText": "Texte Jusqu'au:",
+			"noEventsForTodayText": "Texte Aucun événement aujourd'hui:",
+			"noEventsForNextDaysText": "Texte Aucun événement dans les prochains jours:",
+			"fullDayEventText": "Texte Toute la journée:",
+			"showEventIcon": "Afficher l'icone d'événement"
+		}
+	},
+	"calendar": {
+		"name": "Mode calendrier",
+		"secondary": "Options spécifiques du mode calendrier",
+		"fields": {
+			"showLastCalendarWeek": "Afficher la dernière semaine du calendrier",
+			"disableCalEventLink": "Désactiver les liens sur les événements du calendrier",
+			"disableCalLocationLink": "Désactiver les liens sur les lieux du calendrier",
+			"calShowDescription": "Afficher la descritpion"
+		}
+	},
+	"appearance": {
+		"name": "Apparence",
+		"secondary": "Customiser les couleurs etc.",
+		"main": {
+			"name": "Principal",
+			"secondary": "Paramètres globaux de couleur"
+		},
+		"fields": {
+			"locationLinkColor": "Couleur du lien d'un lieu:",
+			"dimFinishedEvents": "Diminuer la visibilité des événements terminés?"
+		}
+	}
+}
