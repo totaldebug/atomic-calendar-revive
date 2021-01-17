@@ -365,6 +365,14 @@ class AtomicCalendarRevive extends LitElement {
 					margin: auto;
 				}
 
+				.calIconSelector {
+					--mdc-icon-button-size: var(--button-toggle-size, 36px);
+					--mdc-icon-size: var(--button-toggle-icon-size, 20px);
+					border-radius: 4px 4px 4px 4px;
+					border: 1px solid;
+					width: 38px;
+				}
+
 				table.cal {
 					margin-left: 0px;
 					margin-right: 0px;
@@ -495,6 +503,12 @@ class AtomicCalendarRevive extends LitElement {
 				}
 
 				.calDateSelector {
+					display: inline-block;
+					min-width: 9em;
+					text-align: center;
+				}
+				.calIconSelector {
+					float: right;
 					display: inline-block;
 					min-width: 9em;
 					text-align: center;
@@ -1209,15 +1223,12 @@ class AtomicCalendarRevive extends LitElement {
 				@click="${(_e) => this.handleMonthChange(-1)}"
 				title=${this.hass.localize('ui.common.previous')}
 			></ha-icon-button>
-			<a
-				href="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(
-			this.selectedMonth,
-		).format('MM')}/1"
+			<span
 				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
 				target="${this._config.linkTarget}"
 			>
 				${moment(this.selectedMonth).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
-			</a>
+			</span>
 			<ha-icon-button
 				class="ha-icon-button"
 				icon="mdi:chevron-right"
@@ -1225,6 +1236,19 @@ class AtomicCalendarRevive extends LitElement {
 				title=${this.hass.localize('ui.common.next')}
 			></ha-icon-button>
 		</div>`;
+	}
+
+	showCalendarLink() {
+		if (!this._config.disableCalLink) {
+			return html`<div class="calIconSelector">
+			<ha-icon-button
+				icon="mdi:calendar"
+				@click="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(
+				this.selectedMonth,
+			).format('MM')}/1">
+			</ha-icon-button>
+			</div>`
+		}
 	}
 
 	/**
@@ -1290,7 +1314,7 @@ class AtomicCalendarRevive extends LitElement {
 			`,
 		);
 		this.content = html`
-			<div class="calTitleContainer">${this.getCalendarHeaderHTML()}</div>
+			<div class="calTitleContainer">${this.getCalendarHeaderHTML()}${this.showCalendarLink()}</div>
 			<div class="calTableContainer">
 				<table class="cal" style="color: ${this._config.eventTitleColor};">
 					<thead>
