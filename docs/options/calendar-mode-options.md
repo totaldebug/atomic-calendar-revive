@@ -16,6 +16,7 @@ nav_order: 4
 | disableCalEventLink    | boolean | v1.5.0 | `false` If true the link will be disabled on the event summary for the selected day                   |
 | disableCalLocationLink | boolean | v1.5.0 | `false` If true the link will be disabled on the event location icon for the selected day             |
 | calShowDescription     | boolean | v2.5.0 | `false` If true this will display the description in calendar mode                                    |
+| disableCalLink         | boolean | v3.0.0 | `false` If true the link to google calendar will be removed                                           |
 
 ## Color Options
 
