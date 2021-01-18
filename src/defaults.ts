@@ -25,6 +25,7 @@ export default {
 	sortByStartTime: false, // sort first by calendar, then by time
 	disableEventLink: false, // disables links to event calendar
 	disableLocationLink: false, // disables links to event calendar
+	disableCalMonthLink: false, // disables the link on the month name in calendar mode
 	linkTarget: '_blank', // Target for links, can use any HTML target type
 	showDeclined: false, // Show declined events in the calendar
 

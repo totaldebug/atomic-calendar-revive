@@ -73,7 +73,8 @@
 			"showLastCalendarWeek": "Show last calendar week",
 			"disableCalEventLink": "Disable calendar event link",
 			"disableCalLocationLink": "Disable calendar location link",
-			"calShowDescription": "Show Description"
+			"calShowDescription": "Show Description",
+			"disableCalLink": "Disable calendar link"
 		}
 	},
 	"appearance": {
