@@ -274,6 +274,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return true;
 	}
 
+	get _disableCalLink(): boolean {
+		if (this._config) {
+			return this._config.disableCalLink || false;
+		}
+		return true;
+	}
+
 	// CALENDAR SETTINGS END
 
 	// APPEARENCE SETTINGS
@@ -667,6 +674,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									<label class="mdc-label">${localize('calendar.fields.disableCalLocationLink')}</label>
 								</div>
 								<div>
+									<ha-switch
+										aria-label=${`Toggle ${this._disableCalLink ? 'off' : 'on'}`}
+										.checked=${this._disableCalLink !== false}
+										.configValue=${'disableCalLink'}
+										@change=${this._valueChanged}
+									></ha-switch>
+									<label class="mdc-label">${localize('calendar.fields.disableCalLink')}</label>
 								</div>
 							</div>
 						</div>
