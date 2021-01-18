@@ -365,12 +365,50 @@ class AtomicCalendarRevive extends LitElement {
 					margin: auto;
 				}
 
+				ha-button-toggle-group {
+					color: var(--primary-color);
+				}
+
+				.calTitleContainer {
+					padding: 0px 8px 8px 8px;
+				}
+
 				.calIconSelector {
-					--mdc-icon-button-size: var(--button-toggle-size, 36px);
-					--mdc-icon-size: var(--button-toggle-icon-size, 20px);
+					--mdc-icon-button-size: var(--button-toggle-size, 48px);
+					--mdc-icon-size: var(--button-toggle-icon-size, 24px);
 					border-radius: 4px 4px 4px 4px;
-					border: 1px solid;
-					width: 38px;
+					border: 1px solid var(--primary-color);
+					float: right;
+					display: inline-flex;
+					text-align: center;
+				}
+				.calDateSelector {
+					--mdc-icon-button-size: var(--button-toggle-size, 48px);
+					--mdc-icon-size: var(--button-toggle-icon-size, 24px);
+					display: inline-flex;
+					text-align: center;
+				}
+				div.calIconSelector ha-icon-button, div.calDateSelector ha-icon-button {
+					color: var(--primary-color);
+				}
+				div.calDateSelector .prev {
+					border: 1px solid var(--primary-color);
+					border-radius: 3px 0px 0px 3px;
+				}
+				div.calDateSelector .date {
+					border: 1px solid var(--primary-color);
+					border-radius: 0px 0px 0px 0px;
+					padding: 4px 2px 2px 4px;
+				}
+				div.calDateSelector .next {
+					border: 1px solid var(--primary-color);
+					border-radius: 0px 4px 4px 0px;
+				}
+
+				ha-icon-button {
+					--mdc-icon-size: 20px;
+					--mdc-icon-button-size: 25px;
+					color: ${this._config.calDateColor};
 				}
 
 				table.cal {
@@ -380,6 +418,14 @@ class AtomicCalendarRevive extends LitElement {
 					border-collapse: collapse;
 					width: 100%;
 					table-layout: fixed;
+				}
+
+				thead th.cal {
+					color: var(--secondary-text-color);
+					border: 1px solid ${this._config.calGridColor};
+					font-size: 11px;
+					font-weight: 400;
+					text-transform: uppercase;
 				}
 
 				td.cal {
@@ -405,12 +451,6 @@ class AtomicCalendarRevive extends LitElement {
 
 				tr.cal {
 					width: 100%;
-				}
-
-				ha-icon-button {
-					--mdc-icon-size: 20px;
-					--mdc-icon-button-size: 25px;
-					color: ${this._config.calDateColor};
 				}
 
 				.calTableContainer {
@@ -500,18 +540,6 @@ class AtomicCalendarRevive extends LitElement {
 					margin-top: -10px;
 					margin-right: -1px;
 					margin-left: -1px;
-				}
-
-				.calDateSelector {
-					display: inline-block;
-					min-width: 9em;
-					text-align: center;
-				}
-				.calIconSelector {
-					float: right;
-					display: inline-block;
-					min-width: 9em;
-					text-align: center;
 				}
 
 				.loader {
@@ -1218,24 +1246,21 @@ class AtomicCalendarRevive extends LitElement {
 	getCalendarHeaderHTML() {
 		return html`<div class="calDateSelector">
 			<ha-icon-button
-				class="ha-icon-button"
+				class="prev"
 				icon="mdi:chevron-left"
 				@click="${(_e) => this.handleMonthChange(-1)}"
 				title=${this.hass.localize('ui.common.previous')}
 			></ha-icon-button>
-			<span
-				style="text-decoration: none; color: ${this._config.calDateColor}; position: relative; top: 4px;"
-				target="${this._config.linkTarget}"
-			>
+			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
 				${moment(this.selectedMonth).format('MMMM')} ${moment(this.selectedMonth).format('YYYY')}
 			</span>
 			<ha-icon-button
-				class="ha-icon-button"
+				class="next"
 				icon="mdi:chevron-right"
 				@click="${(_e) => this.handleMonthChange(1)}"
 				title=${this.hass.localize('ui.common.next')}
 			></ha-icon-button>
-		</div>`;
+			</div>`;
 	}
 
 	showCalendarLink() {
@@ -1310,7 +1335,7 @@ class AtomicCalendarRevive extends LitElement {
 		const weekDays = moment.weekdaysMin(true);
 		const htmlDayNames = weekDays.map(
 			(day) => html`
-				<th class="cal" style="padding-bottom: 8px; color:  ${this._config.calWeekDayColor};">${day}</th>
+				<th class="cal" style="color:  ${this._config.calWeekDayColor};">${day}</th>
 			`,
 		);
 		this.content = html`
