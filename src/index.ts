@@ -444,9 +444,17 @@ class AtomicCalendarRevive extends LitElement {
 					margin: auto;
 				}
 
-				td.currentDay {
-					color: var(--paper-item-icon-active-color);
-					background-color: ${this._config.calEventBackgroundColor};
+				.calDay.currentDay {
+					height: 20px;
+					background-color: var(--primary-color);
+					border-radius: 50%;
+					display: inline-block;
+					text-align: center;
+					white-space: nowrap;
+					width: max-content;
+					min-width: 20px;
+					line-height: 140%;
+					color: var(--text-primary-color) !important;
 				}
 
 				tr.cal {
@@ -1301,10 +1309,10 @@ class AtomicCalendarRevive extends LitElement {
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
 						@click="${(_e) => this.handleEventSummary(day)}"
-						class="cal ${dayClassToday}"
+						class="cal"
 						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
-						<div class="calDay">
+						<div class="calDay ${dayClassToday}">
 							<div style="position: relative; top: 5%;">${day.dayNumber.replace(/^0|[^/]0./, '')}</div>
 							<div>${this.handleCalendarIcons(day)}</div>
 						</div>
