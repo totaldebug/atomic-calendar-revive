@@ -1276,9 +1276,9 @@ class AtomicCalendarRevive extends LitElement {
 			return html`<div class="calIconSelector">
 			<ha-icon-button
 				icon="mdi:calendar"
-				@click="https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(
+				onClick="window.open('https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format('YYYY')}/${moment(
 				this.selectedMonth,
-			).format('MM')}/1">
+			).format('MM')}/1'), '${this._config.linkTarget}'">
 			</ha-icon-button>
 			</div>`
 		}
