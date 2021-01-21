@@ -74,6 +74,7 @@
 			"disableCalEventLink": "Keela kalendrisündmuse viide",
 			"disableCalLocationLink": "Keela sündmuse asukoha viide",
 			"calShowDescription": "Kirjelduse kuvamine"
+			"disableCalLink": "Peida kalendri viide"
 		}
 	},
 	"appearance": {
