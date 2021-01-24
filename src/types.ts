@@ -95,6 +95,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	firstDayOfWeek?: number;
 	blacklist?: string;
 	whitelist?: string;
+	disableCalLink?: boolean;
 }
 
 export interface LongDateFormatSpec {
