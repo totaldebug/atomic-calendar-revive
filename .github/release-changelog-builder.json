@@ -3,31 +3,25 @@
         {
             "title": "## 💥 Breaking Changes",
             "labels": [
-                "breaking"
+                "flag/breaking changes"
             ]
         },
         {
             "title": "## 🚀 Features",
             "labels": [
-                "feature", "enhancement"
+                "type/feature"
             ]
         },
         {
             "title": "## 🐛 Bug Fixes",
             "labels": [
-                "bug"
-            ]
-        },
-        {
-            "title": "## 🧪 Tests",
-            "labels": [
-                "test"
+                "type/bug"
             ]
         },
         {
             "title": "## 📚 Documentation",
             "labels": [
-                "documentation"
+                "type/docs"
             ]
         }
     ],
