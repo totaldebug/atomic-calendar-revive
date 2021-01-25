@@ -1,9 +1,8 @@
 import { LitElement, html, customElement, TemplateResult, CSSResult, property } from 'lit-element';
-import { HomeAssistant, fireEvent, LovelaceCardEditor, ActionConfig } from 'custom-card-helpers';
+import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
 import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';
-import { EDITOR_VERSION } from './const';
 
 const linkTargets: string[] = ['_blank', '_self', '_parent', '_top'];
 const defaultModes: string[] = ['Event', 'Calendar'];
@@ -306,7 +305,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 
 		// You can restrict on domain type
-		const entities = Object.keys(this.hass.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'sun');
+		// const entities = Object.keys(this.hass.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'sun');
 		return html`
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
