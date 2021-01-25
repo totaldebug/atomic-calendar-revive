@@ -1,5 +1,4 @@
-import { ActionConfig, LovelaceCardConfig, LovelaceCard } from 'custom-card-helpers';
-import { TemplateResult } from 'lit-element';
+import { LovelaceCardConfig } from 'custom-card-helpers';
 
 export interface atomicCardConfig extends LovelaceCardConfig {
 	entities?: any;
@@ -116,7 +115,6 @@ export interface LongDateFormatSpec {
 	llll?: string;
 }
 
-
 //EDITOR TYPES
 export interface EntityConfig {
 	entity: string;
@@ -127,7 +125,7 @@ export interface EntityConfig {
 
 export interface ConfigEntity extends EntityConfig {
 	type?: string;
-	secondary_info?: "entity-id" | "last-changed";
+	secondary_info?: 'entity-id' | 'last-changed';
 	action_name?: string;
 	service?: string;
 	service_data?: object;

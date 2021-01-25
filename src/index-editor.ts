@@ -5,30 +5,30 @@ import { style } from './style-editor';
 import { atomicCardConfig } from './types';
 import { EDITOR_VERSION } from './const';
 
-var linkTargets: string[] = ["_blank", "_self", "_parent", "_top"];
-var defaultModes: string[] = ["Event", "Calendar"];
+const linkTargets: string[] = ['_blank', '_self', '_parent', '_top'];
+const defaultModes: string[] = ['Event', 'Calendar'];
 
 const options = {
 	required: {
 		icon: 'tune',
-		show: true
+		show: true,
 	},
 	main: {
 		icon: 'eye-settings',
-		show: false
+		show: false,
 	},
 	event: {
 		icon: 'calendar-check',
-		show: false
+		show: false,
 	},
 	calendar: {
 		icon: 'calendar-month-outline',
-		show: false
+		show: false,
 	},
 	appearance: {
 		icon: 'palette',
 		show: false,
-	}
+	},
 };
 
 @customElement('atomic-calendar-revive-editor')
@@ -298,9 +298,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return false;
 	}
 
-
 	// APPEARENCE SETTINGS END
-
 
 	protected render(): TemplateResult | void {
 		if (!this.hass) {
@@ -308,7 +306,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 
 		// You can restrict on domain type
-		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'sun');
+		const entities = Object.keys(this.hass.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'sun');
 		return html`
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
@@ -319,12 +317,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('required.secondary')}</div>
 				</div>
 				${options.required.show
-				? html`
+					? html`
 							<div class="values">
 								<span>Entities and their options must be configured through code editor</span>
 							</div>
-						`
-				: ''}
+					  `
+					: ''}
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
 					<div class="row">
@@ -334,7 +332,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('main.secondary')}</div>
 				</div>
 				${options.main.show
-				? html`
+					? html`
 							<div class="values">
 								<paper-input
 									label="${localize('main.fields.name')}"
@@ -385,28 +383,24 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									label="${localize('main.fields.defaultMode')}"
 									@value-changed=${this._valueChanged}
 									.configValue=${'defaultMode'}
-									>
+								>
 									<paper-listbox slot="dropdown-content" .selected=${defaultModes.indexOf(this._defaultMode)}>
-								 		${defaultModes.map(mode => {
-					return html`
-												<paper-item>${mode}</paper-item>
-											`;
-				})}
+										${defaultModes.map((mode) => {
+											return html` <paper-item>${mode}</paper-item> `;
+										})}
 									</paper-listbox>
 								</paper-dropdown-menu>
 								<paper-dropdown-menu
 									label="${localize('main.fields.linkTarget')}"
 									@value-changed=${this._valueChanged}
 									.configValue=${'linkTarget'}
-									>
+								>
 									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
-								 		${linkTargets.map(linkTarget => {
-					return html`
-												<paper-item>${linkTarget}</paper-item>
-											`;
-				})}
-									</paper-listbox>
-								</paper-dropdown-menu><br />
+										${linkTargets.map((linkTarget) => {
+											return html` <paper-item>${linkTarget}</paper-item> `;
+										})}
+									</paper-listbox> </paper-dropdown-menu
+								><br />
 								<div class="side-by-side">
 									<div>
 										<ha-switch
@@ -475,12 +469,11 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										></ha-switch>
 										<label class="mdc-label">${localize('main.fields.showRelativeTime')}</label>
 									</div>
-									<div>
-									</div>
+									<div></div>
 								</div>
 							</div>
-						`
-				: ''}
+					  `
+					: ''}
 				<!-- MAIN SETTINGS END -->
 				<!-- EVENT SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'event'}>
@@ -491,7 +484,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('event.secondary')}</div>
 				</div>
 				${options.event.show
-				? html`
+					? html`
 							<div class="values">
 								<paper-input
 									label="${localize('event.fields.untilText')}"
@@ -622,8 +615,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									</div>
 								</div>
 							</div>
-						`
-				: ''}
+					  `
+					: ''}
 				<!-- EVENT SETTINGS END -->
 				<!-- CALENDAR SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'calendar'}>
@@ -634,8 +627,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('calendar.secondary')}</div>
 				</div>
 				${options.calendar.show
-				? html`
-						<div class="values">
+					? html`
+							<div class="values">
 								<ha-switch
 									aria-label=${`Toggle ${this._calShowDescription ? 'off' : 'on'}`}
 									.checked=${this._calShowDescription !== false}
@@ -643,49 +636,49 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@change=${this._valueChanged}
 								></ha-switch>
 								<label class="mdc-label">${localize('calendar.fields.calShowDescription')}</label>
-							<div calss="side-by-side">
-								<div>
-									<ha-switch
-										aria-label=${`Toggle ${this._showLastCalendarWeek ? 'off' : 'on'}`}
-										.checked=${this._showLastCalendarWeek !== false}
-										.configValue=${'showLastCalendarWeek'}
-										@change=${this._valueChanged}
-									></ha-switch>
-									<label class="mdc-label">${localize('calendar.fields.showLastCalendarWeek')}</label>
+								<div calss="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showLastCalendarWeek ? 'off' : 'on'}`}
+											.checked=${this._showLastCalendarWeek !== false}
+											.configValue=${'showLastCalendarWeek'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('calendar.fields.showLastCalendarWeek')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._disableCalEventLink ? 'off' : 'on'}`}
+											.checked=${this._disableCalEventLink !== false}
+											.configValue=${'disableCalEventLink'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('calendar.fields.disableCalEventLink')}</label>
+									</div>
 								</div>
-								<div>
-									<ha-switch
-										aria-label=${`Toggle ${this._disableCalEventLink ? 'off' : 'on'}`}
-										.checked=${this._disableCalEventLink !== false}
-										.configValue=${'disableCalEventLink'}
-										@change=${this._valueChanged}
-									></ha-switch>
-									<label class="mdc-label">${localize('calendar.fields.disableCalEventLink')}</label>
+								<div calss="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._disableCalLocationLink ? 'off' : 'on'}`}
+											.checked=${this._disableCalLocationLink !== false}
+											.configValue=${'disableCalLocationLink'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('calendar.fields.disableCalLocationLink')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._disableCalLink ? 'off' : 'on'}`}
+											.checked=${this._disableCalLink !== false}
+											.configValue=${'disableCalLink'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('calendar.fields.disableCalLink')}</label>
+									</div>
 								</div>
 							</div>
-							<div calss="side-by-side">
-								<div>
-									<ha-switch
-										aria-label=${`Toggle ${this._disableCalLocationLink ? 'off' : 'on'}`}
-										.checked=${this._disableCalLocationLink !== false}
-										.configValue=${'disableCalLocationLink'}
-										@change=${this._valueChanged}
-									></ha-switch>
-									<label class="mdc-label">${localize('calendar.fields.disableCalLocationLink')}</label>
-								</div>
-								<div>
-									<ha-switch
-										aria-label=${`Toggle ${this._disableCalLink ? 'off' : 'on'}`}
-										.checked=${this._disableCalLink !== false}
-										.configValue=${'disableCalLink'}
-										@change=${this._valueChanged}
-									></ha-switch>
-									<label class="mdc-label">${localize('calendar.fields.disableCalLink')}</label>
-								</div>
-							</div>
-						</div>
-						`
-				: ''}
+					  `
+					: ''}
 				<!-- CALENDAR SETTINGS END -->
 				<!-- APPEARANCE SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'appearance'}>
@@ -696,26 +689,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('appearance.secondary')}</div>
 				</div>
 				${options.appearance.show
-				? html`
-          <div class="values">
-						<div class="side-by-side">
-							<div>
-								<ha-switch
-									aria-label=${`Toggle ${this._dimFinishedEvents ? 'off' : 'on'}`}
-									.checked=${this._dimFinishedEvents !== false}
-									.configValue=${'dimFinishedEvents'}
-									@change=${this._valueChanged}
-								></ha-switch>
-								<label class="mdc-label">${localize('appearance.fields.dimFinishedEvents')}</label>
+					? html`
+							<div class="values">
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._dimFinishedEvents ? 'off' : 'on'}`}
+											.checked=${this._dimFinishedEvents !== false}
+											.configValue=${'dimFinishedEvents'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('appearance.fields.dimFinishedEvents')}</label>
+									</div>
+								</div>
 							</div>
-						</div>
-          </div>
-            `
-				: ''}
+					  `
+					: ''}
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
 		`;
-
 	}
 
 	private _toggleOption(ev): void {
@@ -744,14 +736,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				delete this._config[target.configValue];
 			} else {
 				let value = target.value;
-				if (target.type === "number") {
+				if (target.type === 'number') {
 					value = Number(value);
 				}
 				this._config = {
 					...this._config,
 					[target.configValue]: target.checked !== undefined ? target.checked : value,
 				};
-
 			}
 		}
 		fireEvent(this, 'config-changed', { config: this._config });
