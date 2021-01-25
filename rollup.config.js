@@ -5,6 +5,8 @@ import babel from '@rollup/plugin-babel';
 import { terser } from "rollup-plugin-terser";
 import serve from 'rollup-plugin-serve';
 import json from '@rollup/plugin-json';
+import eslint from '@rollup/plugin-eslint';
+import minify from 'rollup-plugin-babel-minify';
 
 const dev = process.env.ROLLUP_WATCH;
 
@@ -19,13 +21,48 @@ const serveopts = {
 };
 
 const plugins = [
-    resolve(),
+    resolve({
+        jsnext: true,
+        main: true,
+        browser: true,
+    }),
+    eslint(),
     commonjs(),
     typescript(),
     json(),
     babel({
         exclude: 'node_modules/**',
-        babelHelpers: 'bundled'
+        babelHelpers: 'bundled',
+        presets: [
+            [
+                '@babel/preset-env',
+                {
+                    "modules": false,
+                    "targets": "> 2.5%, not dead"
+                }
+            ]
+        ],
+        plugins: [
+            [
+                "@babel/plugin-proposal-decorators",
+                {
+                    "legacy": true
+                }
+            ],
+            [
+                "@babel/plugin-proposal-class-properties",
+                {
+                    "loose": true
+                }
+            ],
+            [
+                "@babel/plugin-transform-template-literals"
+            ]
+        ]
+    }),
+    minify({
+        "evaluate": false,
+        "mangle": false,
     }),
     dev && serve(serveopts),
     !dev && terser(),
@@ -34,11 +71,13 @@ const plugins = [
 export default {
     input: ['./src/index.ts'],
     output: {
-        dir: './dist',
-        format: 'es',
+        file: './dist/index.js',
+        format: 'iife',
+        sourcemap: "inline",
+        compact: true,
     },
     watch: {
-        clearScreen: false
+        clearScreen: false,
     },
     plugins: [...plugins],
 };

@@ -1,25 +1,24 @@
 import * as en from './languages/en.json';
 
-var languages: any = {
-  en: en,
+const languages: any = {
+	en: en,
 };
 
-export function localize(string: string, search: string = '', replace: string = '') {
+export function localize(string: string, search = '', replace = '') {
+	const lang = (localStorage.getItem('selectedLanguage') || 'en').replace(/['"]+/g, '').replace('-', '_');
 
-  const lang = (localStorage.getItem('selectedLanguage') || 'en').replace(/['"]+/g, '').replace('-', '_');
+	let translated: string;
 
-  var translated: string;
+	try {
+		translated = string.split('.').reduce((o, i) => o[i], languages[lang]);
+	} catch (e) {
+		translated = string.split('.').reduce((o, i) => o[i], languages['en']);
+	}
 
-  try {
-    translated = string.split('.').reduce((o, i) => o[i], languages[lang]);
-  } catch (e) {
-    translated = string.split('.').reduce((o, i) => o[i], languages['en']);
-  }
+	if (translated === undefined) translated = string.split('.').reduce((o, i) => o[i], languages['en']);
 
-  if (translated === undefined) translated = string.split('.').reduce((o, i) => o[i], languages['en']);
-
-  if (search !== '' && replace !== '') {
-    translated = translated.replace(search, replace);
-  }
-  return translated;
+	if (search !== '' && replace !== '') {
+		translated = translated.replace(search, replace);
+	}
+	return translated;
 }
