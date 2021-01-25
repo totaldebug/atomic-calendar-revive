@@ -1,7 +1,7 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "3.1.2",
-	"editor_version": "1.3.0",
+	"version": "3.1.3",
+	"editor_version": "1.3.1",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
@@ -13,7 +13,7 @@
 		"babel": "babel dist/index.js --out-file dist/atomic-calendar-revive.js",
 		"rollup": "rollup -c",
 		"start": "rollup -c --watch",
-		"build": "npm run rollup  && npm run babel",
+		"build": "rollup -c ",
 		"watch": "rollup -c --watch --config rollup-dev.config.js"
 	},
 	"repository": {
