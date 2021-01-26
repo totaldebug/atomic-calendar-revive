@@ -11,6 +11,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	// text translations
 	fullDayEventText?: string;
 	untilText?: string;
+
 	maxDaysToShow?: number;
 	maxEventCount?: number;
 	showLoader?: boolean;
@@ -31,6 +32,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	linkTarget?: string;
 	showDeclined?: boolean;
 	softLimit?: number;
+	showPrivate?: boolean;
 
 	// color and font settings
 	nameColor?: string;

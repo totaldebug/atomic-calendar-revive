@@ -1000,6 +1000,7 @@ class AtomicCalendarRevive extends LitElement {
 								)) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
+							(this._config.showPrivate || singleEvent.visibility != "private") &&
 							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
 								!(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
@@ -1510,7 +1511,7 @@ class EventClass {
 	}
 
 	get isGoogleCal() {
-		if (this.eventClass.htmlLink.includes('google')) return true;
+		if (this.link.includes('google')) return true;
 		else return false;
 	}
 
@@ -1571,6 +1572,10 @@ class EventClass {
 
 	get link() {
 		return this.eventClass.htmlLink;
+	}
+
+	get visibility() {
+		return this.eventClass.visibility;
 	}
 }
 
