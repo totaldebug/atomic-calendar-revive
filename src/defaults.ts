@@ -28,6 +28,7 @@ export default {
 	disableCalMonthLink: false, // disables the link on the month name in calendar mode
 	linkTarget: '_blank', // Target for links, can use any HTML target type
 	showDeclined: false, // Show declined events in the calendar
+	showPrivate: true, // hide private events
 
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color
