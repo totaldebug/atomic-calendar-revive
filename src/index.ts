@@ -286,13 +286,13 @@ class AtomicCalendarRevive extends LitElement {
 
 				.hoursHTML {
 					color: ${this._config.timeColor};
-					font-size: ${this._config.timeSize}%;
+					font-size: ${this._config.timeSize}% !important;
 					float: left;
 				}
 
 				.relativeTime {
 					color: ${this._config.timeColor};
-					font-size: ${this._config.timeSize}%;
+					font-size: ${this._config.timeSize}% !important;
 					float: right;
 					padding-left: 5px;
 				}
@@ -652,35 +652,35 @@ class AtomicCalendarRevive extends LitElement {
 		// full day events, no hours set
 		// 1. Starts any day, ends later -> 'All day, end date'
 		if (event.isFullMoreDaysEvent && moment(event.startTime).isAfter(today, 'day'))
-			return html`<div>
+			return html`
 				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+			`;
 		// 2 . Is full day event starting before today, ending after today
 		else if (
 			event.isFullMoreDaysEvent &&
 			(moment(event.startTime).isBefore(today, 'day') || moment(event.endTime).isAfter(today, 'day'))
 		)
-			return html`<div>
+			return html`
 				${this._config.fullDayEventText}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+			`;
 		// 3. One day only, or multiple day ends today -> 'All day'
-		else if (event.isFullDayEvent) return html`<div>${this._config.fullDayEventText}</div>`;
+		else if (event.isFullDayEvent) return html`${this._config.fullDayEventText}`;
 		// 4. long term event, ends later -> 'until date'
 		else if (moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isAfter(today, 'day'))
-			return html`<div>${this._config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}</div>`;
+			return html`${this._config.untilText} ${this.getCurrDayAndMonth(moment(event.endTime))}`;
 		// 5.long term event, ends today -> 'until hour'
 		else if (moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isSame(today, 'day'))
-			return html`<div>${this._config.untilText} ${event.endTime.format('LT')}</div>`;
+			return html`${this._config.untilText} ${event.endTime.format('LT')}`;
 		// 6. starts today or later, ends later -> 'hour - until date'
 		else if (!moment(event.startTime).isBefore(today, 'day') && moment(event.endTime).isAfter(event.startTime, 'day'))
-			return html`<div>
+			return html`
 				${event.startTime.format('LT')}, ${this._config.untilText!.toLowerCase()}
 				${this.getCurrDayAndMonth(moment(event.endTime))}
-			</div>`;
+			`;
 		// 7. Normal one day event, with time set -> 'hour - hour'
-		else return html`<div>${event.startTime.format('LT')} - ${event.endTime.format('LT')}</div>`;
+		else return html`${event.startTime.format('LT')} - ${event.endTime.format('LT')}`;
 	}
 
 	/**
