@@ -1103,6 +1103,7 @@ class AtomicCalendarRevive extends LitElement {
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
+									(this._config.showPrivate || event.visibility != "private") &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
 									return event;
