@@ -16,6 +16,7 @@ nav_order: 3
 | showEventIcon        | boolean | v2.2.3 | `false` Show the entity icon before the event title                                                    |
 | europeanDate         | boolean | v2.2.3 | `false` Show date for event days in european format                                                    |
 | softLimit            | integer | v2.7.0 | Adds flexibility when `maxEventCount` is set, so if there is only e.g. 1 extra event it would be shown |
+| showHiddenText       | boolean | v3.3.0 | `true` Show x hidden events when limited number of events selected                                     |
 
 ## Color Options
 

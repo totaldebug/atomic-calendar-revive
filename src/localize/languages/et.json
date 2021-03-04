@@ -63,7 +63,8 @@
 			"noEventsForTodayText": "Tänased sündmused puuduvad tekst:",
 			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
 			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
-			"showEventIcon": "Kuva sündmuse ikooni"
+			"showEventIcon": "Kuva sündmuse ikooni",
+			"showHiddenText": "Ostende occultatum eventu illud?"
 		}
 	},
 	"calendar": {

@@ -33,6 +33,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	showDeclined?: boolean;
 	softLimit?: number;
 	showPrivate?: boolean;
+	showHiddenText?: boolean;
 
 	// color and font settings
 	nameColor?: string;

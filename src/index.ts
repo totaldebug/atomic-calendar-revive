@@ -115,14 +115,14 @@ class AtomicCalendarRevive extends LitElement {
 
 			<ha-card class="cal-card">
 				${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html` <div class="cal-nameContainer">
+					? html` <div class="cal-nameContainer">
 							${this._config.name
-						? html`<div class="cal-name" @click="${() => this.handleToggle()}">${this._config.name}</div>`
-						: ''}
+								? html`<div class="cal-name" @click="${() => this.handleToggle()}">${this._config.name}</div>`
+								: ''}
 							${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
 							${this._config.showDate ? html`<div class="calDate">${this.getDate()}</div>` : ''}
 					  </div>`
-				: ''}
+					: ''}
 
 				<div class="cal-eventContainer" style="padding-top: 4px;">${this.content}</div>
 			</ha-card>`;
@@ -624,7 +624,7 @@ class AtomicCalendarRevive extends LitElement {
 			typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
 		const textDecoration: string =
 			typeof event.attendees != 'undefined' &&
-				!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+			!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 				? 'line-through'
 				: 'none';
 
@@ -793,8 +793,8 @@ class AtomicCalendarRevive extends LitElement {
 				const dayWrap = i == 0 && di > 0 ? 'daywrap' : '';
 				const isEventNext =
 					di == 0 &&
-						moment(event.startTime).isAfter(moment()) &&
-						(i == 0 || !moment(arr[i - 1].startTime).isAfter(moment()))
+					moment(event.startTime).isAfter(moment()) &&
+					(i == 0 || !moment(arr[i - 1].startTime).isAfter(moment()))
 						? true
 						: false;
 				//show line before next event
@@ -856,11 +856,11 @@ class AtomicCalendarRevive extends LitElement {
 				const eventDateFormat =
 					this._config.europeanDate == true
 						? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth
-							? event.startTimeToShow.format('MMM')
-							: ''}`
+								? event.startTimeToShow.format('MMM')
+								: ''}`
 						: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0
-							? event.startTimeToShow.format('DD')
-							: ''}`;
+								? event.startTimeToShow.format('DD')
+								: ''}`;
 
 				const dayClassTodayEvent = moment(event.startTime).isSame(moment(), 'day') ? `event-leftCurrentDay` : ``;
 
@@ -887,7 +887,11 @@ class AtomicCalendarRevive extends LitElement {
 
 			return htmlEvents;
 		});
-		const eventnotice = this.hiddenEvents > 0 ? this.hiddenEvents + ' ' + localize('common.hiddenEventText') : '';
+		const eventnotice = this._config.showHiddenText
+			? this.hiddenEvents > 0
+				? this.hiddenEvents + ' ' + localize('common.hiddenEventText')
+				: ''
+			: '';
 		this.content = html`<table>
 				<tbody>
 					${htmlDays}
@@ -1000,7 +1004,7 @@ class AtomicCalendarRevive extends LitElement {
 								)) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
-							(this._config.showPrivate || singleEvent.visibility != "private") &&
+							(this._config.showPrivate || singleEvent.visibility != 'private') &&
 							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
 								!(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
@@ -1085,17 +1089,16 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarColor =
 								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
 							const filteredEvents = eventsArray.filter((event) => {
-
 								event['startTime'] = event.start.dateTime
 									? moment(event.start.dateTime)
 									: event.start.date
-										? moment(event.start.date).startOf('day')
-										: moment(event.start);
+									? moment(event.start.date).startOf('day')
+									: moment(event.start);
 								event['endTime'] = event.end.dateTime
 									? moment(event.end.dateTime)
 									: event.end.date
-										? moment(event.end.date).subtract(1, 'days').endOf('day')
-										: moment(event.end);
+									? moment(event.end.date).subtract(1, 'days').endOf('day')
+									: moment(event.end);
 
 								if (
 									!moment(event.startTime).isAfter(m.date, 'day') &&
@@ -1103,7 +1106,7 @@ class AtomicCalendarRevive extends LitElement {
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
-									(this._config.showPrivate || event.visibility != "private") &&
+									(this._config.showPrivate || event.visibility != 'private') &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
 									return event;
@@ -1111,20 +1114,19 @@ class AtomicCalendarRevive extends LitElement {
 							});
 							// Take filtered events and check if they are full day events or not
 							filteredEvents.map((event) => {
-
 								//1. check if google calendar all day event
 								if (
 									moment(event.startTime).isSame(moment(event.startTime).startOf('day')) &&
 									moment(event.endTime).isSame(moment(event.endTime).endOf('day'))
 								)
-									event['isFullDayEvent'] = true
+									event['isFullDayEvent'] = true;
 								//2. check if CalDav all day event
 								else if (
 									moment(event.startTime).hours() === 0 &&
 									moment(event.startTime).isSame(moment(event.endTime).subtract(1, 'day')) &&
 									moment(event.endTime).hours() === 0
 								)
-									event['isFullDayEvent'] = true
+									event['isFullDayEvent'] = true;
 								else event['isFullDayEvent'] = false;
 
 								// Check if the event is finished
@@ -1213,7 +1215,7 @@ class AtomicCalendarRevive extends LitElement {
 			if (event.isFullDayEvent) {
 				const bulletType: string =
 					typeof event.attendees != 'undefined' &&
-						!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+					!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 						? 'summary-fullday-div-declined'
 						: 'summary-fullday-div-accepted';
 
@@ -1224,12 +1226,11 @@ class AtomicCalendarRevive extends LitElement {
 					</div>
 				</div>`;
 			} else {
-
 				const StartTime = this._config.showHours ? moment(event.startTime).format('LT') : '';
 
 				const bulletType: string =
 					typeof event.attendees != 'undefined' &&
-						!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+					!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 						? 'bullet-event-div-declined'
 						: 'bullet-event-div-accepted';
 
@@ -1301,8 +1302,8 @@ class AtomicCalendarRevive extends LitElement {
 				<ha-icon-button
 					icon="mdi:calendar"
 					onClick="window.open('https://calendar.google.com/calendar/r/month/${moment(this.selectedMonth).format(
-				'YYYY',
-			)}/${moment(this.selectedMonth).format('MM')}/1'), '${this._config.linkTarget}'"
+						'YYYY',
+					)}/${moment(this.selectedMonth).format('MM')}/1'), '${this._config.linkTarget}'"
 				>
 				</ha-icon-button>
 			</div>`;
@@ -1456,13 +1457,13 @@ class EventClass {
 		this._startTime = this.eventClass.start.dateTime
 			? moment(this.eventClass.start.dateTime)
 			: this.eventClass.start.date
-				? moment(this.eventClass.start.date).startOf('day')
-				: moment(this.eventClass.start);
+			? moment(this.eventClass.start.date).startOf('day')
+			: moment(this.eventClass.start);
 		this._endTime = this.eventClass.end.dateTime
 			? moment(this.eventClass.end.dateTime)
 			: this.eventClass.end.date
-				? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day')
-				: moment(this.eventClass.end);
+			? moment(this.eventClass.end.date).subtract(1, 'days').endOf('day')
+			: moment(this.eventClass.end);
 		this.isFinished = false;
 		this.isEmpty = false;
 	}

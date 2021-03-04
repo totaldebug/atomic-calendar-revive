@@ -29,6 +29,7 @@ export default {
 	linkTarget: '_blank', // Target for links, can use any HTML target type
 	showDeclined: false, // Show declined events in the calendar
 	showPrivate: true, // hide private events
+	showHiddenText: true, //show the hidden events text
 
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color

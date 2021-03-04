@@ -245,6 +245,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return '';
 	}
+	get _showHiddenText(): boolean {
+		if (this._config) {
+			return this._config.showHiddenText || false;
+		}
+		return true;
+	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -316,12 +322,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('required.secondary')}</div>
 				</div>
 				${options.required.show
-					? html`
+				? html`
 							<div class="values">
 								<span>Entities and their options must be configured through code editor</span>
 							</div>
 					  `
-					: ''}
+				: ''}
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
 					<div class="row">
@@ -331,7 +337,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('main.secondary')}</div>
 				</div>
 				${options.main.show
-					? html`
+				? html`
 							<div class="values">
 								<paper-input
 									label="${localize('main.fields.name')}"
@@ -385,8 +391,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								>
 									<paper-listbox slot="dropdown-content" .selected=${defaultModes.indexOf(this._defaultMode)}>
 										${defaultModes.map((mode) => {
-											return html` <paper-item>${mode}</paper-item> `;
-										})}
+					return html` <paper-item>${mode}</paper-item> `;
+				})}
 									</paper-listbox>
 								</paper-dropdown-menu>
 								<paper-dropdown-menu
@@ -396,8 +402,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								>
 									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
 										${linkTargets.map((linkTarget) => {
-											return html` <paper-item>${linkTarget}</paper-item> `;
-										})}
+					return html` <paper-item>${linkTarget}</paper-item> `;
+				})}
 									</paper-listbox> </paper-dropdown-menu
 								><br />
 								<div class="side-by-side">
@@ -472,7 +478,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								</div>
 							</div>
 					  `
-					: ''}
+				: ''}
 				<!-- MAIN SETTINGS END -->
 				<!-- EVENT SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'event'}>
@@ -483,7 +489,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('event.secondary')}</div>
 				</div>
 				${options.event.show
-					? html`
+				? html`
 							<div class="values">
 								<paper-input
 									label="${localize('event.fields.untilText')}"
@@ -613,9 +619,22 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										<label class="mdc-label">${localize('event.fields.showEventIcon')}</label>
 									</div>
 								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showHiddenText ? 'off' : 'on'}`}
+											.checked=${this._showHiddenText !== false}
+											.configValue=${'showHiddenText'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showHiddenText')}</label>
+									</div>
+									<div>
+									</div>
+								</div>
 							</div>
 					  `
-					: ''}
+				: ''}
 				<!-- EVENT SETTINGS END -->
 				<!-- CALENDAR SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'calendar'}>
@@ -626,7 +645,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('calendar.secondary')}</div>
 				</div>
 				${options.calendar.show
-					? html`
+				? html`
 							<div class="values">
 								<ha-switch
 									aria-label=${`Toggle ${this._calShowDescription ? 'off' : 'on'}`}
@@ -677,7 +696,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								</div>
 							</div>
 					  `
-					: ''}
+				: ''}
 				<!-- CALENDAR SETTINGS END -->
 				<!-- APPEARANCE SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'appearance'}>
@@ -688,7 +707,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 					<div class="secondary">${localize('appearance.secondary')}</div>
 				</div>
 				${options.appearance.show
-					? html`
+				? html`
 							<div class="values">
 								<div class="side-by-side">
 									<div>
@@ -703,7 +722,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								</div>
 							</div>
 					  `
-					: ''}
+				: ''}
 				<!-- APPEARANCE SETTINGS END -->
 			</div>
 		`;
