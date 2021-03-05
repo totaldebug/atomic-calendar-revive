@@ -24,7 +24,7 @@ class AtomicCalendarRevive extends LitElement {
 	lastHTMLUpdateTime!: moment.Moment;
 	events!: Array<any>;
 	shouldUpdateHtml: boolean;
-	errorMessage: string;
+	errorMessage: TemplateResult;
 	modeToggle: string;
 	refreshCalEvents: boolean;
 	monthToGet: string;
@@ -45,7 +45,7 @@ class AtomicCalendarRevive extends LitElement {
 		this.events;
 		this.content = html``;
 		this.shouldUpdateHtml = true;
-		this.errorMessage = '';
+		this.errorMessage = html``;
 		this.modeToggle = '';
 		this.selectedMonth = moment();
 		this.refreshCalEvents = true;
@@ -163,7 +163,7 @@ class AtomicCalendarRevive extends LitElement {
 					this.events = await this.getEvents();
 				} catch (error) {
 					console.log(error);
-					this.errorMessage = localize('errors.update_card');
+					this.errorMessage = html` ${localize('errors.update_card')}  <a href='https://marksie1988.github.io/atomic-calendar-revive/faq.html' target='${this._config.linkTarget}'>See Here</a>`;
 					this.showLoader = false;
 				}
 
@@ -742,7 +742,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		// TODO some more tests end error message
 		if (!days) {
-			this.content = html`${this.errorMessage}`;
+			this.content = this.errorMessage;
 			return;
 		}
 
