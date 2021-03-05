@@ -887,8 +887,10 @@ class AtomicCalendarRevive extends LitElement {
 
 			return htmlEvents;
 		});
-		const eventnotice = this.hiddenEvents > 0
-			? this.hiddenEvents + ' ' + localize('common.hiddenEventText')
+		const eventnotice = this._config.showHiddenText
+			? this.hiddenEvents > 0
+				? this.hiddenEvents + ' ' + localize('common.hiddenEventText')
+				: ''
 			: '';
 		this.content = html`<table>
 				<tbody>
