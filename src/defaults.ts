@@ -4,7 +4,6 @@ export default {
 	// text translations
 	fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
 	untilText: localize('common.untilText'), // "Until" custom text
-	hiddenEventText: localize('common.hiddenEventText'), // "Until" custom text
 
 	// main settings
 	maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
@@ -30,6 +29,7 @@ export default {
 	showDeclined: false, // Show declined events in the calendar
 	showPrivate: true, // hide private events
 	showHiddenText: true, //show the hidden events text
+	hiddenEventText: localize('common.hiddenEventText'),
 
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color

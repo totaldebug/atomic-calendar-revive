@@ -64,7 +64,8 @@
             "noEventsForNextDaysText": "Text für 'Keine Einträge in den nächsten Tagen':",
             "fullDayEventText": "Text für 'Ganztägiger Eintrag':",
             "showEventIcon": "Ereignis-Symbol anzeigen?",
-            "showHiddenText": "Versteckten Ereignistext anzeigen?"
+            "showHiddenText": "Versteckten Ereignistext anzeigen?",
+            "hiddenEventText": "Text für versteckte Ereignisse"
         }
     },
     "calendar": {
