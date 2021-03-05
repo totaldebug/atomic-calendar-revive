@@ -1,0 +1,94 @@
+{
+    "common": {
+        "version": "Version",
+        "show_warning": "Warnung anzeigen",
+        "error": "Fehler",
+        "description": "Erweiterte Kalenderkarte für Home Assistant Lovelace",
+        "fullDayEventText": "Ganztägig",
+        "untilText": "Bis",
+        "noEventsForTodayText": "Keine Einträge für heute!",
+        "noEventsForNextDaysText": "Keine Einträge in den nächsten Tagen",
+        "hiddenEventText": "Einige Einträge sind ausgeblendet."
+    },
+    "ui": {
+        "common": {
+            "previous": "Zurück",
+            "next": "Vor"
+        }
+    },
+    "errors": {
+        "invalid_configuration": "Ungültige Konfiguration",
+        "update_card": "Der Kalender kann von der Home Assistant-Komponente nicht geladen werden!"
+    },
+    "required": {
+        "name": "Benötigt",
+        "secondary": "Folgende Optionen sind notwendig, damit die Lovelace Karte angezeigt werden kann:"
+    },
+    "main": {
+        "name": "Haupteinstellungen",
+        "secondary": "Global geltende Optionen",
+        "fields": {
+            "name": "Name",
+            "showColors": "Farben anzeigen",
+            "maxDaysToShow": "Maximal angezeigte Tage",
+            "showLocation": "Ortssymbol anzeigen",
+            "showLoader": "Ladeanimation anzeigen",
+            "showDate": "Datum mitanzeigen",
+            "showDeclined": "Abgelehnte Einträge anzeigen",
+            "sortByStartTime": "Nach Startzeit sortieren",
+            "hideFinishedEvents": "Beendete Einträge ausblenden",
+            "dateFormat": "Datumsformat",
+            "hoursFormat": "Stundenformat",
+            "defaultMode": "Standardmodus",
+            "linkTarget": "Verknüpfungsziel",
+            "refreshInterval": "Aktualisierungsintervall",
+            "showRelativeTime": "Relative Zeit anzeigen",
+            "firstDayOfWeek": "Erster Wochentag 0-6"
+        }
+    },
+    "event": {
+        "name": "Ereignismodus",
+        "secondary": "Ereignismodus-spezifische Optionen",
+        "fields": {
+            "showCurrentEventLine": "Linie vor einem Eintrag anzeigen?",
+            "showProgressBar": "Fortschrittsbalken anzeigen?",
+            "showMonth": "Monat anzeigen?",
+            "showWeekDay": "Wochentag anzeigen?",
+            "showDescription": "Beschreibung anzeigen?",
+            "disableEventLink": "Links im Ereignistitel deaktivieren?",
+            "disableLocationLink": "Links zum Ort deaktivieren?",
+            "showNoEventsForToday": "'Keine Einträge heute' anzeigen?",
+            "showFullDayProgress": "Ganztägigen Fortschritt der Einträge anzeigen?",
+            "untilText": "Text für 'bis':",
+            "noEventsForTodayText": "Text für 'Keine Einträge heute':",
+            "noEventsForNextDaysText": "Text für 'Keine Einträge in den nächsten Tagen':",
+            "fullDayEventText": "Text für 'Ganztägiger Eintrag':",
+            "showEventIcon": "Ereignis-Symbol anzeigen?",
+            "showHiddenText": "Versteckten Ereignistext anzeigen?",
+            "hiddenEventText": "Text für versteckte Ereignisse"
+        }
+    },
+    "calendar": {
+        "name": "Kalendermodus",
+        "secondary": "Kalendermodus-spezifische Optionen",
+        "fields": {
+            "showLastCalendarWeek": "Letzte Kalenderwoche anzeigen?",
+            "disableCalEventLink": "Links für Kalendereinträge deaktivieren?",
+            "disableCalLocationLink": "Links für Ortsangaben in Kalendereinträgen deaktivieren?",
+            "calShowDescription": "Beschreibung anzeigen?",
+            "disableCalLink": "Kalenderlinks deaktivieren?"
+        }
+    },
+    "appearance": {
+        "name": "Erscheinungsbild",
+        "secondary": "Farbanpassungen usw.",
+        "main": {
+            "name": "Globale Einstellungen",
+            "secondary": "Globale Farbeinstellungen"
+        },
+        "fields": {
+            "locationLinkColor": "Farbe für Links zu Ortsangaben:",
+            "dimFinishedEvents": "Erledigte Einträge blasser anzeigen?"
+        }
+    }
+}

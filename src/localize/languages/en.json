@@ -63,7 +63,9 @@
 			"noEventsForTodayText": "No events today text:",
 			"noEventsForNextDaysText": "No events in the next few days text:",
 			"fullDayEventText": "Full day event text:",
-			"showEventIcon": "Show Event Icon"
+			"showEventIcon": "Show Event Icon",
+			"showHiddenText": "Show hidden event text?",
+			"hiddenEventText": "Text for hidden events:"
 		}
 	},
 	"calendar": {

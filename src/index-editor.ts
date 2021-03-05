@@ -245,6 +245,18 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return '';
 	}
+	get _showHiddenText(): boolean {
+		if (this._config) {
+			return this._config.showHiddenText || false;
+		}
+		return true;
+	}
+	get _hiddenEventText(): string {
+		if (this._config) {
+			return this._config.hiddenEventText || '';
+		}
+		return '';
+	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -513,6 +525,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									.configValue=${'noEventsForTodayText'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
+								<paper-input
+									label="${localize('event.fields.hiddenEventText')}"
+									type="text"
+									.value=${this._hiddenEventText}
+									.configValue=${'hiddenEventText'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
 								<div class="side-by-side">
 									<div>
 										<ha-switch
@@ -612,6 +631,18 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showEventIcon')}</label>
 									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showHiddenText ? 'on' : 'off'}`}
+											.checked=${this._showHiddenText !== false}
+											.configValue=${'showHiddenText'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showHiddenText')}</label>
+									</div>
+									<div></div>
 								</div>
 							</div>
 					  `

@@ -887,7 +887,11 @@ class AtomicCalendarRevive extends LitElement {
 
 			return htmlEvents;
 		});
-		const eventnotice = this.hiddenEvents > 0 ? this.hiddenEvents + ' ' + localize('common.hiddenEventText') : '';
+		const eventnotice = this._config.showHiddenText
+			? this.hiddenEvents > 0
+				? this.hiddenEvents + ' ' + localize('common.hiddenEventText')
+				: ''
+			: '';
 		this.content = html`<table>
 				<tbody>
 					${htmlDays}
@@ -1000,7 +1004,7 @@ class AtomicCalendarRevive extends LitElement {
 								)) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
-							(this._config.showPrivate || singleEvent.visibility != "private") &&
+							(this._config.showPrivate || singleEvent.visibility != 'private') &&
 							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
 								!(this._config.hideFinishedEvents && singleAPIEvent.isEventFinished))
@@ -1085,7 +1089,6 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarColor =
 								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
 							const filteredEvents = eventsArray.filter((event) => {
-
 								event['startTime'] = event.start.dateTime
 									? moment(event.start.dateTime)
 									: event.start.date
@@ -1103,7 +1106,7 @@ class AtomicCalendarRevive extends LitElement {
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
-									(this._config.showPrivate || event.visibility != "private") &&
+									(this._config.showPrivate || event.visibility != 'private') &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
 									return event;
@@ -1111,20 +1114,19 @@ class AtomicCalendarRevive extends LitElement {
 							});
 							// Take filtered events and check if they are full day events or not
 							filteredEvents.map((event) => {
-
 								//1. check if google calendar all day event
 								if (
 									moment(event.startTime).isSame(moment(event.startTime).startOf('day')) &&
 									moment(event.endTime).isSame(moment(event.endTime).endOf('day'))
 								)
-									event['isFullDayEvent'] = true
+									event['isFullDayEvent'] = true;
 								//2. check if CalDav all day event
 								else if (
 									moment(event.startTime).hours() === 0 &&
 									moment(event.startTime).isSame(moment(event.endTime).subtract(1, 'day')) &&
 									moment(event.endTime).hours() === 0
 								)
-									event['isFullDayEvent'] = true
+									event['isFullDayEvent'] = true;
 								else event['isFullDayEvent'] = false;
 
 								// Check if the event is finished
@@ -1224,7 +1226,6 @@ class AtomicCalendarRevive extends LitElement {
 					</div>
 				</div>`;
 			} else {
-
 				const StartTime = this._config.showHours ? moment(event.startTime).format('LT') : '';
 
 				const bulletType: string =
