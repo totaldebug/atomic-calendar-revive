@@ -21,3 +21,9 @@ Ensure that you also can access the file at the location specified in HA from a 
 If your color scheme is not showing as expected and you are using a custom theme, first please swap back to the default theme and see if this resolves the issue.
 
 Also consider using [card-mod](https://github.com/thomasloven/lovelace-card-mod) instead, this is a much better way to control the cards looks.
+
+## How to fix "The calendar can't be loaded from Home Assistant component."
+
+Usually this error is displayed when the calendar is not authorised for access via Home Assistant.
+
+For Google Calendar integtrations be sure to remove the `.google.token` file and re-auth your google calendar.
