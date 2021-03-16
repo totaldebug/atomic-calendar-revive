@@ -786,6 +786,7 @@ class AtomicCalendarRevive extends LitElement {
 			d.push(emptyEvent);
 			days.unshift(d);
 		}
+
 		//loop through days
 		htmlDays = days.map((day, di) => {
 			//loop through events for each day
@@ -889,7 +890,7 @@ class AtomicCalendarRevive extends LitElement {
 		});
 		const eventnotice = this._config.showHiddenText
 			? this.hiddenEvents > 0
-				? this.hiddenEvents + ' ' + localize('common.hiddenEventText')
+				? this.hiddenEvents + ' ' + this._config.hiddenEventText
 				: ''
 			: '';
 		this.content = html`<table>
