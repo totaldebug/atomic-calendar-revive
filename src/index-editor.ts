@@ -775,6 +775,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				};
 			}
 		}
-		fireEvent(this, 'config-changed', { config: this._config });
+		//fireEvent(this, 'config-changed', { config: this._config });
 	}
 }
