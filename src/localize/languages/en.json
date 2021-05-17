@@ -18,7 +18,8 @@
 	},
 	"errors": {
 		"invalid_configuration": "Invalid Configuration",
-		"update_card": "The calendar can't be loaded from Home Assistant component"
+		"update_card": "The calendar can't be loaded from Home Assistant component",
+		"no_entities": "You have not specified any entities"
 	},
 	"required": {
 		"name": "Reqired",
