@@ -1,1 +1,0 @@
-{"code":"import { version, editor_version } from '../package.json';\r\nexport const CARD_VERSION = version;\r\nexport const EDITOR_VERSION = editor_version;\r\n","references":["/atomic-calendar-revive/package.json"]}
