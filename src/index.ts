@@ -3,6 +3,7 @@ import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 //import 'moment/min/locales';
 import '@material/mwc-linear-progress';
 import { DateTime } from "luxon";
+import Info from 'luxon/src/info.js'
 
 //import moment from 'moment';
 
@@ -75,6 +76,9 @@ class AtomicCalendarRevive extends LitElement {
 		if (!config) {
 			throw new Error(localize('errors.invalid_configuration'));
 		}
+		if (!config.entities) {
+			throw new Error(localize('errors.no_entities'))
+		}
 
 		const customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
@@ -84,24 +88,19 @@ class AtomicCalendarRevive extends LitElement {
 		};
 
 		this.modeToggle = this._config.defaultMode!;
-		try {
-			if (typeof this._config.entities === 'string')
-				this._config.entities = [
-					{
-						entity: config.entities,
-					},
-				];
-			this._config.entities.forEach((entity, i) => {
-				if (typeof entity === 'string')
-					this._config.entities[i] = {
-						entity: entity,
-					};
-			});
-		} catch (e) {
-			console.log(e);
-			this.errorMessage = html` ${localize('errors.no_entities')}  <a href='https://marksie1988.github.io/atomic-calendar-revive/config/basic_config.html' target='${this._config.linkTarget}'>See Here</a>`;
-			this.showLoader = false;
-		}
+
+		if (typeof this._config.entities === 'string')
+			this._config.entities = [
+				{
+					entity: config.entities,
+				},
+			];
+		this._config.entities.forEach((entity, i) => {
+			if (typeof entity === 'string')
+				this._config.entities[i] = {
+					entity: entity,
+				};
+		});
 
 	}
 
@@ -584,14 +583,7 @@ class AtomicCalendarRevive extends LitElement {
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.
 	getCardSize() {
-		try {
-			return this._config.entities.length + 1;
-		} catch (e) {
-			console.log(e);
-			this.errorMessage = html` ${localize('errors.no_entities')}  <a href='https://marksie1988.github.io/atomic-calendar-revive/config/basic_config.html' target='${this._config.linkTarget}'>See Here</a>`;
-			this.showLoader = false;
-		}
-
+		return this._config.entities.length + 1;
 	}
 
 	_toggle(state) {
@@ -973,8 +965,8 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	async getEvents() {
 		const daysToShow = this._config.maxDaysToShow! == 0 ? this._config.maxDaysToShow! : this._config.maxDaysToShow! - 1;
-		const start = DateTime.now().plus({ days: this._config.startDaysAhead }).endOf('day').toFormat('yyyy-MM-dd HH:mm:ss');
-		const end = DateTime.now().plus({ days: daysToShow + this._config.startDaysAhead! }).endOf('day').toFormat('yyyy-MM-dd HH:mm:ss');
+		const start = DateTime.now().plus({ days: this._config.startDaysAhead }).startOf('day').toFormat("yyyy-MM-dd'T'HH:mm:ss");
+		const end = DateTime.now().plus({ days: daysToShow + this._config.startDaysAhead! }).endOf('day').toFormat("yyyy-MM-dd'T'HH:mm:ss");
 		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
 			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
@@ -1004,7 +996,7 @@ class AtomicCalendarRevive extends LitElement {
 								this.checkTimeFilter(
 									singleEvent,
 									DateTime.fromFormat(startTimeFilter, 'HH:mm').minus({ minutes: 1 }),
-									DateTime.fromFormat(endTimeFilter, 'HH:mm').add({ minutes: 1 }),
+									DateTime.fromFormat(endTimeFilter, 'HH:mm').plus({ minutes: 1 }),
 								)) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
@@ -1063,8 +1055,9 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarEvents(startDay, endDay, monthToGet, month) {
 		this.refreshCalEvents = false;
-		const start = DateTime.fromISO(startDay).startOf('day').toFormat('YYYY-MM-DDTHH:mm:ss');
-		const end = DateTime.fromISO(endDay).endOf('day').toFormat('YYYY-MM-DDTHH:mm:ss');
+		const start = DateTime.fromISO(startDay).startOf('day').toFormat("YYYY-MM-DD'T'HH:mm:ss");
+		const end = DateTime.fromISO(endDay).endOf('day').toFormat("YYYY-MM-DD'T'HH:mm:ss");
+
 		// calendarUrlList[url, type of event configured for this callendar,filters]
 		const calendarUrlList: any[] = [];
 		this._config.entities.map((entity) => {
@@ -1121,16 +1114,21 @@ class AtomicCalendarRevive extends LitElement {
 								if (
 									DateTime.fromISO(event.startTime).hasSame(DateTime.fromISO(event.startTime).startOf('day')) &&
 									DateTime.fromISO(event.endTime).hasSame(DateTime.fromISO(event.endTime).endOf('day'))
-								)
+								) {
 									event['isFullDayEvent'] = true;
+								}
+
 								//2. check if CalDav all day event
 								else if (
 									DateTime.fromISO(event.startTime).hours() === 0 &&
 									DateTime.fromISO(event.startTime).hasSame(DateTime.fromISO(event.endTime).minus({ days: 1 })) &&
 									DateTime.fromISO(event.endTime).hours() === 0
-								)
+								) {
 									event['isFullDayEvent'] = true;
-								else event['isFullDayEvent'] = false;
+								}
+								else {
+									event['isFullDayEvent'] = false;
+								}
 
 								// Check if the event is finished
 								DateTime.fromISO(event.endTime) < DateTime.now()
@@ -1169,7 +1167,7 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	buildCalendar(selectedMonth) {
 		const firstDay = DateTime.fromISO(selectedMonth).startOf('month');
-		const dayOfWeekNumber = firstDay.day();
+		const dayOfWeekNumber = firstDay.weekday;
 		this.month = [];
 		let weekShift = 0;
 		dayOfWeekNumber - this._config.firstDayOfWeek! >= 0 ? (weekShift = 0) : (weekShift = 7);
@@ -1178,7 +1176,7 @@ class AtomicCalendarRevive extends LitElement {
 			i < 42 - dayOfWeekNumber + this._config.firstDayOfWeek! - weekShift;
 			i++
 		) {
-			const Calendar = new CalendarDay(DateTime.fromISO(firstDay).add({ days: i }), i);
+			const Calendar = new CalendarDay(firstDay.plus({ days: i }), i);
 			this.month.push(Calendar);
 		}
 	}
@@ -1188,7 +1186,7 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	handleMonthChange(i) {
-		this.selectedMonth = DateTime.fromISO(this.selectedMonth).add({ months: i });
+		this.selectedMonth = DateTime.fromISO(this.selectedMonth).plus({ months: i });
 		this.monthToGet = this.selectedMonth.toFormat('L');
 		this.eventSummary = html`&nbsp;`;
 		this.refreshCalEvents = true;
@@ -1288,7 +1286,7 @@ class AtomicCalendarRevive extends LitElement {
 				title=${this.hass.localize('ui.common.previous')}
 			></ha-icon-button>
 			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
-				${DateTime.fromISO(this.selectedMonth).toFormat('MMMM')} ${DateTime.fromISO(this.selectedMonth).toFormat('YYYY')}
+				${DateTime.fromISO(this.selectedMonth).toFormat('MMMM')} ${DateTime.fromISO(this.selectedMonth).toFormat('yyyy')}
 			</span>
 			<ha-icon-button
 				class="next"
@@ -1305,7 +1303,7 @@ class AtomicCalendarRevive extends LitElement {
 				<ha-icon-button
 					icon="mdi:calendar"
 					onClick="window.open('https://calendar.google.com/calendar/r/month/${DateTime.fromISO(this.selectedMonth).toFormat(
-				'YYYY',
+				'yyyy',
 			)}/${DateTime.fromISO(this.selectedMonth).toFormat('MM')}/1'), '${this._config.linkTarget}'"
 				>
 				</ha-icon-button>
@@ -1340,7 +1338,7 @@ class AtomicCalendarRevive extends LitElement {
 						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
 						<div class="calDay ${dayClassToday}">
-							<div style="position: relative; top: 5%;">${day.dayNumber.replace(/^0|[^/]0./, '')}</div>
+							<div style="position: relative; top: 5%;">${day.date.day}</div>
 							<div>${this.handleCalendarIcons(day)}</div>
 						</div>
 					</td>
@@ -1367,7 +1365,7 @@ class AtomicCalendarRevive extends LitElement {
 			this.hiddenEvents = 0;
 		}
 		const month = this.month;
-		const weekDays = DateTime.fromISO.weekdaysMin(true);
+		const weekDays = Info.weekdays('short');
 		const htmlDayNames = weekDays.map(
 			(day) => html` <th class="cal" style="color:  ${this._config.calWeekDayColor};">${day}</th> `,
 		);
@@ -1527,10 +1525,12 @@ class EventClass {
 	get isFullDayEvent() {
 		//1. check if google calendar all day event
 		if (
-			DateTime.fromISO(this._startTime).hasSame(DateTime.fromISO(this._startTime), 'day') &&
-			DateTime.fromISO(this._endTime).hasSame(DateTime.fromISO(this._endTime), 'day')
-		)
+			DateTime.fromISO(this._startTime).toMillis() === DateTime.fromISO(this._startTime).startOf('day').toMillis() &&
+			DateTime.fromISO(this._endTime).toMillis() === DateTime.fromISO(this._endTime).endOf('day').toMillis()
+		) {
 			return true;
+		}
+
 		//2. check if CalDav all day event
 		else if (
 			DateTime.fromISO(this._startTime).hours === 0 &&
@@ -1548,8 +1548,8 @@ class EventClass {
 				(!this._startTime &&
 					!this._endTime &&
 					!DateTime.fromISO(this._startTime).hasSame(DateTime.fromISO(this._endTime).minus({ days: 1 }), 'day')) ||
-				(DateTime.fromISO(this._startTime).hasSame(DateTime.fromISO(this._startTime).startOf('day'), 'day') &&
-					DateTime.fromISO(this._endTime).hasSame(DateTime.fromISO(this._endTime).startOf('day'), 'day') &&
+				(DateTime.fromISO(this._startTime).toMillis() === DateTime.fromISO(this._startTime).startOf('day').toMillis() &&
+					DateTime.fromISO(this._endTime).toMillis() === DateTime.fromISO(this._endTime).endOf('day').toMillis() &&
 					DateTime.fromISO(this._endTime).startOf('day').minus({ days: 1 }) > DateTime.fromISO(this._startTime).endOf('day'))
 			)
 				return true;
