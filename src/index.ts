@@ -1055,31 +1055,30 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarEvents(startDay, endDay, monthToGet, month) {
 		this.refreshCalEvents = false;
-		const start = DateTime.fromISO(startDay).startOf('day').toFormat("YYYY-MM-DD'T'HH:mm:ss");
-		const end = DateTime.fromISO(endDay).endOf('day').toFormat("YYYY-MM-DD'T'HH:mm:ss");
+		const start = DateTime.fromISO(startDay).startOf('day').toFormat("yyyy-MM-dd'T'HH:mm:ss");
+		const end = DateTime.fromISO(endDay).endOf('day').toFormat("yyyy-MM-dd'T'HH:mm:ss");
 
 		// calendarUrlList[url, type of event configured for this callendar,filters]
 		const calendarUrlList: any[] = [];
 		this._config.entities.map((entity) => {
-			if (typeof entity.icon != 'undefined') {
-				calendarUrlList.push([
-					`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,
-					entity.icon,
-					typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
-					typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
-					typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor,
-					typeof entity.startTimeFilter != 'undefined' ? entity.startTimeFilter : '00:00:00',
-					typeof entity.endTimeFilter != 'undefined' ? entity.endTimeFilter : '0:00:00',
-				]);
-			}
+			// Check for calendar settings, if any are undefined, set defaults
+			calendarUrlList.push([
+				`calendars/${entity.entity}?start=${start}Z&end=${end}Z`,
+				typeof entity.icon != 'undefined' ? entity.icon : 'mdi:bell-circle',
+				typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
+				typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
+				typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor,
+				typeof entity.startTimeFilter != 'undefined' ? entity.startTimeFilter : '00:00:00',
+				typeof entity.endTimeFilter != 'undefined' ? entity.endTimeFilter : '00:00:00',
+			]);
 		});
 		Promise.all(calendarUrlList.map((url) => this.hass!.callApi('GET', url[0])))
 			.then((result: Array<any>) => {
 				if (monthToGet == this.monthToGet) {
 					result.map((eventsArray, i: number) => {
 						this.month.map((m: { date: string }) => {
-							const calendarIcon = calendarUrlList[i][1];
 							const calendarUrl = calendarUrlList[i][0];
+							const calendarIcon = calendarUrlList[i][1];
 							const calendarBlacklist = typeof calendarUrlList[i][2] != 'undefined' ? calendarUrlList[i][2] : '';
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
 							const calendarColor =
@@ -1095,16 +1094,16 @@ class AtomicCalendarRevive extends LitElement {
 									: event.end.date
 										? DateTime.fromISO(event.end.date).minus({ days: 1 }).endOf('day')
 										: DateTime.fromISO(event.end);
-
 								if (
-									!DateTime.fromISO(event.startTime).startOf('day') > DateTime.fromISO(m.date).startOf('day') &&
-									!DateTime.fromISO(event.endTime).startOf('day') < DateTime.fromISO(m.date).startOf('day') &&
+									!DateTime.fromISO(event.startTime).day > DateTime.fromISO(m.date).day &&
+									!DateTime.fromISO(event.endTime).day < DateTime.fromISO(m.date).day &&
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
 									(this._config.showPrivate || event.visibility != 'private') &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
+									console.log(event)
 									return event;
 								}
 							});
@@ -1112,24 +1111,23 @@ class AtomicCalendarRevive extends LitElement {
 							filteredEvents.map((event) => {
 								//1. check if google calendar all day event
 								if (
-									DateTime.fromISO(event.startTime).hasSame(DateTime.fromISO(event.startTime).startOf('day')) &&
-									DateTime.fromISO(event.endTime).hasSame(DateTime.fromISO(event.endTime).endOf('day'))
+									DateTime.fromISO(event.startTime).toMillis() === DateTime.fromISO(event.startTime).startOf('day').toMillis() &&
+									DateTime.fromISO(event.endTime).toMillis() === DateTime.fromISO(event.endTime).endOf('day').toMillis()
 								) {
 									event['isFullDayEvent'] = true;
 								}
 
 								//2. check if CalDav all day event
 								else if (
-									DateTime.fromISO(event.startTime).hours() === 0 &&
+									DateTime.fromISO(event.startTime).hours === 0 &&
 									DateTime.fromISO(event.startTime).hasSame(DateTime.fromISO(event.endTime).minus({ days: 1 })) &&
-									DateTime.fromISO(event.endTime).hours() === 0
+									DateTime.fromISO(event.endTime).hours === 0
 								) {
 									event['isFullDayEvent'] = true;
 								}
 								else {
 									event['isFullDayEvent'] = false;
 								}
-
 								// Check if the event is finished
 								DateTime.fromISO(event.endTime) < DateTime.now()
 									? (event['isEventFinished'] = true)
@@ -1187,7 +1185,7 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	handleMonthChange(i) {
 		this.selectedMonth = DateTime.fromISO(this.selectedMonth).plus({ months: i });
-		this.monthToGet = this.selectedMonth.toFormat('L');
+		this.monthToGet = this.selectedMonth.toFormat('M');
 		this.eventSummary = html`&nbsp;`;
 		this.refreshCalEvents = true;
 	}
@@ -1328,7 +1326,6 @@ class AtomicCalendarRevive extends LitElement {
 			const dayStyleClicked = DateTime.fromISO(day.date).hasSame(DateTime.fromISO(this.clickedDate), 'day')
 				? `background-color: ${this._config.calActiveEventBackgroundColor};`
 				: ``;
-
 			if (i < 35 || showLastRow)
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
@@ -1355,7 +1352,8 @@ class AtomicCalendarRevive extends LitElement {
 		if (
 			this.month.length == 0 ||
 			this.refreshCalEvents ||
-			DateTime.now().diff(this.lastCalendarUpdateTime, 'minutes') > 120
+			!this.lastCalendarUpdateTime ||
+			DateTime.now().diff(DateTime.fromISO(this.lastCalendarUpdateTime)).seconds > this._config.refreshInterval
 		) {
 			this.lastCalendarUpdateTime = DateTime.now();
 			this.showLoader = true;
@@ -1403,7 +1401,7 @@ class CalendarDay {
 	constructor(calendarDay, d) {
 		this.calendarDay = calendarDay;
 		this._lp = d;
-		this.ymd = DateTime.fromISO(calendarDay).toFormat('YYYY-MM-DD');
+		this.ymd = DateTime.fromISO(calendarDay).toFormat('yyyy-MM-dd');
 		this._allEvents = [];
 		this._daybackground = [];
 	}
@@ -1412,13 +1410,6 @@ class CalendarDay {
 		return DateTime.fromISO(this.calendarDay);
 	}
 
-	get dayNumber() {
-		return DateTime.fromISO(this.calendarDay).toFormat('DD');
-	}
-
-	get monthNumber() {
-		return DateTime.fromISO(this.calendarDay).month;
-	}
 	set allEvents(events) {
 		this._allEvents = events;
 	}
