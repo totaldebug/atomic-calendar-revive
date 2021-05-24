@@ -1083,65 +1083,58 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
 							const calendarColor =
 								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
-							const filteredEvents = eventsArray.filter((event) => {
+
+							eventsArray.map((event) => {
 								event['startTime'] = event.start.dateTime
 									? DateTime.fromISO(event.start.dateTime)
 									: event.start.date
 										? DateTime.fromISO(event.start.date).startOf('day')
-										: DateTime.fromISO(event.start);
+										: DateTime.fromISO(event.start, { setZone: true });
 								event['endTime'] = event.end.dateTime
 									? DateTime.fromISO(event.end.dateTime)
 									: event.end.date
 										? DateTime.fromISO(event.end.date).minus({ days: 1 }).endOf('day')
-										: DateTime.fromISO(event.end);
+										: DateTime.fromISO(event.end, { setZone: true });
 								if (
-									!DateTime.fromISO(event.startTime).day > DateTime.fromISO(m.date).day &&
-									!DateTime.fromISO(event.endTime).day < DateTime.fromISO(m.date).day &&
+									!(event.startTime.day > DateTime.fromISO(m.date).day) &&
+									!(event.endTime.day < DateTime.fromISO(m.date).day) &&
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
 									(this._config.showPrivate || event.visibility != 'private') &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
-									console.log(event)
-									return event;
-								}
-							});
-							// Take filtered events and check if they are full day events or not
-							filteredEvents.map((event) => {
-								//1. check if google calendar all day event
-								if (
-									DateTime.fromISO(event.startTime).toMillis() === DateTime.fromISO(event.startTime).startOf('day').toMillis() &&
-									DateTime.fromISO(event.endTime).toMillis() === DateTime.fromISO(event.endTime).endOf('day').toMillis()
-								) {
-									event['isFullDayEvent'] = true;
-								}
 
-								//2. check if CalDav all day event
-								else if (
-									DateTime.fromISO(event.startTime).hours === 0 &&
-									DateTime.fromISO(event.startTime).hasSame(DateTime.fromISO(event.endTime).minus({ days: 1 })) &&
-									DateTime.fromISO(event.endTime).hours === 0
-								) {
-									event['isFullDayEvent'] = true;
-								}
-								else {
-									event['isFullDayEvent'] = false;
-								}
-								// Check if the event is finished
-								DateTime.fromISO(event.endTime) < DateTime.now()
-									? (event['isEventFinished'] = true)
-									: (event['isEventFinished'] = false);
+									// Check if google calendar  or CalDav all day event
+									if (
+										(event.startTime.toMillis() === event.startTime.startOf('day').toMillis() &&
+											event.endTime.toMillis() === event.endTime.endOf('day').toMillis()) ||
+										(event.startTime.hour.toString() == 0 &&
+											event.endTime.hour.toString() == 0 &&
+											event.startTime.day <= event.endTime.day
+										)
+									) {
+										event['isFullDayEvent'] = true;
+									}
+									else {
+										event['isFullDayEvent'] = false;
+									}
 
-								try {
-									event['_config'] = {
-										color: calendarColor,
-										titleColor: this._config.eventTitleColor,
-										icon: calendarIcon,
-									};
-									return m['allEvents'].push(event);
-								} catch (e) {
-									console.log(localize('common.version') + ': ', e, calendarUrl);
+									// Check if the event is finished
+									event.endTime < DateTime.now()
+										? (event['isEventFinished'] = true)
+										: (event['isEventFinished'] = false);
+
+									try {
+										event['_config'] = {
+											color: calendarColor,
+											titleColor: this._config.eventTitleColor,
+											icon: calendarIcon,
+										};
+										return m['allEvents'].push(event);
+									} catch (e) {
+										console.log(localize('common.version') + ': ', e, calendarUrl);
+									}
 								}
 							});
 						});
