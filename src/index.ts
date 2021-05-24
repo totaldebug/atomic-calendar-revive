@@ -1190,10 +1190,9 @@ class AtomicCalendarRevive extends LitElement {
 	handleEventSummary(day) {
 		this.clickedDate = day.date;
 		day._allEvents.sort(function (a, b) {
-			const leftStartTime = a.start.dateTime ? DateTime.fromISO(a.start.dateTime) : DateTime.fromISO(a.start.date).startOf('day');
-			const rightStartTime = b.start.dateTime ? DateTime.fromISO(b.start.dateTime) : DateTime.fromISO(b.start.date).startOf('day');
-			return DateTime.fromISO(leftStartTime).diff(DateTime.fromISO(rightStartTime));
+			return a.startTime.diff(b.startTime);
 		});
+		console.log(day)
 		this.eventSummary = day._allEvents.map((event) => {
 			const titleColor =
 				typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
