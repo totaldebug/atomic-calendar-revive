@@ -1246,7 +1246,7 @@ class AtomicCalendarRevive extends LitElement {
 		const myIcons: any[] = [];
 		day._allEvents.map((event) => {
 			if (event._config.icon && event._config.icon.length > 0) {
-				const index = myIcons.findIndex((x) => x.icon == event._config.icon);
+				const index = myIcons.findIndex((x) => (x.icon == event._config.icon) && (x.color == event._config.color));
 				if (index === -1) {
 					myIcons.push({ icon: event._config.icon, color: event._config.color });
 				}
