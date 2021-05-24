@@ -1177,7 +1177,7 @@ class AtomicCalendarRevive extends LitElement {
 	 *
 	 */
 	handleMonthChange(i) {
-		this.selectedMonth = DateTime.fromISO(this.selectedMonth).plus({ months: i });
+		this.selectedMonth = this.selectedMonth.plus({ months: i });
 		this.monthToGet = this.selectedMonth.toFormat('M');
 		this.eventSummary = html`&nbsp;`;
 		this.refreshCalEvents = true;
@@ -1217,7 +1217,7 @@ class AtomicCalendarRevive extends LitElement {
 					</div>
 				</div>`;
 			} else {
-				const StartTime = this._config.showHours ? DateTime.fromISO(event.startTime).toFormat('LT') : '';
+				const StartTime = this._config.showHours ? event.startTime.toFormat('T') : '';
 
 				const bulletType: string =
 					typeof event.attendees != 'undefined' &&
@@ -1276,7 +1276,7 @@ class AtomicCalendarRevive extends LitElement {
 				title=${this.hass.localize('ui.common.previous')}
 			></ha-icon-button>
 			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
-				${DateTime.fromISO(this.selectedMonth).toFormat('MMMM')} ${DateTime.fromISO(this.selectedMonth).toFormat('yyyy')}
+				${this.selectedMonth.toFormat('MMMM')} ${this.selectedMonth.toFormat('yyyy')}
 			</span>
 			<ha-icon-button
 				class="next"
@@ -1292,9 +1292,9 @@ class AtomicCalendarRevive extends LitElement {
 			return html`<div class="calIconSelector">
 				<ha-icon-button
 					icon="mdi:calendar"
-					onClick="window.open('https://calendar.google.com/calendar/r/month/${DateTime.fromISO(this.selectedMonth).toFormat(
+					onClick="window.open('https://calendar.google.com/calendar/r/month/${this.selectedMonth.toFormat(
 				'yyyy',
-			)}/${DateTime.fromISO(this.selectedMonth).toFormat('MM')}/1'), '${this._config.linkTarget}'"
+			)}/${this.selectedMonth.toFormat('MM')}/1'), '${this._config.linkTarget}'"
 				>
 				</ha-icon-button>
 			</div>`;
@@ -1307,15 +1307,16 @@ class AtomicCalendarRevive extends LitElement {
 	 */
 	getCalendarDaysHTML(month) {
 		let showLastRow = true;
-		if (!this._config.showLastCalendarWeek && !DateTime.fromISO(month[35].date).hasSame(DateTime.fromISO(this.selectedMonth), 'month'))
+		if (!this._config.showLastCalendarWeek && !DateTime.fromISO(month[35].date).hasSame(this.selectedMonth, 'month'))
 			showLastRow = false;
 
 		return month.map((day, i) => {
-			const dayStyleOtherMonth = DateTime.fromISO(day.date).hasSame(DateTime.fromISO(this.selectedMonth), 'month') ? '' : `opacity: .35;`;
-			const dayClassToday = DateTime.fromISO(day.date).hasSame(DateTime.now(), 'day') ? `currentDay` : ``;
-			const dayStyleSat = DateTime.fromISO(day.date).weekday == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
-			const dayStyleSun = DateTime.fromISO(day.date).weekday == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
-			const dayStyleClicked = DateTime.fromISO(day.date).hasSame(DateTime.fromISO(this.clickedDate), 'day')
+			const dayDate = DateTime.fromISO(day.date)
+			const dayStyleOtherMonth = dayDate.hasSame(this.selectedMonth, 'month') ? '' : `opacity: .35;`;
+			const dayClassToday = dayDate.hasSame(DateTime.now(), 'day') ? `currentDay` : ``;
+			const dayStyleSat = dayDate.weekday == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
+			const dayStyleSun = dayDate.weekday == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
+			const dayStyleClicked = dayDate.hasSame(DateTime.fromISO(this.clickedDate), 'day')
 				? `background-color: ${this._config.calActiveEventBackgroundColor};`
 				: ``;
 			if (i < 35 || showLastRow)
