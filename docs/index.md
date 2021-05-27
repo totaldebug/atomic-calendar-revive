@@ -49,6 +49,7 @@ It contains two types of views: `Events mode` and `Calendar mode`. You can switc
 ## Contributions & Support
 
 Got **something interesting** you'd like to **share**? Learn about [contributing](https://github.com/marksie1988/.github/blob/main/.github/CONTRIBUTING.md).
+
 ## Donate
 
 Please consider supporting this project by sponsoring, or just donating a little via [our sponsor page](https://github.com/sponsors/marksie1988)
