@@ -1342,7 +1342,6 @@ class AtomicCalendarRevive extends LitElement {
 				: ``;
 			if (dayDate.isSame(dayjs(), 'day') && !this.clickedDate) {
 				this.handleEventSummary(day, false)
-				console.log('first')
 			}
 			if (i < 35 || showLastRow)
 				return html`
