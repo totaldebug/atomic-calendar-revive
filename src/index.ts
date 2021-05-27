@@ -131,14 +131,14 @@ class AtomicCalendarRevive extends LitElement {
 
 			<ha-card class="cal-card">
 				${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-					? html` <div class="cal-nameContainer">
+				? html` <div class="cal-nameContainer">
 							${this._config.name
-								? html`<div class="cal-name" @click="${() => this.handleToggle()}">${this._config.name}</div>`
-								: ''}
+						? html`<div class="cal-name" @click="${() => this.handleToggle()}">${this._config.name}</div>`
+						: ''}
 							${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
 							${this._config.showDate ? html`<div class="calDate">${this.getDate()}</div>` : ''}
 					  </div>`
-					: ''}
+				: ''}
 
 				<div class="cal-eventContainer" style="padding-top: 4px;">${this.content}</div>
 			</ha-card>`;
@@ -644,7 +644,7 @@ class AtomicCalendarRevive extends LitElement {
 			typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
 		const textDecoration: string =
 			typeof event.attendees != 'undefined' &&
-			!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+				!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 				? 'line-through'
 				: 'none';
 
@@ -875,11 +875,11 @@ class AtomicCalendarRevive extends LitElement {
 				const eventDateFormat =
 					this._config.europeanDate == true
 						? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth
-								? event.startTimeToShow.format('MMM')
-								: ''}`
+							? event.startTimeToShow.format('MMM')
+							: ''}`
 						: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0
-								? event.startTimeToShow.format('DD')
-								: ''}`;
+							? event.startTimeToShow.format('DD')
+							: ''}`;
 
 				const dayClassTodayEvent = event.startTime.isSame(dayjs(), 'day') ? `event-leftCurrentDay` : ``;
 
@@ -1112,13 +1112,13 @@ class AtomicCalendarRevive extends LitElement {
 								event['startTime'] = event.start.dateTime
 									? dayjs(event.start.dateTime)
 									: event.start.date
-									? dayjs(event.start.date).startOf('day')
-									: dayjs(event.start);
+										? dayjs(event.start.date).startOf('day')
+										: dayjs(event.start);
 								event['endTime'] = event.end.dateTime
 									? dayjs(event.end.dateTime)
 									: event.end.date
-									? dayjs(event.end.date).subtract(1, 'day').endOf('day')
-									: dayjs(event.end);
+										? dayjs(event.end.date).subtract(1, 'day').endOf('day')
+										: dayjs(event.end);
 								if (
 									!event.startTime.isAfter(m.date, 'day') &&
 									!event.endTime.isBefore(m.date, 'day') &&
@@ -1207,8 +1207,10 @@ class AtomicCalendarRevive extends LitElement {
 	 * show events summary under the calendar
 	 *
 	 */
-	handleEventSummary(day) {
-		this.clickedDate = day.date;
+	handleEventSummary(day, fromClick) {
+		if (fromClick) {
+			this.clickedDate = day.date;
+		}
 		day._allEvents.sort(function (a, b) {
 			return a.startTime.diff(b.startTime);
 		});
@@ -1225,7 +1227,7 @@ class AtomicCalendarRevive extends LitElement {
 			if (event.isFullDayEvent) {
 				const bulletType: string =
 					typeof event.attendees != 'undefined' &&
-					!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+						!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 						? 'summary-fullday-div-declined'
 						: 'summary-fullday-div-accepted';
 
@@ -1240,7 +1242,7 @@ class AtomicCalendarRevive extends LitElement {
 
 				const bulletType: string =
 					typeof event.attendees != 'undefined' &&
-					!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
+						!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
 						? 'bullet-event-div-declined'
 						: 'bullet-event-div-accepted';
 
@@ -1312,8 +1314,8 @@ class AtomicCalendarRevive extends LitElement {
 				<ha-icon-button
 					icon="mdi:calendar"
 					onClick="window.open('https://calendar.google.com/calendar/r/month/${this.selectedMonth.format(
-						'YYYY',
-					)}/${this.selectedMonth.format('MM')}/1'), '${this._config.linkTarget}'"
+				'YYYY',
+			)}/${this.selectedMonth.format('MM')}/1'), '${this._config.linkTarget}'"
 				>
 				</ha-icon-button>
 			</div>`;
@@ -1338,11 +1340,15 @@ class AtomicCalendarRevive extends LitElement {
 			const dayStyleClicked = dayDate.isSame(dayjs(this.clickedDate), 'day')
 				? `background-color: ${this._config.calActiveEventBackgroundColor};`
 				: ``;
+			if (dayDate.isSame(dayjs(), 'day') && !this.clickedDate) {
+				this.handleEventSummary(day, false)
+				console.log('first')
+			}
 			if (i < 35 || showLastRow)
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
-						@click="${() => this.handleEventSummary(day)}"
+						@click="${() => this.handleEventSummary(day, true)}"
 						class="cal"
 						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked}"
 					>
@@ -1459,13 +1465,13 @@ class EventClass {
 		this._startTime = this.eventClass.start.dateTime
 			? dayjs(this.eventClass.start.dateTime)
 			: this.eventClass.start.date
-			? dayjs(this.eventClass.start.date).startOf('day')
-			: dayjs(this.eventClass.start);
+				? dayjs(this.eventClass.start.date).startOf('day')
+				: dayjs(this.eventClass.start);
 		this._endTime = this.eventClass.end.dateTime
 			? dayjs(this.eventClass.end.dateTime)
 			: this.eventClass.end.date
-			? dayjs(this.eventClass.end.date).subtract(1, 'day').endOf('day')
-			: dayjs(this.eventClass.end);
+				? dayjs(this.eventClass.end.date).subtract(1, 'day').endOf('day')
+				: dayjs(this.eventClass.end);
 		this.isFinished = false;
 		this.isEmpty = false;
 	}
