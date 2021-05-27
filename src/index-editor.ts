@@ -1,5 +1,6 @@
 import { LitElement, html, customElement, TemplateResult, CSSResult, property } from 'lit-element';
-import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
+import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
+import { fireEvent } from './components/fire-event';
 import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';
@@ -776,6 +777,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			}
 		}
 
-		//fireEvent(this, 'config-changed', { config: this._config });
+		fireEvent(this, 'config-changed', { config: this._config });
 	}
 }

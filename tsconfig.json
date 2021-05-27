@@ -17,5 +17,5 @@
   },
   "include": [
     "src/*"
-  ]
+, "src/locale.dayjs.ts"  ]
 }

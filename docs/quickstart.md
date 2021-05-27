@@ -59,14 +59,14 @@ resources:
 
 In order to increase the amount of events that are shown you have to add `max_results` setting to `google_calendars.yaml` file
 
-For calendar mode we recommend that this is set to at least 30
+For calendar mode we recommend that this is set to at least 42
 
 ```yaml
 - cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
   entities:
   - device_id: calendar_id
     name: Calendar_name
-    max_results: 30
+    max_results: 42
 ```
 
 ## Configuration

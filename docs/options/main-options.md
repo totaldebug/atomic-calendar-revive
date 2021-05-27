@@ -31,7 +31,7 @@ nav_order: 1
 | showRelativeTime     | boolean | optional | v2.7.0 | `true` shows amount of time until event starts |
 | showPrivate          | boolean | optional | v3.3.0 | `true` show private events (only Google Calendar) |
 
-# Color Options
+## Color Options
 
 | Name                 |  Type   | Since  |                                     Description                                     |
 | -------------------- | :-----: | :----: | :---------------------------------------------------------------------------------: |

@@ -54,18 +54,3 @@ get this added for you.
 | pt-br | Portuguese (Brazil) |
 | pt | Portuguese |
 | ru | Russian |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
