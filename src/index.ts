@@ -178,6 +178,12 @@ class AtomicCalendarRevive extends LitElement {
 				this.isUpdating = true;
 				try {
 					this.events = await this.getEvents();
+					if (this._config.showNoEventDays) {
+						this.events = this.setNoEventDays(this.events);
+
+					}
+					this.events = this.sortEvents(this.events);
+					this.events = this.groupEvents(this.events);
 				} catch (error) {
 					console.log(error);
 					this.errorMessage = html`${localize('errors.update_card')}
@@ -196,6 +202,74 @@ class AtomicCalendarRevive extends LitElement {
 
 		if (this.modeToggle == 'Event') this.updateEventsHTML(this.events);
 		else this.updateCalendarHTML();
+	}
+
+	setNoEventDays(singleEvents) {
+		// Create an array of days to show
+		const daysToShow = this._config.maxDaysToShow! == 0 ? this._config.maxDaysToShow! : this._config.maxDaysToShow! - 1;
+		let initialTime = dayjs()
+			.add(this._config.startDaysAhead!, 'day')
+			.startOf('day')
+			, endTime = dayjs()
+				.add(daysToShow + this._config.startDaysAhead!, 'day')
+				.endOf('day')
+			, allDates: any = [];
+		for (let q = initialTime; q.isBefore(endTime, 'day'); q = q.add(1, 'day')) {
+			allDates.push(q);
+		}
+		allDates.map((day) => {
+			var isEvent: boolean = false;
+
+			for (var i = 0; i < singleEvents.length; i++) {
+				if (singleEvents[i].startTime.isSame(day, 'day')) {
+					var isEvent = true;
+				}
+			}
+			if (!isEvent) {
+				const emptyEv = {
+					eventClass: '',
+					config: '',
+					start: { dateTime: day.endOf('day') },
+					end: { dateTime: day.endOf('day') },
+					summary: this._config.noEventText,
+					isFinished: false,
+					htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
+				};
+				const emptyEvent = new EventClass(emptyEv, this._config, '');
+				emptyEvent.isEmpty = true;
+				singleEvents.push(emptyEvent);
+				var isEvent = false;
+
+			}
+		});
+		return singleEvents
+
+	}
+
+	sortEvents(singleEvents) {
+		// Sorts events by date and time
+		if (this._config.sortByStartTime) {
+			singleEvents.sort(function (a, b) {
+				return a.startTime.diff(b.startTime);
+			});
+		}
+
+		return singleEvents
+	}
+
+	groupEvents(singleEvents) {
+		// grouping events by days, returns object with days and events
+		const ev: any[] = [].concat(...singleEvents);
+		const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
+			r[a.daysToSort] = r[a.daysToSort] || [];
+			r[a.daysToSort].push(a);
+			return r;
+		}, {});
+
+		const days = Object.keys(groupsOfEvents).map(function (k) {
+			return groupsOfEvents[k];
+		});
+		return days;
 	}
 
 	handleToggle() {
@@ -768,7 +842,7 @@ class AtomicCalendarRevive extends LitElement {
 
 		// TODO write something if no events
 		if (days.length === 0 && this._config.maxDaysToShow == 1) {
-			this.content = this._config.noEventsForTodayText;
+			this.content = this._config.noEventText;
 			return;
 		} else if (days.length === 0) {
 			this.content = this._config.noEventsForNextDaysText;
@@ -792,7 +866,7 @@ class AtomicCalendarRevive extends LitElement {
 				config: '',
 				start: { dateTime: dayjs().endOf('day') },
 				end: { dateTime: dayjs().endOf('day') },
-				summary: this._config.noEventsForTodayText,
+				summary: this._config.noEventText,
 				isFinished: false,
 				htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
 			};
@@ -983,17 +1057,17 @@ class AtomicCalendarRevive extends LitElement {
 		const start = dayjs()
 			.add(this._config.startDaysAhead!, 'day')
 			.startOf('day')
-			.add(timeOffset, 'minutes')
-			.format('YYYY-MM-DDTHH:mm:ss');
+			.add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		const end = dayjs()
 			.add(daysToShow + this._config.startDaysAhead!, 'day')
 			.endOf('day')
-			.add(timeOffset, 'minutes')
-			.format('YYYY-MM-DDTHH:mm:ss');
+			.add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
 			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
 		});
+
+		// call to API for events
 		try {
 			return await Promise.all(calendarUrlList.map((url) => this.hass.callApi('GET', url))).then((result) => {
 				const singleEvents: any[] = [];
@@ -1034,12 +1108,6 @@ class AtomicCalendarRevive extends LitElement {
 					});
 				});
 
-				if (this._config.sortByStartTime) {
-					singleEvents.sort(function (a, b) {
-						return a.startTime.diff(b.startTime);
-					});
-				}
-
 				// Check maxEventCount and softLimit
 				if (this._config.maxEventCount) {
 					if (
@@ -1051,20 +1119,8 @@ class AtomicCalendarRevive extends LitElement {
 					}
 				}
 
-				const ev: any[] = [].concat(...singleEvents);
-
-				// grouping events by days, returns object with days and events
-				const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
-					r[a.daysToSort] = r[a.daysToSort] || [];
-					r[a.daysToSort].push(a);
-					return r;
-				}, {});
-
-				const days = Object.keys(groupsOfEvents).map(function (k) {
-					return groupsOfEvents[k];
-				});
 				this.showLoader = false;
-				return days;
+				return singleEvents;
 			});
 		} catch (error) {
 			this.showLoader = false;

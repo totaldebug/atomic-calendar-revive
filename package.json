@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "4.0.0",
+	"version": "4.1.0",
 	"editor_version": "1.5.0",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
@@ -54,9 +54,8 @@
 		"@polymer/lit-element": "^0.7.1",
 		"@webcomponents/webcomponentsjs": "^2.5.0",
 		"custom-card-helpers": "^1.6.6",
-		"dayjs": "^1.10.4",
+		"dayjs": "^1.10.5",
 		"lit-element": "^2.4.0",
-		"luxon": "^1.27.0",
 		"node-google-calendar": "^1.1.1",
 		"npm": "^7.5.2",
 		"typescript": "^4.1.2"

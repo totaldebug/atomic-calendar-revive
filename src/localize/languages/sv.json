@@ -6,7 +6,7 @@
 		"description": "Ett avancerat kalenderkort för Home Assistant med Lovelace",
 		"fullDayEventText": "Heldag",
 		"untilText": "Tills",
-		"noEventsForTodayText": "Inga händelser idag!",
+		"noEventText": "Inga händelser",
 		"noEventsForNextDaysText": "Inga händelser de närmaste dagarna",
 		"hiddenEventText": "händelser är dolda"
 	},
@@ -60,7 +60,7 @@
 			"showNoEventsForToday": "Visa inga händelser idag?",
 			"showFullDayProgress": "Visa förlopp för heldagshändelser?",
 			"untilText": "Text för Tills:",
-			"noEventsForTodayText": "Text för INga händelser idag:",
+			"noEventText": "Text för INga händelser idag:",
 			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
 			"fullDayEventText": "Text för Heldagshändelse:",
 			"showEventIcon": "Show Event Icon",

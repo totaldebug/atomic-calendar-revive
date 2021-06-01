@@ -6,7 +6,7 @@
         "description": "Erweiterte Kalenderkarte für Home Assistant Lovelace",
         "fullDayEventText": "Ganztägig",
         "untilText": "Bis",
-        "noEventsForTodayText": "Keine Einträge für heute!",
+        "noEventText": "Keine Einträge",
         "noEventsForNextDaysText": "Keine Einträge in den nächsten Tagen",
         "hiddenEventText": "Einige Einträge sind ausgeblendet."
     },
@@ -60,7 +60,7 @@
             "showNoEventsForToday": "'Keine Einträge heute' anzeigen?",
             "showFullDayProgress": "Ganztägigen Fortschritt der Einträge anzeigen?",
             "untilText": "Text für 'bis':",
-            "noEventsForTodayText": "Text für 'Keine Einträge heute':",
+            "noEventText": "Text für 'Keine Einträge heute':",
             "noEventsForNextDaysText": "Text für 'Keine Einträge in den nächsten Tagen':",
             "fullDayEventText": "Text für 'Ganztägiger Eintrag':",
             "showEventIcon": "Ereignis-Symbol anzeigen?",
