@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, TemplateResult, CSSResult, property } from 'lit-element';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
-import { fireEvent } from './components/fire-event';
+import { fireEvent } from './helpers/fire-event';
 import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';
@@ -240,9 +240,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return '';
 	}
-	get _noEventsForTodayText(): string {
+	get _noEventText(): string {
 		if (this._config) {
-			return this._config.noEventsForTodayText || '';
+			return this._config.noEventText || '';
 		}
 		return '';
 	}
@@ -520,10 +520,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									@value-changed=${this._valueChanged}
 								></paper-input>
 								<paper-input
-									label="${localize('event.fields.noEventsForTodayText')}"
+									label="${localize('event.fields.noEventText')}"
 									type="text"
-									.value=${this._noEventsForTodayText}
-									.configValue=${'noEventsForTodayText'}
+									.value=${this._noEventText}
+									.configValue=${'noEventText'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
 								<paper-input

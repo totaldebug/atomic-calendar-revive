@@ -6,7 +6,7 @@
 		"description": "An advanced calendar card for Home Assistant with Lovelace.",
 		"fullDayEventText": "All Day",
 		"untilText": "Until",
-		"noEventsForTodayText": "No events for today!",
+		"noEventText": "No events",
 		"noEventsForNextDaysText": "No events in the next few days",
 		"hiddenEventText": "events are hidden"
 	},
@@ -61,7 +61,7 @@
 			"showNoEventsForToday": "Show No Events Today?",
 			"showFullDayProgress": "Show full day event progress?",
 			"untilText": "until text:",
-			"noEventsForTodayText": "No events today text:",
+			"noEventText": "No events today text:",
 			"noEventsForNextDaysText": "No events in the next few days text:",
 			"fullDayEventText": "Full day event text:",
 			"showEventIcon": "Show Event Icon",

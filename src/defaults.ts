@@ -21,7 +21,7 @@ export default {
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
-	sortByStartTime: false, // sort first by calendar, then by time
+	sortByStartTime: true, // sort first by calendar, then by time
 	disableEventLink: false, // disables links to event calendar
 	disableLocationLink: false, // disables links to event calendar
 	disableCalMonthLink: false, // disables the link on the month name in calendar mode
@@ -41,8 +41,10 @@ export default {
 	descSize: 80, //Description text size (percent of standard text)
 
 	showNoEventsForToday: false,
-	noEventsForTodayText: localize('common.noEventsForTodayText'),
+	noEventText: localize('common.noEventText'),
 	noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
+	showNoEventDays: false,
+
 
 	timeColor: 'var(--primary-color)', // Time text color (center bottom)
 	timeSize: 90, //Time text size

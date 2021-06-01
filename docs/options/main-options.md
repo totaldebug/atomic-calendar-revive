@@ -30,6 +30,7 @@ nav_order: 1
 | showHours            | boolean |   optional   | v2.7.0  | `true` shows when and event starts / ends |
 | showRelativeTime     | boolean | optional | v2.7.0 | `true` shows amount of time until event starts |
 | showPrivate          | boolean | optional | v3.3.0 | `true` show private events (only Google Calendar) |
+| showNoEventDays | boolean |   optional   | v4.1.0  | `false` Shows days that have no events, instead of only showing event days   |
 
 ## Color Options
 

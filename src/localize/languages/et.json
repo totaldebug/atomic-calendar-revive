@@ -6,7 +6,7 @@
 		"description": "Lisa mugandatav kalender kasutajaliidesesse.",
 		"fullDayEventText": "Terve päev",
 		"untilText": "Kuni",
-		"noEventsForTodayText": "Täna pole sündmusi!",
+		"noEventText": "üritusi pole",
 		"noEventsForNextDaysText": "Paari järgmise päeva sündmusi pole",
 		"hiddenEventText": "sündmused on varjatud"
 	},
@@ -60,7 +60,7 @@
 			"showNoEventsForToday": "Kas kuvada tänaste sündmuste puudumist?",
 			"showFullDayProgress": "Kas kuvada terve päeva sündmuste edenemist?",
 			"untilText": "Kestab kuni tekst:",
-			"noEventsForTodayText": "Tänased sündmused puuduvad tekst:",
+			"noEventText": "Tänased sündmused puuduvad tekst:",
 			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
 			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
 			"showEventIcon": "Kuva sündmuse ikooni",
