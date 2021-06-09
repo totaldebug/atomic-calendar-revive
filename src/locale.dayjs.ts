@@ -1,3 +1,4 @@
+import 'dayjs/locale/cs';
 import 'dayjs/locale/de-at';
 import 'dayjs/locale/de-ch';
 import 'dayjs/locale/de';
