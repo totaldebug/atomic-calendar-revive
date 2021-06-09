@@ -1436,7 +1436,7 @@ class AtomicCalendarRevive extends LitElement {
 			this.hiddenEvents = 0;
 		}
 		const month = this.month;
-		const weekDays = dayjs.weekdaysMin();
+		const weekDays = dayjs.weekdaysMin(true);
 		const htmlDayNames = weekDays.map(
 			(day) => html`<th class="cal" style="color:  ${this._config.calWeekDayColor};">${day}</th>`,
 		);
