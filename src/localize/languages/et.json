@@ -8,12 +8,12 @@
 		"untilText": "Kuni",
 		"noEventText": "üritusi pole",
 		"noEventsForNextDaysText": "Paari järgmise päeva sündmusi pole",
-		"hiddenEventText": "sündmused on varjatud"
+		"hiddenEventText": "Sündmused on varjatud"
 	},
 	"ui": {
 		"common": {
 			"previous": "Eelmine",
-			"next": "Järgminet"
+			"next": "Järgmine"
 		}
 	},
 	"errors": {
@@ -64,7 +64,7 @@
 			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
 			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
 			"showEventIcon": "Kuva sündmuse ikooni",
-			"showHiddenText": "Ostende occultatum eventu illud?"
+			"showHiddenText": "Kas näidata summutatud teksti?"
 		}
 	},
 	"calendar": {
@@ -74,7 +74,7 @@
 			"showLastCalendarWeek": "Kuva kalendri viimane nädal",
 			"disableCalEventLink": "Keela kalendrisündmuse viide",
 			"disableCalLocationLink": "Keela sündmuse asukoha viide",
-			"calShowDescription": "Kirjelduse kuvamine"
+			"calShowDescription": "Kirjelduse kuvamine",
 			"disableCalLink": "Peida kalendri viide"
 		}
 	},
