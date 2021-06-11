@@ -1,6 +1,8 @@
 import { localize } from './localize/localize';
 
 export default {
+	cardHeight: "100%",
+
 	// text translations
 	fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
 	untilText: localize('common.untilText'), // "Until" custom text
