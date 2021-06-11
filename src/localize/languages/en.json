@@ -44,7 +44,8 @@
 			"linkTarget": "Link target",
 			"refreshInterval": "Refresh Interval",
 			"showRelativeTime": "Show Relative Time",
-			"firstDayOfWeek": "First Day of Week 0-6"
+			"firstDayOfWeek": "First Day of Week 0-6",
+			"cardHeight": "Card Height"
 		}
 	},
 	"event": {

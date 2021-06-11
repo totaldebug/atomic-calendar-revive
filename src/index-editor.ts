@@ -87,6 +87,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		return 'Events';
 	}
+	get _cardHeight(): string {
+		if (this._config) {
+			return this._config.cardHeight || '100%';
+		}
+		return '100%';
+	}
 
 	get _showLocation(): boolean {
 		if (this._config) {
@@ -413,6 +419,18 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				})}
 									</paper-listbox> </paper-dropdown-menu
 								><br />
+								<div class="side-by-side">
+									<div>
+										<paper-input
+											label="${localize('main.fields.cardHeight')}"
+											.value=${this._cardHeight}
+											.configValue=${'cardHeight'}
+											@value-changed=${this._valueChanged}
+										></paper-input>
+									</div>
+									<div>
+									</div>
+								</div>
 								<div class="side-by-side">
 									<div>
 										<ha-switch

@@ -294,6 +294,8 @@ class AtomicCalendarRevive extends LitElement {
 				.cal-card {
 					cursor: default;
 					padding: 16px;
+					height: ${this._config.cardHeight};
+					overflow: auto;
 				}
 
 				.cal-name {
@@ -671,6 +673,7 @@ class AtomicCalendarRevive extends LitElement {
 	// The height of your card. Home Assistant uses this to automatically
 	// distribute all cards over the available columns.
 	getCardSize() {
+
 		return this._config.entities.length + 1;
 	}
 

@@ -17,6 +17,7 @@ nav_order: 4
 | disableCalLocationLink | boolean | v1.5.0 | `false` If true the link will be disabled on the event location icon for the selected day             |
 | calShowDescription     | boolean | v2.5.0 | `false` If true this will display the description in calendar mode                                    |
 | disableCalLink         | boolean | v3.0.0 | `false` If true the link to google calendar will be removed                                           |
+| cardHeight             | string  | v4.3.0 | `100%` Change to `px` or `%` to set the height of the card, this will add scroll if it is too small   |
 
 ## Color Options
 
