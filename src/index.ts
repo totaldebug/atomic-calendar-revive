@@ -178,9 +178,12 @@ class AtomicCalendarRevive extends LitElement {
 				this.isUpdating = true;
 				try {
 					this.events = await this.getEvents();
+
+					// Check no event days and display
+					this.events = this.sortEvents(this.events);
+					this.events = this.limitEvents(this.events);
 					if (this._config.showNoEventDays) {
 						this.events = this.setNoEventDays(this.events);
-
 					}
 					this.events = this.sortEvents(this.events);
 					this.events = this.groupEvents(this.events);
@@ -254,6 +257,21 @@ class AtomicCalendarRevive extends LitElement {
 			});
 		}
 
+		return singleEvents
+	}
+
+	limitEvents(singleEvents) {
+
+		// Check maxEventCount and softLimit
+		if (this._config.maxEventCount) {
+			if (
+				(!this._config.softLimit && this._config.maxEventCount < singleEvents.length) ||
+				(this._config.softLimit && singleEvents.length > this._config.maxEventCount + this._config.softLimit)
+			) {
+				this.hiddenEvents += singleEvents.length - this._config.maxEventCount;
+				singleEvents.length = this._config.maxEventCount;
+			}
+		}
 		return singleEvents
 	}
 
@@ -1110,17 +1128,6 @@ class AtomicCalendarRevive extends LitElement {
 						}
 					});
 				});
-
-				// Check maxEventCount and softLimit
-				if (this._config.maxEventCount) {
-					if (
-						(!this._config.softLimit && this._config.maxEventCount < singleEvents.length) ||
-						(this._config.softLimit && singleEvents.length > this._config.maxEventCount + this._config.softLimit)
-					) {
-						this.hiddenEvents += singleEvents.length - this._config.maxEventCount;
-						singleEvents.length = this._config.maxEventCount;
-					}
-				}
 
 				this.showLoader = false;
 				return singleEvents;
