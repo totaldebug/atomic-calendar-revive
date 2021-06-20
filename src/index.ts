@@ -25,6 +25,7 @@ import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 import defaultConfig from './defaults';
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 class AtomicCalendarRevive extends LitElement {
 	@property() public hass!: HomeAssistant;
@@ -1099,6 +1100,8 @@ class AtomicCalendarRevive extends LitElement {
 							typeof this._config.entities[i]['blacklist'] != 'undefined' ? this._config.entities[i]['blacklist'] : '';
 						const whitelist =
 							typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
+						const locationWhitelist =
+							typeof this._config.entities[i]['locationWhitelist'] != 'undefined' ? this._config.entities[i]['locationWhitelist'] : '';
 						const singleAPIEvent = new EventClass(singleEvent, this._config, this._config.entities[i]);
 						const startTimeFilter =
 							typeof this._config.entities[i]['startTimeFilter'] != 'undefined'
@@ -1118,6 +1121,7 @@ class AtomicCalendarRevive extends LitElement {
 								)) &&
 							(blacklist == '' || !this.checkFilter(singleEvent.summary, blacklist)) &&
 							(whitelist == '' || this.checkFilter(singleEvent.summary, whitelist)) &&
+							(locationWhitelist == '' || this.checkFilter(singleEvent.location, locationWhitelist)) &&
 							(this._config.showPrivate || singleEvent.visibility != 'private') &&
 							(this._config.showDeclined || !this.checkDeclined(singleEvent)) &&
 							((this._config.maxDaysToShow === 0 && singleAPIEvent.isEventRunning) ||
@@ -1157,6 +1161,7 @@ class AtomicCalendarRevive extends LitElement {
 				typeof entity.icon != 'undefined' ? entity.icon : 'mdi:bell-circle',
 				typeof entity.blacklist != 'undefined' ? entity.blacklist : '',
 				typeof entity.whitelist != 'undefined' ? entity.whitelist : '',
+				typeof entity.locationWhitelist != 'undefined' ? entity.locationWhitelist : '',
 				typeof entity.color != 'undefined' ? entity.color : this._config.defaultCalColor,
 				typeof entity.startTimeFilter != 'undefined' ? entity.startTimeFilter : '00:00:00',
 				typeof entity.endTimeFilter != 'undefined' ? entity.endTimeFilter : '00:00:00',
@@ -1171,6 +1176,7 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarIcon = calendarUrlList[i][1];
 							const calendarBlacklist = typeof calendarUrlList[i][2] != 'undefined' ? calendarUrlList[i][2] : '';
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
+							const calendarLocationWhitelist = typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : '';
 							const calendarColor =
 								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
 
@@ -1191,6 +1197,7 @@ class AtomicCalendarRevive extends LitElement {
 									calendarIcon &&
 									(calendarBlacklist == '' || !this.checkFilter(event.summary, calendarBlacklist)) &&
 									(calendarWhitelist == '' || this.checkFilter(event.summary, calendarWhitelist)) &&
+									(calendarLocationWhitelist == '' || this.checkFilter(event.location, calendarLocationWhitelist)) &&
 									(this._config.showPrivate || event.visibility != 'private') &&
 									(this._config.showDeclined || !this.checkDeclined(event))
 								) {
