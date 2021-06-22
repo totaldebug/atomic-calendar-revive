@@ -1,7 +1,18 @@
+import * as de from './languages/de.json';
 import * as en from './languages/en.json';
+import * as et from './languages/et.json';
+import * as fr from './languages/fr.json';
+import * as nb from './languages/nb.json';
+import * as sv from './languages/sv.json';
+
 
 const languages: any = {
+	de: de,
 	en: en,
+	et: et,
+	fr: fr,
+	nb: nb,
+	sv: sv,
 };
 
 export function localize(string: string, search = '', replace = '') {

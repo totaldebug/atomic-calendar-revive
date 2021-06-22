@@ -25,7 +25,6 @@ import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 import defaultConfig from './defaults';
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 class AtomicCalendarRevive extends LitElement {
 	@property() public hass!: HomeAssistant;
