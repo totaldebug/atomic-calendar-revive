@@ -1177,7 +1177,7 @@ class AtomicCalendarRevive extends LitElement {
 							const calendarWhitelist = typeof calendarUrlList[i][3] != 'undefined' ? calendarUrlList[i][3] : '';
 							const calendarLocationWhitelist = typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : '';
 							const calendarColor =
-								typeof calendarUrlList[i][4] != 'undefined' ? calendarUrlList[i][4] : this._config.defaultCalColor;
+								typeof calendarUrlList[i][5] != 'undefined' ? calendarUrlList[i][5] : this._config.defaultCalColor;
 
 							eventsArray.map((event) => {
 								event['startTime'] = event.start.dateTime
