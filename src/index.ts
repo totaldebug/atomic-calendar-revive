@@ -1,4 +1,5 @@
-﻿import { LitElement, html, property, TemplateResult } from 'lit-element';
+﻿import { LitElement, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import '@material/mwc-linear-progress';
 

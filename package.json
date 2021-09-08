@@ -49,15 +49,16 @@
 		"rollup-plugin-typescript2": "^0.30.0"
 	},
 	"dependencies": {
+		"@formatjs/icu-messageformat-parser": "^2.0.11",
 		"@material/mwc-icon-button": "^0.22.1",
 		"@material/mwc-linear-progress": "^0.22.1",
 		"@polymer/lit-element": "^0.7.1",
 		"@webcomponents/webcomponentsjs": "^2.5.0",
-		"custom-card-helpers": "^1.6.6",
+		"custom-card-helpers": "^1.8.0",
 		"dayjs": "^1.10.5",
-		"lit-element": "^2.4.0",
+		"lit": "^2.0.0-rc.4",
 		"node-google-calendar": "^1.1.1",
-		"npm": "^7.5.2",
+		"npm": "^7.22.0",
 		"typescript": "^4.1.2"
 	},
 	"bugs": {

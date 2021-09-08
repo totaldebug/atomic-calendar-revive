@@ -1,4 +1,5 @@
-import { LitElement, html, customElement, TemplateResult, CSSResult, property } from 'lit-element';
+import { LitElement, html, TemplateResult, CSSResult } from 'lit';
+import { property, customElement } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { fireEvent } from './helpers/fire-event';
 import { localize } from './localize/localize';
