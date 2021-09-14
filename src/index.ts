@@ -755,7 +755,10 @@ class AtomicCalendarRevive extends LitElement {
 	}
 	// generate Calendar description
 	getCalDescHTML(event) {
-		if (event.description) return html`<div class="calDescription">- ${event.description}</div>`;
+		if (event.description) {
+			let desc = this._config.descLength ? event.description.slice(0, this._config.descLength) : event.description
+			return html`<div class="calDescription">- ${desc}</div>`;
+		}
 	}
 
 	/**
@@ -963,9 +966,8 @@ class AtomicCalendarRevive extends LitElement {
 					: '';
 
 				// Show the description
-				const descHTML = this._config.showDescription
-					? html`<div class="event-description">${event.description}</div>`
-					: '';
+				const descHTML = this._config.showDescription ? this._config.descLength ? html`<div class="event-description">${event.description.slice(0, this._config.descLength)}</div>` : event.description : '';
+
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 				// check and set the date format
 				const eventDateFormat =
