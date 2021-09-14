@@ -45,6 +45,7 @@ get this added for you.
 | fr-ca  |       French (Canada)        |
 | fr-ch  |     French (Switzerland)     |
 |   fr   |            French            |
+|   hu   |          Hungarian           |
 | it-ch  |    Italian (Switzerland)     |
 |   it   |           Italian            |
 |   ja   |           Japanese           |
