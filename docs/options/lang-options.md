@@ -42,6 +42,7 @@ get this added for you.
 | es-pr  |    Spanish (Puerto Rico)     |
 | es-us  |   Spanish (United States)    |
 |   es   |           Spanish            |
+|   fi   |           Finnish            |
 | fr-ca  |       French (Canada)        |
 | fr-ch  |     French (Switzerland)     |
 |   fr   |            French            |
