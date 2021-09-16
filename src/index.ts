@@ -122,6 +122,28 @@ class AtomicCalendarRevive extends LitElement {
 				'color: white; background: #484848; font-weight: 700;',
 				'color: white; background: #cc5500; font-weight: 700;',
 			);
+			this.language =
+				typeof this._config.language != 'undefined' ? this._config.language! : this.hass.locale ? this.hass.locale.language.toLowerCase() : this.hass.language.toLowerCase();
+			let timeFormat = 'HH:mm';
+			if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
+			else if (this._config.hoursFormat == '24h') timeFormat = 'HH:mm';
+			else if (this._config.hoursFormat != '12h' && this._config.hoursFormat != '24h')
+				timeFormat = this._config.hoursFormat!;
+
+			dayjs.locale(this.language);
+			dayjs.updateLocale(this.language, {
+				weekStart: this._config.firstDayOfWeek!,
+				formats: {
+					LT: timeFormat,
+					LTS: 'HH:mm:ss',
+					L: 'DD/MM/YYYY',
+					LL: 'D MMMM YYYY',
+					LLL: 'MMM D YYYY HH:mm',
+					LLLL: 'dddd, D MMMM YYYY HH:mm',
+				},
+			});
+			this.selectedMonth = dayjs();
+			this.monthToGet = dayjs().format('MM');
 		}
 		if (!this._config || !this.hass) {
 			return html``;
@@ -146,26 +168,7 @@ class AtomicCalendarRevive extends LitElement {
 	}
 
 	async updateCard() {
-		this.language =
-			typeof this._config.language != 'undefined' ? this._config.language! : this.hass.language.toLowerCase();
-		let timeFormat = 'HH:mm';
-		if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
-		else if (this._config.hoursFormat == '24h') timeFormat = 'HH:mm';
-		else if (this._config.hoursFormat != '12h' && this._config.hoursFormat != '24h')
-			timeFormat = this._config.hoursFormat!;
 
-		dayjs.locale(this.language);
-		dayjs.updateLocale(this.language, {
-			weekStart: this._config.firstDayOfWeek!,
-			formats: {
-				LT: timeFormat,
-				LTS: 'HH:mm:ss',
-				L: 'DD/MM/YYYY',
-				LL: 'D MMMM YYYY',
-				LLL: 'MMM D YYYY HH:mm',
-				LLLL: 'dddd, D MMMM YYYY HH:mm',
-			},
-		});
 		this.firstrun = false;
 
 		// check if an update is needed
@@ -1388,9 +1391,7 @@ class AtomicCalendarRevive extends LitElement {
 			return html`<div class="calIconSelector">
 				<ha-icon-button
 					icon="mdi:calendar"
-					onClick="window.open('https://calendar.google.com/calendar/r/month/${this.selectedMonth.format(
-				'YYYY',
-			)}/${this.selectedMonth.format('MM')}/1'), '${this._config.linkTarget}'"
+					onClick="window.open('https://calendar.google.com/calendar/r/month/${this.selectedMonth.format('YYYY')}/${this.selectedMonth.format('MM')}/1'), '${this._config.linkTarget}'"
 				>
 				</ha-icon-button>
 			</div>`;
