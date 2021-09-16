@@ -51,7 +51,7 @@
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "^2.0.11",
 		"@material/mwc-icon-button": "^0.22.1",
-		"@material/mwc-linear-progress": "^0.22.1",
+		"@material/mwc-linear-progress": "^0.23.0",
 		"@polymer/lit-element": "^0.7.1",
 		"@webcomponents/webcomponentsjs": "^2.5.0",
 		"custom-card-helpers": "^1.8.0",
