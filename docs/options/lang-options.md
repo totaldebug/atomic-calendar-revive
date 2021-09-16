@@ -58,3 +58,4 @@ get this added for you.
 |   pt   |          Portuguese          |
 |   ru   |           Russian            |
 |   sv   |           Swedish            |
+|   sk   |           Slovak             |
