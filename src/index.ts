@@ -759,7 +759,10 @@ class AtomicCalendarRevive extends LitElement {
 	// generate Calendar description
 	getCalDescHTML(event) {
 		if (event.description) {
-			let desc = this._config.descLength ? event.description.slice(0, this._config.descLength) : event.description
+			var desc = event.description
+			if (this._config.descLength && event.description.length > this._config.descLength) {
+				var desc = event.description.slice(0, this._config.descLength)
+			}
 			return html`<div class="calDescription">- ${desc}</div>`;
 		}
 	}
@@ -969,40 +972,46 @@ class AtomicCalendarRevive extends LitElement {
 					: '';
 
 				// Show the description
-				const descHTML = this._config.showDescription ? this._config.descLength ? html`<div class="event-description">${event.description.slice(0, this._config.descLength)}</div>` : event.description : '';
+				const descHTML = this._config.showDescription ?
+					event.description && this._config.descLength && event.description.length >= this._config.descLength ?
+						html`<div class="event-description">${event.description.slice(0, this._config.descLength)}</div>`
+						: html`<div class="event-description">${event.description}</div>`
+					: '';
 
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 				// check and set the date format
 				const eventDateFormat =
 					this._config.europeanDate == true
-						? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth
-							? event.startTimeToShow.format('MMM')
-							: ''}`
+						? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''
+							}${i === 0 && this._config.showMonth
+								? event.startTimeToShow.format('MMM')
+								: ''}`
 						: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0
 							? event.startTimeToShow.format('DD')
-							: ''}`;
+							: ''
+							}`;
 
 				const dayClassTodayEvent = event.startTime.isSame(dayjs(), 'day') ? `event-leftCurrentDay` : ``;
 
 				return html`<tr class="${dayWrap}" style="color:  ${this._config.dayWrapperLineColor};">
-					<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-						<div class=${dayClassTodayEvent}>
-							${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
-						</div>
-						<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
-					</td>
-					<td style="width: 100%;  ${finishedEventsStyle} ${lastEventStyle}">
-						<div>${currentEventLine}</div>
-						<div class="event-right">
-							<div class="event-main">${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}</div>
-							<div class="event-location">${this.getLocationHTML(event)} ${eventCalName}</div>
-						</div>
-						<div class="event-right">
-							<div class="event-main">${descHTML}</div>
-						</div>
+	<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+		<div class=${dayClassTodayEvent}>
+			${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
+</div>
+	<div class=${dayClassTodayEvent}>${eventDateFormat}</div>
+		</td>
+		<td style="width: 100%;  ${finishedEventsStyle} ${lastEventStyle}">
+			<div>${currentEventLine}</div>
+				<div class="event-right">
+					<div class="event-main">${this.getTitleHTML(event)} ${hoursHTML} ${relativeTime}</div>
+						<div class="event-location">${this.getLocationHTML(event)} ${eventCalName}</div>
+							</div>
+							<div class="event-right">
+								<div class="event-main">${descHTML}</div>
+									</div>
 						${progressBar}
-					</td>
-				</tr>`;
+</td>
+	</tr>`;
 			});
 
 			return htmlEvents;
