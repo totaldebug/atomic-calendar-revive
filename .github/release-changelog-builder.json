@@ -23,7 +23,18 @@
             "labels": [
                 "type/docs"
             ]
-        }
+        },
+        {
+            "title": "## 📔 Language",
+            "labels": [
+                "type/language"
+            ]
+        },
+        {
+            "title": "## ⬆️ Dependencies",
+            "labels": [
+                "type/dependencies"
+            ]
     ],
     "ignore_labels": [
         "ignore"
