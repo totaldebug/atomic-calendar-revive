@@ -1,3 +1,4 @@
+import * as da from './languages/da.json';
 import * as de from './languages/de.json';
 import * as en from './languages/en.json';
 import * as et from './languages/et.json';
@@ -7,6 +8,7 @@ import * as sv from './languages/sv.json';
 
 
 const languages: any = {
+	da: da,
 	de: de,
 	en: en,
 	et: et,

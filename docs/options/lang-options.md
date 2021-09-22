@@ -26,6 +26,7 @@ get this added for you.
 | Locale |           Language           |
 | :----: | :--------------------------: |
 |   cs   |            Czech             |
+|   da   |           Danish             |
 | de-at  |       German (Austria)       |
 | de-ch  |     German (Switzerland)     |
 |   de   |            German            |
