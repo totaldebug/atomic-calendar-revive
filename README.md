@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="/.github/img/atomic_calendar_revive.png" alt="Atomic Calendar Revive">
+  <img src="https://raw.githubusercontent.com/marksie1988/atomic-calendar-revive/master/.github/img/atomic_calendar_revive.png" alt="Atomic Calendar Revive">
 </h1>
 
 <h4 align="center">An advanced calendar card for Home Assistant Lovelace.</h4>
@@ -53,14 +53,12 @@ There are two main views:
 
 You can switch between the two and select a default mode.
 
-This is an updated version of [atomic7777's atomic-calendar](https://github.com/atomic7777/atomic_calendar).
-
 <div align=center>
-     <img src="/.github/img/no-events.png" alt="No Events" width="300" />
-     <img src="/.github/img/events-mode.png" alt="Event Mode" width="300" />
+     <img src="https://raw.githubusercontent.com/marksie1988/atomic-calendar-revive/master/.github/img/no-events.png" alt="No Events" width="300" />
+     <img src="https://raw.githubusercontent.com/marksie1988/atomic-calendar-revive/master/.github/img/events-mode.png" alt="Event Mode" width="300" />
      <br>
-     <img src="/.github/img/calendar-mode-today.png" alt="Calendar Mode Today" width="300" />
-     <img src="/.github/img/calendar-mode-allday.png" alt="Calendar Mode All Day" width="300" />
+     <img src="https://raw.githubusercontent.com/marksie1988/atomic-calendar-revive/master/.github/img/calendar-mode-today.png" alt="Calendar Mode Today" width="300" />
+     <img src="https://raw.githubusercontent.com/marksie1988/atomic-calendar-revive/master/.github/img/calendar-mode-allday.png" alt="Calendar Mode All Day" width="300" />
 </div >
 
 <p align="right">
@@ -101,6 +99,12 @@ This is an updated version of [atomic7777's atomic-calendar](https://github.com/
 | Custom Icon Support | ✔️ | ❌ (Limited) |
 | Event Progress Bars | ✔️ | ✔️ |
 | Many more features | ✔️ | ✔️ |
+
+## Compatibility
+
+| Card Version | HA Version | Notes |
+| v5.0.0  | 2021.6 Upwards  | May work on older HA Versions but `hoursFormat` option will need to be manually set. |
+| v4.1.1 | 0.117 Upwards | |
 
 ## Contributing
 
