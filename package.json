@@ -37,6 +37,8 @@
 		"@typescript-eslint/eslint-plugin": "^4.33.0",
 		"@typescript-eslint/parser": "^4.33.0",
 		"babel-preset-minify": "^0.5.1",
+		"commitizen": "^4.2.4",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^7.14.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-prettier": "^4.0.0",
@@ -64,5 +66,10 @@
 	"bugs": {
 		"url": "https://github.com/marksie1988/atomic-calendar-revive/issues"
 	},
-	"homepage": "https://github.com/marksie1988/atomic-calendar-revive#readme"
+	"homepage": "https://github.com/marksie1988/atomic-calendar-revive#readme",
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	}
 }
