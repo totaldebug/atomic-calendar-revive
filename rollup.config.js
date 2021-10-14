@@ -40,10 +40,7 @@ const plugins = [
 				}
 			],
 			[
-				"@babel/plugin-proposal-class-properties",
-				{
-					"loose": true
-				}
+				"@babel/plugin-proposal-class-properties"
 			],
 			[
 				"@babel/plugin-transform-template-literals"

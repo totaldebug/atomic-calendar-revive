@@ -2,6 +2,7 @@
 import { property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import '@material/mwc-linear-progress';
+import { formatTime } from './helpers/format-time'
 
 // DayJS for managing date information
 import dayjs from 'dayjs';
@@ -124,13 +125,10 @@ class AtomicCalendarRevive extends LitElement {
 			);
 			this.language =
 				typeof this._config.language != 'undefined' ? this._config.language! : this.hass.locale ? this.hass.locale.language.toLowerCase() : this.hass.language.toLowerCase();
-			let timeFormat = 'HH:mm';
-			if (this._config.hoursFormat == '12h') timeFormat = 'h:mm A';
-			else if (this._config.hoursFormat == '24h') timeFormat = 'HH:mm';
-			else if (this._config.hoursFormat != '12h' && this._config.hoursFormat != '24h')
-				timeFormat = this._config.hoursFormat!;
 
 			dayjs.locale(this.language);
+
+			let timeFormat = typeof this._config.hoursFormat != 'undefined' ? this._config.hoursFormat : (this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24') ? formatTime(this.hass.locale) : dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
@@ -142,6 +140,7 @@ class AtomicCalendarRevive extends LitElement {
 					LLLL: 'dddd, D MMMM YYYY HH:mm',
 				},
 			});
+
 			this.selectedMonth = dayjs();
 			this.monthToGet = dayjs().format('MM');
 		}

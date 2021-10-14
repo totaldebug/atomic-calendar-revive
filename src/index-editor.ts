@@ -1,7 +1,7 @@
 import { LitElement, html, TemplateResult, CSSResult } from 'lit';
 import { property, customElement } from 'lit/decorators.js';
-import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
-import { fireEvent } from './helpers/fire-event';
+import { HomeAssistant, LovelaceCardEditor, fireEvent } from 'custom-card-helpers';
+
 import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';

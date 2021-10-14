@@ -19,7 +19,6 @@ export default {
 	showCurrentEventLine: false, // show a line between last and next event
 	showDate: false,
 	dateFormat: 'LL',
-	hoursFormat: '24h', // 12h / 24h.
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
