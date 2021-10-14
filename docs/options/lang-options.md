@@ -58,5 +58,6 @@ get this added for you.
 | pt-br  |     Portuguese (Brazil)      |
 |   pt   |          Portuguese          |
 |   ru   |           Russian            |
+|   sl   |          Slovenian           |
 |   sv   |           Swedish            |
 |   sk   |           Slovak             |

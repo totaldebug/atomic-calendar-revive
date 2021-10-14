@@ -1,0 +1,96 @@
+{
+    "common": {
+        "version": "Verzija",
+        "show_warning": "Prikaži opozorilo",
+        "error": "Napaka",
+        "description": "Napreden koledar za Home Assistant z Lovelace vmesnikom.",
+        "fullDayEventText": "Ves dan",
+        "untilText": "Do",
+        "noEventText": "Ni dogodkov",
+        "noEventsForNextDaysText": "Ni dogodkov v naslednjih nekaj dneh",
+        "hiddenEventText": "dogodki so skriti"
+    },
+    "ui": {
+        "common": {
+            "previous": "Prejšnji",
+            "next": "Naslednji"
+        }
+    },
+    "errors": {
+        "invalid_configuration": "Nepravilna konfiguracija",
+        "update_card": "Koledarja ni mogoče naložiti iz komponente Home Assistant",
+        "no_entities": "Niste določili nobene entitete"
+    },
+    "required": {
+        "name": "Zahtevano",
+        "secondary": "Zahtevane možnosti za delovanje te kartice"
+    },
+    "main": {
+        "name": "Glavne možnosti",
+        "secondary": "Nastavitve za celotno kartico",
+        "fields": {
+            "name": "Naziv",
+            "showColors": "Prikaži barve",
+            "maxDaysToShow": "Največje število dni za prikaz",
+            "showLocation": "Pokaži ikono lokacije",
+            "showLoader": "Pokaži animacijo nalagalnika",
+            "showDate": "Prikaži datum na kartici",
+            "showDeclined": "Prikaži zavrnjene dogodke",
+            "sortByStartTime": "Razvrsti po času začetka",
+            "hideFinishedEvents": "Skrij končane dogodke",
+            "dateFormat": "Format datuma",
+            "hoursFormat": "Format ur",
+            "defaultMode": "Privzeti način",
+            "linkTarget": "Cilj povezave",
+            "refreshInterval": "Osvežitveni interval",
+            "showRelativeTime": "Pokaži relativni čas",
+            "firstDayOfWeek": "Prvi dan v tednu 0-6",
+            "cardHeight": "Višina kartice"
+        }
+    },
+    "event": {
+        "name": "Način dogodka",
+        "secondary": "Posebne možnosti za način dogodka",
+        "fields": {
+            "showCurrentEventLine": "Prikaži vrstico pred dogodkom?",
+            "showProgressBar": "Prikaži vrstico napredka?",
+            "showMonth": "Prikaži mesec?",
+            "showWeekDay": "Prikaži dan tedna",
+            "showDescription": "Prikaži opis?",
+            "disableEventLink": "Onemogoči povezave v naslovu dogodka?",
+            "disableLocationLink": "Onemogoči povezave do lokacije?",
+            "showNoEventsForToday": "Prikaži danes ni dogodka?",
+            "showFullDayProgress": "Pokaži celodnevni napredek dogodka?",
+            "untilText": "do besedila:",
+            "noEventText": "Besedilo danes ni dogodka:",
+            "noEventsForNextDaysText": "Besedilo v naslednjih dneh ni nobenega dogodka:",
+            "fullDayEventText": "Celodnevno besedilo dogodka:",
+            "showEventIcon": "Pokaži ikono dogodka",
+            "showHiddenText": "Pokaži skrito besedilo dogodka?",
+            "hiddenEventText": "Besedilo za skrite dogodke:"
+        }
+    },
+    "calendar": {
+        "name": "Način koledarja",
+        "secondary": "Možnosti za način koledarja",
+        "fields": {
+            "showLastCalendarWeek": "Pokaži zadnji koledarski teden",
+            "disableCalEventLink": "Onemogoči povezavo do dogodka v koledarju",
+            "disableCalLocationLink": "Onemogoči povezavo do lokacije koledarja",
+            "calShowDescription": "Prikaži opis",
+            "disableCalLink": "Onemogoči povezavo do koledarja"
+        }
+    },
+    "appearance": {
+        "name": "Videz",
+        "secondary": "Prilagodite barve itd.",
+        "main": {
+            "name": "Osnovni",
+            "secondary": "Glavne barvne nastavitve"
+        },
+        "fields": {
+            "locationLinkColor": "Barva povezave do lokacije:",
+            "dimFinishedEvents": "Zatemniti končane dogodke?"
+        }
+    }
+}

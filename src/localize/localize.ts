@@ -4,8 +4,8 @@ import * as en from './languages/en.json';
 import * as et from './languages/et.json';
 import * as fr from './languages/fr.json';
 import * as nb from './languages/nb.json';
+import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
-
 
 const languages: any = {
 	da: da,
@@ -14,6 +14,7 @@ const languages: any = {
 	et: et,
 	fr: fr,
 	nb: nb,
+	sl: sl,
 	sv: sv,
 };
 

@@ -32,5 +32,6 @@ import 'dayjs/locale/pl';
 import 'dayjs/locale/pt-br';
 import 'dayjs/locale/pt';
 import 'dayjs/locale/ru';
+import 'dayjs/locale/sl';
 import 'dayjs/locale/sv';
 import 'dayjs/locale/sk';
