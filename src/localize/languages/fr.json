@@ -43,7 +43,9 @@
 			"linkTarget": "Lien cible",
 			"refreshInterval": "Interval de raffraîchissement",
 			"showRelativeTime": "Afficher l'heure relative",
-			"firstDayOfWeek": "Premier jour de la semaine 0-6"
+			"firstDayOfWeek": "Premier jour de la semaine 0-6",
+			"cardHeight": "hauteur de la carte",
+			"hideDuplicates": "masquer les doublons"
 		}
 	},
 	"event": {

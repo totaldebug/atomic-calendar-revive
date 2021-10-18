@@ -1,7 +1,7 @@
 {
 	"atomic-calendar-revive": {
-		"updated_at": "2021-10-14",
-		"version": "5.0.0",
+		"updated_at": "2021-10-18",
+		"version": "5.1.0",
 		"remote_location": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest/dist/atomic-calendar-revive.js",
 		"visit_repo": "https://github.com/marksie1988/atomic-calendar-revive",
 		"changelog": "https://github.com/marksie1988/atomic-calendar-revive/releases/latest"

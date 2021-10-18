@@ -3,6 +3,7 @@ import { property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import '@material/mwc-linear-progress';
 import { formatTime } from './helpers/format-time'
+import { removeDuplicates } from './functions/remove_duplicates';
 
 // DayJS for managing date information
 import dayjs from 'dayjs';
@@ -909,8 +910,16 @@ class AtomicCalendarRevive extends LitElement {
 
 		//loop through days
 		htmlDays = days.map((day, di) => {
+
+			// if hideDuplicates is set remove the duplicate events
+			if (this._config.hideDuplicates) {
+				var dayEvents = removeDuplicates(day)
+			} else {
+				var dayEvents = day
+			}
+
 			//loop through events for each day
-			const htmlEvents = day.map((event, i, arr) => {
+			const htmlEvents = dayEvents.map((event, i, arr) => {
 				const dayWrap = i == 0 && di > 0 ? 'daywrap' : '';
 				const isEventNext =
 					di == 0 && event.startTime.isAfter(dayjs()) && (i == 0 || !arr[i - 1].startTime.isAfter(dayjs()))
@@ -1297,10 +1306,16 @@ class AtomicCalendarRevive extends LitElement {
 		if (fromClick) {
 			this.clickedDate = day.date;
 		}
-		day._allEvents.sort(function (a, b) {
+		if (this._config.hideDuplicates) {
+			var dayEvents = removeDuplicates(day._allEvents);
+		} else {
+			var dayEvents = day._allEvents;
+		}
+
+		dayEvents.sort(function (a, b) {
 			return a.startTime.diff(b.startTime);
 		});
-		this.eventSummary = day._allEvents.map((event) => {
+		this.eventSummary = dayEvents.map((event) => {
 			const titleColor =
 				typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
 			const calColor = typeof event._config.color != 'undefined' ? event._config.color : this._config.defaultCalColor;
@@ -1676,5 +1691,6 @@ class EventClass {
 (window as any).customCards.push({
 	type: 'atomic-calendar-revive',
 	name: 'Atomic Calendar Revive',
+	preview: true,
 	description: localize('common.description'),
 });

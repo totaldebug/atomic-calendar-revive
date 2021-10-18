@@ -43,7 +43,9 @@
 			"linkTarget": "Koblingsmål",
 			"refreshInterval": "Oppdater intervall",
 			"showRelativeTime": "Vis relativ tid",
-			"firstDayOfWeek": "Første dag i uke 0-6"
+			"firstDayOfWeek": "Første dag i uke 0-6",
+			"cardHeight": "kortets høyde",
+			"hideDuplicates": "skjul dubletter"
 		}
 	},
 	"event": {

@@ -45,7 +45,8 @@
             "refreshInterval": "Osvežitveni interval",
             "showRelativeTime": "Pokaži relativni čas",
             "firstDayOfWeek": "Prvi dan v tednu 0-6",
-            "cardHeight": "Višina kartice"
+            "cardHeight": "Višina kartice",
+            "hideDuplicates": "skrij dvojnike"
         }
     },
     "event": {

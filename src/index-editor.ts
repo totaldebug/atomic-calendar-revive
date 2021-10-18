@@ -1,5 +1,5 @@
 import { LitElement, html, TemplateResult, CSSResult } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { property, customElement, state } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor, fireEvent } from 'custom-card-helpers';
 
 import { localize } from './localize/localize';
@@ -34,9 +34,11 @@ const options = {
 
 @customElement('atomic-calendar-revive-editor')
 export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCardEditor {
-	@property() public hass?: HomeAssistant;
-	@property() private _config?: atomicCardConfig;
-	@property() private _toggle?: boolean;
+	@property({ attribute: false }) public hass?: HomeAssistant;
+	@state() private _config?: atomicCardConfig;
+	@state() private _toggle?: boolean;
+	@state() private _helpers?: any;
+	private _initialized = false;
 
 	static get styles(): CSSResult {
 		return style;
@@ -44,260 +46,155 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
 	public setConfig(config: atomicCardConfig): void {
 		this._config = config;
+
+		this.loadCardHelpers();
+	}
+
+	protected shouldUpdate(): boolean {
+		if (!this._initialized) {
+			this._initialize();
+		}
+
+		return true;
 	}
 
 	get _entity(): string {
-		if (this._config) {
-			return this._config.entity || '';
-		}
-
-		return '';
+		return this._config?.entity || '';
 	}
 
 	//MAIN SETTINGS
 	get _name(): string {
-		if (this._config) {
-			return this._config.name || '';
-		}
-		return '';
+		return this._config?.name || '';
 	}
 
 	get _firstDayOfWeek(): number {
-		if (this._config) {
-			return this._config.firstDayOfWeek || 1;
-		}
-		return 7;
+		return this._config?.firstDayOfWeek || 1;
 	}
 
 	get _maxDaysToShow(): number {
-		if (this._config) {
-			return this._config.maxDaysToShow || 7;
-		}
-		return 7;
+		return this._config?.maxDaysToShow || 7;
 	}
 
 	get _linkTarget(): string {
-		if (this._config) {
-			return this._config.linkTarget || '_blank';
-		}
-		return '_blank';
+		return this._config?.linkTarget || '_blank';
 	}
 	get _defaultMode(): string {
-		if (this._config) {
-			return this._config.defaultMode || 'Event';
-		}
-		return 'Events';
+		return this._config?.defaultMode || 'Event';
 	}
 	get _cardHeight(): string {
-		if (this._config) {
-			return this._config.cardHeight || '100%';
-		}
-		return '100%';
+		return this._config?.cardHeight || '100%';
 	}
 
 	get _showLocation(): boolean {
-		if (this._config) {
-			return this._config.showLocation || true;
-		}
-		return false;
+		return this._config?.showLocation || true;
 	}
 	get _showLoader(): boolean {
-		if (this._config) {
-			return this._config.showLoader || true;
-		}
-		return false;
+		return this._config?.showLoader || true;
 	}
 	get _sortByStartTime(): boolean {
-		if (this._config) {
-			return this._config.sortByStartTime || false;
-		}
-		return true;
+		return this._config?.sortByStartTime || false;
 	}
 	get _showDeclined(): boolean {
-		if (this._config) {
-			return this._config.showDeclined || false;
-		}
-		return false;
+		return this._config?.showDeclined || false;
 	}
+	get _hideDuplicates(): boolean {
+		return this._config?.hideDuplicates || false;
+	}
+
 	get _dateFormat(): string {
-		if (this._config) {
-			return this._config.dateFormat || 'LL';
-		}
-		return 'LL';
+		return this._config?.dateFormat || 'LL';
 	}
 	get _hoursFormat(): string {
-		if (this._config) {
-			return this._config.hoursFormat || 'default';
-		}
-		return 'default';
+		return this._config?.hoursFormat || '';
 	}
 	get _refreshInterval(): string {
-		if (this._config) {
-			return this._config.refreshInterval || '60';
-		}
-		return '60';
+		return this._config?.refreshInterval || '60';
 	}
 	get _showDate(): boolean {
-		if (this._config) {
-			return this._config.showDate || false;
-		}
-
-		return true;
+		return this._config?.showDate || false;
 	}
 	get _showRelativeTime(): boolean {
-		if (this._config) {
-			return this._config.showRelativeTime || false;
-		}
-
-		return true;
+		return this._config?.showRelativeTime || false;
 	}
 	// MAIN SETTINGS END
 
 	// EVENT SETTINGS
 
 	get _showCurrentEventLine(): boolean {
-		if (this._config) {
-			return this._config.showCurrentEventLine || false;
-		}
-		return true;
+		return this._config?.showCurrentEventLine || false;
 	}
 
 	get _showProgressBar(): boolean {
-		if (this._config) {
-			return this._config.showProgressBar || true;
-		}
-		return false;
+		return this._config?.showProgressBar || true;
+
 	}
 
 	get _showMonth(): boolean {
-		if (this._config) {
-			return this._config.showMonth || false;
-		}
-		return true;
+		return this._config?.showMonth || false;
 	}
 	get _showWeekDay(): boolean {
-		if (this._config) {
-			return this._config.showWeekDay || false;
-		}
-		return true;
+		return this._config?.showWeekDay || false;
 	}
 	get _showDescription(): boolean {
-		if (this._config) {
-			return this._config.showDescription || true;
-		}
-		return false;
+		return this._config?.showDescription || true;
 	}
 	get _disableEventLink(): boolean {
-		if (this._config) {
-			return this._config.disableEventLink || false;
-		}
-		return true;
+		return this._config?.disableEventLink || false;
 	}
 	get _disableLocationLink(): boolean {
-		if (this._config) {
-			return this._config.disableLocationLink || false;
-		}
-		return true;
+		return this._config?.disableLocationLink || false;
 	}
 	get _showNoEventsForToday(): boolean {
-		if (this._config) {
-			return this._config.showNoEventsForToday || false;
-		}
-		return true;
+		return this._config?.showNoEventsForToday || false;
 	}
 	get _showCalNameInEvent(): boolean {
-		if (this._config) {
-			return this._config.showCalNameInEvent || false;
-		}
-		return true;
+		return this._config?.showCalNameInEvent || false;
 	}
 	get _showFullDayProgress(): boolean {
-		if (this._config) {
-			return this._config.showFullDayProgress || false;
-		}
-		return true;
+		return this._config?.showFullDayProgress || false;
 	}
 	get _hideFinishedEvents(): boolean {
-		if (this._config) {
-			return this._config.hideFinishedEvents || false;
-		}
-		return true;
+		return this._config?.hideFinishedEvents || false;
 	}
 	get _showEventIcon(): boolean {
-		if (this._config) {
-			return this._config.showEventIcon || false;
-		}
-		return true;
+		return this._config?.showEventIcon || false;
 	}
 	get _untilText(): string {
-		if (this._config) {
-			return this._config.untilText || '';
-		}
-		return '';
+		return this._config?.untilText || '';
 	}
 	get _fullDayEventText(): string {
-		if (this._config) {
-			return this._config.fullDayEventText || '';
-		}
-		return '';
+		return this._config?.fullDayEventText || '';
 	}
 	get _noEventsForNextDaysText(): string {
-		if (this._config) {
-			return this._config.noEventsForNextDaysText || '';
-		}
-		return '';
+		return this._config?.noEventsForNextDaysText || '';
 	}
 	get _noEventText(): string {
-		if (this._config) {
-			return this._config.noEventText || '';
-		}
-		return '';
+		return this._config?.noEventText || '';
 	}
 	get _showHiddenText(): boolean {
-		if (this._config) {
-			return this._config.showHiddenText || false;
-		}
-		return true;
+		return this._config?.showHiddenText || false;
 	}
 	get _hiddenEventText(): string {
-		if (this._config) {
-			return this._config.hiddenEventText || '';
-		}
-		return '';
+		return this._config?.hiddenEventText || '';
 	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
 	get _showLastCalendarWeek(): boolean {
-		if (this._config) {
-			return this._config.showLastCalendarWeek || false;
-		}
-		return true;
+		return this._config?.showLastCalendarWeek || false;
 	}
 	get _disableCalEventLink(): boolean {
-		if (this._config) {
-			return this._config.disableCalEventLink || false;
-		}
-		return true;
+		return this._config?.disableCalEventLink || false;
 	}
 	get _disableCalLocationLink(): boolean {
-		if (this._config) {
-			return this._config.disableCalLocationLink || false;
-		}
-		return true;
+		return this._config?.disableCalLocationLink || false;
 	}
 	get _calShowDescription(): boolean {
-		if (this._config) {
-			return this._config.calShowDescription || false;
-		}
-		return true;
+		return this._config?.calShowDescription || false;
 	}
 
 	get _disableCalLink(): boolean {
-		if (this._config) {
-			return this._config.disableCalLink || false;
-		}
-		return true;
+		return this._config?.disableCalLink || false;
 	}
 
 	// CALENDAR SETTINGS END
@@ -305,27 +202,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	// APPEARENCE SETTINGS
 
 	get _locationLinkColor(): string {
-		if (this._config) {
-			return this._config.locationLinkColor || '';
-		}
-		return '';
+		return this._config?.locationLinkColor || '';
 	}
 	get _dimFinishedEvents(): boolean {
-		if (this._config) {
-			return this._config.dimFinishedEvents || true;
-		}
-		return false;
+		return this._config?.dimFinishedEvents || true;
 	}
 
 	// APPEARENCE SETTINGS END
 
 	protected render(): TemplateResult | void {
-		if (!this.hass) {
+		if (!this.hass || !this._helpers) {
 			return html``;
 		}
 
+		// The climate more-info has ha-switch and paper-dropdown-menu elements that are lazy loaded unless explicitly done here
+		this._helpers.importMoreInfoControl('climate');
+
 		// You can restrict on domain type
-		// const entities = Object.keys(this.hass.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'sun');
+		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
+
 		return html`
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
@@ -474,7 +369,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 								<div class="side-by-side">
 									<div>
 										<ha-switch
-											aria-label=${`Toggle ${this._hideFinishedEvents ? 'on' : 'off'}`}
+											aria-label=${`Toggle ${this._hideFinishedEvents ? 'off' : 'on'}`}
 											.checked=${this._hideFinishedEvents !== false}
 											.configValue=${'hideFinishedEvents'}
 											@change=${this._valueChanged}
@@ -483,6 +378,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									</div>
 									<div>
 										<ha-switch
+											aria-label=${`Toggle ${this._showLocation ? 'on' : 'off'}`}
 											.checked=${this._showLocation !== false}
 											.configValue=${'showLocation'}
 											@change=${this._valueChanged}
@@ -500,7 +396,15 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										></ha-switch>
 										<label class="mdc-label">${localize('main.fields.showRelativeTime')}</label>
 									</div>
-									<div></div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._hideDuplicates ? 'on' : 'off'}`}
+											.checked=${this._hideDuplicates !== false}
+											.configValue=${'hideDuplicates'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.hideDuplicates')}</label>
+									</div>
 								</div>
 							</div>
 					  `
@@ -759,7 +663,16 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			</div>
 		`;
 	}
+	private _initialize(): void {
+		if (this.hass === undefined) return;
+		if (this._config === undefined) return;
+		if (this._helpers === undefined) return;
+		this._initialized = true;
+	}
 
+	private async loadCardHelpers(): Promise<void> {
+		this._helpers = await (window as any).loadCardHelpers();
+	}
 	private _toggleOption(ev): void {
 		this._toggleThing(ev, options);
 	}
@@ -783,19 +696,16 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		}
 		if (target.configValue) {
 			if (target.value === '') {
-				delete this._config[target.configValue];
+				const tmpConfig = { ...this._config };
+				delete tmpConfig[target.configValue];
+				this._config = tmpConfig;
 			} else {
-				let value = target.value;
-				if (target.type === 'number') {
-					value = Number(value);
-				}
 				this._config = {
 					...this._config,
-					[target.configValue]: target.checked !== undefined ? target.checked : value,
+					[target.configValue]: target.checked !== undefined ? target.checked : target.value,
 				};
 			}
 		}
-
 		fireEvent(this, 'config-changed', { config: this._config });
 	}
 }
