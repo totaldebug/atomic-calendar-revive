@@ -32,6 +32,7 @@ nav_order: 1
 | showPrivate          | boolean |   optional   | v3.3.0  | `true` show private events (only Google Calendar)                                                                                                                                                                     |
 | showNoEventDays      | boolean |   optional   | v4.1.0  | `false` Shows days that have no events, instead of only showing event days                                                                                                                                            |
 | descLength           | integer |   optional   | v4.8.0  | Sets the length of descriptions                                                                                                                                                                                       |
+| hideDuplicates       | boolean |   optional   | v5.1.0  | `false` Removes any duplicate items based on summary, start time and end time.                                                                                                                                        |
 
 ## Color Options
 

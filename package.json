@@ -14,7 +14,8 @@
 		"rollup": "rollup -c",
 		"start": "rollup -c --watch",
 		"build": "rollup -c ",
-		"watch": "rollup -c --watch --config rollup-dev.config.js"
+		"watch": "rollup -c --watch --config rollup-dev.config.js",
+		"commit": "cz"
 	},
 	"repository": {
 		"type": "git",
