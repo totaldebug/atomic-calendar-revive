@@ -43,7 +43,9 @@
 			"linkTarget": "Viite tüüp",
 			"refreshInterval": "Värskendussagedus",
 			"showRelativeTime": "Kuva suhtelist aega",
-			"firstDayOfWeek": "Nädala esimene päev (0-6)"
+			"firstDayOfWeek": "Nädala esimene päev (0-6)",
+			"cardHeight": "kaardi kõrgus",
+			"hideDuplicates": "peida duplikaadid"
 		}
 	},
 	"event": {

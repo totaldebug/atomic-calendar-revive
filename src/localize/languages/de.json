@@ -43,7 +43,9 @@
             "linkTarget": "Verknüpfungsziel",
             "refreshInterval": "Aktualisierungsintervall",
             "showRelativeTime": "Relative Zeit anzeigen",
-            "firstDayOfWeek": "Erster Wochentag 0-6"
+            "firstDayOfWeek": "Erster Wochentag 0-6",
+            "cardHeight": "Kartenhöhe",
+            "hideDuplicates": "Duplikate ausblenden"
         }
     },
     "event": {

@@ -102,6 +102,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	whitelist?: string;
 	locationFilter?: string;
 	disableCalLink?: boolean;
+	removeDuplicates?: boolean;
 }
 
 export interface LongDateFormatSpec {

@@ -101,4 +101,5 @@ export default {
 
 	showEventIcon: false,
 	europeanDate: false,
+	hideDuplicates: false,
 };

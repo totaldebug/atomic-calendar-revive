@@ -45,7 +45,8 @@
             "refreshInterval": "Opdaterings interval",
             "showRelativeTime": "Vis den relative tid",
             "firstDayOfWeek": "Første dag i ugen 0-6",
-            "cardHeight": "Højde på kort"
+            "cardHeight": "Højde på kort",
+            "hideDuplicates": "Skjul dubletter"
         }
     },
     "event": {
