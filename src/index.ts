@@ -1108,7 +1108,15 @@ class AtomicCalendarRevive extends LitElement {
 			.add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 		const calendarUrlList: string[] = [];
 		this._config.entities.map((entity) => {
-			calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
+			if(typeof entity.maxDaysToShow != 'undefined') {
+				const altEnd = dayjs()
+						.add(entity.maxDaysToShow! - 1 + this._config.startDaysAhead!, 'day')
+						.endOf('day')
+						.add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
+				calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${altEnd}Z`);
+			} else {
+				calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
+			}
 		});
 
 		// call to API for events
