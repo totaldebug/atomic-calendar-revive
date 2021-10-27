@@ -1,0 +1,51 @@
+name: Feature request
+description: Suggest an idea for this project
+labels: 'type/feature'
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to assist with improving this project!
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the feature you are requesting.
+      options:
+      - label: I have searched the existing issues
+        required: true
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: Current Behavior
+      description: A concise description of what you're experiencing.
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behaviour
+    attributes:
+      label: Expected behaviour
+      description: A concise description of what you expected to happen.
+      placeholder: Tell us what you should see!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Possible Solutions
+      description: If you have an idea on how to implement this please let us know.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Context / Reason
+      description: Providing context helps us come up with a solution that is most useful in the real world.
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/marksie1988/.github/blob/main/.github/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
