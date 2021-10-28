@@ -107,8 +107,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _hoursFormat(): string {
 		return this._config?.hoursFormat || '';
 	}
-	get _refreshInterval(): string {
-		return this._config?.refreshInterval || '60';
+	get _refreshInterval(): number {
+		return this._config?.refreshInterval || 60;
 	}
 	get _showDate(): boolean {
 		return this._config?.showDate || false;
@@ -702,7 +702,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			} else {
 				this._config = {
 					...this._config,
-					[target.configValue]: target.checked !== undefined ? target.checked : target.value,
+					[target.configValue]: target.checked !== undefined ? target.checked : (isNaN(target.value)) ? target.value : parseInt(target.value),
 				};
 			}
 		}
