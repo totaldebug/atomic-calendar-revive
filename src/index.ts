@@ -1404,7 +1404,9 @@ class AtomicCalendarRevive extends LitElement {
 				icon="mdi:chevron-left"
 				@click="${() => this.handleMonthChange(-1)}"
 				title=${this.hass.localize('ui.common.previous')}
-			></ha-icon-button>
+			>
+				<ha-icon icon="mdi:chevron-left"></ha-icon>
+			</ha-icon-button>
 			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
 				${this.selectedMonth.format('MMMM')} ${this.selectedMonth.format('YYYY')}
 			</span>
@@ -1413,7 +1415,9 @@ class AtomicCalendarRevive extends LitElement {
 				icon="mdi:chevron-right"
 				@click="${() => this.handleMonthChange(1)}"
 				title=${this.hass.localize('ui.common.next')}
-			></ha-icon-button>
+			>
+				<ha-icon icon="mdi:chevron-right"></ha-icon>
+			</ha-icon-button>
 		</div>`;
 	}
 
@@ -1424,6 +1428,7 @@ class AtomicCalendarRevive extends LitElement {
 					icon="mdi:calendar"
 					onClick="window.open('https://calendar.google.com/calendar/r/month/${this.selectedMonth.format('YYYY')}/${this.selectedMonth.format('MM')}/1'), '${this._config.linkTarget}'"
 				>
+					<ha-icon icon="mdi:calendar"></ha-icon>
 				</ha-icon-button>
 			</div>`;
 		}
