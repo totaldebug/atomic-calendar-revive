@@ -76,35 +76,37 @@ You can switch between the two and select a default mode.
 
 ## Features
 
-|                  |   🔰 Revive |  Original |
-| -----------------| :---------: | :---------: |
-| HACS Support | ✔️ | ❌ |
-| New UI | ✔️ | ❌ |
-| See Calendar Names | ✔️ | ❌ |
-| Keyword Whitelist      | ✔️ | ❌|
-| Keyword Blacklist | ✔️ | ✔️ |
-| Disable Calendar Links | ✔️ | ❌ |
-| Lovelace UI Editor | ✔️ | ❌ |
-| Hide finished events | ✔️ | ❌ |
-| Sort by start time | ✔️ | ❌ |
-| Relative time to event | ✔️ | ❌ |
-| Limit total number of events | ✔️ | ❌ |
-| Soft Event Limit | ✔️ | ❌ |
-| No external libraries | ✔️ | ❌ |
-| Translations Included | ✔️ | ❌ (Partial) |
-| All Day & Multi-Day Events | ✔️ | ✔️ |
-| Events List | ✔️ | ✔️ |
-| Calendar List | ✔️ | ✔️ |
-| Dim expired events | ✔️ | ✔️ |
-| Custom Icon Support | ✔️ | ❌ (Limited) |
-| Event Progress Bars | ✔️ | ✔️ |
-| Many more features | ✔️ | ✔️ |
+|                              | 🔰 Revive |  Original   |
+| ---------------------------- | :------: | :---------: |
+| HACS Support                 |    ✔️     |      ❌      |
+| New UI                       |    ✔️     |      ❌      |
+| See Calendar Names           |    ✔️     |      ❌      |
+| Keyword Whitelist            |    ✔️     |      ❌      |
+| Keyword Blacklist            |    ✔️     |      ✔️      |
+| Disable Calendar Links       |    ✔️     |      ❌      |
+| Lovelace UI Editor           |    ✔️     |      ❌      |
+| Hide finished events         |    ✔️     |      ❌      |
+| Sort by start time           |    ✔️     |      ❌      |
+| Relative time to event       |    ✔️     |      ❌      |
+| Limit total number of events |    ✔️     |      ❌      |
+| Soft Event Limit             |    ✔️     |      ❌      |
+| No external libraries        |    ✔️     |      ❌      |
+| Translations Included        |    ✔️     | ❌ (Partial) |
+| All Day & Multi-Day Events   |    ✔️     |      ✔️      |
+| Events List                  |    ✔️     |      ✔️      |
+| Calendar List                |    ✔️     |      ✔️      |
+| Dim expired events           |    ✔️     |      ✔️      |
+| Custom Icon Support          |    ✔️     | ❌ (Limited) |
+| Event Progress Bars          |    ✔️     |      ✔️      |
+| Many more features           |    ✔️     |      ✔️      |
 
 ## Compatibility
 
-| Card Version | HA Version | Notes |
-| v5.0.0  | 2021.6 Upwards  | May work on older HA Versions but `hoursFormat` option will need to be manually set. |
-| v4.1.1 | 0.117 Upwards | |
+| Card Version |     HA Version      |                                        Notes                                         |
+| ------------ | :-----------------: | :----------------------------------------------------------------------------------: |
+| v6.0.0b      |   2021.11 Upwards   |                   Progress bar will not work on older HA Versions                    |
+| v5.0.0       | 2021.6 to 2021.10.6 | May work on older HA Versions but `hoursFormat` option will need to be manually set. |
+| v4.1.1       |    0.117 Upwards    |                                                                                      |
 
 ## Contributing
 
@@ -112,9 +114,9 @@ Got **something interesting** you'd like to **share**? Learn about [contributing
 
 ## Author
 
-| [![TotalDebug](https://totaldebug.uk/assets/images/logo.png)](https://linkedin.com/in/marksie1988) 	|
-|:-------------------------:     |
-| **marksie1988 (Steven Marks)** |
+| [![TotalDebug](https://totaldebug.uk/assets/images/logo.png)](https://linkedin.com/in/marksie1988) |
+| :------------------------------------------------------------------------------------------------: |
+|                                   **marksie1988 (Steven Marks)**                                   |
 
 ## Support
 
