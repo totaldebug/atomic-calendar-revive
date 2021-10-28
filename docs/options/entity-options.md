@@ -15,6 +15,7 @@ nav_order: 2
 | icon            | string | v2.0.0 | `null` Add an icon to a calendar                                                                       |
 | startTimeFilter | string | v2.0.0 | Only shows events between specific times _NOTE_ must be set with `endTimeFilter` format: `'10:00'`     |
 | endTimeFilter   | string | v2.0.0 | Only shows events between specific times _NOTE_ must be set with `startTimeFilter` format: `'17:00'`   |
+| maxDaysToShow   | integer | v5.2.0  | `7` Maximum number of days to show. Overrides main configuration maxDaysToShow for this calendar     |                                                                                                                         |
 
 ---
 
