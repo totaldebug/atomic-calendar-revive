@@ -1,0 +1,26 @@
+changelog:
+  categories:
+    - title: 💥 Breaking Changes
+      labels:
+        - semver/major
+        - flag/breaking changes
+    - title: 🚀 Exciting New Features
+      labels:
+        - semver/minor
+        - type/feature
+    - title: 🐛 Patches & Bug Fixes
+      labels:
+        - semver/patch
+        - type/bug
+    - title: 📚 Documentation
+      labels:
+        - type/docs
+    - title: 📔 Language
+      labels:
+        - type/language
+    - title: ⬆️ Dependencies
+      labels:
+        - type/dependencies
+    - title: Other Changes
+      labels:
+        - "*"

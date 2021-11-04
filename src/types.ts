@@ -1,5 +1,11 @@
-import { LovelaceCardConfig } from 'custom-card-helpers';
+import { LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } from 'custom-card-helpers';
 
+declare global {
+	interface HTMLElementTagNameMap {
+		'atomic-calendar-card-editor': LovelaceCardEditor;
+		'atomic-calendar-card': LovelaceCard;
+	}
+}
 export interface atomicCardConfig extends LovelaceCardConfig {
 	entities?: any;
 	type: string;
@@ -35,6 +41,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	showPrivate?: boolean;
 	showHiddenText?: boolean;
 	hiddenEventText?: string;
+	refreshInterval: number;
 
 	// color and font settings
 	nameColor?: string;
