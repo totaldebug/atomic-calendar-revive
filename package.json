@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "5.2.2",
+	"version": "6.0.0",
 	"editor_version": "1.7.1",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
@@ -54,7 +54,6 @@
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "^2.0.12",
 		"@material/mwc-icon-button": "^0.25.1",
-		"@material/mwc-linear-progress": "^0.25.1",
 		"@polymer/lit-element": "^0.7.1",
 		"@webcomponents/webcomponentsjs": "^2.6.0",
 		"custom-card-helpers": "git+https://github.com/totaldebug/custom-card-helpers.git",
