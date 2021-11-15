@@ -11,6 +11,7 @@ import updateLocale from 'dayjs/plugin/updateLocale';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -18,6 +19,7 @@ dayjs.extend(relativeTime);
 dayjs.extend(isoWeek);
 dayjs.extend(localeData);
 dayjs.extend(LocalizedFormat);
+dayjs.extend(isSameOrBefore);
 
 // Import Card Editor
 import './index-editor';
