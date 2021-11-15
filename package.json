@@ -19,7 +19,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/marksie1988/atomic-calendar-revive.git"
+		"url": "git+https://github.com/totaldebug/atomic-calendar-revive.git"
 	},
 	"author": "Steven Marks",
 	"license": "ISC",
@@ -64,9 +64,9 @@
 		"typescript": "^4.4.4"
 	},
 	"bugs": {
-		"url": "https://github.com/marksie1988/atomic-calendar-revive/issues"
+		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"
 	},
-	"homepage": "https://github.com/marksie1988/atomic-calendar-revive#readme",
+	"homepage": "https://github.com/totaldebug/atomic-calendar-revive#readme",
 	"config": {
 		"commitizen": {
 			"path": "./node_modules/cz-conventional-changelog"
