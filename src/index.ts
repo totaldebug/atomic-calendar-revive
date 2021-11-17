@@ -722,16 +722,17 @@ class AtomicCalendarRevive extends LitElement {
 		const titleColor: string =
 			typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
 		const dayClassEventRunning = event.isEventRunning ? `event-titleRunning` : `event-title`;
+		const textDecoration: string = this.checkDeclined(event.eventClass) ? 'line-through' : 'none';
 
 		if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
 			return html`
-				<div style="color: ${titleColor}">
+				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
 					<div class="${dayClassEventRunning}">${this.getEventIcon(event)} ${titletext}</div>
 				</div>
 			`;
 		else
 			return html`
-				<a href="${event.link}" style="text-decoration: none;" target="${this._config.linkTarget}">
+				<a href="${event.link}" style="text-decoration: ${textDecoration};" target="${this._config.linkTarget}">
 					<div style="color: ${titleColor}">
 						<div class="${dayClassEventRunning}">${this.getEventIcon(event)} <span>${titletext}</span></div>
 					</div>
@@ -742,13 +743,13 @@ class AtomicCalendarRevive extends LitElement {
 	getCalTitleHTML(event) {
 		const titleColor: string =
 			typeof event._config.titleColor != 'undefined' ? event._config.titleColor : this._config.eventTitleColor;
-		const textDecoration: string =
-			typeof event.attendees != 'undefined' &&
-				!!event.attendees.find((attendee) => attendee.self == true && attendee.responseStatus == 'declined')
-				? 'line-through'
-				: 'none';
+		const textDecoration: string = this.checkDeclined(event) ? 'line-through' : 'none';
 
-		if (this._config.disableCalEventLink || event.htmlLink === null) return html`${event.summary}`;
+		if (this._config.disableCalEventLink || event.htmlLink === null)
+			return html`<span
+				style="text-decoration: ${textDecoration};color: ${titleColor}"
+				>${event.summary}
+			</span>`;
 		else
 			return html`<a
 				href="${event.htmlLink}"
