@@ -80,6 +80,7 @@ const style = css`
 		color: ${this._config.descColor};
 		font-size: ${this._config.descSize}%;
 		overflow-wrap: anywhere;
+		user-select: text;
 	}
 
 	.hoursHTML {
@@ -105,10 +106,12 @@ const style = css`
 		text-align: right;
 		display: inline-block;
 		vertical-align: top;
+    user-select: text;
 	}
 
 	.event-title {
 		font-size: ${this._config.eventTitleSize}%;
+    user-select: text;
 	}
 
 	.event-location-icon {
