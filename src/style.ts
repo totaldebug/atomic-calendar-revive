@@ -106,12 +106,12 @@ const style = css`
 		text-align: right;
 		display: inline-block;
 		vertical-align: top;
-    user-select: text;
+		user-select: text;
 	}
 
 	.event-title {
 		font-size: ${this._config.eventTitleSize}%;
-    user-select: text;
+		user-select: text;
 	}
 
 	.event-location-icon {
