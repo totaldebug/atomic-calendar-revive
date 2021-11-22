@@ -79,7 +79,7 @@ const style = css`
 		padding: 0px 5px 0 5px;
 		color: ${this._config.descColor};
 		font-size: ${this._config.descSize}%;
-    overflow-wrap: anywhere;
+		overflow-wrap: anywhere;
 	}
 
 	.hoursHTML {
