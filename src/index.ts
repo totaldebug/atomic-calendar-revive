@@ -398,6 +398,8 @@ class AtomicCalendarRevive extends LitElement {
 					padding: 0px 5px 0 5px;
 					color: ${this._config.descColor};
 					font-size: ${this._config.descSize}%;
+					overflow-wrap: anywhere;
+					user-select: text;
 				}
 				.hidden-events {
 					color: var(--primary-text-color);
@@ -426,10 +428,12 @@ class AtomicCalendarRevive extends LitElement {
 					text-align: right;
 					display: inline-block;
 					vertical-align: top;
+					user-select: text;
 				}
 
 				.event-title {
 					font-size: ${this._config.eventTitleSize}%;
+					user-select: text;
 				}
 
 				.event-titleRunning {
@@ -448,6 +452,7 @@ class AtomicCalendarRevive extends LitElement {
 					text-decoration: none;
 					color: ${this._config.locationLinkColor};
 					font-size: ${this._config.locationTextSize}%;
+					user-select: text;
 				}
 
 				.event-circle {
