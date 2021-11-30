@@ -18,7 +18,8 @@
 	},
 	"errors": {
 		"invalid_configuration": "Configuration invalide",
-		"update_card": "Le calendrier ne peut pas être chargé depuis le composant Home Assistant"
+		"update_card": "Le calendrier ne peut pas être chargé depuis le composant Home Assistant",
+		"no_entities": "Vous n'avez pas specifier d'entitées"
 	},
 	"required": {
 		"name": "Requis",
@@ -66,7 +67,8 @@
 			"noEventsForNextDaysText": "Texte Aucun événement dans les prochains jours:",
 			"fullDayEventText": "Texte Toute la journée:",
 			"showEventIcon": "Afficher l'icone d'événement",
-			"showHiddenText": "Afficher le texte de l'événement masqué"
+			"showHiddenText": "Afficher le texte de l'événement masqué",
+			"hiddenEventText": "Texte pour les événements masqués:"
 		}
 	},
 	"calendar": {
@@ -76,7 +78,8 @@
 			"showLastCalendarWeek": "Afficher la dernière semaine du calendrier",
 			"disableCalEventLink": "Désactiver les liens sur les événements du calendrier",
 			"disableCalLocationLink": "Désactiver les liens sur les lieux du calendrier",
-			"calShowDescription": "Afficher la description"
+			"calShowDescription": "Afficher la description",
+			"disableCalLink": "Désactiver les liens calendar"
 		}
 	},
 	"appearance": {
