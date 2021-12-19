@@ -591,6 +591,10 @@ class AtomicCalendarRevive extends LitElement {
 					width: 100%;
 				}
 
+				.summary-div {
+					font-size: 90%;
+				}
+
 				.summary-event-div {
 					padding-top: 3px;
 				}
@@ -1517,7 +1521,7 @@ class AtomicCalendarRevive extends LitElement {
 					</tbody>
 				</table>
 			</div>
-			<div style="font-size: 90%;">${this.eventSummary}</div>
+			<div class="summary-div">${this.eventSummary}</div>
 		`;
 	}
 }
