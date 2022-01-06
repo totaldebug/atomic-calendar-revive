@@ -52,6 +52,7 @@ get this added for you.
 | it-ch  |    Italian (Switzerland)     |
 |   it   |           Italian            |
 |   ja   |           Japanese           |
+|   nb   |          Norwegian           |
 |   ne   |           Nepalese           |
 | nl-be  |       Dutch (Belgium)        |
 |   nl   |            Dutch             |
