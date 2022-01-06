@@ -429,6 +429,7 @@ class AtomicCalendarRevive extends LitElement {
 					display: inline-block;
 					vertical-align: top;
 					user-select: text;
+					overflow-wrap: anywhere;
 				}
 
 				.event-title {
