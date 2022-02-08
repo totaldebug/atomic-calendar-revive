@@ -9,15 +9,13 @@ export default class EventClass {
     isEmpty: boolean;
     private _eventClass: any;
     private _globalConfig: any;
-    private _config: any;
     private _startDateTime: dayjs.Dayjs | undefined;
     private _endDateTime: dayjs.Dayjs | undefined;
 
 
-    constructor(eventClass, globalConfig, config) {
+    constructor(eventClass, globalConfig) {
         this._eventClass = eventClass;
         this._globalConfig = globalConfig;
-        this._config = config;
         this.isEmpty = false;
     }
 
@@ -35,6 +33,10 @@ export default class EventClass {
 
     get entity() {
         return this._eventClass.hassEntity || {};
+    }
+
+    get entityConfig() {
+        return this._eventClass.entity || {};
     }
 
     get originName() {
@@ -145,12 +147,13 @@ export default class EventClass {
     get isRunning() {
         return this.startDateTime.isBefore(dayjs()) && this.endDateTime.isAfter(dayjs());
     }
-    
+
     /**
      * is this finished?
      * @return {boolean}
      */
     get isFinished() {
+        // TODO: Fix needed for full / multi day event
         return this.endDateTime.isAfter(dayjs());
     }
 
@@ -225,21 +228,23 @@ export default class EventClass {
             copiedEvent._isFirstDay = i === 0;
             copiedEvent._isLastDay = i === (daysLong - 1);
 
-            const partialEvent: EventClass = new EventClass(copiedEvent, this._config, '');
+            // Create event object for each of the days the multi-event occurs on
+            const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
 
-            // only add event if starting before the config numberOfDays
-            const endDate = dayjs().startOf('day').add(this._config.numberOfDays, 'days');
-            if (endDate.isAfter(partialEvent.startDateTime)) {
-                partialEvents.push(partialEvent)
+            // only add event if start date is before the maxDaysToShow and after
+            // the current date
+            const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
+
+            if (endDate.isAfter(partialEvent.startDateTime) && dayjs().startOf('day').subtract(1, 'min').isBefore(partialEvent.startDateTime)) {
+                partialEvents.push(partialEvent);
             }
         }
-
         return partialEvents;
     }
 
 
     get titleColor() {
-        if (this._config.eventTitleColor) return this._config.eventTitleColor;
+        if (this.entityConfig.eventTitleColor) return this.entityConfig.eventTitleColor;
         else return 'var(--primary-text-color)';
     }
 

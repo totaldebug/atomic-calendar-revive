@@ -24,7 +24,6 @@ nav_order: 1
 | disableEventLink     | boolean |   optional   | v0.10.0 | `false` disables links in event title.                                                                                                                                                                                |
 | disableLocationLink  | boolean |   optional   | v0.10.0 | `false` disables links in event location.                                                                                                                                                                             |
 | linkTarget           | string  |   optional   | v0.11.0 | `_blank` Allows custom target for links, default will open new tab.                                                                                                                                                   |
-| showDeclined         | boolean |   optional   | v2.0.0  | `false` show/hide events that have been declined                                                                                                                                                                      |
 | defaultMode          | integer |   optional   | v2.0.0  | `Event` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default                                                                                                                         |
 | refreshInterval      | integer |   optional   | v2.1.0  | `60` Set how often the calendar should refresh data in seconds                                                                                                                                                        |
 | showHours            | boolean |   optional   | v2.7.0  | `true` shows when and event starts / ends                                                                                                                                                                             |
@@ -33,7 +32,8 @@ nav_order: 1
 | showNoEventDays      | boolean |   optional   | v4.1.0  | `false` Shows days that have no events, instead of only showing event days                                                                                                                                            |
 | descLength           | integer |   optional   | v4.8.0  | Sets the length of descriptions                                                                                                                                                                                       |
 | hideDuplicates       | boolean |   optional   | v5.1.0  | `false` Removes any duplicate items based on summary, start time and end time.                                                                                                                                        |
-
+| hideDeclined         | boolean |   optional   | v7.0.0  | `false` show/hide events that have been declined                                                                                                                                                                      |
+| showMultiDay | boolean | optional | v7.0.0 | `false` if set true will show multi-day events on each day |
 ## Color Options
 
 | Name                 |  Type   | Since  |                                     Description                                     |

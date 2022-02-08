@@ -2,7 +2,7 @@
 import { property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { formatTime } from './helpers/format-time'
-import { removeDuplicates } from './functions/remove_duplicates';
+import { getAllEvents, removeDuplicates, checkFilter, groupEventsByDay } from './lib/event.func';
 import { styles } from './style';
 
 // DayJS for managing date information
@@ -42,7 +42,7 @@ class AtomicCalendarRevive extends LitElement {
   lastCalendarUpdateTime!: dayjs.Dayjs;
   lastEventsUpdateTime!: dayjs.Dayjs;
   lastHTMLUpdateTime!: dayjs.Dayjs;
-  events!: Array<any>;
+  events!: {} | any[];
   shouldUpdateHtml: boolean;
   errorMessage: TemplateResult;
   modeToggle: string;
@@ -56,6 +56,7 @@ class AtomicCalendarRevive extends LitElement {
   isUpdating: boolean;
   clickedDate!: Date;
   language: string;
+  failedEvents!: {} | any[];
 
   constructor() {
     super();
@@ -63,6 +64,7 @@ class AtomicCalendarRevive extends LitElement {
     this.lastEventsUpdateTime;
     this.lastHTMLUpdateTime;
     this.events;
+    this.failedEvents;
     this.content = html``;
     this.shouldUpdateHtml = true;
     this.errorMessage = html``;
@@ -184,20 +186,20 @@ class AtomicCalendarRevive extends LitElement {
         this.hiddenEvents = 0;
         this.isUpdating = true;
         try {
-          this.events = await this.getEvents();
-
+          const { events, failedEvents } = await getAllEvents(this._config, this.hass);
+          this.events = events;
+          this.failedEvents = failedEvents;
           // Check no event days and display
-          this.events = this.sortEvents(this.events);
-          this.events = this.limitEvents(this.events);
           if (this._config.showNoEventDays) {
             this.events = this.setNoEventDays(this.events);
           }
-          this.events = this.sortEvents(this.events);
-          this.events = this.groupEvents(this.events);
+          this.events = groupEventsByDay(this.events, this._config);
+          console.log(this.events)
+
         } catch (error) {
           console.log(error);
           this.errorMessage = html`${localize('errors.update_card')}
-						<a href="https://marksie1988.github.io/atomic-calendar-revive/faq.html" target="${this._config.linkTarget}"
+						<a href="https://docs.totaldebug.uk/atomic-calendar-revive/faq.html" target="${this._config.linkTarget}"
 							>See Here</a
 						>`;
           this.showLoader = false;
@@ -245,7 +247,7 @@ class AtomicCalendarRevive extends LitElement {
           isFinished: false,
           htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
         };
-        const emptyEvent = new EventClass(emptyEv, this._config, '');
+        const emptyEvent = new EventClass(emptyEv, this._config);
         emptyEvent.isEmpty = true;
         singleEvents.push(emptyEvent);
         var isEvent = false;
@@ -254,47 +256,6 @@ class AtomicCalendarRevive extends LitElement {
     });
     return singleEvents
 
-  }
-
-  sortEvents(singleEvents) {
-    // Sorts events by date and time
-    if (this._config.sortByStartTime) {
-      singleEvents.sort(function (a: EventClass, b: EventClass) {
-        return a.startDateTime.diff(b.startDateTime);
-      });
-    }
-
-    return singleEvents
-  }
-
-  limitEvents(singleEvents) {
-
-    // Check maxEventCount and softLimit
-    if (this._config.maxEventCount) {
-      if (
-        (!this._config.softLimit && this._config.maxEventCount < singleEvents.length) ||
-        (this._config.softLimit && singleEvents.length > this._config.maxEventCount + this._config.softLimit)
-      ) {
-        this.hiddenEvents += singleEvents.length - this._config.maxEventCount;
-        singleEvents.length = this._config.maxEventCount;
-      }
-    }
-    return singleEvents
-  }
-
-  groupEvents(singleEvents) {
-    // grouping events by days, returns object with days and events
-    const ev: any[] = [].concat(...singleEvents);
-    const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
-      r[a.daysToSort] = r[a.daysToSort] || [];
-      r[a.daysToSort].push(a);
-      return r;
-    }, {});
-
-    const days = Object.keys(groupsOfEvents).map(function (k) {
-      return groupsOfEvents[k];
-    });
-    return days;
   }
 
   handleToggle() {
@@ -331,25 +292,25 @@ class AtomicCalendarRevive extends LitElement {
     });
   }
 
-  getEventIcon(event) {
+  getEventIcon(event: EventClass) {
     const iconColor: string =
-      typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+      typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : this._config.eventTitleColor;
 
-    if (this._config.showEventIcon && event._config.icon != 'undefined')
-      return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event._config.icon}"></ha-icon>`;
+    if (this._config.showEventIcon && event.entityConfig.icon != 'undefined')
+      return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
   }
   /**
    * generate Event Title (summary) HTML
    * TODO: Add event class
    */
-  getTitleHTML(event) {
+  getTitleHTML(event: EventClass) {
     const titletext: string = event.title;
     const titleColor: string =
-      typeof event._config.color != 'undefined' ? event._config.color : this._config.eventTitleColor;
+      typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : this._config.eventTitleColor;
     const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 
-    if (this._config.disableEventLink || event.link == 'undefined' || event.link === null)
+    if (this._config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null)
       return html`
 				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
 					<div class="${dayClassEventRunning}" style="--event-title-size: ${this._config.eventTitleSize}%">${this.getEventIcon(event)} ${titletext}</div>
@@ -357,7 +318,7 @@ class AtomicCalendarRevive extends LitElement {
 			`;
     else
       return html`
-				<a href="${event.link}" style="text-decoration: ${textDecoration};" target="${this._config.linkTarget}">
+				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${this._config.linkTarget}">
 					<div style="color: ${titleColor}">
 						<div class="${dayClassEventRunning}" style="--event-title-size: ${this._config.eventTitleSize}%">${this.getEventIcon(event)} <span>${titletext}</span></div>
 					</div>
@@ -528,7 +489,7 @@ class AtomicCalendarRevive extends LitElement {
         isFinished: false,
         htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
       };
-      const emptyEvent = new EventClass(emptyEv, this._config, '');
+      const emptyEvent = new EventClass(emptyEv, this._config);
       emptyEvent.isEmpty = true;
       const d: any[] = [];
       d.push(emptyEvent);
@@ -538,16 +499,11 @@ class AtomicCalendarRevive extends LitElement {
     //loop through days
     htmlDays = days.map((day, di) => {
 
-      // if hideDuplicates is set remove the duplicate events
-      if (this._config.hideDuplicates) {
-        var dayEvents = removeDuplicates(day)
-      } else {
-        var dayEvents = day
-      }
+      var dayEvents = day
 
       //loop through events for each day
       // TODO: Add type to event
-      const htmlEvents = dayEvents.map((event, i, arr) => {
+      const htmlEvents = dayEvents.map((event: EventClass, i, arr) => {
         const dayWrap = i == 0 && di > 0 ? 'daywrap' : '';
         const isEventNext =
           di == 0 && event.startDateTime.isAfter(dayjs()) && (i == 0 || !arr[i - 1].startDateTime.isAfter(dayjs()))
@@ -566,12 +522,12 @@ class AtomicCalendarRevive extends LitElement {
 						  </div>`
             : ``;
 
-        const calColor = typeof event._config.color != 'undefined' ? event._config.color : this._config.defaultCalColor;
+        const calColor = typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : this._config.defaultCalColor;
 
         //show calendar name
-        const eventCalName = event._config.eventCalName
+        const eventCalName = event.entityConfig.calendarName
           ? html`<div class="event-cal-name" style="color: ${calColor};">
-							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event._config.eventCalName}
+							<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event.entityConfig.calendarName}
 					  </div>`
           : ``;
 
@@ -686,111 +642,6 @@ class AtomicCalendarRevive extends LitElement {
   }
 
   /**
-   * check if string contains one of keywords
-   * @param {string} string to check inside
-   * @param {string} comma delimited keywords
-   * @return {bool}
-   */
-  checkFilter(str, filter) {
-    if (typeof filter != 'undefined' && filter != '') {
-      const keywords = filter.split(',');
-      return keywords.some((keyword) => {
-        if (RegExp('(?:^|\\s)' + keyword.trim(), 'i').test(str)) return true;
-        else return false;
-      });
-    } else return false;
-  }
-
-  // if a time filter is set and entry is between the times, return true
-  checkTimeFilter(event: EventClass, startFilter, endFilter) {
-    return (
-      dayjs(event.startDateTime).isAfter(startFilter, 'hour') &&
-      dayjs(event.startDateTime).isBefore(endFilter, 'hour')
-    );
-  }
-
-  /**
-   * gets events from HA to Events mode
-   *
-   */
-  async getEvents() {
-    const daysToShow = this._config.maxDaysToShow! == 0 ? this._config.maxDaysToShow! : this._config.maxDaysToShow! - 1;
-    const timeOffset = -dayjs().utcOffset();
-    const start = dayjs()
-      .add(this._config.startDaysAhead!, 'day')
-      .startOf('day')
-      .add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
-    const end = dayjs()
-      .add(daysToShow + this._config.startDaysAhead!, 'day')
-      .endOf('day')
-      .add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
-    const calendarUrlList: string[] = [];
-    this._config.entities.map((entity) => {
-      if (typeof entity.maxDaysToShow != 'undefined') {
-        const altEnd = dayjs()
-          .add(entity.maxDaysToShow! - 1 + this._config.startDaysAhead!, 'day')
-          .endOf('day')
-          .add(timeOffset, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
-        calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${altEnd}Z`);
-      } else {
-        calendarUrlList.push(`calendars/${entity.entity}?start=${start}Z&end=${end}Z`);
-      }
-    });
-
-    // call to API for events
-    try {
-      return await Promise.all(calendarUrlList.map((url) => this.hass.callApi('GET', url))).then((result) => {
-        const singleEvents: any[] = [];
-        let eventCount = 0;
-        result.map((calendar: any, i: number) => {
-          calendar.map((singleEvent: EventClass) => {
-            const blacklist =
-              typeof this._config.entities[i]['blacklist'] != 'undefined' ? this._config.entities[i]['blacklist'] : '';
-            const whitelist =
-              typeof this._config.entities[i]['whitelist'] != 'undefined' ? this._config.entities[i]['whitelist'] : '';
-            const locationWhitelist =
-              typeof this._config.entities[i]['locationWhitelist'] != 'undefined' ? this._config.entities[i]['locationWhitelist'] : '';
-            const singleAPIEvent = new EventClass(singleEvent, this._config, this._config.entities[i]);
-            const startTimeFilter =
-              typeof this._config.entities[i]['startTimeFilter'] != 'undefined'
-                ? this._config.entities[i]['startTimeFilter']
-                : '';
-            const endTimeFilter =
-              typeof this._config.entities[i]['endTimeFilter'] != 'undefined'
-                ? this._config.entities[i]['endTimeFilter']
-                : '';
-            if (
-              (startTimeFilter == '' ||
-                endTimeFilter == '' ||
-                this.checkTimeFilter(
-                  singleEvent,
-                  dayjs(startTimeFilter, 'HH:mm').subtract(1, 'minute'),
-                  dayjs(endTimeFilter, 'HH:mm').add(1, 'minute'),
-                )) &&
-              (blacklist == '' || !this.checkFilter(singleEvent.title, blacklist)) &&
-              (whitelist == '' || this.checkFilter(singleEvent.title, whitelist)) &&
-              (locationWhitelist == '' || this.checkFilter(singleEvent.location, locationWhitelist)) &&
-              (this._config.showPrivate || singleEvent.visibility != 'private') &&
-              (this._config.showDeclined || !singleEvent.isDeclined) &&
-              ((this._config.maxDaysToShow === 0 && singleAPIEvent.isRunning) ||
-                !(this._config.hideFinishedEvents && !singleAPIEvent.isRunning))
-            ) {
-              singleEvents.push(singleAPIEvent);
-              eventCount++;
-            }
-          });
-        });
-
-        this.showLoader = false;
-        return singleEvents;
-      });
-    } catch (error) {
-      this.showLoader = false;
-      throw error;
-    }
-  }
-
-  /**
    * gets events from HA to Calendar mode
    *
    */
@@ -819,7 +670,7 @@ class AtomicCalendarRevive extends LitElement {
       .then((result: Array<any>) => {
         if (monthToGet == this.monthToGet) {
           result.map((eventsArray, i: number) => {
-            this.month.map((m: { date: string }) => {
+            this.month.map((m: CalendarDay) => {
               const calendarUrl = calendarUrlList[i][0];
               const calendarIcon = calendarUrlList[i][1];
               const calendarBlacklist = typeof calendarUrlList[i][2] != 'undefined' ? calendarUrlList[i][2] : '';
@@ -829,13 +680,16 @@ class AtomicCalendarRevive extends LitElement {
                 typeof calendarUrlList[i][5] != 'undefined' ? calendarUrlList[i][5] : this._config.defaultCalColor;
 
               eventsArray.map((event: EventClass) => {
+                console.log(event)
+                console.log(m.date)
+                console.log(event.startDateTime.isAfter(m.date, 'day'));
                 if (
                   !event.startDateTime.isAfter(m.date, 'day') &&
                   !event.endDateTime.isBefore(m.date, 'day') &&
                   calendarIcon &&
-                  (calendarBlacklist == '' || !this.checkFilter(event.title, calendarBlacklist)) &&
-                  (calendarWhitelist == '' || this.checkFilter(event.title, calendarWhitelist)) &&
-                  (calendarLocationWhitelist == '' || this.checkFilter(event.location, calendarLocationWhitelist)) &&
+                  (calendarBlacklist == '' || !checkFilter(event.title, calendarBlacklist)) &&
+                  (calendarWhitelist == '' || checkFilter(event.title, calendarWhitelist)) &&
+                  (calendarLocationWhitelist == '' || checkFilter(event.location, calendarLocationWhitelist)) &&
                   (this._config.showPrivate || event.visibility != 'private') &&
                   (this._config.showDeclined || event.isDeclined)
                 ) {
@@ -922,15 +776,9 @@ class AtomicCalendarRevive extends LitElement {
     if (fromClick) {
       this.clickedDate = day.date;
     }
-    if (this._config.hideDuplicates) {
-      var dayEvents = removeDuplicates(day._allEvents);
-    } else {
-      var dayEvents = day._allEvents;
-    }
 
-    dayEvents.sort(function (a: EventClass, b: EventClass) {
-      return a.startDateTime.diff(b.startDateTime);
-    });
+    var dayEvents = day._allEvents;
+
     this.eventSummary = dayEvents.map((event: EventClass) => {
       // TODO: Revert back to config color
       const titleColor =
@@ -980,11 +828,11 @@ class AtomicCalendarRevive extends LitElement {
   handleCalendarIcons(day) {
     const allIcons: any[] = [];
     const myIcons: any[] = [];
-    day._allEvents.map((event) => {
-      if (event._config.icon && event._config.icon.length > 0) {
-        const index = myIcons.findIndex((x) => x.icon == event._config.icon && x.color == event._config.color);
+    day._allEvents.map((event: EventClass) => {
+      if (event.entityConfig.icon && event.entityConfig.icon.length > 0) {
+        const index = myIcons.findIndex((x) => x.icon == event.entityConfig.icon && x.color == event.entityConfig.color);
         if (index === -1) {
-          myIcons.push({ icon: event._config.icon, color: event._config.color });
+          myIcons.push({ icon: event.entityConfig.icon, color: event.entityConfig.color });
         }
       }
     });
