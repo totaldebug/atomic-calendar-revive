@@ -31,18 +31,16 @@ function checkTimeFilter(event: EventClass, startFilter, endFilter) {
 }
 
 /**
- * check if string contains one of keywords
- * @param {string} string to check inside
- * @param {string} comma delimited keywords
- * @return {bool}
+ *
+ * @param regex regex that should be checked
+ * @param field field to check against
+ * @returns
  */
-export function checkFilter(str, filter) {
-    if (typeof filter != 'undefined' && filter != '') {
-        const keywords = filter.split(',');
-        return keywords.some((keyword) => {
-            if (RegExp('(?:^|\\s)' + keyword.trim(), 'i').test(str)) return true;
-            else return false;
-        });
+export function checkFilter(str: string, regexList: string) {
+    if (typeof regexList != 'undefined' && regexList != '') {
+        const regex = new RegExp(regexList, 'i');
+        if (regex.test(str)) return true;
+        else return false;
     } else return false;
 }
 
@@ -156,21 +154,32 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
         calEvent.originCalendar = config.entities.find(entity => entity.entity === calEvent.entity.entity);
         const newEvent: EventClass = new EventClass(calEvent, config);
 
-        // if given blacklist value, ignore events that match this title
-        if (newEvent.entity.blacklist && newEvent.title) {
-            const regex = new RegExp(newEvent.entity.blacklist, 'i');
-            if (regex.test(newEvent.title)) return events;
-        }
-
         // if hideDeclined events then filter out
         if (config.hideDeclined && newEvent.isDeclined) return events;
 
-        // if given blocklistLocation value ignore events that match this location
-        if (newEvent.entity.blocklistLocation && newEvent.location) {
-            const regex = new RegExp(newEvent.entity.blocklistLocation, 'i');
+        // if given blocklist value, ignore events that match this title
+        if (newEvent.entityConfig.blocklist && newEvent.title) {
+            const regex = new RegExp(newEvent.entityConfig.blocklist, 'i');
+            if (regex.test(newEvent.title)) return events;
+        }
+
+        // if given blocklistLocation value, ignore events that match this location
+        if (newEvent.entityConfig.blocklistLocation && newEvent.location) {
+            const regex = new RegExp(newEvent.entityConfig.blocklistLocation, 'i');
             if (regex.test(newEvent.location)) return events;
         }
 
+        // if given allowlist value, ignore events that dont match the title
+        if (newEvent.entityConfig.allowlist && newEvent.title) {
+            const regex = new RegExp(newEvent.entityConfig.allowlist, 'i');
+            if (!regex.test(newEvent.title)) return events;
+        }
+
+        // if given allowlistLocation value, ignore events that dont match the location
+        if (newEvent.entityConfig.allowlistLocation && newEvent.location) {
+            const regex = new RegExp(newEvent.entityConfig.allowlistLocation, 'i');
+            if (!regex.test(newEvent.location)) return events;
+        }
 
         /**
          * if we want to split multi day events and its a multi day event then
@@ -182,6 +191,7 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
             const partialEvents = newEvent.splitIntoMultiDay(newEvent);
             events = events.concat(partialEvents);
         } else {
+            events.push(newEvent);
         }
 
         return events;

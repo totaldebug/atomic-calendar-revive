@@ -194,7 +194,6 @@ class AtomicCalendarRevive extends LitElement {
             this.events = this.setNoEventDays(this.events);
           }
           this.events = groupEventsByDay(this.events, this._config);
-          console.log(this.events)
 
         } catch (error) {
           console.log(error);
