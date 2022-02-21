@@ -68,7 +68,8 @@
 			"fullDayEventText": "Full day event text:",
 			"showEventIcon": "Show Event Icon",
 			"showHiddenText": "Show hidden event text?",
-			"hiddenEventText": "Text for hidden events:"
+			"hiddenEventText": "Text for hidden events:",
+			"showCalendarName": "Show calendar name"
 		}
 	},
 	"calendar": {

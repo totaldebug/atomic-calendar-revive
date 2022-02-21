@@ -154,7 +154,7 @@ export default class EventClass {
      */
     get isFinished() {
         // TODO: Fix needed for full / multi day event
-        return this.endDateTime.isAfter(dayjs());
+        return this.endDateTime.isBefore(dayjs());
     }
 
 
@@ -253,6 +253,11 @@ export default class EventClass {
     }
 
     get description() {
+        // if Observance is in the description, filter it out
+        const regex = new RegExp('^Observance', 'i');
+        if (regex.test(this.rawEvent.description)) {
+            return '';
+        }
         return this.rawEvent.description;
     }
 

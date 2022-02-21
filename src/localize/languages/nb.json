@@ -68,7 +68,8 @@
 			"fullDayEventText": "Heldagshendelse tekst:",
 			"showEventIcon": "Vis hendelsesikon",
 			"showHiddenText": "Vis skjult hendelsestekst?",
-			"hiddenEventText": "Tekst for skjulte hendelser:"
+			"hiddenEventText": "Tekst for skjulte hendelser:",
+			"showCalendarName": "Show calendar name"
 		}
 	},
 	"calendar": {

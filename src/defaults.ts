@@ -31,6 +31,7 @@ export default {
 	showPrivate: true, // hide private events
 	showHiddenText: true, //show the hidden events text
 	hiddenEventText: localize('common.hiddenEventText'),
+	showCalendarName: false,
 
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color

@@ -1,6 +1,8 @@
 import { computeStateDomain, HomeAssistant } from "custom-card-helpers";
 import dayjs from "dayjs";
+import { AtomicCalendarReviveEditor } from "../index-editor";
 import { atomicCardConfig } from "../types";
+import CalendarDay from "./calendar.class";
 import EventClass from "./event.class";
 
 /**
@@ -81,26 +83,88 @@ export function groupEventsByDay(events, config) {
     return groupedEvents;
 }
 
+/**
+ * create array for 42 calendar days
+ * showLastCalendarWeek
+ */
+function buildCalendar(config: atomicCardConfig, selectedMonth) {
+    const firstDay = selectedMonth.startOf('month');
+    const dayOfWeekNumber = firstDay.day();
+    const month: any = [];
+    let weekShift = 0;
+    dayOfWeekNumber - config.firstDayOfWeek! >= 0 ? (weekShift = 0) : (weekShift = 7);
+    for (
+        let i = config.firstDayOfWeek! - dayOfWeekNumber - weekShift;
+        i < 42 - dayOfWeekNumber + config.firstDayOfWeek! - weekShift;
+        i++
+    ) {
+        month.push(new CalendarDay(firstDay.add(i, 'day'), i));
+    }
+    return month
+}
 
 /**
-   * gets events from HA to Events mode
+ * Gets events for EventMode specifically, calculations for the dates are different
+ * to calendar mode hence the different function
+ *
+ * @param config Card Configuration
+ * @param hass Hassio Options
+ * @returns List of Events
+ */
+export async function getEventMode(config: atomicCardConfig, hass) {
+
+    const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
+    const today = dayjs().startOf('day');
+    const start = today
+        .add(config.startDaysAhead!, 'day');
+    const end = today
+        .add(daysToShow + config.startDaysAhead!, 'day');
+    const getEvents = await getAllEvents(start, end, config, hass)
+
+    return getEvents;
+}
+
+/**
+ * Gets events for CalendarMode specifically, calculations for the dates are different
+ * to event mode hence the different function
+ *
+ * @param config Card Configuration
+ * @param hass Hassio Options
+ * @param monthToGet Month to collect data from
+ */
+export async function getCalendarMode(config: atomicCardConfig, hass, selectedMonth) {
+    const month = buildCalendar(config, selectedMonth);
+    const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass);
+
+    // link events to the specific day of the month
+    month.map((day: CalendarDay) => {
+        events.map((event: EventClass) => {
+            if (event.startDateTime.isSame(day.date, 'day')) {
+                day.allEvents.push(event);
+            }
+        });
+        return day;
+    })
+    return month;
+}
+
+/**
+   * gets events from HA, this is for both Calendar and Event mode
    *
    */
-export async function getAllEvents(config: atomicCardConfig, hass) {
+export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config: atomicCardConfig, hass) {
 
-    // create URL Params
-    const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-    const dateFormat = 'YYYY-MM-DDTHH:mm:ss'
+    // format times correctly
+    const today = dayjs().startOf('day');
+    const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
     const timeOffset = -dayjs().utcOffset();
-    const today = dayjs().startOf('day')
-    const start = today
-        .add(config.startDaysAhead!, 'day')
+
+    const startTime = start
         .add(timeOffset, 'minutes')
-        .format(dateFormat)
-    const end = today
-        .add(daysToShow + config.startDaysAhead!, 'day')
+        .format(dateFormat);
+    const endTime = end
         .add(timeOffset, 'minutes')
-        .format(dateFormat)
+        .format(dateFormat);
 
     // for each calendar entity get all events
     // each entity may be a string of entity id or
@@ -115,8 +179,9 @@ export async function getAllEvents(config: atomicCardConfig, hass) {
         // get correct end date if maxDaysToShow is set
         const entityEnd = typeof entity.maxDaysToShow != 'undefined' ? today
             .add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-            .add(timeOffset, 'minutes').format(dateFormat) : end;
-        const url: string = `calendars/${entity.entity}?start=${start}Z&end=${entityEnd}Z`;
+            .add(timeOffset, 'minutes').format(dateFormat) : endTime;
+
+        const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${entityEnd}Z`;
 
         // make all requests at the same time
         calendarEntityPromises.push(hass.callApi('GET', url)

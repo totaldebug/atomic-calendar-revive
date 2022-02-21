@@ -68,7 +68,8 @@
             "fullDayEventText": "Hel dags tekst:",
             "showEventIcon": "Vis aftale ikon",
             "showHiddenText": "Vis skjulte aftaler tekst?",
-            "hiddenEventText": "Tekst til skjulte aftaler:"
+            "hiddenEventText": "Tekst til skjulte aftaler:",
+			"showCalendarName": "Show calendar name"
         }
     },
     "calendar": {

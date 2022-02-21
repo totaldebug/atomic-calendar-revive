@@ -199,6 +199,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showHiddenText(): boolean {
 		return this._config?.showHiddenText || false;
 	}
+	get _showCalendarName(): boolean {
+		return this._config?.showCalendarName || false;
+	}
 	get _hiddenEventText(): string {
 		return this._config?.hiddenEventText || '';
 	}
@@ -706,7 +709,15 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showHiddenText')}</label>
 									</div>
-									<div></div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showCalendarName ? 'on' : 'off'}`}
+											.checked=${this._showCalendarName !== false}
+											.configValue=${'showCalendarName'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showCalendarName')}</label>
+									</div>
 								</div>
 							</div>
 					  `

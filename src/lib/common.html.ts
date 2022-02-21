@@ -1,0 +1,85 @@
+import dayjs from "dayjs";
+import { html } from "lit";
+import { atomicCardConfig } from "../types";
+import EventClass from "./event.class";
+
+export function showCalendarLink(config, selectedMonth) {
+	if (!config.disableCalLink) {
+		return html`<div class="calIconSelector">
+				<ha-icon-button
+					icon="mdi:calendar"
+          style="--mdc-icon-color: ${config.calDateColor}"
+					onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format('YYYY')}/${selectedMonth.format('MM')}/1'), '${config.linkTarget}'"
+				>
+					<ha-icon icon="mdi:calendar"></ha-icon>
+				</ha-icon-button>
+			</div>`;
+	}
+}
+
+
+export function setNoEventDays(config: atomicCardConfig, singleEvents) {
+	// Create an array of days to show
+	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
+	let initialTime = dayjs()
+		.add(config.startDaysAhead!, 'day')
+		.startOf('day')
+		, endTime = dayjs()
+			.add(daysToShow + config.startDaysAhead!, 'day')
+			.endOf('day')
+		, allDates: any = [];
+	for (let q = initialTime; q.isBefore(endTime, 'day'); q = q.add(1, 'day')) {
+		allDates.push(q);
+	}
+	allDates.map((day) => {
+		var isEvent: boolean = false;
+
+		for (var i = 0; i < singleEvents.length; i++) {
+			if (singleEvents[i].startDateTime.isSame(day, 'day')) {
+				var isEvent = true;
+			}
+		}
+		if (!isEvent) {
+			const emptyEv = {
+				eventClass: '',
+				config: '',
+				start: { dateTime: day.endOf('day') },
+				end: { dateTime: day.endOf('day') },
+				summary: config.noEventText,
+				isFinished: false,
+				htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
+			};
+			const emptyEvent = new EventClass(emptyEv, config);
+			emptyEvent.isEmpty = true;
+			singleEvents.push(emptyEvent);
+			var isEvent = false;
+
+		}
+	});
+	return singleEvents
+
+}
+
+export function getDate(config: atomicCardConfig) {
+	const date = dayjs().format(config.dateFormat);
+	return html`${date}`;
+}
+
+/**
+ * ready-to-use function to remove year from moment format('LL')
+ * @param {moment}
+ * @return {String} [month, day]
+ */
+
+export function getCurrDayAndMonth(locale) {
+	const today = locale.format('LL');
+	return today
+		.replace(locale.format('YYYY'), '') // remove year
+		.replace(/\s\s+/g, ' ') // remove double spaces, if any
+		.trim() // remove spaces from the start and the end
+		.replace(/[??]\./, '') // remove year letter from RU/UK locales
+		.replace(/de$/, '') // remove year prefix from PT
+		.replace(/b\.$/, '') // remove year prefix from SE
+		.trim() // remove spaces from the start and the end
+		.replace(/,$/g, ''); // remove comma from the end
+}
