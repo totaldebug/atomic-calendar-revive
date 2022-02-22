@@ -105,4 +105,5 @@ export default {
 	hideDuplicates: false,
 
 	showMultiDay: false,
+	showMultiDayEventParts: false,
 };

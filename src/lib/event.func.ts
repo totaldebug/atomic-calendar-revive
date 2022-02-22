@@ -119,8 +119,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
         .add(config.startDaysAhead!, 'day');
     const end = today
         .add(daysToShow + config.startDaysAhead!, 'day');
-    const getEvents = await getAllEvents(start, end, config, hass)
-
+    const getEvents = await getAllEvents(start, end, config, hass);
     return getEvents;
 }
 
@@ -217,6 +216,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 export function processEvents(allEvents: any[], config: atomicCardConfig) {
     let newEvents = allEvents.reduce((events, calEvent) => {
         calEvent.originCalendar = config.entities.find(entity => entity.entity === calEvent.entity.entity);
+
         const newEvent: EventClass = new EventClass(calEvent, config);
 
         // if hideDeclined events then filter out
@@ -258,7 +258,6 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
         } else {
             events.push(newEvent);
         }
-
         return events;
     }, []);
 

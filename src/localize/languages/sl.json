@@ -68,8 +68,7 @@
             "fullDayEventText": "Celodnevno besedilo dogodka:",
             "showEventIcon": "Pokaži ikono dogodka",
             "showHiddenText": "Pokaži skrito besedilo dogodka?",
-            "hiddenEventText": "Besedilo za skrite dogodke:",
-			"showCalendarName": "Show calendar name"
+            "hiddenEventText": "Besedilo za skrite dogodke:"
         }
     },
     "calendar": {

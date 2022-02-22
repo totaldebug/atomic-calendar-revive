@@ -66,8 +66,7 @@
 			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
 			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
 			"showEventIcon": "Kuva sündmuse ikooni",
-			"showHiddenText": "Kas näidata summutatud teksti?",
-			"showCalendarName": "Show calendar name"
+			"showHiddenText": "Kas näidata summutatud teksti?"
 		}
 	},
 	"calendar": {

@@ -125,6 +125,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _hideDuplicates(): boolean {
 		return this._config?.hideDuplicates || false;
 	}
+	get _showMultiDay(): boolean {
+		return this._config?.showMultiDay || false;
+	}
+	get _showMultiDayEventParts(): boolean {
+		return this._config?.showMultiDayEventParts || false;
+	}
 
 	get _dateFormat(): string {
 		return this._config?.dateFormat || 'LL';
@@ -549,7 +555,28 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										<label class="mdc-label">${localize('main.fields.hideDuplicates')}</label>
 									</div>
 								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showMultiDay ? 'on' : 'off'}`}
+											.checked=${this._showMultiDay !== false}
+											.configValue=${'showMultiDay'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showMultiDay')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showMultiDayEventParts ? 'on' : 'off'}`}
+											.checked=${this._showMultiDayEventParts !== false}
+											.configValue=${'showMultiDayEventParts'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showMultiDayEventParts')}</label>
+									</div>
+								</div>
 							</div>
+
 					  `
 				: ''}
 				<!-- MAIN SETTINGS END -->

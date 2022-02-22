@@ -83,3 +83,8 @@ export function getCurrDayAndMonth(locale) {
 		.trim() // remove spaces from the start and the end
 		.replace(/,$/g, ''); // remove comma from the end
 }
+
+export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
+	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) return
+	return html`(${event.addDays + 1}/${event.daysLong})`
+}

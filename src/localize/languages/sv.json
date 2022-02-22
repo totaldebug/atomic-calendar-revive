@@ -66,8 +66,7 @@
 			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
 			"fullDayEventText": "Text för Heldagshändelse:",
 			"showEventIcon": "Show Event Icon",
-			"showHiddenText": "Visa dold händelsetext",
-			"showCalendarName": "Show calendar name"
+			"showHiddenText": "Visa dold händelsetext"
 		}
 	},
 	"calendar": {

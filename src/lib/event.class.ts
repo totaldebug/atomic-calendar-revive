@@ -206,7 +206,7 @@ export default class EventClass {
     }
 
     /**
-     * split this event into a multi day event
+     * split event into a multi day event where it crosses to a new day
      * @param {*} newEvent
      */
     splitIntoMultiDay(newEvent) {
@@ -216,7 +216,8 @@ export default class EventClass {
         // every 24 hours is a day. if we do get some full days then just add to 1 daysLong
         // TODO: Confirm this works as expected
         let daysLong = 2;
-        const fullDays = this.endDateTime.subtract(1, 'minutes').diff(this.startDateTime, 'hours') / 24;
+        const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').diff(this.startDateTime, 'hours') / 24);
+
         if (fullDays) daysLong = fullDays + 1;
 
         for (let i = 0; i < daysLong; i++) {
@@ -226,11 +227,10 @@ export default class EventClass {
             copiedEvent.daysLong = daysLong;
 
             copiedEvent._isFirstDay = i === 0;
-            copiedEvent._isLastDay = i === (daysLong - 1);
+            copiedEvent._isLastDay = i <= (daysLong - 1) && i > 0;
 
             // Create event object for each of the days the multi-event occurs on
             const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
-
             // only add event if start date is before the maxDaysToShow and after
             // the current date
             const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
@@ -281,8 +281,7 @@ export default class EventClass {
     get address() {
         if (!this.rawEvent.location) return '';
 
-        const address = this.rawEvent.location.substring(this.rawEvent.location.indexOf(',') + 1);
-        return address.split(' ').join('+');
+        return this.rawEvent.location.split(',')[0];
     }
 
     get visibility() {

@@ -67,8 +67,7 @@
             "fullDayEventText": "Text für 'Ganztägiger Eintrag':",
             "showEventIcon": "Ereignis-Symbol anzeigen?",
             "showHiddenText": "Versteckten Ereignistext anzeigen?",
-            "hiddenEventText": "Text für versteckte Ereignisse",
-			"showCalendarName": "Show calendar name"
+            "hiddenEventText": "Text für versteckte Ereignisse"
         }
     },
     "calendar": {
