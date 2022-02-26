@@ -13,7 +13,9 @@
         "runem.lit-plugin",
         "davidanson.vscode-markdownlint",
         "redhat.vscode-yaml",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "ms-python.python",
+        "tht13.html-preview-vscode"
     ],
     "settings": {
         "files.eol": "\n",

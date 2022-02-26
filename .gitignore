@@ -90,3 +90,5 @@ undefined/
 
 # DynamoDB Local files
 .dynamodb/
+
+docs/_build

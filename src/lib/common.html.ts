@@ -84,6 +84,12 @@ export function getCurrDayAndMonth(locale) {
 		.replace(/,$/g, ''); // remove comma from the end
 }
 
+/**
+ * Calculates the event part number to display on the card
+ * @param config card configuration
+ * @param event event to be checked
+ * @returns TemplateResult containing part count
+ */
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
 	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) return
 	return html`(${event.addDays + 1}/${event.daysLong})`
