@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
   workflow_dispatch:
 
 jobs:
@@ -19,6 +19,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           generate_release_notes: true
-          prerelease: ${{ contains(needs.tag_version.outputs.tag, '-rc') || contains(needs.tag_version.outputs.tag, '-b') || contains(needs.tag_version.outputs.tag, '-a') }}
+          prerelease: ${{ contains(needs.tag_version.outputs.tag, '-rc*') || contains(needs.tag_version.outputs.tag, '-b*') || contains(needs.tag_version.outputs.tag, '-a*') }}
       - name: 🏷️ Update latest tag
         uses: EndBug/latest-tag@latest

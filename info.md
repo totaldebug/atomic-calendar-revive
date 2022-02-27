@@ -39,6 +39,27 @@ If using a pre-release, we do request that any bugs or unexpected behaviour is r
 
 {% endif %}
 
+{% if selected_tag.replace("v", "").replace(".","") | int = 700  %}
+
+# v7.0.0
+
+This release sees some major changes in the way the card functions, please upgrade and
+check your configuration **before** submitting an issue.
+
+# Changed configuration options
+
+- `blacklist` renamed to `blocklist`
+- `whitelist` renamed to `allowlist`
+- `locationWhitelist` changed to `allowlistLocation`
+- added `blocklistLocation`
+- Blocklist and allowlist now changed to use Regex for more flexibility
+- `showDeclined` changed to `hideDeclined`
+- `eventCalName` changed to `name` under each entity
+- added `showCalendarName`
+- added `showMultiDayEventParts`
+
+{% endif %}
+
 # Atomic Calendar Revive
 
 A _Calendar Card_ for Home Assistant that adds **advanced settings** to allow much

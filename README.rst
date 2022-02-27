@@ -1,7 +1,12 @@
-.. image:: https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/atomic_calendar_revive.png
-    :align: center
 
-An advanced calendar card for Home Assistant Lovelace.
+.. raw:: html
+
+      <p align="center">
+      <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/atomic_calendar_revive.png" alt="text">
+      </p>
+      <p align="center">
+      An advanced calendar card for Home Assistant Lovelace.
+      </p>
 
 |release| |stars| |hacs|
 

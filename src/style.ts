@@ -170,7 +170,8 @@ export const styles: CSSResultGroup = css`
 		}
 
 		.progress-bar {
-
+			--mdc-theme-primary: var(--mdc-theme-primary);
+			--mdc-linear-progress-buffer-color: var(--mdc-linear-progress-buffer-color);
 		}
 
 		mwc-linear-progress {
