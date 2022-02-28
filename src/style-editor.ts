@@ -39,4 +39,8 @@ export const style = css`
 		flex: 1;
 		padding-right: 4px;
 	}
+	.origin-calendar {
+        width: 50%;
+        margin-left: 35px;
+    }
 `;

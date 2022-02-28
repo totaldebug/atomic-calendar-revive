@@ -1,0 +1,23 @@
+---
+name: Pull Requests
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+jobs:
+  checkVersion:
+    if: github.event_name  == 'pull_request'
+
+    name: Check version updated
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      # Use this GitHub Action
+      - name: Check package version
+        uses: dudo/tag_check@master
+        with:
+          git_tag_prefix: v

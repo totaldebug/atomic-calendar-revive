@@ -1,0 +1,24 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  release:
+    name: Create release
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v2
+      - name: 🛎️ Create release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          prerelease: ${{ contains(needs.tag_version.outputs.tag, '-rc*') || contains(needs.tag_version.outputs.tag, '-b*') || contains(needs.tag_version.outputs.tag, '-a*') }}
+      - name: 🏷️ Update latest tag
+        uses: EndBug/latest-tag@latest

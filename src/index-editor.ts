@@ -12,7 +12,7 @@ const defaultModes: string[] = ['Event', 'Calendar'];
 const options = {
 	required: {
 		icon: 'tune',
-		show: true,
+		show: false,
 	},
 	main: {
 		icon: 'eye-settings',
@@ -34,8 +34,9 @@ const options = {
 
 @customElement('atomic-calendar-revive-editor')
 export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCardEditor {
-	@property({ attribute: false }) public hass?: HomeAssistant;
-	@state() private _config?: atomicCardConfig;
+	@property({ attribute: false })
+	public hass!: HomeAssistant;
+	@state() private _config!: atomicCardConfig;
 	@state() private _toggle?: boolean;
 	@state() private _helpers?: any;
 	private _initialized = false;
@@ -58,8 +59,32 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return true;
 	}
 
-	get _entity(): string {
-		return this._config?.entity || '';
+	// ENTITY SETTINGS
+	get _entityOptions() {
+		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
+
+		const entityOptions = entities.map(eid => {
+			let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
+			const originalEntity = this.hass.states[eid];
+
+			if (matchingConfigEnitity === undefined) {
+
+				matchingConfigEnitity = {
+					entity: eid,
+					name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid,
+					checked: !!matchingConfigEnitity
+				}
+
+			} else {
+				if (!('name' in matchingConfigEnitity)) {
+					matchingConfigEnitity = { ...matchingConfigEnitity, name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid }
+				}
+				matchingConfigEnitity = { ...matchingConfigEnitity, checked: !!matchingConfigEnitity }
+
+			}
+			return matchingConfigEnitity
+		});
+		return entityOptions;
 	}
 
 	//MAIN SETTINGS
@@ -99,6 +124,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 	get _hideDuplicates(): boolean {
 		return this._config?.hideDuplicates || false;
+	}
+	get _showMultiDay(): boolean {
+		return this._config?.showMultiDay || false;
+	}
+	get _showMultiDayEventParts(): boolean {
+		return this._config?.showMultiDayEventParts || false;
 	}
 
 	get _dateFormat(): string {
@@ -174,8 +205,14 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showHiddenText(): boolean {
 		return this._config?.showHiddenText || false;
 	}
+	get _showCalendarName(): boolean {
+		return this._config?.showCalendarName || false;
+	}
 	get _hiddenEventText(): string {
 		return this._config?.hiddenEventText || '';
+	}
+	get _showWeekNumber(): boolean {
+		return this._config?.showWeekNumber || false;
 	}
 	// EVENT SETTINGS END
 
@@ -232,8 +269,123 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				</div>
 				${options.required.show
 				? html`
-							<div class="values">
-								<span>Entities and their options must be configured through code editor</span>
+							<div class="entities">
+							${this._entityOptions.map(entity => {
+					return html`
+								  <div>
+								  	<ha-switch
+										.checked=${entity.checked}
+										.entityId=${entity.entity}
+										@change="${this._entityChanged}"
+									></ha-switch>
+									<label class="mdc-label">${entity.entity}</label>
+									${entity.checked ? html`
+									<div class="side-by-side">
+										<div>
+											<paper-input
+												label="Name"
+												.value="${entity.name}"
+												.configValue=${'name'}
+												.entityId="${entity.entity}"
+												@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+											<paper-input
+												label="Icon"
+												.value="${entity.icon === undefined ? '' : entity.icon}"
+												.configValue=${'icon'}
+												.entityId="${entity.entity}"
+												@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<paper-input
+												label="startTimeFilter"
+												.value="${entity.startTimeFilter === undefined ? '' : entity.startTimeFilter}"
+												.configValue=${'startTimeFilter'}
+												.entityId="${entity.entity}"
+												@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+											<paper-input
+												label="endTimeFilter"
+												.value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
+												.configValue=${'endTimeFilter'}
+												.entityId="${entity.entity}"
+												@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<paper-input
+											label="maxDaysToShow"
+											.value="${entity.maxDaysToShow === undefined ? '' : entity.maxDaysToShow}"
+											.configValue=${'maxDaysToShow'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+											<paper-input
+											label="showMultiDay"
+											.value="${entity.showMultiDay === undefined ? '' : entity.showMultiDay}"
+											.configValue=${'showMultiDay'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<paper-input
+											label="blocklist"
+											.value="${entity.blocklist === undefined ? '' : entity.blocklist}"
+											.configValue=${'blocklist'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+											<paper-input
+											label="blocklistLocation"
+											.value="${entity.blocklistLocation === undefined ? '' : entity.blocklistLocation}"
+											.configValue=${'blocklistLocation'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<paper-input
+											label="allowlist"
+											.value="${entity.allowlist === undefined ? '' : entity.allowlist}"
+											.configValue=${'allowlist'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+											<paper-input
+											label="allowlistLocation"
+											.value="${entity.allowlistLocation === undefined ? '' : entity.allowlistLocation}"
+											.configValue=${'allowlistLocation'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+									</div>` : html``
+						}
+
+								  </div>
+								`;
+				})
+					}
 							</div>
 					  `
 				: ''}
@@ -406,7 +558,28 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										<label class="mdc-label">${localize('main.fields.hideDuplicates')}</label>
 									</div>
 								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showMultiDay ? 'on' : 'off'}`}
+											.checked=${this._showMultiDay !== false}
+											.configValue=${'showMultiDay'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showMultiDay')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showMultiDayEventParts ? 'on' : 'off'}`}
+											.checked=${this._showMultiDayEventParts !== false}
+											.configValue=${'showMultiDayEventParts'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.showMultiDayEventParts')}</label>
+									</div>
+								</div>
 							</div>
+
 					  `
 				: ''}
 				<!-- MAIN SETTINGS END -->
@@ -566,7 +739,26 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showHiddenText')}</label>
 									</div>
-									<div></div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showCalendarName ? 'on' : 'off'}`}
+											.checked=${this._showCalendarName !== false}
+											.configValue=${'showCalendarName'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showCalendarName')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showWeekNumber ? 'on' : 'off'}`}
+											.checked=${this._showWeekNumber !== false}
+											.configValue=${'showWeekNumber'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showWeekNumber')}</label>
+									</div>
 								</div>
 							</div>
 					  `
@@ -687,9 +879,8 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 
 	private _valueChanged(ev): void {
-		if (!this._config || !this.hass) {
-			return;
-		}
+		if (this.cantFireEvent) return;
+
 		const target = ev.target;
 		if (this[`_${target.configValue}`] === target.value) {
 			return;
@@ -707,5 +898,73 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			}
 		}
 		fireEvent(this, 'config-changed', { config: this._config });
+	}
+
+	get entities() {
+		const entities = [...(this._config.entities || [])];
+
+		// convert any legacy entity strings into objects
+		let entityObjects = entities.map(entity => {
+			if (entity.entity) return entity;
+			return { entity, name: entity };
+		});
+
+		return entityObjects;
+	}
+	/**
+	  * change the calendar name of an entity
+	  * @param {*} ev
+	  */
+	private _entityValueChanged(ev) {
+		if (this.cantFireEvent) return;
+
+		const target = ev.target
+		let entityObjects = [...this.entities];
+
+		entityObjects = entityObjects.map(entity => {
+			if (entity.entity === target.entityId) {
+				if (this[`_${target.configValue}`] === target.value) {
+					return;
+				}
+				if (target.configValue && target.value === '') {
+					delete entity[target.configValue];
+					return entity;
+				} else {
+					entity = {
+						...entity,
+						[target.configValue]: target.checked !== undefined ? target.checked : (isNaN(target.value)) ? target.value : parseInt(target.value),
+					}
+				}
+			}
+			return entity;
+		});
+
+		this._config = Object.assign({}, this._config, { entities: entityObjects });
+		fireEvent(this, 'config-changed', { config: this._config });
+	}
+	/**
+	 * add or remove calendar entities from config
+	 * @param {*} ev
+	 */
+	private _entityChanged(ev) {
+		const target = ev.target;
+
+		if (this.cantFireEvent) return;
+		let entityObjects = [...this.entities];
+		if (target.checked) {
+			const originalEntity = this.hass.states[target.entityId];
+			entityObjects.push({ entity: target.entityId, name: originalEntity.attributes.friendly_name || target.entityId });
+		} else {
+			entityObjects = entityObjects.filter(entity => entity.entity !== target.entityId);
+		}
+
+		this._config = Object.assign({}, this._config, { entities: entityObjects });
+		fireEvent(this, 'config-changed', { config: this._config });
+	}
+	/**
+	* stop events from firing if certains conditions not met
+	*/
+	get cantFireEvent() {
+		return (!this._config || !this.hass);
 	}
 }

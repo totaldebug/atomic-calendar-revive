@@ -27,10 +27,11 @@ export default {
 	disableLocationLink: false, // disables links to event calendar
 	disableCalMonthLink: false, // disables the link on the month name in calendar mode
 	linkTarget: '_blank', // Target for links, can use any HTML target type
-	showDeclined: false, // Show declined events in the calendar
+	hideDeclined: false, // hide declined events in the calendar
 	showPrivate: true, // hide private events
 	showHiddenText: true, //show the hidden events text
 	hiddenEventText: localize('common.hiddenEventText'),
+	showCalendarName: false,
 
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color
@@ -102,4 +103,8 @@ export default {
 	showEventIcon: false,
 	europeanDate: false,
 	hideDuplicates: false,
+
+	showMultiDay: false,
+	showMultiDayEventParts: false,
+	showWeekNumber: false,
 };
