@@ -1,8 +1,9 @@
 import EventClass from "./event.class";
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { atomicCardConfig } from "../types";
 import dayjs from "dayjs";
-import { getCurrDayAndMonth, getMultiDayEventParts } from "./common.html";
+import { getCurrDayAndMonth, getMultiDayEventParts, isHtml } from "./common.html";
 
 /**
  * Gets the icon for a specific event
@@ -147,3 +148,24 @@ export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
     }
 }
 
+
+export function getDescription(config: atomicCardConfig, event: EventClass) {
+    if (config.showDescription && event.description) {
+        var desc = event.description;
+        if (isHtml(event.description)) {
+            desc = unsafeHTML(event.description);
+        }
+
+        if (!isHtml(event.description) && config.descLength && event.description.length >= config.descLength) {
+            desc = html`${event.description.slice(0, config.descLength)}`;
+        }
+        return html`<div class="event-right">
+                        <div class="event-main">
+                            <div class="event-description" style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%">
+                                ${desc}
+                            </div>
+                        </div>
+                    </div>`;
+    }
+    return html``
+}

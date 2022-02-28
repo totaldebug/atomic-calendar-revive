@@ -94,3 +94,12 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
 	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) return
 	return html`(${event.addDays + 1}/${event.daysLong})`
 }
+
+/**
+ * Checks if a string is html or not
+ * @param input string input to check for html
+ * @returns true/false
+ */
+export function isHtml(input) {
+	return /<[a-z]+\d?(\s+[\w-]+=("[^"]*"|'[^']*'))*\s*\/?>|&#?\w+;/i.test(input);
+}

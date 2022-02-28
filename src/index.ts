@@ -6,6 +6,7 @@ import { formatTime } from './helpers/format-time'
 import { groupEventsByDay, getEventMode, getCalendarMode } from './lib/event.func';
 import { styles } from './style';
 
+
 // DayJS for managing date information
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
@@ -32,7 +33,7 @@ import CalendarDay from './lib/calendar.class';
 import EventClass from './lib/event.class';
 
 import { getCalendarDescriptionHTML, getCalendarLocationHTML, getCalendarTitleHTML, handleCalendarIcons } from './lib/calendarMode.html';
-import { getHoursHTML, getLocationHTML, getRelativeTime, getTitleHTML, getWeekNumberHTML } from './lib/eventMode.html'
+import { getDescription, getHoursHTML, getLocationHTML, getRelativeTime, getTitleHTML, getWeekNumberHTML } from './lib/eventMode.html'
 import { getDate, setNoEventDays, showCalendarLink } from './lib/common.html';
 
 import { atomicCardConfig } from './types';
@@ -381,13 +382,6 @@ class AtomicCalendarRevive extends LitElement {
           ? html`<div class="relativeTime" style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%"> ${getRelativeTime(event)}</div>`
           : '';
 
-        // Show the description
-        const descHTML = this._config.showDescription ?
-          event.description && this._config.descLength && event.description.length >= this._config.descLength ?
-            html`<div class="event-description" style="--description-color: ${this._config.descColor}; --description-size: ${this._config.descSize}%">${event.description.slice(0, this._config.descLength)}</div>`
-            : html`<div class="event-description" style="--description-color: ${this._config.descColor}; --description-size: ${this._config.descSize}%">${event.description}</div>`
-          : '';
-
         const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
         // check and set the date format
         const eventDateFormat =
@@ -417,8 +411,7 @@ class AtomicCalendarRevive extends LitElement {
 					<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName}</div>
 				</div>
         <div class="event-right">${hoursHTML} ${relativeTime}</div>
-				<div class="event-right">
-					<div class="event-main">${descHTML}</div>
+				${getDescription(this._config, event)}</div>
 				</div>
 				${progressBar}
     </td>

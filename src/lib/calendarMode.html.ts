@@ -2,8 +2,10 @@ import { handleClick, HomeAssistant } from "custom-card-helpers";
 import dayjs from "dayjs";
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { atomicCardConfig } from "../types";
 import CalendarDay from "./calendar.class";
+import { isHtml } from "./common.html";
 import EventClass from "./event.class";
 
 dayjs.extend(isoWeek);
@@ -65,9 +67,12 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
  */
 export function getCalendarDescriptionHTML(config: atomicCardConfig, event: EventClass) {
 	if (event.description) {
-		var desc = event.description
-		if (config.descLength && event.description.length > config.descLength) {
-			var desc = event.description.slice(0, config.descLength)
+		var desc = event.description;
+		if (isHtml(event.description)) {
+			desc = unsafeHTML(event.description);
+		}
+		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
+			desc = event.description.slice(0, config.descLength)
 		}
 		return html`<div class="calDescription" style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%">- ${desc}</div>`;
 	}
