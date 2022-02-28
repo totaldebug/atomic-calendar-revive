@@ -57,6 +57,7 @@ check your configuration **before** submitting an issue.
 - `eventCalName` changed to `name` under each entity
 - added `showCalendarName`
 - added `showMultiDayEventParts`
+- added `showWeekNumber`
 
 {% endif %}
 

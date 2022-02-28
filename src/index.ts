@@ -14,6 +14,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import week from 'dayjs/plugin/weekOfYear';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -22,6 +23,7 @@ dayjs.extend(isoWeek);
 dayjs.extend(localeData);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isSameOrBefore);
+dayjs.extend(week);
 
 // Import Card Editor
 import './index-editor';
@@ -30,7 +32,7 @@ import CalendarDay from './lib/calendar.class';
 import EventClass from './lib/event.class';
 
 import { getCalendarDescriptionHTML, getCalendarLocationHTML, getCalendarTitleHTML, handleCalendarIcons } from './lib/calendarMode.html';
-import { getHoursHTML, getLocationHTML, getRelativeTime, getTitleHTML } from './lib/eventMode.html'
+import { getHoursHTML, getLocationHTML, getRelativeTime, getTitleHTML, getWeekNumberHTML } from './lib/eventMode.html'
 import { getDate, setNoEventDays, showCalendarLink } from './lib/common.html';
 
 import { atomicCardConfig } from './types';
@@ -207,7 +209,7 @@ class AtomicCalendarRevive extends LitElement {
         } catch (error) {
           console.log(error);
           this.errorMessage = html`${localize('errors.update_card')}
-						<a href="https://docs.totaldebug.uk/atomic-calendar-revive/faq.html" target="${this._config.linkTarget}"
+						<a href="https://docs.totaldebug.uk/atomic-calendar-revive/overview/faq.html" target="${this._config.linkTarget}"
 							>See Here</a
 						>`;
           this.showLoader = false;
@@ -255,13 +257,17 @@ class AtomicCalendarRevive extends LitElement {
   updateEventsHTML(days) {
     let htmlDays = '';
 
-    // TODO some more tests end error message
+    /**
+     * If there is an error, put the message as content
+     */
     if (!days) {
       this.content = this.errorMessage;
       return;
     }
 
-    // TODO write something if no events
+    /**
+     * If there are no events, put some text in
+     */
     if (days.length === 0 && this._config.maxDaysToShow == 1) {
       this.content = this._config.noEventText;
       return;
@@ -270,7 +276,9 @@ class AtomicCalendarRevive extends LitElement {
       return;
     }
 
-    // move today's finished events up
+    /**
+     * Move finished events up to the top
+     */
     if (dayjs(days[0][0]).isSame(dayjs(), 'day') && days[0].length > 1) {
       let i = 1;
       while (i < days[0].length) {
@@ -280,7 +288,9 @@ class AtomicCalendarRevive extends LitElement {
         } else i++;
       }
     }
-    // check if no events for today and push a "no events" fake event
+    /**
+     * If there are no events, post fake event with "No Events Today" text
+     */
     if (this._config.showNoEventsForToday && days[0][0].startDateTime.isAfter(dayjs(), 'day') && days[0].length > 0) {
       const emptyEv = {
         eventClass: '',
@@ -298,14 +308,23 @@ class AtomicCalendarRevive extends LitElement {
       days.unshift(d);
     }
 
-    //loop through days
-    htmlDays = days.map((day, di) => {
+    /**
+     * Loop through each day an process the events
+     */
+    let currentWeek = 54;
+    htmlDays = days.map((day: [EventClass], di) => {
+
+      let weekNumberResults = getWeekNumberHTML(day, currentWeek);
+      currentWeek = weekNumberResults.currentWeek
 
       var dayEvents = day
 
-      //loop through events for each day
-      // TODO: Add type to event
+      /**
+       * Loop through each event and add html
+       */
       const htmlEvents = dayEvents.map((event: EventClass, i, arr) => {
+
+
         const dayWrap = i == 0 && di > 0 ? 'daywrap' : '';
         const isEventNext =
           di == 0 && event.startDateTime.isAfter(dayjs()) && (i == 0 || !arr[i - 1].startDateTime.isAfter(dayjs()))
@@ -405,8 +424,8 @@ class AtomicCalendarRevive extends LitElement {
     </td>
 	</tr>`;
       });
-
-      return htmlEvents;
+      var daysEvents = html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`
+      return daysEvents;
     });
     const eventnotice = this._config.showHiddenText
       ? this.hiddenEvents > 0

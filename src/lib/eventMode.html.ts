@@ -118,7 +118,6 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
  * generate Event Relative Time HTML
  *
  */
-
 export function getRelativeTime(event: EventClass) {
     const timeOffset = dayjs().utcOffset();
     const today = dayjs().add(timeOffset, 'minutes');
@@ -126,3 +125,25 @@ export function getRelativeTime(event: EventClass) {
     else if (!event.startDateTime.isBefore(today, 'day'))
         return html`(${today.to(event.startDateTime.add(timeOffset, 'minutes'))})`;
 }
+
+/**
+ *
+ * For the first event, check the week of the year, if it matches
+ * currentWeek, dont update, if it doesnt, update current week
+ * and apply the html week if option showWeeks is set
+ *
+ * @param day events grouped by day
+ * @param currentWeek week number
+ * @returns TemplateResult with current week html
+ */
+export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
+    var currentWeekHTML = html``
+    if (currentWeek != day[0].startDateTime.week()) {
+        currentWeek = day[0].startDateTime.week();
+        currentWeekHTML = html`<div class="week-number">Week ${currentWeek.toString()}</div>`
+        return { currentWeekHTML, currentWeek };
+    } else {
+        return { currentWeekHTML, currentWeek };
+    }
+}
+

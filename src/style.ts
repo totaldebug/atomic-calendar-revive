@@ -72,6 +72,18 @@ export const styles: CSSResultGroup = css`
 			width: 40px;
 		}
 
+		.week-number{
+			color: var(--primary-color);
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+			border: 2px solid;
+			padding: 0 4px;
+			margin: 5px 0;
+			line-height: 16px;
+			width: 100%;
+			text-align: center;
+		}
+
 		.daywrap > td {
 			padding-top: 8px;
 		}

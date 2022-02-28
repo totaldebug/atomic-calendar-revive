@@ -47,8 +47,8 @@
 			"firstDayOfWeek": "First Day of Week 0-6",
 			"cardHeight": "Card Height",
 			"hideDuplicates": "Hide duplicates",
-            "showMultiDay": "Split Multi-Day Events",
-            "showMultiDayEventParts": "Show Multi-Day Event Parts"
+			"showMultiDay": "Split Multi-Day Events",
+			"showMultiDayEventParts": "Show Multi-Day Event Parts"
 		}
 	},
 	"event": {
@@ -71,7 +71,8 @@
 			"showEventIcon": "Show Event Icon",
 			"showHiddenText": "Show hidden event text?",
 			"hiddenEventText": "Text for hidden events:",
-			"showCalendarName": "Show calendar name"
+			"showCalendarName": "Show calendar name",
+			"showWeekNumber": "Show week numbers"
 		}
 	},
 	"calendar": {
