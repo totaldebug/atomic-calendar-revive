@@ -181,14 +181,19 @@ export const styles: CSSResultGroup = css`
 			margin-bottom: 0px;
 		}
 
-		.progress-bar {
-			--mdc-theme-primary: var(--mdc-theme-primary);
-			--mdc-linear-progress-buffer-color: var(--mdc-linear-progress-buffer-color);
-		}
-
-		mwc-linear-progress {
+		progress {
+			border-radius: 2px;
 			width: 100%;
-			margin: auto;
+			height: 3px;
+			box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+		}
+		progress::-webkit-progress-bar {
+			background-color: var(--progress-bar-bg);
+			border-radius: 2px;
+		}
+		progress::-webkit-progress-value{
+			background-color: var(--progress-bar);
+			border-radius: 2px;
 		}
 
 		ha-button-toggle-group {
