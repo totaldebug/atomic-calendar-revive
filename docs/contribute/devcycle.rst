@@ -62,7 +62,7 @@ From the cloned repository, run the command to install the requirements:
 
 .. code-block:: bash
 
-      npm install
+      yarn install
 
 ********************
 Make changes & Build
@@ -70,7 +70,7 @@ Make changes & Build
 
 #. Any changes to the card should be made in the folder ``src``
 #. Update the version number in ``package.json``
-#. Run the command ``npm run build`` to create the latest distribution file
+#. Run the command ``yarn run build`` to create the latest distribution file
 
 *******
 Testing

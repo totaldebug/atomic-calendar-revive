@@ -76,7 +76,7 @@ export default {
 	showProgressBar: true,
 	showFullDayProgress: false,
 	progressBarColor: 'var(--primary-color)',
-	progressBarBufferColor: 'var(--secondary-color)',
+	progressBarBackgroundColor: '#555',
 
 	enableModeChange: false,
 	defaultMode: 'Event',
@@ -107,4 +107,5 @@ export default {
 	showMultiDay: false,
 	showMultiDayEventParts: false,
 	showWeekNumber: false,
+	showDescription: false,
 };

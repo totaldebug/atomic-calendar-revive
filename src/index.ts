@@ -1,6 +1,5 @@
-﻿import "@material/mwc-linear-progress/mwc-linear-progress";
-import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
-import { property, query } from 'lit/decorators.js';
+﻿import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
+import { property } from 'lit/decorators.js';
 import { HomeAssistant, LovelaceCardEditor } from 'custom-card-helpers';
 import { formatTime } from './helpers/format-time'
 import { groupEventsByDay, getEventMode, getCalendarMode } from './lib/event.func';
@@ -363,10 +362,11 @@ class AtomicCalendarRevive extends LitElement {
           const eventDuration = event.endDateTime.diff(event.startDateTime, 'minutes');
           const eventProgress = dayjs().diff(event.startDateTime, 'minutes');
           const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
-          progressBar = html`<mwc-linear-progress
+          /**progressBar = html`<mwc-linear-progress
             class="progress-bar"
-            style="--mdc-theme-primary: ${this._config.progressBarColor}; --mdc-linear-progress-buffer-color: ${this._config.progressBarBufferColor};"
-						progress="${eventPercentProgress}"></mwc-linear-progress>`;
+
+            progress="${eventPercentProgress}"></mwc-linear-progress>`;*/
+          progressBar = html`<progress style="--progress-bar: ${this._config.progressBarColor}; --progress-bar-bg: ${this._config.progressBarBackgroundColor};" value="${eventPercentProgress}" max="1"></progress>`;
         }
 
         const finishedEventsStyle =
