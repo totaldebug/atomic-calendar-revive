@@ -49,10 +49,9 @@ export function checkFilter(str: string, regexList: string) {
 /**
   * group events by the day it's on
   * @param  {Array<EventClass>} events
-  * @param  {Object} config
   * @return {Array<Object>}
   */
-export function groupEventsByDay(events, config) {
+export function groupEventsByDay(events) {
 
     // grouping events by days, returns object with days and events
     const ev: any[] = [].concat(...events);
@@ -66,18 +65,7 @@ export function groupEventsByDay(events, config) {
         return groupsOfEvents[k];
     });
 
-    // check if the maxEventCount is set, if it is we will remove any events
-    // that go over this limit, unless softLimit is set, in which case we
-    // will remove any events over the soft limit
-    if (config.maxEventCount) {
-        if ((!config.softLimit && config.maxEventCount < events.length) ||
-            (config.softLimit && events.length > config.maxEventCount + config.softLimit)
-        ) {
-            //TODO: hidden events?
-            events.length = config.maxEventCount
-        }
 
-    }
     groupedEvents = groupedEvents
 
     return groupedEvents;
@@ -262,6 +250,26 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
         } else {
             events.push(newEvent);
         }
+
+        // Check if the hideFinishedEvents is set, if it is, remove any events
+        // that are already finished
+        if (config.hideFinishedEvents) {
+            events = events.filter(function (e: EventClass) { return e.isFinished == false })
+        }
+
+        // check if the maxEventCount is set, if it is we will remove any events
+        // that go over this limit, unless softLimit is set, in which case we
+        // will remove any events over the soft limit
+        if (config.maxEventCount) {
+            if ((!config.softLimit && config.maxEventCount < events.length) ||
+                (config.softLimit && events.length > config.maxEventCount + config.softLimit)
+            ) {
+                //TODO: hidden events?
+                events.length = config.maxEventCount
+            }
+
+        }
+
         return events;
     }, []);
 
