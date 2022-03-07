@@ -54,18 +54,6 @@ export function checkFilter(str: string, regexList: string) {
   */
 export function groupEventsByDay(events, config) {
 
-    // grouping events by days, returns object with days and events
-    const ev: any[] = [].concat(...events);
-    const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
-        r[a.daysToSort] = r[a.daysToSort] || [];
-        r[a.daysToSort].push(a);
-        return r;
-    }, {});
-
-    let groupedEvents = Object.keys(groupsOfEvents).map(function (k) {
-        return groupsOfEvents[k];
-    });
-
     // check if the maxEventCount is set, if it is we will remove any events
     // that go over this limit, unless softLimit is set, in which case we
     // will remove any events over the soft limit
@@ -78,6 +66,20 @@ export function groupEventsByDay(events, config) {
         }
 
     }
+
+    // grouping events by days, returns object with days and events
+    const ev: any[] = [].concat(...events);
+    const groupsOfEvents = ev.reduce(function (r, a: { daysToSort: number }) {
+        r[a.daysToSort] = r[a.daysToSort] || [];
+        r[a.daysToSort].push(a);
+        return r;
+    }, {});
+
+    let groupedEvents = Object.keys(groupsOfEvents).map(function (k) {
+        return groupsOfEvents[k];
+    });
+
+
     groupedEvents = groupedEvents
 
     return groupedEvents;
