@@ -40,7 +40,7 @@
 		"babel-preset-minify": "^0.5.1",
 		"commitizen": "^4.2.4",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.14.0",
+		"eslint": "^8.15.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"prettier": "^2.6.2",
