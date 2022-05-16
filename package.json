@@ -37,7 +37,7 @@
 		"@rollup/plugin-node-resolve": "^13.3.0",
 		"@typescript-eslint/eslint-plugin": "^5.22.0",
 		"@typescript-eslint/parser": "^5.22.0",
-		"babel-preset-minify": "^0.5.1",
+		"babel-preset-minify": "^0.5.2",
 		"commitizen": "^4.2.4",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.14.0",
