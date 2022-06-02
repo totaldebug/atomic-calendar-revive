@@ -17,7 +17,7 @@
 .. |stars| image:: https://img.shields.io/github/stars/totaldebug/atomic-calendar-revive.svg?style=flat-square
    :target: https://github.com/totaldebug/atomic-calendar-revive
 .. |hacs| image:: https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square
-   :target: https://github.com/custom-components/hacs
+   :target: https://github.com/hacs/integration
 
 .. |commits| image:: https://img.shields.io/github/last-commit/totaldebug/atomic-calendar-revive.svg?style=flat-square&logo=github&logoColor=white
    :target: https://github.com/totaldebug/atomic-calendar-revive/commits/master
