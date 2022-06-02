@@ -792,10 +792,10 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
-"@babel/plugin-transform-template-literals@^7.16.7", "@babel/plugin-transform-template-literals@^7.17.12":
-  version "7.17.12"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.17.12.tgz#4aec0a18f39dd86c442e1d077746df003e362c6e"
-  integrity sha512-kAKJ7DX1dSRa2s7WN1xUAuaQmkTpN+uig4wCKWivVXIObqGbVTUlSavHyfI2iZvz89GFAMGm9p2DBJ4Y1Tp0hw==
+"@babel/plugin-transform-template-literals@^7.16.7", "@babel/plugin-transform-template-literals@^7.18.2":
+  version "7.18.2"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.18.2.tgz#31ed6915721864847c48b656281d0098ea1add28"
+  integrity sha512-/cmuBVw9sZBGZVOMkpAEaVLwm4JmK2GZ1dFKOGGpMzEHWFmyZZ59lUU0PdRr8YNYeQdNzTDwuxP2X2gzydTc9g==
   dependencies:
     "@babel/helper-plugin-utils" "^7.17.12"
 
