@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "7.0.0-b3",
+	"version": "7.0.0-b4",
 	"editor_version": "2.0.0",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
@@ -46,7 +46,6 @@
 		"prettier": "^2.6.2",
 		"rollup": "^2.74.1",
 		"rollup-plugin-serve": "^1.1.0",
-		"rollup-plugin-sourcemaps": "^0.6.3",
 		"rollup-plugin-terser": "^7.0.2",
 		"rollup-plugin-typescript2": "^0.31.2"
 	},
