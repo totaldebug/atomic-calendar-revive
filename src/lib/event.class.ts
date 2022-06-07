@@ -235,7 +235,7 @@ export default class EventClass {
             // the current date
             const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
 
-            if (endDate.isAfter(partialEvent.startDateTime) && dayjs().startOf('day').subtract(1, 'min').isBefore(partialEvent.startDateTime)) {
+            if (endDate.isAfter(partialEvent.startDateTime) && dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime)) {
                 partialEvents.push(partialEvent);
             }
         }

@@ -208,6 +208,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 export function processEvents(allEvents: any[], config: atomicCardConfig) {
     let newEvents = allEvents.reduce((events, calEvent) => {
         calEvent.originCalendar = config.entities.find(entity => entity.entity === calEvent.entity.entity);
+        console.log(events);
 
         const newEvent: EventClass = new EventClass(calEvent, config);
 
@@ -251,27 +252,14 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
             events.push(newEvent);
         }
 
-        // Check if the hideFinishedEvents is set, if it is, remove any events
-        // that are already finished
-        if (config.hideFinishedEvents) {
-            events = events.filter(function (e: EventClass) { return e.isFinished == false })
-        }
-
-        // check if the maxEventCount is set, if it is we will remove any events
-        // that go over this limit, unless softLimit is set, in which case we
-        // will remove any events over the soft limit
-        if (config.maxEventCount) {
-            if ((!config.softLimit && config.maxEventCount < events.length) ||
-                (config.softLimit && events.length > config.maxEventCount + config.softLimit)
-            ) {
-                //TODO: hidden events?
-                events.length = config.maxEventCount
-            }
-
-        }
-
         return events;
     }, []);
+
+    // Check if the hideFinishedEvents is set, if it is, remove any events
+    // that are already finished
+    if (config.hideFinishedEvents) {
+        newEvents = newEvents.filter(function (e: EventClass) { return e.isFinished == false })
+    }
 
     // if hideDuplicates remove any duplicate events where
     // title, startDateTime and endDateTime match
@@ -285,6 +273,19 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
     // sort events by date starting with soonest
     if (config.sortByStartTime) {
         newEvents.sort((a: EventClass, b: EventClass) => a.startDateTime.isBefore(b.startDateTime) ? -1 : 1);
+    }
+
+     // check if the maxEventCount is set, if it is we will remove any events
+    // that go over this limit, unless softLimit is set, in which case we
+    // will remove any events over the soft limit
+    if (config.maxEventCount) {
+        if ((!config.softLimit && config.maxEventCount < newEvents.length) ||
+            (config.softLimit && newEvents.length > config.maxEventCount + config.softLimit)
+        ) {
+            //TODO: hidden events?
+            newEvents.length = config.maxEventCount
+        }
+
     }
 
     return newEvents;

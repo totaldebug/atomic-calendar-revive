@@ -88,10 +88,13 @@ Compatibility
 ================== ====================== =======================================================================================
  Card Version       HA Version             Notes
 ================== ====================== =======================================================================================
+ v7.0.0 (beta)      2022.6 Upwards
  v6.0.0             2021.11 Upwards        Progress bar will not work on older HA Versions
  v5.0.0 - v5.2.2    2021.6 to 2021.10.x    May work on older HA Versions but `hoursFormat` option will need to be manually set.
  v4.1.1             0.117 Upwards
 ================== ====================== =======================================================================================
+
+Home Assistant 2022.5 will not work with the card you must upgrade to 2022.6
 
 ************
 Contributing
