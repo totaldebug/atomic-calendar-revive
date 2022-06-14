@@ -43,8 +43,10 @@ If using a pre-release, we do request that any bugs or unexpected behaviour is r
 
 # v7.0.0
 
-This release sees some major changes in the way the card functions, please upgrade and
-check your configuration **before** submitting an issue.
+This release sees some major changes in the way the card functions, when upgrading
+please check your configuration **before** submitting an issue as many have changed.
+
+Documentation has been updated to reflect any changes made.
 
 # Changed configuration options
 
@@ -68,18 +70,8 @@ more flexibility than other available calendar cards.
 
 Allowing for the use of both Google Calendars and CalDav, With two main viewing modes:
 
-* Event List Mode
-* Calendar View Mode
-
-## Examples
-
-### Event Mode
-
-TBC
-
-### Calendar Mode
-
-TBC
+- Event List Mode
+- Calendar View Mode
 
 ## Install & Configuration
 
@@ -91,21 +83,23 @@ Setup & Configuration is all provided within the [documentation](https://docs.to
 
 | Card Version    |     HA Version      |                                        Notes                                         |
 | --------------- | :-----------------: | :----------------------------------------------------------------------------------: |
-| v7.0.0          |   2022.2.9 Upwards   | Should work on older versions but not tested |
-| v6.0.0          |   2021.11 Upwards   | Progress bar will not work on older HA Versions                    |
+| v7.0.0          |   2022.6 Upwards    |                     Should work on older versions but not tested                     |
+| v6.0.0          |   2021.11 Upwards   |                   Progress bar will not work on older HA Versions                    |
 | v5.0.0 - v5.2.2 | 2021.6 to 2021.10.x | May work on older HA Versions but `hoursFormat` option will need to be manually set. |
-| v4.1.1          |    0.117 Upwards |                                                                                      |
+| v4.1.1          |    0.117 Upwards    |                                                                                      |
+
+Home Assistant 2022.5 will not work with the card you must upgrade to 2022.6
 
 ## Support
 
 Reach out to me at one of the following places:
 
-* [Discord](https://discord.gg/6fmekudc8Q)
-* [Discussions](https://github.com/totaldebug/atomic-calendar-revive/discussions)
-* [Issues](https://github.com/totaldebug/atomic-calendar-revive/issues)
+- [Discord](https://discord.gg/6fmekudc8Q)
+- [Discussions](https://github.com/totaldebug/atomic-calendar-revive/discussions)
+- [Issues](https://github.com/totaldebug/atomic-calendar-revive/issues)
 
 ## License
 
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-orange.svg?style=flat-square)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
-* Copyright © [Total Debug](https://totaldebug.uk "Total Debug").
+- Copyright © [Total Debug](https://totaldebug.uk 'Total Debug').
