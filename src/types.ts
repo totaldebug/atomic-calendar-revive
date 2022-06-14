@@ -138,6 +138,7 @@ export interface EntityConfig {
 	type?: string;
 	name?: string;
 	icon?: string;
+	
 }
 
 export interface ConfigEntity extends EntityConfig {
