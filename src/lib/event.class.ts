@@ -6,285 +6,282 @@ import dayjs from 'dayjs';
  */
 
 export default class EventClass {
-    isEmpty: boolean;
-    private _eventClass: any;
-    private _globalConfig: any;
-    private _startDateTime: dayjs.Dayjs | undefined;
-    private _endDateTime: dayjs.Dayjs | undefined;
+	isEmpty: boolean;
+	private _eventClass: any;
+	private _globalConfig: any;
+	private _startDateTime: dayjs.Dayjs | undefined;
+	private _endDateTime: dayjs.Dayjs | undefined;
 
+	constructor(eventClass, globalConfig) {
+		this._eventClass = eventClass;
+		this._globalConfig = globalConfig;
+		this.isEmpty = false;
+	}
 
-    constructor(eventClass, globalConfig) {
-        this._eventClass = eventClass;
-        this._globalConfig = globalConfig;
-        this.isEmpty = false;
-    }
+	get rawEvent() {
+		return this._eventClass;
+	}
 
-    get rawEvent() {
-        return this._eventClass;
-    }
+	get id() {
+		return (this.rawEvent.id || this.rawEvent.uid) + this.title;
+	}
 
-    get id() {
-        return (this.rawEvent.id || this.rawEvent.uid) + this.title;
-    }
+	get originCalendar() {
+		return this.rawEvent.originCalendar;
+	}
 
-    get originCalendar() {
-        return this.rawEvent.originCalendar;
-    }
+	get entity() {
+		return this._eventClass.hassEntity || {};
+	}
 
-    get entity() {
-        return this._eventClass.hassEntity || {};
-    }
+	get entityConfig() {
+		return this._eventClass.entity || {};
+	}
 
-    get entityConfig() {
-        return this._eventClass.entity || {};
-    }
+	get originName() {
+		const originCalendar = this.originCalendar;
+		if (originCalendar && originCalendar.name) return originCalendar.name;
 
-    get originName() {
-        const originCalendar = this.originCalendar;
-        if (originCalendar && originCalendar.name)
-            return originCalendar.name;
+		const entity = this.entity;
+		if (entity && entity.attributes && entity.attributes.friendly_name) return entity.attributes.friendly_name;
 
-        const entity = this.entity;
-        if (entity && entity.attributes && entity.attributes.friendly_name)
-            return entity.attributes.friendly_name;
+		if (originCalendar && originCalendar.entity) return originCalendar.entity;
 
-        if (originCalendar && originCalendar.entity)
-            return originCalendar.entity;
+		return (entity && entity.entity) || entity || 'Unknown';
+	}
 
-        return entity && entity.entity || entity || 'Unknown';
-    }
+	/**
+	 * get the start time for an event
+	 * @return {String}
+	 */
+	get startDateTime() {
+		if (this._startDateTime === undefined) {
+			const date =
+				(this.rawEvent.start && this.rawEvent.start.date) || this.rawEvent.start.dateTime || this.rawEvent.start || '';
+			this._startDateTime = this._processDate(date);
+		}
 
-    /**
-     * get the start time for an event
-     * @return {String}
-     */
-    get startDateTime() {
-        if (this._startDateTime === undefined) {
-            const date = this.rawEvent.start && this.rawEvent.start.date || this.rawEvent.start.dateTime || this.rawEvent.start || '';
-            this._startDateTime = this._processDate(date);
-        }
+		return this._startDateTime!.clone();
+	}
 
-        return this._startDateTime!.clone();
-    }
+	/**
+	 * get the end time for an event
+	 * @return {String}
+	 */
+	get endDateTime() {
+		if (this._endDateTime === undefined) {
+			const date = (this.rawEvent.end && this.rawEvent.end.date) || this.rawEvent.end.dateTime || this.rawEvent.end;
+			this._endDateTime = this._processDate(date, true);
+		}
 
-    /**
-     * get the end time for an event
-     * @return {String}
-     */
-    get endDateTime() {
-        if (this._endDateTime === undefined) {
-            const date = this.rawEvent.end && this.rawEvent.end.date || this.rawEvent.end.dateTime || this.rawEvent.end;
-            this._endDateTime = this._processDate(date, true);
-        }
+		return this._endDateTime!.clone();
+	}
+	get addDays() {
+		return this.rawEvent.addDays !== undefined ? this.rawEvent.addDays : false;
+	}
 
-        return this._endDateTime!.clone();
-    }
-    get addDays() {
-        return this.rawEvent.addDays !== undefined ? this.rawEvent.addDays : false;
-    }
+	get daysLong() {
+		return this.rawEvent.daysLong;
+	}
 
-    get daysLong() {
-        return this.rawEvent.daysLong;
-    }
+	get isFirstDay() {
+		return this.rawEvent._isFirstDay;
+	}
 
-    get isFirstDay() {
-        return this.rawEvent._isFirstDay;
-    }
+	get isLastDay() {
+		return this.rawEvent._isLastDay;
+	}
 
-    get isLastDay() {
-        return this.rawEvent._isLastDay;
-    }
+	/**
+	 *
+	 * @param {string} date
+	 * @param {boolean} isEndDate
+	 */
+	_processDate(date, isEndDate = false) {
+		if (!date) return date;
 
-    /**
-     *
-     * @param {string} date
-     * @param {boolean} isEndDate
-     */
-    _processDate(date, isEndDate = false) {
-        if (!date) return date;
+		date = dayjs(date);
 
-        date = dayjs(date);
+		// add days to a start date for multi day event
+		if (this.addDays !== false) {
+			if (!isEndDate && this.addDays) date = date.add(this.addDays, 'days');
 
-        // add days to a start date for multi day event
-        if (this.addDays !== false) {
-            if (!isEndDate && this.addDays) date = date.add(this.addDays, 'days');
+			// if not the last day and we are modifying the endDateTime then
+			// set end dateTimeDate as end of start day for that partial event
+			if (!this.isLastDay && isEndDate) {
+				date = dayjs(this.startDateTime).endOf('day');
+			} else if (this.isLastDay && !isEndDate) {
+				// if last day and start time then set start as start of day
+				date = date.startOf('day');
+			}
+		}
 
-            // if not the last day and we are modifying the endDateTime then
-            // set end dateTimeDate as end of start day for that partial event
-            if (!this.isLastDay && isEndDate) {
-                date = dayjs(this.startDateTime).endOf('day');
+		return date;
+	}
 
-            } else if (this.isLastDay && !isEndDate) {
-                // if last day and start time then set start as start of day
-                date = date.startOf('day');
-            }
-        }
+	/**
+	 * is this recurring?
+	 * @return {boolean}
+	 */
+	get isRecurring() {
+		return !!this.rawEvent.recurringEventId;
+	}
 
-        return date;
-    }
+	/**
+	 * is this declined?
+	 * @return {boolean}
+	 */
+	get isDeclined() {
+		const attendees = this.rawEvent.attendees || [];
+		return attendees.filter((a) => a.self && a.responseStatus === 'declined').length !== 0;
+	}
 
-    /**
-     * is this recurring?
-     * @return {boolean}
-     */
-    get isRecurring() {
-        return !!this.rawEvent.recurringEventId;
-    }
+	/**
+	 * is this still active?
+	 * @return {boolean}
+	 */
+	get isRunning() {
+		return this.startDateTime.isBefore(dayjs()) && this.endDateTime.isAfter(dayjs());
+	}
 
-    /**
-     * is this declined?
-     * @return {boolean}
-     */
-    get isDeclined() {
-        const attendees = this.rawEvent.attendees || [];
-        return attendees.filter(a => a.self && a.responseStatus === 'declined').length !== 0;
-    }
+	/**
+	 * is this finished?
+	 * @return {boolean}
+	 */
+	get isFinished() {
+		// TODO: Fix needed for full / multi day event
+		return this.endDateTime.isBefore(dayjs());
+	}
 
-    /**
-     * is this still active?
-     * @return {boolean}
-     */
-    get isRunning() {
-        return this.startDateTime.isBefore(dayjs()) && this.endDateTime.isAfter(dayjs());
-    }
+	/**
+	 * get the URL for an event
+	 * @return {String}
+	 */
+	get htmlLink() {
+		return this.rawEvent.htmlLink || '';
+	}
 
-    /**
-     * is this finished?
-     * @return {boolean}
-     */
-    get isFinished() {
-        // TODO: Fix needed for full / multi day event
-        return this.endDateTime.isBefore(dayjs());
-    }
+	/**
+	 * get the URL from the source element
+	 * @return {String}
+	 */
+	get sourceUrl() {
+		return this.rawEvent.source ? this.rawEvent.source.url || '' : '';
+	}
 
+	/**
+	 * is a multiday event (not all day)
+	 * @return {Boolean}
+	 */
+	get isMultiDay() {
+		// if more than 24 hours we automatically know it's multi day
+		if (this.endDateTime.diff(this.startDateTime, 'hours') > 24) return true;
 
-    /**
-     * get the URL for an event
-     * @return {String}
-     */
-    get htmlLink() {
-        return this.rawEvent.htmlLink || '';
-    }
+		// end date could be at midnight which is not multi day but is seen as the next day
+		// subtract one minute and if that made it one day then its NOT one day
+		const daysDifference = Math.abs(this.startDateTime.date() - this.endDateTime.subtract(1, 'minute').date());
+		if (daysDifference === 1 && this.endDateTime.hour() === 0 && this.endDateTime.minute() === 0) return false;
 
-    /**
-     * get the URL from the source element
-     * @return {String}
-     */
-    get sourceUrl() {
-        return (this.rawEvent.source) ? this.rawEvent.source.url || '' : '';
-    }
+		return !!daysDifference;
+	}
 
-    /**
-     * is a multiday event (not all day)
-     * @return {Boolean}
-     */
-    get isMultiDay() {
-        // if more than 24 hours we automatically know it's multi day
-        if (this.endDateTime.diff(this.startDateTime, 'hours') > 24) return true;
+	/**
+	 * is the event a full day event?
+	 * @return {Boolean}
+	 */
+	get isAllDayEvent() {
+		const isMidnightStart = this.startDateTime.startOf('day').diff(this.startDateTime) === 0;
+		const isMidnightEnd = this.endDateTime.startOf('day').diff(this.endDateTime) === 0;
+		if (isMidnightStart && isMidnightEnd) return true;
 
-        // end date could be at midnight which is not multi day but is seen as the next day
-        // subtract one minute and if that made it one day then its NOT one day
-        const daysDifference = Math.abs(this.startDateTime.date() - this.endDateTime.subtract(1, 'minute').date());
-        if (daysDifference === 1 && this.endDateTime.hour() === 0 && this.endDateTime.minute() === 0) return false;
+		// check for days that are between multi days - they ARE all day
+		if (!this.isFirstDay && !this.isLastDay && this.daysLong) return true;
 
-        return !!daysDifference;
-    }
+		return isMidnightStart && isMidnightEnd;
+	}
 
-    /**
-     * is the event a full day event?
-     * @return {Boolean}
-     */
-    get isAllDayEvent() {
-        const isMidnightStart = this.startDateTime.startOf('day').diff(this.startDateTime) === 0;
-        const isMidnightEnd = this.endDateTime.startOf('day').diff(this.endDateTime) === 0;
-        if (isMidnightStart && isMidnightEnd) return true;
+	/**
+	 * split event into a multi day event where it crosses to a new day
+	 * @param {*} newEvent
+	 */
+	splitIntoMultiDay(newEvent) {
+		const partialEvents: any[] = [];
 
-        // check for days that are between multi days - they ARE all day
-        if (!this.isFirstDay && !this.isLastDay && this.daysLong) return true;
+		// multi days start at two days
+		// every 24 hours is a day. if we do get some full days then just add to 1 daysLong
+		// TODO: Confirm this works as expected
+		let daysLong = 2;
+		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').diff(this.startDateTime, 'hours') / 24);
 
-        return isMidnightStart && isMidnightEnd;
-    }
+		if (fullDays) daysLong = fullDays + 1;
 
-    /**
-     * split event into a multi day event where it crosses to a new day
-     * @param {*} newEvent
-     */
-    splitIntoMultiDay(newEvent) {
-        const partialEvents: any[] = [];
+		for (let i = 0; i < daysLong; i++) {
+			// copy event then add the current day/total days to 'new' event
+			const copiedEvent = JSON.parse(JSON.stringify(newEvent.rawEvent));
+			copiedEvent.addDays = i;
+			copiedEvent.daysLong = daysLong;
 
-        // multi days start at two days
-        // every 24 hours is a day. if we do get some full days then just add to 1 daysLong
-        // TODO: Confirm this works as expected
-        let daysLong = 2;
-        const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').diff(this.startDateTime, 'hours') / 24);
+			copiedEvent._isFirstDay = i === 0;
+			copiedEvent._isLastDay = i <= daysLong - 1 && i > 0;
 
-        if (fullDays) daysLong = fullDays + 1;
+			// Create event object for each of the days the multi-event occurs on
+			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
+			// only add event if start date is before the maxDaysToShow and after
+			// the current date
+			const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
 
-        for (let i = 0; i < daysLong; i++) {
-            // copy event then add the current day/total days to 'new' event
-            const copiedEvent = JSON.parse(JSON.stringify(newEvent.rawEvent));
-            copiedEvent.addDays = i;
-            copiedEvent.daysLong = daysLong;
+			if (
+				endDate.isAfter(partialEvent.startDateTime) &&
+				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime)
+			) {
+				partialEvents.push(partialEvent);
+			}
+		}
+		return partialEvents;
+	}
 
-            copiedEvent._isFirstDay = i === 0;
-            copiedEvent._isLastDay = i <= (daysLong - 1) && i > 0;
+	get titleColor() {
+		if (this.entityConfig.eventTitleColor) return this.entityConfig.eventTitleColor;
+		else return 'var(--primary-text-color)';
+	}
 
-            // Create event object for each of the days the multi-event occurs on
-            const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
-            // only add event if start date is before the maxDaysToShow and after
-            // the current date
-            const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
+	get title() {
+		return this.rawEvent.summary;
+	}
 
-            if (endDate.isAfter(partialEvent.startDateTime) && dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime)) {
-                partialEvents.push(partialEvent);
-            }
-        }
-        return partialEvents;
-    }
+	get description() {
+		// if Observance is in the description, filter it out
+		const regex = new RegExp('^Observance', 'i');
+		if (regex.test(this.rawEvent.description)) {
+			return '';
+		}
+		return this.rawEvent.description;
+	}
 
+	//start time, returns today if before today
+	get startTimeToShow() {
+		const time = this.startDateTime;
+		if (dayjs(time).isBefore(dayjs().startOf('day')) && !(this._globalConfig.startDaysAhead < 0))
+			return dayjs().startOf('day');
+		else return time;
+	}
 
-    get titleColor() {
-        if (this.entityConfig.eventTitleColor) return this.entityConfig.eventTitleColor;
-        else return 'var(--primary-text-color)';
-    }
+	// return YYYYMMDD for sorting
+	get daysToSort() {
+		return this.startTimeToShow.format('YYYYMMDD');
+	}
 
-    get title() {
-        return this.rawEvent.summary;
-    }
+	get location() {
+		return this.rawEvent.location ? this.rawEvent.location.split(' ').join('+') : '';
+	}
 
-    get description() {
-        // if Observance is in the description, filter it out
-        const regex = new RegExp('^Observance', 'i');
-        if (regex.test(this.rawEvent.description)) {
-            return '';
-        }
-        return this.rawEvent.description;
-    }
+	get address() {
+		if (!this.rawEvent.location) return '';
 
-    //start time, returns today if before today
-    get startTimeToShow() {
-        const time = this.startDateTime;
-        if (dayjs(time).isBefore(dayjs().startOf('day')) && !(this._globalConfig.startDaysAhead < 0))
-            return dayjs().startOf('day');
-        else return time;
-    }
+		return this.rawEvent.location.split(',')[0];
+	}
 
-    // return YYYYMMDD for sorting
-    get daysToSort() {
-        return this.startTimeToShow.format('YYYYMMDD');
-    }
-
-    get location() {
-        return this.rawEvent.location ? this.rawEvent.location.split(' ').join('+') : '';
-    }
-
-    get address() {
-        if (!this.rawEvent.location) return '';
-
-        return this.rawEvent.location.split(',')[0];
-    }
-
-    get visibility() {
-        return this.rawEvent.visibility;
-    }
+	get visibility() {
+		return this.rawEvent.visibility;
+	}
 }

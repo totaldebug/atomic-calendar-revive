@@ -12,4 +12,4 @@ jobs:
         pr-message:  'Hello @${{ github.actor }}, thank you for submitting a PR! We will review your changes and respond as soon as possible.'
         issue-message: |
           Hello @${{ github.actor }}, thank you for your interest in our work!
-          If this is a bug report, please provide your configuration and any screenshots that would assist troubleshooting, otherwise we can not help you.{% endraw %}
+          If this is a bug report, please provide your configuration and any screenshots that would assist troubleshooting, otherwise we can not help you.
