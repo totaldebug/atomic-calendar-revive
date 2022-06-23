@@ -13,7 +13,8 @@
 	"ui": {
 		"common": {
 			"previous": "Précédent",
-			"next": "Suivant"
+			"next": "Suivant",
+            "week": "Semaine"
 		}
 	},
 	"errors": {

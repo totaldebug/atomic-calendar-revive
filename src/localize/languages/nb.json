@@ -13,7 +13,8 @@
 	"ui": {
 		"common": {
 			"previous": "Forrige",
-			"next": "Neste"
+			"next": "Neste",
+            "week": "Uke"
 		}
 	},
 	"errors": {

@@ -4,6 +4,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { atomicCardConfig } from "../types";
 import dayjs from "dayjs";
 import { getCurrDayAndMonth, getMultiDayEventParts, isHtml } from "./common.html";
+import { localize } from '../localize/localize';
 
 /**
  * Gets the icon for a specific event
@@ -141,7 +142,7 @@ export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
     var currentWeekHTML = html``
     if (currentWeek != day[0].startDateTime.week()) {
         currentWeek = day[0].startDateTime.week();
-        currentWeekHTML = html`<div class="week-number">Week ${currentWeek.toString()}</div>`
+        currentWeekHTML = html`<div class="week-number">${localize('ui.common.week')} ${currentWeek.toString()}</div>`
         return { currentWeekHTML, currentWeek };
     } else {
         return { currentWeekHTML, currentWeek };

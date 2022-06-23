@@ -13,7 +13,8 @@
 	"ui": {
 		"common": {
 			"previous": "Eelmine",
-			"next": "Järgmine"
+			"next": "Järgmine",
+            "week": "Nädal"
 		}
 	},
 	"errors": {
