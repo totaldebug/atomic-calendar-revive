@@ -13,7 +13,8 @@
     "ui": {
         "common": {
             "previous": "Forrige",
-            "next": "Næste"
+            "next": "Næste",
+            "week": "Uge"
         }
     },
     "errors": {

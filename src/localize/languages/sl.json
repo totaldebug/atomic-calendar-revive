@@ -13,7 +13,8 @@
     "ui": {
         "common": {
             "previous": "Prejšnji",
-            "next": "Naslednji"
+            "next": "Naslednji",
+            "week": "Týždeň"
         }
     },
     "errors": {
