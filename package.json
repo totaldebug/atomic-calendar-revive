@@ -42,7 +42,7 @@
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.18.0",
 		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-plugin-prettier": "^4.1.0",
 		"prettier": "^2.7.1",
 		"rollup": "^2.75.7",
 		"rollup-plugin-serve": "^1.1.0",
