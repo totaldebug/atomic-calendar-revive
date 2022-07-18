@@ -197,10 +197,10 @@
   dependencies:
     "@babel/types" "^7.16.7"
 
-"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.13.0", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.16.7", "@babel/helper-plugin-utils@^7.17.12", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
-  version "7.17.12"
-  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.17.12.tgz#86c2347da5acbf5583ba0a10aed4c9bf9da9cf96"
-  integrity sha512-JDkf04mqtN3y4iAbO1hv9U2ARpPyPL1zqyWs/2WG1pgSq9llHFjStX5jdxb84himgJm+8Ng+x0oiWF/nw/XQKA==
+"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.13.0", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.16.7", "@babel/helper-plugin-utils@^7.17.12", "@babel/helper-plugin-utils@^7.18.9", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
+  version "7.18.9"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.18.9.tgz#4b8aea3b069d8cb8a72cdfe28ddf5ceca695ef2f"
+  integrity sha512-aBXPT3bmtLryXaoJLyYPXPlSD4p1ld9aYeR+sJNOZjJJGiOpb+fKfh3NkcCu7J54nUJwCERPBExCCpyCOHnu/w==
 
 "@babel/helper-remap-async-to-generator@^7.16.8":
   version "7.16.8"
@@ -777,12 +777,12 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.16.7"
 
-"@babel/plugin-transform-template-literals@^7.18.2":
-  version "7.18.2"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.18.2.tgz#31ed6915721864847c48b656281d0098ea1add28"
-  integrity sha512-/cmuBVw9sZBGZVOMkpAEaVLwm4JmK2GZ1dFKOGGpMzEHWFmyZZ59lUU0PdRr8YNYeQdNzTDwuxP2X2gzydTc9g==
+"@babel/plugin-transform-template-literals@^7.18.2", "@babel/plugin-transform-template-literals@^7.18.9":
+  version "7.18.9"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.18.9.tgz#04ec6f10acdaa81846689d63fae117dd9c243a5e"
+  integrity sha512-S8cOWfT82gTezpYOiVaGHrCbhlHgKhQt8XH5ES46P2XWmX92yisoZywf5km75wv5sYcXDUCLMmMxOLCtthDgMA==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.17.12"
+    "@babel/helper-plugin-utils" "^7.18.9"
 
 "@babel/plugin-transform-typeof-symbol@^7.17.12":
   version "7.17.12"
