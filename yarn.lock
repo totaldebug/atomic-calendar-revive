@@ -1165,10 +1165,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lit/reactive-element@^1.3.0":
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.3.2.tgz#43e470537b6ec2c23510c07812616d5aa27a17cd"
-  integrity sha512-A2e18XzPMrIh35nhIdE4uoqRzoIpEU5vZYuQN4S3Ee1zkGdYC27DP12pewbw/RLgPHzaE4kx/YqxMzebOpm0dA==
+"@lit/reactive-element@^1.3.0", "@lit/reactive-element@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.4.0.tgz#78ed05eb9b750e8e3671a61a30c19198e4038f80"
+  integrity sha512-blrtlLKvtVyjTJ3gUHWNSHOU6tD8be9mRafqtnO7GVMcB+5z4RjNcO0DpMGmccK6N8yur1vVVYnS0gPdQ/WgEQ==
 
 "@material/animation@14.0.0-canary.53b3cad2f.0":
   version "14.0.0-canary.53b3cad2f.0"
@@ -3778,21 +3778,21 @@ lit-element@^3.2.0:
     "@lit/reactive-element" "^1.3.0"
     lit-html "^2.2.0"
 
-lit-html@^2.2.0:
-  version "2.2.5"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.2.5.tgz#e2b4fbdb3b57e38a3bce23c8473d72ba0e652ed8"
-  integrity sha512-e56Y9V+RNA+SGYsWP2DGb/wad5Ccd3xUZYjmcmbeZcnc0wP4zFQRXeXn7W3bbfBekmHDK2dOnuYNYkg0bQjh/w==
+lit-html@^2.2.0, lit-html@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-2.3.0.tgz#6896685744f0b1ddef0d39aa2092fcd06dfd169d"
+  integrity sha512-bnJneRqizoeSTxUeyDJLBDr+DI+7bn6P3WWqsj/4AwPWJjYgjSO5W64BVl1CrEo/8DtgU6DAYADX6yeI5/eDsg==
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@^2.0.0, lit@^2.0.0-rc.3, lit@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.2.6.tgz#4ef223e88517c000b0c01baf2e3535e61a75a5b5"
-  integrity sha512-K2vkeGABfSJSfkhqHy86ujchJs3NR9nW1bEEiV+bXDkbiQ60Tv5GUausYN2mXigZn8lC1qXuc46ArQRKYmumZw==
+lit@^2.0.0, lit@^2.0.0-rc.3, lit@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.3.0.tgz#611e122cbf9f34f1af0c1f3f791f886453bdcbde"
+  integrity sha512-ynSGsUYKSGN2weFQ1F3SZq0Ihlj+vr/3KAET//Yf8Tz86L7lZizlw9Px+ab5iN8Si4RkVoLqd9YtKQmjdyKHNg==
   dependencies:
-    "@lit/reactive-element" "^1.3.0"
+    "@lit/reactive-element" "^1.4.0"
     lit-element "^3.2.0"
-    lit-html "^2.2.0"
+    lit-html "^2.3.0"
 
 locate-path@^5.0.0:
   version "5.0.0"
