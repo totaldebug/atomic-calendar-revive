@@ -1,12 +1,12 @@
-import { handleClick, HomeAssistant } from "custom-card-helpers";
-import dayjs from "dayjs";
+import { handleClick, HomeAssistant } from 'custom-card-helpers';
+import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { atomicCardConfig } from "../types";
-import CalendarDay from "./calendar.class";
-import { isHtml } from "./common.html";
-import EventClass from "./event.class";
+import { atomicCardConfig } from '../types';
+import CalendarDay from './calendar.class';
+import { isHtml } from './common.html';
+import EventClass from './event.class';
 
 dayjs.extend(isoWeek);
 
@@ -27,11 +27,10 @@ export function handleCalendarIcons(day: CalendarDay) {
 			}
 		}
 	});
-
 	myIcons.map((icon) => {
 		const dayIcon = html`<span>
-				<ha-icon class="calIcon" style="color:  ${icon.color};" icon="${icon.icon}"></ha-icon>
-			</span>`;
+			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};" ></ha-icon>
+		</span>`;
 
 		allIcons.push(dayIcon);
 	});
@@ -46,17 +45,14 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 
 	if (config.disableCalEventLink || event.htmlLink === null)
-		return html`<span
-				style="text-decoration: ${textDecoration};color: ${titleColor}"
-				>${event.title}
-			</span>`;
+		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${event.title} </span>`;
 	else
 		return html`<a
-				href="${event.htmlLink}"
-				style="text-decoration: ${textDecoration};color: ${titleColor}"
-				target="${config.linkTarget}"
-				>${event.title}
-			</a>`;
+			href="${event.htmlLink}"
+			style="text-decoration: ${textDecoration};color: ${titleColor}"
+			target="${config.linkTarget}"
+			>${event.title}
+		</a>`;
 }
 
 /**
@@ -72,9 +68,14 @@ export function getCalendarDescriptionHTML(config: atomicCardConfig, event: Even
 			desc = unsafeHTML(event.description);
 		}
 		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
-			desc = event.description.slice(0, config.descLength)
+			desc = event.description.slice(0, config.descLength);
 		}
-		return html`<div class="calDescription" style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%">- ${desc}</div>`;
+		return html`<div
+			class="calDescription"
+			style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
+		>
+			- ${desc}
+		</div>`;
 	}
 }
 
@@ -91,9 +92,19 @@ export function getCalendarLocationHTML(config: atomicCardConfig, event: EventCl
 		const loc: string = event.location;
 		const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
 		return html`
-				<a href=${location} target="${config.linkTarget}" class="location-link" style="--location-link-size: ${config.locationTextSize}%">
-					<ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;
-				</a>
-			`;
+			<a
+				href=${location}
+				target="${config.linkTarget}"
+				class="location-link"
+				style="--location-link-size: ${config.locationTextSize}%"
+			>
+				<ha-icon
+					class="event-location-icon"
+					style="--location-icon-color: ${config.locationIconColor}"
+					icon="mdi:map-marker"
+				></ha-icon
+				>&nbsp;
+			</a>
+		`;
 	}
 }
