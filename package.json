@@ -53,7 +53,7 @@
 		"@formatjs/icu-messageformat-parser": "^2.1.2",
 		"@material/mwc-icon-button": "^0.27.0",
 		"@material/mwc-linear-progress": "^0.27.0",
-		"@webcomponents/webcomponentsjs": "^2.6.0",
+		"@webcomponents/webcomponentsjs": "^2.7.0",
 		"custom-card-helpers": "git+https://github.com/totaldebug/custom-card-helpers.git",
 		"dayjs": "^1.11.2",
 		"lit": "^2.2.6",
