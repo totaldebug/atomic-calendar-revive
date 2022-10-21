@@ -35,4 +35,5 @@ Main Options
  hideDeclined              boolean   optional        v7.0.0     ``false`` show/hide events that have been declined
  showMultiDay              boolean   optional        v7.0.0     ``false`` if set true will show multi-day events on each day
  showMultiDayEventParts    boolean   optional        v7.0.0     ``false`` if set true will show how many days in event and which day it is
+ hideFinishedEvents        boolean   optional        v7.0.0     ``false`` if set true will hide any finished events
 ========================= ========= =============== ========== ==========================================================================================================================================================================================================================
