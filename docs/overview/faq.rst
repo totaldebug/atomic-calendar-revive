@@ -19,7 +19,7 @@ My color scheme is not showing as expected, what should I do?
 
 If your color scheme is not showing as expected and you are using a custom theme, first please swap back to the default theme and see if this resolves the issue.
 
-Also consider using [card-mod](https://github.com/thomasloven/lovelace-card-mod) instead, this is a much better way to control the cards looks.
+Also consider using `card-mod <https://github.com/thomasloven/lovelace-card-mod_>`_ instead, this is a much better way to control the cards looks.
 
 How to fix "The calendar can't be loaded from Home Assistant component."
 ########################################################################
