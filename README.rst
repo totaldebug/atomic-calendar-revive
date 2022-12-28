@@ -39,6 +39,20 @@ Allowing for the use of both Google Calendars and CalDav, With two main viewing 
 * Event List Mode
 * Calendar View Mode
 
+.. image:: .github/img/calendar-mode-allday.png
+   :alt: Calendar Mode All-day
+
+.. image:: .github/img/calendar-mode-today.png
+   :alt: Calendar Mode Today
+
+.. image:: .github/img/event-mode-example.png
+   :alt: Event Mode Example
+
+.. image:: .github/img/event-mode-no-date.png
+   :alt: Event Mode no date
+
+Please keep in mind, these screenshots show a basic configuration, this card allows so much more customisation!
+
 *************
 Configuration
 *************
