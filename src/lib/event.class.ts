@@ -211,9 +211,9 @@ export default class EventClass {
 		// every 24 hours is a day. if we do get some full days then just add to 1 daysLong
 		// TODO: Confirm this works as expected
 		let daysLong = 2;
-		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').diff(this.startDateTime, 'hours') / 24);
+		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
 
-		if (fullDays) daysLong = fullDays + 1;
+		if (fullDays) daysLong = fullDays;
 
 		for (let i = 0; i < daysLong; i++) {
 			// copy event then add the current day/total days to 'new' event
