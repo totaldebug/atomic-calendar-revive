@@ -109,4 +109,5 @@ export default {
 	showWeekNumber: false,
 	showDescription: false,
 	showEventDate: true,
+	showDatePerEvent: false,
 };

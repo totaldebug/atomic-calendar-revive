@@ -382,10 +382,6 @@ class AtomicCalendarRevive extends LitElement {
 					const eventDuration = event.endDateTime.diff(event.startDateTime, 'minutes');
 					const eventProgress = dayjs().diff(event.startDateTime, 'minutes');
 					const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
-					/**progressBar = html`<mwc-linear-progress
-            class="progress-bar"
-
-            progress="${eventPercentProgress}"></mwc-linear-progress>`;*/
 					progressBar = html`<progress
 						style="--progress-bar: ${this._config.progressBarColor}; --progress-bar-bg: ${this._config
 							.progressBarBackgroundColor};"
@@ -420,13 +416,18 @@ class AtomicCalendarRevive extends LitElement {
 					: '';
 
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
+
+				const showDatePer = this._config.showDatePerEvent
+					? true
+					: i === 0 ? true : false;
+
 				// check and set the date format
 				const eventDateFormat =
 					this._config.europeanDate == true
-						? html`${i === 0 ? event.startTimeToShow.format('DD') + ' ' : ''}${i === 0 && this._config.showMonth
+						? html`${showDatePer ? event.startTimeToShow.format('DD') + ' ' : ''}${showDatePer && this._config.showMonth
 								? event.startTimeToShow.format('MMM')
 								: ''}`
-						: html`${i === 0 && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${i === 0
+						: html`${showDatePer && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${showDatePer
 								? event.startTimeToShow.format('DD')
 								: ''}`;
 
@@ -436,7 +437,7 @@ class AtomicCalendarRevive extends LitElement {
 				const eventLeft = this._config.showEventDate == true
 							? html`<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
 							<div class=${dayClassTodayEvent}>
-								${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
+								${showDatePer && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
 							</div><div class=${dayClassTodayEvent}>${eventDateFormat}</div>
 							</td>`
 							: html``;
