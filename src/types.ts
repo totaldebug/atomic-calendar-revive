@@ -44,6 +44,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	refreshInterval: number;
 	showDescription: boolean;
 	showEventIcon: boolean;
+	showEventDate?: boolean;
 
 	// color and font settings
 	nameColor?: string;
@@ -138,7 +139,7 @@ export interface EntityConfig {
 	type?: string;
 	name?: string;
 	icon?: string;
-	
+
 }
 
 export interface ConfigEntity extends EntityConfig {

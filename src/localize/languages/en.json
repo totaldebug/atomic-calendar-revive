@@ -73,7 +73,8 @@
 			"showHiddenText": "Show hidden event text?",
 			"hiddenEventText": "Text for hidden events:",
 			"showCalendarName": "Show calendar name",
-			"showWeekNumber": "Show week numbers"
+			"showWeekNumber": "Show week numbers",
+			"showEventDate": "Show date for events"
 		}
 	},
 	"calendar": {

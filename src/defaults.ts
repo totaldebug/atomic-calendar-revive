@@ -108,4 +108,5 @@ export default {
 	showMultiDayEventParts: false,
 	showWeekNumber: false,
 	showDescription: false,
+	showEventDate: true,
 };
