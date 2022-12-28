@@ -16,4 +16,5 @@ Event Mode Options
  hiddenEventText         string     v3.3.0   ``localize('common.hiddenEventText')`` allows a user to change the text displayed for hidden events
  showCalendarName        boolean    v7.0.0   ``false`` Show the calendar name in Event Mode
  showWeekNumber          boolean    v7.0.0   ``false`` Show the year week number at the beginning of each week
+ showEventDate           boolean    v7.1.0   ``true`` Show the event date
 ======================= ========== ======== ===========================================================================================================

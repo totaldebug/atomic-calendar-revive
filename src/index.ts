@@ -432,13 +432,18 @@ class AtomicCalendarRevive extends LitElement {
 
 				const dayClassTodayEvent = event.startDateTime.isSame(dayjs(), 'day') ? `event-leftCurrentDay` : ``;
 
-				return html`<tr class="${dayWrap}" style="color:  ${this._config.dayWrapperLineColor};">
-	  <td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-		  <div class=${dayClassTodayEvent}>
-			  ${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
-      </div>
-	    <div class=${dayClassTodayEvent}>${eventDateFormat}</div>
-		</td>
+
+				const eventLeft = this._config.showEventDate == true
+							? html`<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+							<div class=${dayClassTodayEvent}>
+								${i === 0 && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
+							</div><div class=${dayClassTodayEvent}>${eventDateFormat}</div>
+							</td>`
+							: html``;
+
+
+				return html`<tr class="${dayWrap}" style="color:  ${this._config.dayWrapperLineColor};">${eventLeft}
+
 		<td style="width: 100%;  ${finishedEventsStyle} ${lastEventStyle}">
 			<div>${currentEventLine}</div>
 				<div class="event-right">
