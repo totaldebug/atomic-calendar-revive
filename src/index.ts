@@ -466,7 +466,7 @@ class AtomicCalendarRevive extends LitElement {
 				? this.hiddenEvents + ' ' + this._config.hiddenEventText
 				: ''
 			: '';
-		this.content = html`<table>
+			this.content = html`<table style="width: 100%">
 				<tbody>
 					${htmlDays}
 				</tbody>
