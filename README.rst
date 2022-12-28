@@ -40,6 +40,7 @@ Allowing for the use of both Google Calendars and CalDav, With two main viewing 
 * Calendar View Mode
 
 .. image:: .github/img/calendar-mode-allday.png
+   :width: 100px
    :alt: Calendar Mode All-day
 
 .. image:: .github/img/calendar-mode-today.png
