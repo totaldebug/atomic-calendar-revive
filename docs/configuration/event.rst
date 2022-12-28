@@ -17,4 +17,5 @@ Event Mode Options
  showCalendarName        boolean    v7.0.0   ``false`` Show the calendar name in Event Mode
  showWeekNumber          boolean    v7.0.0   ``false`` Show the year week number at the beginning of each week
  showEventDate           boolean    v7.1.0   ``true`` Show the event date
+ showDatePerEvent        boolean    v7.2.0   ``false`` Show the date next to each event entry
 ======================= ========== ======== ===========================================================================================================

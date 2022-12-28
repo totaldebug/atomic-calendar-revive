@@ -217,6 +217,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showEventDate(): boolean {
 		return this._config?.showEventDate || false;
 	}
+	get _showDatePerEvent(): boolean {
+		return this._config?.showDatePerEvent || false;
+	}
+
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -772,6 +776,19 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 										<label class="mdc-label">${localize('event.fields.showEventDate')}</label>
 									</div>
 								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showDatePerEvent ? 'on' : 'off'}`}
+											.checked=${this._showDatePerEvent !== false}
+											.configValue=${'showDatePerEvent'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showDatePerEvent')}</label>
+									</div>
+									<div>
+								</div>
+
 							</div>
 					  `
 				: ''}

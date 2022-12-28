@@ -44,7 +44,8 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	refreshInterval: number;
 	showDescription: boolean;
 	showEventIcon: boolean;
-	showEventDate?: boolean;
+	showEventDate: boolean;
+	showDatePerEvent: boolean;
 
 	// color and font settings
 	nameColor?: string;
