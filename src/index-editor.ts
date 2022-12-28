@@ -214,6 +214,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showWeekNumber(): boolean {
 		return this._config?.showWeekNumber || false;
 	}
+	get _showEventDate(): boolean {
+		return this._config?.showEventDate || false;
+	}
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -758,6 +761,15 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showWeekNumber')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showEventDate ? 'on' : 'off'}`}
+											.checked=${this._showEventDate !== false}
+											.configValue=${'showEventDate'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showEventDate')}</label>
 									</div>
 								</div>
 							</div>
