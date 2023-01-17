@@ -62,28 +62,41 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	// ENTITY SETTINGS
 	get _entityOptions() {
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
+		var entityOptions
+		if (typeof this._config?.entities != 'undefined') {
+			entityOptions = entities.map(eid => {
+				let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
+				const originalEntity = this.hass.states[eid];
 
-		const entityOptions = entities.map(eid => {
-			let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
-			const originalEntity = this.hass.states[eid];
+				if (matchingConfigEnitity === undefined) {
 
-			if (matchingConfigEnitity === undefined) {
+					matchingConfigEnitity = {
+						entity: eid,
+						name: originalEntity.attributes.friendly_name || eid,
+						checked: !!matchingConfigEnitity
+					}
 
-				matchingConfigEnitity = {
+				} else {
+					if (!('name' in matchingConfigEnitity)) {
+						matchingConfigEnitity = { ...matchingConfigEnitity, name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid }
+					}
+					matchingConfigEnitity = { ...matchingConfigEnitity, checked: !!matchingConfigEnitity }
+
+				}
+				return matchingConfigEnitity
+			});
+		} else {
+			entityOptions = entities.map(eid => {
+				const originalEntity = this.hass.states[eid];
+				return {
 					entity: eid,
-					name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid,
-					checked: !!matchingConfigEnitity
+					name: originalEntity.attributes.friendly_name || eid,
+					checked: false
 				}
+			});
+		}
 
-			} else {
-				if (!('name' in matchingConfigEnitity)) {
-					matchingConfigEnitity = { ...matchingConfigEnitity, name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid }
-				}
-				matchingConfigEnitity = { ...matchingConfigEnitity, checked: !!matchingConfigEnitity }
 
-			}
-			return matchingConfigEnitity
-		});
 		return entityOptions;
 	}
 
