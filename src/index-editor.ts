@@ -63,7 +63,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _entityOptions() {
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
 		var entityOptions
-		console.log(this._config?.entities)
 		if (typeof this._config?.entities != 'undefined') {
 			entityOptions = entities.map(eid => {
 				let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
