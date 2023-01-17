@@ -441,8 +441,6 @@ class AtomicCalendarRevive extends LitElement {
 							</div><div class=${dayClassTodayEvent}>${eventDateFormat}</div>
 							</td>`
 							: html``;
-
-
 				return html`<tr class="${dayWrap}" style="color:  ${this._config.dayWrapperLineColor};">${eventLeft}
 
 		<td style="width: 100%;  ${finishedEventsStyle} ${lastEventStyle}">
