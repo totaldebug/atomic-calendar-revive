@@ -23,7 +23,7 @@
 		"no_entities": "You have not specified any entities"
 	},
 	"required": {
-		"name": "Reqired",
+		"name": "Required",
 		"secondary": "Required options for this card to function"
 	},
 	"main": {
