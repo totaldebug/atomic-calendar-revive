@@ -38,7 +38,7 @@
 		"@typescript-eslint/eslint-plugin": "^5.48.2",
 		"@typescript-eslint/parser": "^5.48.2",
 		"babel-preset-minify": "^0.5.2",
-		"commitizen": "^4.2.6",
+		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.32.0",
 		"eslint-config-prettier": "^8.6.0",
