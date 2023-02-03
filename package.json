@@ -44,7 +44,7 @@
 		"eslint-config-prettier": "^8.6.0",
 		"eslint-plugin-prettier": "^4.2.1",
 		"prettier": "^2.8.3",
-		"rollup": "^3.10.0",
+		"rollup": "^3.13.0",
 		"rollup-plugin-serve": "^2.0.2",
 		"rollup-plugin-terser": "^7.0.2",
 		"rollup-plugin-typescript2": "^0.34.1"
