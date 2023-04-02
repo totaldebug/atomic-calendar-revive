@@ -53,9 +53,9 @@ const plugins = [
 export default {
 	input: ['./src/index.ts'],
 	output: {
-		file: './dist/atomic-calendar-revive.js',
-		format: 'iife',
-		compact: true,
+		file: 'dist/atomic-calendar-revive.js',
+		format: 'umd',
+		name: 'AtomicCalendarRevive',
 	},
 	watch: {
 		clearScreen: false,

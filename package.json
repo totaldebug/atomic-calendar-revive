@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "7.2.2",
+	"version": "7.3.0",
 	"editor_version": "2.2.2",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
@@ -13,7 +13,7 @@
 		"babel": "babel dist/index.js --out-file dist/atomic-calendar-revive.js",
 		"rollup": "rollup -c",
 		"start": "rollup -c --watch",
-		"build": "rollup -c ",
+		"build": "rollup -c --bundleConfigAsCjs",
 		"watch": "rollup -c --watch --config rollup-dev.config.js",
 		"commit": "cz"
 	},
@@ -51,15 +51,28 @@
 	},
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "^2.1.2",
+		"@lit-labs/scoped-registry-mixin": "^1.0.0",
+		"@material/mwc-formfield": "^0.27.0",
 		"@material/mwc-icon-button": "^0.27.0",
 		"@material/mwc-linear-progress": "^0.27.0",
+		"@material/mwc-list": "^0.25.3",
+		"@material/mwc-menu": "^0.25.3",
+		"@material/mwc-ripple": "^0.25.3",
+		"@material/mwc-select": "^0.27.0",
+		"@material/mwc-switch": "^0.27.0",
+		"@material/mwc-textfield": "^0.27.0",
 		"@webcomponents/webcomponentsjs": "^2.6.0",
-		"custom-card-helpers": "^1.8.0",
+		"custom-card-helpers": "git+https://github.com/totaldebug/custom-card-helpers.git",
 		"dayjs": "^1.11.2",
 		"lit": "^2.2.6",
 		"lit-element": "^3.2.0",
 		"npm": "^8.13.1",
 		"typescript": "^4.7.4"
+	},
+	"resolutions": {
+		"lit": "^2.2.6",
+		"lit-element": "^3.2.0",
+		"@lit/reactive-element": "1.2.1"
 	},
 	"bugs": {
 		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"

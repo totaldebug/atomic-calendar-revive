@@ -13,6 +13,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	entity?: string;
 	language?: string;
 	daysToSort?: number;
+	eventTitle?: string;
 
 	// text translations
 	fullDayEventText?: string;
