@@ -246,7 +246,11 @@ export default class EventClass {
 	}
 
 	get title() {
-		return this.rawEvent.summary;
+		if (!this.rawEvent.summary) {
+			if (this.entityConfig.eventTitle) return this.entityConfig.eventTitle
+			else return this._globalConfig.eventTitle
+		}
+		else return this.rawEvent.summary;
 	}
 
 	get description() {
