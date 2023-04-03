@@ -546,7 +546,7 @@ class AtomicCalendarRevive extends LitElement {
 					</div>
 				</div>`;
 			} else {
-				const StartTime = this._config.showHours ? event.startDateTime.format('LT') : '';
+				const eventTime = this._config.showHours ? `${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}` : '';
 
 				const bulletType: string = event.isDeclined ? 'bullet-event-div-declined' : 'bullet-event-div-accepted';
 
@@ -554,7 +554,7 @@ class AtomicCalendarRevive extends LitElement {
 					<div class="summary-event-div" style="${finishedEventsStyle}">
 						<div class="${bulletType}" style="border-color: ${eventColor}"></div>
 						<div class="bullet-event-span" style="color: ${eventColor};">
-							${StartTime} - ${getCalendarTitleHTML(this._config, event)}
+							${eventTime} - ${getCalendarTitleHTML(this._config, event)}
 							${getCalendarLocationHTML(this._config, event)}
 						</div>
 						<div class="calMain">
