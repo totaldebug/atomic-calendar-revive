@@ -352,11 +352,6 @@ class AtomicCalendarRevive extends LitElement {
 				const currentEventLine =
 					this._config.showCurrentEventLine && isEventNext
 						? html`<div class="eventBar">
-								<ha-icon
-									icon="mdi:circle"
-									class="event-circle"
-									style="color:  ${this._config.eventBarColor};"
-								></ha-icon>
 								<hr class="event" style="--event-bar-color: ${this._config.eventBarColor} " />
 						  </div>`
 						: ``;
