@@ -31,6 +31,19 @@ export const styles: CSSResultGroup = css`
 			float: left;
 		}
 
+		.headerNameSuperCompact {
+            font-family: var(--paper-font-headline_-_font-family);
+            -webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
+            font-size: var(--paper-font-headline_-_font-size);
+            font-weight: var(--paper-font-headline_-_font-weight);
+            letter-spacing: var(--paper-font-headline_-_letter-spacing);
+            line-height: var(--paper-font-headline_-_line-height);
+            text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
+            opacity: var(--dark-primary-opacity);
+            float: left;
+            font-size: 1rem;
+        }
+
 		.headerDate {
 			font-size: var(--paper-font-headline_-_font-size);
 			font-size: 1.3rem;
@@ -40,6 +53,16 @@ export const styles: CSSResultGroup = css`
 			line-height: var(--paper-font-headline_-_line-height);
 			float: right;
 		}
+
+		.headerDateSuperCompact {
+            font-size: var(--paper-font-headline_-_font-size);
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--primary-text-color);
+            line-height: var(--paper-font-headline_-_line-height);
+            float: right;
+            font-size: 1rem;
+        }
 
 		table {
 			color: black;
@@ -67,6 +90,12 @@ export const styles: CSSResultGroup = css`
 			text-align: center;
 			vertical-align: top;
 		}
+
+		.event-leftSuperCompact {
+            padding: 1px 1px 1px 1px;
+            text-align: center;
+            vertical-align: top;
+        }
 
 		.event-leftCurrentDay {
 			width: 40px;

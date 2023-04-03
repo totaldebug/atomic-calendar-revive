@@ -186,14 +186,14 @@ class AtomicCalendarRevive extends LitElement {
 		}
 		this.updateCard();
 
-		return html` <ha-card class="cal-card" style="--card-height: ${this._config.cardHeight}">
+		return html` <ha-card class="cal-card" style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}">
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html` <div class="header">
+				? html` <div class="header" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}">
 						${this._config.name
-							? html`<div class="headerName" @click="${() => this.handleToggle()}">${this._config.name}</div>`
+							? html`<div class="${this._config.compactMode ? 'headerNameSuperCompact' : 'headerName'}" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}" @click="${() => this.handleToggle()}">${this._config.name}</div>`
 							: ''}
 						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
-						${this._config.showDate ? html`<div class="headerDate">${getDate(this._config)}</div>` : ''}
+						${this._config.showDate ? html`<div class="${this._config.compactMode ? 'headerDateSuperCompact' : 'headerDate'}" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}">${getDate(this._config)}</div>` : ''}
 				  </div>`
 				: ''}
 
@@ -435,21 +435,21 @@ class AtomicCalendarRevive extends LitElement {
 
 
 				const eventLeft = this._config.showEventDate == true
-							? html`<td class="event-left" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
+							? html`<td class="${this._config.compactMode ? 'event-leftSuperCompact' : 'event-left'}" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
 							<div class=${dayClassTodayEvent}>
 								${showDatePer && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
 							</div><div class=${dayClassTodayEvent}>${eventDateFormat}</div>
 							</td>`
 							: html``;
-				return html`<tr class="${dayWrap}" style="color:  ${this._config.dayWrapperLineColor};">${eventLeft}
+				return html`<tr class="${dayWrap}" style="${this._config.compactMode ? 'line-height: 80%; ' : ''} color:  ${this._config.dayWrapperLineColor};">${eventLeft}
 
-		<td style="width: 100%;  ${finishedEventsStyle} ${lastEventStyle}">
+					<td style="width: 100%; ${this._config.compactMode ? 'padding-top: 2px; padding-bottom: 2px;' : ''} ${finishedEventsStyle} ${lastEventStyle}">
 			<div>${currentEventLine}</div>
 				<div class="event-right">
 					<div class="event-main">${getTitleHTML(this._config, event)}</div>
-					<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName}</div>
+					<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML: ''}</div>
 				</div>
-        <div class="event-right">${hoursHTML} ${relativeTime}</div>
+        <div class="event-right">${!this._config.hoursOnSameLine ? hoursHTML : ''} ${relativeTime}</div>
 				${getDescription(this._config, event)}</div>
 				</div>
 				${progressBar}

@@ -37,4 +37,6 @@ Main Options
  showMultiDayEventParts    boolean   optional        v7.0.0     ``false`` if set true will show how many days in event and which day it is
  hideFinishedEvents        boolean   optional        v7.0.0     ``false`` if set true will hide any finished events
  eventTitle                string    optional        v7.3.0     Where no event title exists, add this string instead, Will add globally unless entity.eventTitle is set.
+ compactMode               boolean   optional        v7.3.0     ``false`` if set true will squash text down to allow for much more compact design
+ hoursOnSameLine           boolean   optional        v7.3.0     ``false`` if set true will move hours to show on the same line as the summary. NOTE using other options can mess up this style
 ========================= ========= =============== ========== ==========================================================================================================================================================================================================================

@@ -49,7 +49,10 @@
 			"cardHeight": "Card Height",
 			"hideDuplicates": "Hide duplicates",
 			"showMultiDay": "Split Multi-Day Events",
-			"showMultiDayEventParts": "Show Multi-Day Event Parts"
+			"showMultiDayEventParts": "Show Multi-Day Event Parts",
+			"eventTitle": "Set blank event title",
+			"compactMode": "Enable compact mode",
+			"hoursOnSameLine": "Show hours on the event line"
 		}
 	},
 	"event": {
