@@ -160,6 +160,16 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showRelativeTime(): boolean {
 		return this._config?.showRelativeTime || false;
 	}
+	get _eventTitle(): string {
+		return this._config?.eventTitle || '';
+	}
+	get _compactMode(): boolean {
+		return this._config?.compactMode || false;
+	}
+	get _hoursOnSameLine(): boolean {
+		return this._config?.hoursOnSameLine || false;
+	}
+
 	// MAIN SETTINGS END
 
 	// EVENT SETTINGS
@@ -399,6 +409,19 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@value-changed="${this._entityValueChanged}"
 											></paper-input>
 										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<paper-input
+											label="eventTitle"
+											.value="${entity.eventTitle === undefined ? '' : entity.eventTitle}"
+											.configValue=${'eventTitle'}
+											.entityId="${entity.entity}"
+											@value-changed="${this._entityValueChanged}"
+											></paper-input>
+										</div>
+										<div>
+										</div>
 									</div>` : html``
 						}
 
@@ -463,6 +486,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 									label="${localize('main.fields.hoursFormat')}"
 									.value=${this._hoursFormat}
 									.configValue=${'hoursFormat'}
+									@value-changed=${this._valueChanged}
+								></paper-input>
+								<paper-input
+									label="${localize('main.fields.eventTitle')}"
+									.value=${this._eventTitle}
+									.configValue=${'eventTitle'}
 									@value-changed=${this._valueChanged}
 								></paper-input>
 								<paper-dropdown-menu
@@ -596,6 +625,26 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('main.fields.showMultiDayEventParts')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._compactMode ? 'on' : 'off'}`}
+											.checked=${this._compactMode !== false}
+											.configValue=${'compactMode'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.compactMode')}</label>
+									</div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._hoursOnSameLine ? 'on' : 'off'}`}
+											.checked=${this._hoursOnSameLine !== false}
+											.configValue=${'hoursOnSameLine'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('main.fields.hoursOnSameLine')}</label>
 									</div>
 								</div>
 							</div>

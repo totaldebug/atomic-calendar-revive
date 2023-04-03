@@ -115,6 +115,8 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	locationFilter?: string;
 	disableCalLink?: boolean;
 	removeDuplicates?: boolean;
+	compactMode?: boolean;
+	hoursOnSameLine?: boolean;
 }
 
 export interface LongDateFormatSpec {
@@ -141,7 +143,15 @@ export interface EntityConfig {
 	type?: string;
 	name?: string;
 	icon?: string;
-
+	startTimeFilter?: string;
+	endTimeFilter?: string;
+	maxDaysToShow?: number;
+	showMultiDay?: boolean;
+	blocklist?: string;
+	blocklistLocation?: string;
+	allowlist?: string;
+	allowlistLocation?: string;
+	eventTitle?: string;
 }
 
 export interface ConfigEntity extends EntityConfig {
