@@ -187,16 +187,10 @@ export const styles: CSSResultGroup = css`
 			user-select: text;
 		}
 
-		.event-circle {
-			width: 10px;
-			height: 10px;
-			margin-left: -2px;
-		}
-
 		hr.event {
 			color: var(--event-bar-color);
 			margin: -8px 0px 2px 0px;
-			border-width: 1px 0 0 0;
+			border-width: 2px 0 0 0;
 		}
 
 		.event-cal-name {
