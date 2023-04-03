@@ -117,18 +117,6 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
 }
 
 /**
- * generate Event Relative Time HTML
- *
- */
-export function getRelativeTime(event: EventClass) {
-    const timeOffset = dayjs().utcOffset();
-    const today = dayjs().add(timeOffset, 'minutes');
-    if (event.isEmpty) return html``;
-    else if (!event.startDateTime.isBefore(today, 'day'))
-        return html`(${today.to(event.startDateTime.add(timeOffset, 'minutes'))})`;
-}
-
-/**
  *
  * For the first event, check the week of the year, if it matches
  * currentWeek, dont update, if it doesnt, update current week
