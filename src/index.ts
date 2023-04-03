@@ -14,6 +14,7 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import week from 'dayjs/plugin/weekOfYear';
+import duration from 'dayjs/plugin/duration';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -23,6 +24,7 @@ dayjs.extend(localeData);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(week);
+dayjs.extend(duration)
 
 // Import Card Editor
 import './index-editor';
@@ -40,7 +42,6 @@ import {
 	getDescription,
 	getHoursHTML,
 	getLocationHTML,
-	getRelativeTime,
 	getTitleHTML,
 	getWeekNumberHTML,
 } from './lib/eventMode.html';
@@ -398,17 +399,19 @@ class AtomicCalendarRevive extends LitElement {
 					  >
 							${getHoursHTML(this._config, event)}
 					  </div>`
-					: '';
+					: html``;
 
 				// Show the relative time
-				const relativeTime = this._config.showRelativeTime
-					? html`<div
-							class="relativeTime"
-							style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%"
-					  >
-							${getRelativeTime(event)}
-					  </div>`
-					: '';
+				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
+					const now = dayjs()
+					var timeUntilRemaining = html`<div
+						class="relativeTime timeRemaining"
+						style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%">
+						${this._config.showRelativeTime && (event.startDateTime.isAfter(now, 'minutes')) ? `(${event.startDateTime.fromNow()})` : this._config.showTimeRemaining && (event.startDateTime.isBefore(now, 'minutes') && event.endDateTime.isAfter(now, 'minutes')) ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}` : ''}
+			  		</div>`
+
+				} else { var timeUntilRemaining = html``}
+
 
 				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
@@ -444,7 +447,7 @@ class AtomicCalendarRevive extends LitElement {
 					<div class="event-main">${getTitleHTML(this._config, event)}</div>
 					<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML: ''}</div>
 				</div>
-        <div class="event-right">${!this._config.hoursOnSameLine ? hoursHTML : ''} ${relativeTime}</div>
+        <div class="event-right">${!this._config.hoursOnSameLine ? hoursHTML : ''} ${timeUntilRemaining}</div>
 				${getDescription(this._config, event)}</div>
 				</div>
 				${progressBar}

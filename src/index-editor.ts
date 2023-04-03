@@ -243,6 +243,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	get _showDatePerEvent(): boolean {
 		return this._config?.showDatePerEvent || false;
 	}
+	get _showTimeRemaining(): boolean {
+		return this._config?.showTimeRemaining || false;
+	}
 
 	// EVENT SETTINGS END
 
@@ -847,6 +850,16 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 											@change=${this._valueChanged}
 										></ha-switch>
 										<label class="mdc-label">${localize('event.fields.showDatePerEvent')}</label>
+									</div>
+									<div>
+									<div>
+										<ha-switch
+											aria-label=${`Toggle ${this._showTimeRemaining ? 'on' : 'off'}`}
+											.checked=${this._showTimeRemaining !== false}
+											.configValue=${'showTimeRemaining'}
+											@change=${this._valueChanged}
+										></ha-switch>
+										<label class="mdc-label">${localize('event.fields.showTimeRemaining')}</label>
 									</div>
 									<div>
 								</div>

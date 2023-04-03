@@ -115,8 +115,10 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	locationFilter?: string;
 	disableCalLink?: boolean;
 	removeDuplicates?: boolean;
+
 	compactMode?: boolean;
 	hoursOnSameLine?: boolean;
+	showTimeRemaining?: boolean;
 }
 
 export interface LongDateFormatSpec {
