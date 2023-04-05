@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
 import { AtomicCalendarReviveEditor } from '../index-editor';
-import { atomicCardConfig } from '../types';
+import { atomicCardConfig, EntityConfig } from '../types';
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
 
@@ -204,6 +204,37 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 }
 
 /**
+ * Sorts all day events into order of entities
+ * @param {Array<Events>} list of events
+ * @param {Array<EntityConfig>} all entities for card
+ * @return {Promise<Array<EventClass>>}
+ */
+function sortEventsByEntity(events: EventClass[], entities: EntityConfig[]): any[] {
+	const allDayEvents = events.filter((event) => event.isAllDayEvent);
+	const otherEvents = events.filter((event) => !event.isAllDayEvent);
+
+	allDayEvents.sort((event1, event2) => {
+	  const entity1 = entities.find(
+		(entity) => entity.entity === event1.entity.entity_id
+	  );
+	  const entity2 = entities.find(
+		(entity) => entity.entity === event2.entity.entity_id
+	  );
+	  if (!entity1 || !entity2) {
+		return 0;
+	  }
+	  const index1 = entities.indexOf(entity1);
+	  const index2 = entities.indexOf(entity2);
+	  if (index1 === index2) {
+		return event1.title.localeCompare(event2.title);
+	  }
+	  return index1 - index2;
+	});
+
+	return [...allDayEvents, ...otherEvents];
+  }
+
+/**
  * converts all calendar events to CalendarEvent objects
  * @param {Array<Events>} list of raw caldav calendar events
  * @return {Promise<Array<EventClass>>}
@@ -301,6 +332,7 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 			newEvents.length = config.maxEventCount;
 		}
 	}
+	newEvents = sortEventsByEntity(newEvents, config.entities)
 
 	return newEvents;
 }
