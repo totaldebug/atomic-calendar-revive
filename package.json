@@ -68,7 +68,7 @@
 		"lit": "^2.7.1",
 		"lit-element": "^3.3.1",
 		"npm": "^9.6.3",
-		"typescript": "^5.0.3"
+		"typescript": "^5.0.4"
 	},
 	"resolutions": {
 		"lit": "^2.2.6",
