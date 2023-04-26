@@ -4071,10 +4071,10 @@ lit-html@^2.7.0:
   dependencies:
     "@types/trusted-types" "^2.0.2"
 
-lit@^2.0.0, lit@^2.0.0-rc.3, lit@^2.2.6, lit@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.1.tgz#8425eceff08fc392ee500de486f7113d600eaee0"
-  integrity sha512-t1cVWUVQj+ucdx16QPvqzyHWYTj/bvlv6vRCUuZ5T/dA4W2Ui4a4tz7uJ1IhoTb9rKe3pTJiWmoN2GJGGteszw==
+lit@^2.0.0, lit@^2.0.0-rc.3, lit@^2.2.6, lit@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-2.7.3.tgz#7f7920dbaba12828d359ca3439cd6f73619061da"
+  integrity sha512-0a+u+vVbmgSfPu+fyvqjMPBX0Kwbyj9QOv9MbQFZhWGlV2cyk3lEwgfUQgYN+i/lx++1Z3wZknSIp3QCKxHLyg==
   dependencies:
     "@lit/reactive-element" "^1.6.0"
     lit-element "^3.3.0"
