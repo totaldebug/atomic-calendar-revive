@@ -50,7 +50,7 @@
 		"rollup-plugin-typescript2": "^0.34.1"
 	},
 	"dependencies": {
-		"@formatjs/icu-messageformat-parser": "^2.3.0",
+		"@formatjs/icu-messageformat-parser": "^2.4.0",
 		"@lit-labs/scoped-registry-mixin": "^1.0.1",
 		"@lit/reactive-element": "1.6.1",
 		"@material/mwc-formfield": "^0.27.0",
