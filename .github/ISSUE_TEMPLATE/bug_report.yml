@@ -40,6 +40,17 @@ body:
         4. See error...
     validations:
       required: false
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      description: What mode does this issue apply to?
+      options:
+        - Event (default)
+        - Calendar
+        - Both
+    validations:
+      required: true
   - type: input
     id: card-version
     attributes:
