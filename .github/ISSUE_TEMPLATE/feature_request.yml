@@ -35,6 +35,17 @@ body:
       description: If you have an idea on how to implement this please let us know.
     validations:
       required: false
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      description: What mode does this feature apply to?
+      options:
+        - Event (default)
+        - Calendar
+        - Both
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Context / Reason
