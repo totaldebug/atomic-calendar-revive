@@ -1,0 +1,108 @@
+{
+	"common": {
+		"version": "Versio",
+		"show_warning": "Näytä varoitus",
+		"error": "Virhe",
+		"description": "Edistyksellinen kalenterikortti Home Assistantille Lovelacen kanssa.",
+		"fullDayEventText": "Koko päivä",
+		"untilText": "Asti",
+		"noEventText": "Ei tapahtumia",
+		"noEventsForNextDaysText": "Ei tapahtumia lähipäivinä",
+		"hiddenEventText": "tapahtumat on piilotettu"
+	},
+	"ui": {
+		"common": {
+			"previous": "Edellinen",
+			"next": "Seuraava",
+            "week": "Viikko"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Virheelliset asetukset",
+		"update_card": "Kalenteria ei voi ladata Home Assistant -komponentista",
+		"no_entities": "Et ole määrittänyt yhtään entiteettiä"
+	},
+	"required": {
+		"name": "Vaadittu",
+		"secondary": "Tämän kortin toiminnan edellyttämät vaihtoehdot"
+	},
+	"main": {
+		"name": "Päävaihtoehdot",
+		"secondary": "Vaihtoehdot, jotka ovat voimassa kaikkialla",
+		"fields": {
+			"name": "Nimi",
+			"showColors": "Näytä värit",
+			"maxDaysToShow": "Enintään näytettävät päivät",
+			"showLocation": "Näytä sijainnin kuvake",
+			"showLoader": "Näytä latausanimaatio",
+			"showDate": "Näytä päivämäärä kortissa",
+			"showDeclined": "Näytä hylätyt tapahtumat",
+			"sortByStartTime": "Lajittele alkamisajan mukaan",
+			"hideFinishedEvents": "Piilota valmiit tapahtumat",
+			"dateFormat": "Päivämäärämuoto",
+			"hoursFormat": "Tuntien muoto",
+			"defaultMode": "Oletustila",
+			"linkTarget": "Linkin kohde",
+			"refreshInterval": "Päivitysväli",
+			"showRelativeTime": "Näytä suhteellinen aika",
+			"firstDayOfWeek": "Viikon ensimmäinen päivä 0-6",
+			"cardHeight": "Kortin korkeus",
+			"hideDuplicates": "Piilota kaksoiskappaleet",
+			"showMultiDay": "Jaa monipäiväiset tapahtumat",
+			"showMultiDayEventParts": "Näytä usean päivän tapahtuman osat",
+			"eventTitle": "Aseta tyhjä tapahtuman otsikko",
+			"compactMode": "Ota kompakti tila käyttöön",
+			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä"
+		}
+	},
+	"event": {
+		"name": "Tapahtumatila",
+		"secondary": "Tapahtumatilan erityisasetukset",
+		"fields": {
+			"showCurrentEventLine": "Näytetäänkö viiva ennen tapahtumaa?",
+			"showProgressBar": "Näytetäänkö edistymispalkki?",
+			"showMonth": "Näytä kuukausi?",
+			"showWeekDay": "Näytä viikonpäivä?",
+			"showDescription": "Näytä kuvaus?",
+			"disableEventLink": "Poistetaanko linkit käytöstä tapahtuman otsikossa?",
+			"disableLocationLink": "Poistetaanko sijaintilinkit käytöstä?",
+			"showNoEventsForToday": "Näytä ei tapahtumia tänään?",
+			"showFullDayProgress": "Näytetäänkö koko päivän tapahtuman edistyminen?",
+			"untilText": "asti -teksti:",
+			"noEventText": "Ei tapahtumia tänään -teksti:",
+			"noEventsForNextDaysText": "Ei tapahtumia lähipäivinä -teksti:",
+			"fullDayEventText": "Koko päivän tapahtuma -teksti:",
+			"showEventIcon": "Näytä tapahtumakuvake",
+			"showHiddenText": "Näytetäänkö piilotetun tapahtuman teksti?",
+			"hiddenEventText": "Teksti piilotetuille tapahtumille:",
+			"showCalendarName": "Näytä kalenterin nimi",
+			"showWeekNumber": "Näytä viikkonumerot",
+			"showEventDate": "Näytä tapahtumien päivämäärä",
+			"showDatePerEvent": "Näytä päivämäärä jokaisen tapahtuman vieressä",
+			"showTimeRemaining": "Näytä jäljellä oleva aika"
+		}
+	},
+	"calendar": {
+		"name": "Kalenteritila",
+		"secondary": "Kalenteritilan erityisasetukset",
+		"fields": {
+			"showLastCalendarWeek": "Näytä viimeinen kalenteriviikko",
+			"disableCalEventLink": "Poista kalenterin tapahtumalinkki käytöstä",
+			"disableCalLocationLink": "Poista kalenterin sijaintilinkki käytöstä",
+			"calShowDescription": "Näytä kuvaus",
+			"disableCalLink": "Poista kalenterilinkki käytöstä"
+		}
+	},
+	"appearance": {
+		"name": "Ulkomuoto",
+		"secondary": "Mukauta värejä jne.",
+		"main": {
+			"name": "Pää",
+			"secondary": "Yleiset väriasetukset"
+		},
+		"fields": {
+			"locationLinkColor": "Sijaintilinkin väri:",
+			"dimFinishedEvents": "Himmennä päättyneet tapahtumat?"
+		}
+	}
+}
