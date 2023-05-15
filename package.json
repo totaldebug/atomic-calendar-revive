@@ -66,7 +66,7 @@
 		"custom-card-helpers": "git+https://github.com/totaldebug/custom-card-helpers.git",
 		"dayjs": "^1.11.7",
 		"lit": "^2.7.4",
-		"lit-element": "^3.3.1",
+		"lit-element": "^3.3.2",
 		"npm": "^9.6.6",
 		"typescript": "^5.0.3"
 	},
