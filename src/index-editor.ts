@@ -1,10 +1,15 @@
 import { LitElement, html, TemplateResult, CSSResult } from 'lit';
 import { property, customElement, state } from 'lit/decorators.js';
+import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin'
 import { HomeAssistant, LovelaceCardEditor, fireEvent } from 'custom-card-helpers';
 
 import { localize } from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types';
+import { formfieldDefinition } from '../elements/formfield';
+import { textfieldDefinition } from '../elements/textfield';
+import { switchDefinition } from '../elements/switch';
+import { selectDefinition } from '../elements/select';
 
 const linkTargets: string[] = ['_blank', '_self', '_parent', '_top'];
 const defaultModes: string[] = ['Event', 'Calendar'];
@@ -33,13 +38,20 @@ const options = {
 };
 
 @customElement('atomic-calendar-revive-editor')
-export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCardEditor {
+export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
 	@property({ attribute: false })
 	public hass!: HomeAssistant;
 	@state() private _config!: atomicCardConfig;
 	@state() private _toggle?: boolean;
 	@state() private _helpers?: any;
 	private _initialized = false;
+
+	static elementDefinitions = {
+		...textfieldDefinition,
+		...formfieldDefinition,
+		...switchDefinition,
+		...selectDefinition,
+	};
 
 	static get styles(): CSSResult {
 		return style;
@@ -67,7 +79,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			entityOptions = entities.map(eid => {
 				let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
 				const originalEntity = this.hass.states[eid];
-
 				if (matchingConfigEnitity === undefined) {
 
 					matchingConfigEnitity = {
@@ -95,8 +106,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				}
 			});
 		}
-
-
 		return entityOptions;
 	}
 
@@ -285,9 +294,6 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			return html``;
 		}
 
-		// The climate more-info has ha-switch and paper-dropdown-menu elements that are lazy loaded unless explicitly done here
-		this._helpers.importMoreInfoControl('climate');
-
 		// You can restrict on domain type
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
 
@@ -295,7 +301,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 			<div class="card-config">
 				<div class="option" @click=${this._toggleOption} .option=${'required'}>
 					<div class="row">
-						<ha-icon .icon=${`mdi:${options.required.icon}`}></ha-icon>
+						<ha-icon icon=${`mdi:${options.required.icon}`}></ha-icon>
 						<div class="title">${localize('required.name')}</div>
 					</div>
 					<div class="secondary">${localize('required.secondary')}</div>
@@ -306,122 +312,122 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 							${this._entityOptions.map(entity => {
 					return html`
 								  <div>
-								  	<ha-switch
+								  	<mwc-switch
 										.checked=${entity.checked}
 										.entityId=${entity.entity}
 										@change="${this._entityChanged}"
-									></ha-switch>
+									></mwc-switch>
 									<label class="mdc-label">${entity.entity}</label>
 									${entity.checked ? html`
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 												label="Name"
 												.value="${entity.name}"
 												.configValue=${'name'}
 												.entityId="${entity.entity}"
-												@value-changed="${this._entityValueChanged}"
-											></paper-input>
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
-											<paper-input
+											<mwc-textfield
 												label="Icon"
 												.value="${entity.icon === undefined ? '' : entity.icon}"
 												.configValue=${'icon'}
 												.entityId="${entity.entity}"
-												@value-changed="${this._entityValueChanged}"
-											></paper-input>
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 									</div>
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 												label="startTimeFilter"
 												.value="${entity.startTimeFilter === undefined ? '' : entity.startTimeFilter}"
 												.configValue=${'startTimeFilter'}
 												.entityId="${entity.entity}"
-												@value-changed="${this._entityValueChanged}"
-											></paper-input>
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
-											<paper-input
+											<mwc-textfield
 												label="endTimeFilter"
 												.value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
 												.configValue=${'endTimeFilter'}
 												.entityId="${entity.entity}"
-												@value-changed="${this._entityValueChanged}"
-											></paper-input>
+												@inputd="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 									</div>
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="maxDaysToShow"
 											.value="${entity.maxDaysToShow === undefined ? '' : entity.maxDaysToShow}"
 											.configValue=${'maxDaysToShow'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="showMultiDay"
 											.value="${entity.showMultiDay === undefined ? '' : entity.showMultiDay}"
 											.configValue=${'showMultiDay'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 									</div>
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="blocklist"
 											.value="${entity.blocklist === undefined ? '' : entity.blocklist}"
 											.configValue=${'blocklist'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="blocklistLocation"
 											.value="${entity.blocklistLocation === undefined ? '' : entity.blocklistLocation}"
 											.configValue=${'blocklistLocation'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 									</div>
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="allowlist"
 											.value="${entity.allowlist === undefined ? '' : entity.allowlist}"
 											.configValue=${'allowlist'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="allowlistLocation"
 											.value="${entity.allowlistLocation === undefined ? '' : entity.allowlistLocation}"
 											.configValue=${'allowlistLocation'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 									</div>
 									<div class="side-by-side">
 										<div>
-											<paper-input
+											<mwc-textfield
 											label="eventTitle"
 											.value="${entity.eventTitle === undefined ? '' : entity.eventTitle}"
 											.configValue=${'eventTitle'}
 											.entityId="${entity.entity}"
-											@value-changed="${this._entityValueChanged}"
-											></paper-input>
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
 										</div>
 										<div>
 										</div>
@@ -438,7 +444,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				<!-- MAIN SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'main'}>
 					<div class="row">
-						<ha-icon .icon=${`mdi:${options.main.icon}`}></ha-icon>
+						<ha-icon icon=${`mdi:${options.main.icon}`}></ha-icon>
 						<div class="title">${localize('main.name')}</div>
 					</div>
 					<div class="secondary">${localize('main.secondary')}</div>
@@ -446,207 +452,233 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				${options.main.show
 				? html`
 							<div class="values">
-								<paper-input
-									label="${localize('main.fields.name')}"
-									.value=${this._name}
-									.configValue=${'name'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
 								<div class="side-by-side">
 									<div>
-										<paper-input
+										<mwc-textfield
+											label="${localize('main.fields.name')}"
+											.value=${this._name}
+											.configValue=${'name'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
 											label="${localize('main.fields.firstDayOfWeek')}"
 											type="number"
 											.value=${this._firstDayOfWeek}
 											.configValue=${'firstDayOfWeek'}
-											@value-changed=${this._valueChanged}
-										></paper-input>
+											@input=${this._valueChanged}
+										></mwc-textfield>
 									</div>
 									<div>
-										<paper-input
+										<mwc-textfield
 											label="${localize('main.fields.maxDaysToShow')}"
 											type="number"
 											.value=${this._maxDaysToShow}
 											.configValue=${'maxDaysToShow'}
-											@value-changed=${this._valueChanged}
-										></paper-input>
+											@input=${this._valueChanged}
+										></mwc-textfield>
 									</div>
 								</div>
-								<paper-input
-									label="${localize('main.fields.refreshInterval')}"
-									type="number"
-									.value=${this._refreshInterval}
-									.configValue=${'refreshInterval'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('main.fields.dateFormat')}"
-									.value=${this._dateFormat}
-									.configValue=${'dateFormat'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('main.fields.hoursFormat')}"
-									.value=${this._hoursFormat}
-									.configValue=${'hoursFormat'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('main.fields.eventTitle')}"
-									.value=${this._eventTitle}
-									.configValue=${'eventTitle'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-dropdown-menu
-									label="${localize('main.fields.defaultMode')}"
-									@value-changed=${this._valueChanged}
-									.configValue=${'defaultMode'}
-								>
-									<paper-listbox slot="dropdown-content" .selected=${defaultModes.indexOf(this._defaultMode)}>
-										${defaultModes.map((mode) => {
-					return html` <paper-item>${mode}</paper-item> `;
-				})}
-									</paper-listbox>
-								</paper-dropdown-menu>
-								<paper-dropdown-menu
-									label="${localize('main.fields.linkTarget')}"
-									@value-changed=${this._valueChanged}
-									.configValue=${'linkTarget'}
-								>
-									<paper-listbox slot="dropdown-content" .selected=${linkTargets.indexOf(this._linkTarget)}>
-										${linkTargets.map((linkTarget) => {
-					return html` <paper-item>${linkTarget}</paper-item> `;
-				})}
-									</paper-listbox> </paper-dropdown-menu
-								><br />
 								<div class="side-by-side">
 									<div>
-										<paper-input
+										<mwc-textfield
+											label="${localize('main.fields.refreshInterval')}"
+											type="number"
+											.value=${this._refreshInterval}
+											.configValue=${'refreshInterval'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+										<mwc-textfield
+											label="${localize('main.fields.dateFormat')}"
+											.value=${this._dateFormat}
+											.configValue=${'dateFormat'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
+											label="${localize('main.fields.hoursFormat')}"
+											.value=${this._hoursFormat}
+											.configValue=${'hoursFormat'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+										<mwc-textfield
+											label="${localize('main.fields.eventTitle')}"
+											.value=${this._eventTitle}
+											.configValue=${'eventTitle'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-select
+											naturalMenuWidth
+											fixedMenuPosition
+											label="${localize('main.fields.defaultMode')}"
+											.configValue=${'defaultMode'}
+											.value=${this._defaultMode}
+											@selected=${this._valueChanged}
+											@closed=${ (ev) => ev.stopPropagation() }
+										>
+											${defaultModes.map((mode) => {
+												return html`<mwc-list-item .value=${mode}>${mode}</mwc-list-item> `;
+											})}
+										</mwc-select>
+									</div>
+									<div>
+										<mwc-select
+											naturalMenuWidth
+											fixedMenuPosition
+											label="${localize('main.fields.linkTarget')}"
+											.configValue=${'linkTarget'}
+											.value=${this._linkTarget}
+											@selected=${this._valueChanged}
+											@closed=${ (ev) => ev.stopPropagation() }
+										>
+											${linkTargets.map((linkTarget) => {
+												return html`<mwc-list-item .value=${linkTarget}>${linkTarget}</mwc-list-item> `;
+											})}
+										</mwc-select>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
 											label="${localize('main.fields.cardHeight')}"
 											.value=${this._cardHeight}
 											.configValue=${'cardHeight'}
 											@value-changed=${this._valueChanged}
-										></paper-input>
+										></mwc-textfield>
 									</div>
 									<div>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											.checked=${this._showLoader !== false}
 											.configValue=${'showLoader'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showLoader')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showDate ? 'off' : 'on'}`}
 											.checked=${this._showDate !== false}
 											.configValue=${'showDate'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showDate')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle Show Declined ${this._showDeclined ? 'off' : 'on'}`}
 											.checked=${this._showDeclined !== false}
 											.configValue=${'showDeclined'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showDeclined')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._sortByStartTime ? 'off' : 'on'}`}
 											.checked=${this._sortByStartTime !== false}
 											.configValue=${'sortByStartTime'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.sortByStartTime')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._hideFinishedEvents ? 'off' : 'on'}`}
 											.checked=${this._hideFinishedEvents !== false}
 											.configValue=${'hideFinishedEvents'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.hideFinishedEvents')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showLocation ? 'on' : 'off'}`}
 											.checked=${this._showLocation !== false}
 											.configValue=${'showLocation'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showLocation')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showRelativeTime ? 'on' : 'off'}`}
 											.checked=${this._showRelativeTime !== false}
 											.configValue=${'showRelativeTime'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showRelativeTime')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._hideDuplicates ? 'on' : 'off'}`}
 											.checked=${this._hideDuplicates !== false}
 											.configValue=${'hideDuplicates'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.hideDuplicates')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showMultiDay ? 'on' : 'off'}`}
 											.checked=${this._showMultiDay !== false}
 											.configValue=${'showMultiDay'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showMultiDay')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showMultiDayEventParts ? 'on' : 'off'}`}
 											.checked=${this._showMultiDayEventParts !== false}
 											.configValue=${'showMultiDayEventParts'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.showMultiDayEventParts')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._compactMode ? 'on' : 'off'}`}
 											.checked=${this._compactMode !== false}
 											.configValue=${'compactMode'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.compactMode')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._hoursOnSameLine ? 'on' : 'off'}`}
 											.checked=${this._hoursOnSameLine !== false}
 											.configValue=${'hoursOnSameLine'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.hoursOnSameLine')}</label>
 									</div>
 								</div>
@@ -658,7 +690,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				<!-- EVENT SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'event'}>
 					<div class="row">
-						<ha-icon .icon=${`mdi:${options.event.icon}`}></ha-icon>
+						<ha-icon icon=${`mdi:${options.event.icon}`}></ha-icon>
 						<div class="title">${localize('event.name')}</div>
 					</div>
 					<div class="secondary">${localize('event.secondary')}</div>
@@ -666,199 +698,217 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				${options.event.show
 				? html`
 							<div class="values">
-								<paper-input
-									label="${localize('event.fields.untilText')}"
-									type="text"
-									.value=${this._untilText}
-									.configValue=${'untilText'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('event.fields.fullDayEventText')}"
-									type="text"
-									.value=${this._fullDayEventText}
-									.configValue=${'fullDayEventText'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('event.fields.noEventsForNextDaysText')}"
-									type="text"
-									.value=${this._noEventsForNextDaysText}
-									.configValue=${'noEventsForNextDaysText'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('event.fields.noEventText')}"
-									type="text"
-									.value=${this._noEventText}
-									.configValue=${'noEventText'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
-								<paper-input
-									label="${localize('event.fields.hiddenEventText')}"
-									type="text"
-									.value=${this._hiddenEventText}
-									.configValue=${'hiddenEventText'}
-									@value-changed=${this._valueChanged}
-								></paper-input>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-textfield
+											label="${localize('event.fields.untilText')}"
+											type="text"
+											.value=${this._untilText}
+											.configValue=${'untilText'}
+											@value-changed=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+										<mwc-textfield
+											label="${localize('event.fields.fullDayEventText')}"
+											type="text"
+											.value=${this._fullDayEventText}
+											.configValue=${'fullDayEventText'}
+											@value-changed=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
+											label="${localize('event.fields.noEventsForNextDaysText')}"
+											type="text"
+											.value=${this._noEventsForNextDaysText}
+											.configValue=${'noEventsForNextDaysText'}
+											@value-changed=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+										<mwc-textfield
+											label="${localize('event.fields.noEventText')}"
+											type="text"
+											.value=${this._noEventText}
+											.configValue=${'noEventText'}
+											@value-changed=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
+											label="${localize('event.fields.hiddenEventText')}"
+											type="text"
+											.value=${this._hiddenEventText}
+											.configValue=${'hiddenEventText'}
+											@value-changed=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-switch
 											aria-label=${`Toggle ${this._showCurrentEventLine ? 'off' : 'on'}`}
 											.checked=${this._showCurrentEventLine !== false}
 											.configValue=${'showCurrentEventLine'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showCurrentEventLine')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showProgressBar ? 'on' : 'off'}`}
 											.checked=${this._showProgressBar !== false}
 											.configValue=${'showProgressBar'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showProgressBar')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showMonth ? 'off' : 'on'}`}
 											.checked=${this._showMonth !== false}
 											.configValue=${'showMonth'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showMonth')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showWeekDay ? 'off' : 'on'}`}
 											.checked=${this._showWeekDay !== false}
 											.configValue=${'showWeekDay'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showWeekDay')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showDescription ? 'on' : 'off'}`}
 											.checked=${this._showDescription !== false}
 											.configValue=${'showDescription'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showDescription')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._disableEventLink ? 'off' : 'on'}`}
 											.checked=${this._disableEventLink !== false}
 											.configValue=${'disableEventLink'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.disableEventLink')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._disableLocationLink ? 'off' : 'on'}`}
 											.checked=${this._disableLocationLink !== false}
 											.configValue=${'disableLocationLink'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.disableLocationLink')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showNoEventsForToday ? 'off' : 'on'}`}
 											.checked=${this._showNoEventsForToday !== false}
 											.configValue=${'showNoEventsForToday'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showNoEventsForToday')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showFullDayProgress ? 'off' : 'on'}`}
 											.checked=${this._showFullDayProgress !== false}
 											.configValue=${'showFullDayProgress'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showFullDayProgress')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showEventIcon ? 'off' : 'on'}`}
 											.checked=${this._showEventIcon !== false}
 											.configValue=${'showEventIcon'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showEventIcon')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showHiddenText ? 'on' : 'off'}`}
 											.checked=${this._showHiddenText !== false}
 											.configValue=${'showHiddenText'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showHiddenText')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showCalendarName ? 'on' : 'off'}`}
 											.checked=${this._showCalendarName !== false}
 											.configValue=${'showCalendarName'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showCalendarName')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showWeekNumber ? 'on' : 'off'}`}
 											.checked=${this._showWeekNumber !== false}
 											.configValue=${'showWeekNumber'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showWeekNumber')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showEventDate ? 'on' : 'off'}`}
 											.checked=${this._showEventDate !== false}
 											.configValue=${'showEventDate'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showEventDate')}</label>
 									</div>
 								</div>
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showDatePerEvent ? 'on' : 'off'}`}
 											.checked=${this._showDatePerEvent !== false}
 											.configValue=${'showDatePerEvent'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showDatePerEvent')}</label>
 									</div>
 									<div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showTimeRemaining ? 'on' : 'off'}`}
 											.checked=${this._showTimeRemaining !== false}
 											.configValue=${'showTimeRemaining'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showTimeRemaining')}</label>
 									</div>
 									<div>
@@ -871,7 +921,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				<!-- CALENDAR SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'calendar'}>
 					<div class="row">
-						<ha-icon .icon=${`mdi:${options.calendar.icon}`}></ha-icon>
+						<ha-icon icon=${`mdi:${options.calendar.icon}`}></ha-icon>
 						<div class="title">${localize('calendar.name')}</div>
 					</div>
 					<div class="secondary">${localize('calendar.secondary')}</div>
@@ -879,50 +929,50 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				${options.calendar.show
 				? html`
 							<div class="values">
-								<ha-switch
+								<mwc-switch
 									aria-label=${`Toggle ${this._calShowDescription ? 'off' : 'on'}`}
 									.checked=${this._calShowDescription !== false}
 									.configValue=${'calShowDescription'}
 									@change=${this._valueChanged}
-								></ha-switch>
+								></mwc-switch>
 								<label class="mdc-label">${localize('calendar.fields.calShowDescription')}</label>
 								<div calss="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._showLastCalendarWeek ? 'off' : 'on'}`}
 											.checked=${this._showLastCalendarWeek !== false}
 											.configValue=${'showLastCalendarWeek'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('calendar.fields.showLastCalendarWeek')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._disableCalEventLink ? 'off' : 'on'}`}
 											.checked=${this._disableCalEventLink !== false}
 											.configValue=${'disableCalEventLink'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('calendar.fields.disableCalEventLink')}</label>
 									</div>
 								</div>
 								<div calss="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._disableCalLocationLink ? 'off' : 'on'}`}
 											.checked=${this._disableCalLocationLink !== false}
 											.configValue=${'disableCalLocationLink'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('calendar.fields.disableCalLocationLink')}</label>
 									</div>
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._disableCalLink ? 'off' : 'on'}`}
 											.checked=${this._disableCalLink !== false}
 											.configValue=${'disableCalLink'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('calendar.fields.disableCalLink')}</label>
 									</div>
 								</div>
@@ -933,7 +983,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				<!-- APPEARANCE SETTINGS -->
 				<div class="option" @click=${this._toggleOption} .option=${'appearance'}>
 					<div class="row">
-						<ha-icon .icon=${`mdi:${options.appearance.icon}`}></ha-icon>
+						<ha-icon icon=${`mdi:${options.appearance.icon}`}></ha-icon>
 						<div class="title">${localize('appearance.name')}</div>
 					</div>
 					<div class="secondary">${localize('appearance.secondary')}</div>
@@ -943,12 +993,12 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 							<div class="values">
 								<div class="side-by-side">
 									<div>
-										<ha-switch
+										<mwc-switch
 											aria-label=${`Toggle ${this._dimFinishedEvents ? 'off' : 'on'}`}
 											.checked=${this._dimFinishedEvents !== false}
 											.configValue=${'dimFinishedEvents'}
 											@change=${this._valueChanged}
-										></ha-switch>
+										></mwc-switch>
 										<label class="mdc-label">${localize('appearance.fields.dimFinishedEvents')}</label>
 									</div>
 								</div>
@@ -960,9 +1010,15 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		`;
 	}
 	private _initialize(): void {
-		if (this.hass === undefined) return;
-		if (this._config === undefined) return;
-		if (this._helpers === undefined) return;
+		if (this.hass === undefined) {
+			return;
+		}
+		if (this._config === undefined) {
+			return;
+		}
+		if (this._helpers === undefined) {
+			return;
+		}
 		this._initialized = true;
 	}
 
@@ -983,9 +1039,11 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 
 	private _valueChanged(ev): void {
-		if (this.cantFireEvent) return;
+		if (this.cantFireEvent) {
+			return;
+		}
 
-		const target = ev.target;
+		const {target} = ev;
 		if (this[`_${target.configValue}`] === target.value) {
 			return;
 		}
@@ -1008,21 +1066,23 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		const entities = [...(this._config.entities || [])];
 
 		// convert any legacy entity strings into objects
-		let entityObjects = entities.map(entity => {
-			if (entity.entity) return entity;
-			return { entity, name: entity };
-		});
-
-		return entityObjects;
+		return entities.map(entity => {
+  			if (entity.entity) {
+				return entity;
+			}
+  			return { entity, name: entity };
+  		});
 	}
 	/**
 	  * change the calendar name of an entity
 	  * @param {*} ev
 	  */
 	private _entityValueChanged(ev) {
-		if (this.cantFireEvent) return;
+		if (this.cantFireEvent) {
+			return;
+		}
 
-		const target = ev.target
+		const {target} = ev
 		let entityObjects = [...this.entities];
 
 		entityObjects = entityObjects.map(entity => {
@@ -1051,9 +1111,11 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	 * @param {*} ev
 	 */
 	private _entityChanged(ev) {
-		const target = ev.target;
+		const {target} = ev;
 
-		if (this.cantFireEvent) return;
+		if (this.cantFireEvent) {
+			return;
+		}
 		let entityObjects = [...this.entities];
 		if (target.checked) {
 			const originalEntity = this.hass.states[target.entityId];
