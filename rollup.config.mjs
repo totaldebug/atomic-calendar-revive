@@ -5,6 +5,10 @@ import babel from '@rollup/plugin-babel';
 import terser from "@rollup/plugin-terser";
 import json from '@rollup/plugin-json';
 import eslint from '@rollup/plugin-eslint';
+import ignore from './rollup-plugins/ignore';
+import { ignoreTextfieldFiles } from './elements/ignore/textfield';
+import { ignoreSwitchFiles } from './elements/ignore/switch';
+import { ignoreSelectFiles } from './elements/ignore/select';
 
 const plugins = [
 	nodeResolve({
@@ -48,6 +52,11 @@ const plugins = [
 		]
 	}),
 	terser(),
+	ignore(
+		{
+			files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
+		}
+	),
 ];
 
 export default {

@@ -1,11 +1,11 @@
-import { FrontendTranslationData, TimeFormat } from "custom-card-helpers";
+import { FrontendLocaleData, TimeFormat } from "custom-card-helpers";
 
 /**
  * Formats a number based on the specified language with thousands separator(s) and decimal character for better legibility.
  * @param locale The user-selected language and number format, from `hass.locale`
  */
 export const formatTime = (
-  locale?: FrontendTranslationData,
+  locale?: FrontendLocaleData,
 ): string => {
 
   let format: string | string[] | undefined;

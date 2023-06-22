@@ -44,15 +44,16 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 
-	if (config.disableCalEventLink || event.htmlLink === null)
-		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${event.title} </span>`;
-	else
-		return html`<a
-			href="${event.htmlLink}"
-			style="text-decoration: ${textDecoration};color: ${titleColor}"
-			target="${config.linkTarget}"
-			>${event.title}
-		</a>`;
+	if (config.disableCalEventLink || event.htmlLink === null) {
+   return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${event.title} </span>`;
+ } else {
+   return html`<a
+  			href="${event.htmlLink}"
+  			style="text-decoration: ${textDecoration};color: ${titleColor}"
+  			target="${config.linkTarget}"
+  			>${event.title}
+  		</a>`;
+ }
 }
 
 /**
@@ -63,7 +64,7 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
  */
 export function getCalendarDescriptionHTML(config: atomicCardConfig, event: EventClass) {
 	if (event.description) {
-		var desc = event.description;
+		let desc = event.description;
 		if (isHtml(event.description)) {
 			desc = unsafeHTML(event.description);
 		}

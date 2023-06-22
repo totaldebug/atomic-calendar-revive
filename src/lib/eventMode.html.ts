@@ -16,8 +16,9 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
     const iconColor: string =
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 
-    if (config.showEventIcon && event.entityConfig.icon != 'undefined')
-        return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+    if (config.showEventIcon && event.entityConfig.icon != 'undefined') {
+      return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+    }
 }
 
 /**
@@ -33,20 +34,21 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
     const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 
-    if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null)
-        return html`
-				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
-					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${titletext} ${getMultiDayEventParts(config, event)} </div>
-				</div>
-			`;
-    else
-        return html`
-				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-					<div style="color: ${titleColor}">
-						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${titletext} ${getMultiDayEventParts(config, event)} </span></div>
-					</div>
-				</a>
-			`;
+    if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
+      return html`
+        				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
+        					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${titletext} ${getMultiDayEventParts(config, event)} </div>
+        				</div>
+        			`;
+    } else {
+      return html`
+        				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
+        					<div style="color: ${titleColor}">
+        						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${titletext} ${getMultiDayEventParts(config, event)} </span></div>
+        					</div>
+        				</a>
+        			`;
+    }
 }
 
 /**
@@ -57,39 +59,34 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
  */
 export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
     const today = dayjs();
-    if (event.isEmpty) return html`<div>&nbsp;</div>`;
+    if (event.isEmpty) {
+      return html`<div>&nbsp;</div>`;
+    }
     // full day events, no hours set
     // 1. Starts any day, ends later -> 'All day, end date'
-    if (event.isAllDayEvent && event.isMultiDay && event.startDateTime.isAfter(today, 'day'))
-        return html`
-				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
-				${getCurrDayAndMonth(event.endDateTime)}
-			`;
-    // 2 . Is full day event starting before today, ending after today
-    else if (
-        event.isAllDayEvent && event.isMultiDay &&
-        (event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))
-    )
-        return html`
-				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
-				${getCurrDayAndMonth(event.endDateTime)}
-			`;
-    // 3. One day only, or multiple day ends today -> 'All day'
-    else if (event.isAllDayEvent) return html`${config.fullDayEventText}`;
-    // 4. long term event, ends later -> 'until date'
-    else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day'))
-        return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
-    // 5.long term event, ends today -> 'until hour'
-    else if (event.startTimeToShow.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day'))
-        return html`${config.untilText} ${event.endDateTime.format('LT')} `;
-    // 6. starts today or later, ends later -> 'hour - until date'
-    else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day'))
-        return html`
-				${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
-				${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}
-`;
-    // 7. Normal one day event, with time set -> 'hour - hour'
-    else return html`${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')} `;
+    if (event.isAllDayEvent && event.isMultiDay && event.startDateTime.isAfter(today, 'day')) {
+      return html`
+    				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
+    				${getCurrDayAndMonth(event.endDateTime)}
+    			`;
+    } else if (event.isAllDayEvent && event.isMultiDay &&
+                       (event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))) {
+             return html`
+               				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
+               				${getCurrDayAndMonth(event.endDateTime)}
+               			`;
+           } else if (event.isAllDayEvent) {
+                    return html`${config.fullDayEventText}`;
+                  } else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
+                           return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
+                         } else if (event.startTimeToShow.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) {
+                                  return html`${config.untilText} ${event.endDateTime.format('LT')} `;
+                                } else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
+                                         return html`${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
+                                                    ${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}`;
+                                       } else {
+                                         return html`${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')} `;
+                                       }
 }
 
 
@@ -140,7 +137,7 @@ export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
 
 export function getDescription(config: atomicCardConfig, event: EventClass) {
     if (config.showDescription && event.description) {
-        var desc = event.description;
+        let desc = event.description;
         if (isHtml(event.description)) {
             desc = unsafeHTML(event.description);
         }

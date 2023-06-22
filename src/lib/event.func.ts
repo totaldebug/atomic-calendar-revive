@@ -14,13 +14,12 @@ dayjs.extend(isBetween);
  * @return {TemplateResult}
  */
 export function removeDuplicates(dayEvents) {
-	const filtered = dayEvents.filter(
-		(
-			(temp) => (a) =>
-				((k) => !temp[k] && (temp[k] = true))(a.summary + '|' + a.startTime + '|' + a.endTime)
-		)(Object.create(null)),
-	);
-	return filtered;
+	return dayEvents.filter(
+ 		(
+ 			(temp) => (a) =>
+ 				((k) => !temp[k] && (temp[k] = true))(a.summary + '|' + a.startTime + '|' + a.endTime)
+ 		)(Object.create(null)),
+ 	);
 }
 
 /**
@@ -51,9 +50,14 @@ function checkBetweenTimeFilter(event: EventClass, startFilter, endFilter) {
 export function checkFilter(str: string, regexList: string) {
 	if (typeof regexList != 'undefined' && regexList != '') {
 		const regex = new RegExp(regexList, 'i');
-		if (regex.test(str)) return true;
-		else return false;
-	} else return false;
+		if (regex.test(str)) {
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
 }
 
 /**
@@ -70,13 +74,9 @@ export function groupEventsByDay(events) {
 		return r;
 	}, {});
 
-	let groupedEvents = Object.keys(groupsOfEvents).map(function (k) {
-		return groupsOfEvents[k];
-	});
-
-	groupedEvents = groupedEvents;
-
-	return groupedEvents;
+	return Object.keys(groupsOfEvents).map(function (k) {
+ 		return groupsOfEvents[k];
+ 	});
 }
 
 /**
@@ -112,8 +112,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
 	const today = dayjs();
 	const start = today.startOf('day').add(config.startDaysAhead!, 'day');
 	const end = today.endOf('day').add(daysToShow + config.startDaysAhead!, 'day');
-	const getEvents = await getAllEvents(start, end, config, hass);
-	return getEvents;
+	return await getAllEvents(start, end, config, hass);
 }
 
 /**
@@ -246,39 +245,45 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		const newEvent: EventClass = new EventClass(calEvent, config);
 
 		// if hideDeclined events then filter out
-		if (config.hideDeclined && newEvent.isDeclined) return events;
+		if (config.hideDeclined && newEvent.isDeclined) {
+			return events;
+		}
 
 		// if given blocklist value, ignore events that match this title
 		if (newEvent.entityConfig.blocklist && newEvent.title) {
 			const regex = new RegExp(newEvent.entityConfig.blocklist, 'i');
-			if (regex.test(newEvent.title)) return events;
+			if (regex.test(newEvent.title)) {
+				return events;
+			}
 		}
 
 		// if given blocklistLocation value, ignore events that match this location
 		if (newEvent.entityConfig.blocklistLocation && newEvent.location) {
 			const regex = new RegExp(newEvent.entityConfig.blocklistLocation, 'i');
-			if (regex.test(newEvent.location)) return events;
+			if (regex.test(newEvent.location)) {
+				return events;
+			}
 		}
 
 		// if given allowlist value, ignore events that dont match the title
 		if (newEvent.entityConfig.allowlist && newEvent.title) {
 			const regex = new RegExp(newEvent.entityConfig.allowlist, 'i');
-			if (!regex.test(newEvent.title)) return events;
+			if (!regex.test(newEvent.title)) {
+				return events;
+			}
 		}
 
 		// if given allowlistLocation value, ignore events that dont match the location
 		if (newEvent.entityConfig.allowlistLocation && newEvent.location) {
 			const regex = new RegExp(newEvent.entityConfig.allowlistLocation, 'i');
-			if (!regex.test(newEvent.location)) return events;
-		}
-
-		if (newEvent.entityConfig.startTimeFilter && newEvent.entityConfig.endTimeFilter) {
-			if (
-				!checkBetweenTimeFilter(newEvent, newEvent.entityConfig.startTimeFilter, newEvent.entityConfig.endTimeFilter)
-			) {
+			if (!regex.test(newEvent.location)) {
 				return events;
 			}
 		}
+
+		if (newEvent.entityConfig.startTimeFilter && newEvent.entityConfig.endTimeFilter && !checkBetweenTimeFilter(newEvent, newEvent.entityConfig.startTimeFilter, newEvent.entityConfig.endTimeFilter)) {
+        return events;
+  }
 
 		/**
 		 * if we want to split multi day events and its a multi day event then
@@ -323,14 +328,9 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 	// check if the maxEventCount is set, if it is we will remove any events
 	// that go over this limit, unless softLimit is set, in which case we
 	// will remove any events over the soft limit
-	if (config.maxEventCount) {
-		if (
-			(!config.softLimit && config.maxEventCount < newEvents.length) ||
-			(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit)
-		) {
-			//TODO: hidden events?
-			newEvents.length = config.maxEventCount;
-		}
+	if (config.maxEventCount && ((!config.softLimit && config.maxEventCount < newEvents.length) ||
+ 			(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))) {
+		newEvents.length = config.maxEventCount;
 	}
 	newEvents = sortEventsByEntity(newEvents, config.entities)
 
