@@ -52,7 +52,9 @@
 			"showMultiDayEventParts": "Näytä usean päivän tapahtuman osat",
 			"eventTitle": "Aseta tyhjä tapahtuman otsikko",
 			"compactMode": "Ota kompakti tila käyttöön",
-			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä"
+			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä",
+			"titleLength": "Otsikon enimmäispituus (0 rajattomasti)",
+			"descLength": "Kuvauksen enimmäispituus (0 rajattomasti)"
 		}
 	},
 	"event": {

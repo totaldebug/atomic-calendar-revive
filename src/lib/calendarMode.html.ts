@@ -43,15 +43,20 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
 	const titleColor: string =
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
+	let {title} = event;
+
+	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
+		title = event.title.slice(0, config.titleLength);
+	}
 
 	if (config.disableCalEventLink || event.htmlLink === null) {
-   return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${event.title} </span>`;
- } else {
-   return html`<a
+   		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${title} </span>`;
+ 	} else {
+   		return html`<a
   			href="${event.htmlLink}"
   			style="text-decoration: ${textDecoration};color: ${titleColor}"
   			target="${config.linkTarget}"
-  			>${event.title}
+  			>${title}
   		</a>`;
  }
 }
@@ -64,18 +69,18 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
  */
 export function getCalendarDescriptionHTML(config: atomicCardConfig, event: EventClass) {
 	if (event.description) {
-		let desc = event.description;
+		let {description} = event;
 		if (isHtml(event.description)) {
-			desc = unsafeHTML(event.description);
+			description = unsafeHTML(event.description);
 		}
 		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
-			desc = event.description.slice(0, config.descLength);
+			description = event.description.slice(0, config.descLength);
 		}
 		return html`<div
 			class="calDescription"
 			style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
 		>
-			- ${desc}
+			- ${description}
 		</div>`;
 	}
 }

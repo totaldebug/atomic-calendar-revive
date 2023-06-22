@@ -47,7 +47,14 @@
             "showRelativeTime": "Pokaži relativni čas",
             "firstDayOfWeek": "Prvi dan v tednu 0-6",
             "cardHeight": "Višina kartice",
-            "hideDuplicates": "skrij dvojnike"
+            "hideDuplicates": "skrij dvojnike",
+			"showMultiDay": "Razdeljeni večdnevni dogodki",
+			"showMultiDayEventParts": "Prikaži dele večdnevnega dogodka",
+			"eventTitle": "Nastavite prazen naslov dogodka",
+			"compactMode": "Omogoči kompaktni način",
+			"hoursOnSameLine": "Prikaži ure na vrstici dogodkov",
+			"titleLength": "Največja dolžina naslova (0 za neomejeno)",
+			"descLength": "Največja dolžina opisa (0 za neomejeno)"
         }
     },
     "event": {
@@ -69,7 +76,12 @@
             "fullDayEventText": "Celodnevno besedilo dogodka:",
             "showEventIcon": "Pokaži ikono dogodka",
             "showHiddenText": "Pokaži skrito besedilo dogodka?",
-            "hiddenEventText": "Besedilo za skrite dogodke:"
+            "hiddenEventText": "Besedilo za skrite dogodke:",
+			"showCalendarName": "Pokaži ime koledarja",
+			"showWeekNumber": "Prikaži številke tednov",
+			"showEventDate": "Pokaži datum za dogodke",
+			"showDatePerEvent": "Prikažite datum poleg vsakega dogodka",
+			"showTimeRemaining": "Pokaži preostali čas"
         }
     },
     "calendar": {

@@ -35,6 +35,7 @@ The Configuration editor supports the following locales:
  de        German
  en        English
  et        Estonian
+ fi        Finnish
  fr        French
  nb        Norwegian
  sl        Slovenian

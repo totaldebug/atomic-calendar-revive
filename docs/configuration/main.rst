@@ -40,4 +40,5 @@ Main Options
  compactMode               boolean   optional        v7.3.0     ``false`` if set true will squash text down to allow for much more compact design
  hoursOnSameLine           boolean   optional        v7.3.0     ``false`` if set true will move hours to show on the same line as the summary. NOTE using other options can mess up this style
  language                  string    optional        unknown    Not recommended to use, but can set the language code e.g. "gb" / "es"
+ titleLength               integer   optional        v7.4.0     Sets the maximum length of the event titles
 ========================= ========= =============== ========== ==========================================================================================================================================================================================================================

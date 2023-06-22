@@ -46,7 +46,14 @@
             "showRelativeTime": "Relative Zeit anzeigen",
             "firstDayOfWeek": "Erster Wochentag 0-6",
             "cardHeight": "Kartenhöhe",
-            "hideDuplicates": "Duplikate ausblenden"
+            "hideDuplicates": "Duplikate ausblenden",
+			"showMultiDay": "Split meerdaagse evenementen",
+			"showMultiDayEventParts": "Toon meerdaagse evenementonderdelen",
+			"eventTitle": "Lege evenementtitel instellen",
+			"compactMode": "Schakel de compacte modus in",
+			"hoursOnSameLine": "Toon uren op de gebeurtenisregel",
+			"titleLength": "Maximale titellengte (0 voor onbeperkt)",
+			"descLength": "Maximale beschrijvingslengte (0 voor onbeperkt)"
         }
     },
     "event": {
@@ -68,7 +75,12 @@
             "fullDayEventText": "Text für 'Ganztägiger Eintrag':",
             "showEventIcon": "Ereignis-Symbol anzeigen?",
             "showHiddenText": "Versteckten Ereignistext anzeigen?",
-            "hiddenEventText": "Text für versteckte Ereignisse"
+            "hiddenEventText": "Text für versteckte Ereignisse",
+			"showCalendarName": "Toon agendanaam",
+			"showWeekNumber": "Toon weeknummers",
+			"showEventDate": "Toon datum voor evenementen",
+			"showDatePerEvent": "Toon datum naast elk evenement",
+			"showTimeRemaining": "Laat de resterende tijd zien"
         }
     },
     "calendar": {

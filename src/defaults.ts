@@ -110,4 +110,7 @@ export default {
 	showDescription: false,
 	showEventDate: true,
 	showDatePerEvent: false,
+
+	titleLength: 0,
+	descLength: 0
 };

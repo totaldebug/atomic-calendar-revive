@@ -54,6 +54,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	dateSize?: number;
 	descColor?: string;
 	descSize?: number;
+	titleLength?: number;
 	descLength?: number;
 	showNoEventsForToday?: boolean;
 	showNoEventDays?: boolean;

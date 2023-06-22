@@ -46,7 +46,14 @@
 			"showRelativeTime": "Kuva suhtelist aega",
 			"firstDayOfWeek": "Nädala esimene päev (0-6)",
 			"cardHeight": "kaardi kõrgus",
-			"hideDuplicates": "peida duplikaadid"
+			"hideDuplicates": "peida duplikaadid",
+			"showMultiDay": "Jagatud mitmepäevased üritused",
+			"showMultiDayEventParts": "Näita mitmepäevaste sündmuste osi",
+			"eventTitle": "Määra tühi sündmuse pealkiri",
+			"compactMode": "Kompaktrežiimi lubamine",
+			"hoursOnSameLine": "Näidake sündmuse reale tundi",
+			"titleLength": "Pealkirja maksimaalne pikkus (0 piiramatu jaoks)",
+			"descLength": "Kirjelduse maksimaalne pikkus (0 piiramatu puhul)"
 		}
 	},
 	"event": {
@@ -67,7 +74,12 @@
 			"noEventsForNextDaysText": "Paaril järgmisel päeval pole sündmusi tekst:",
 			"fullDayEventText": "Kogu päeva kestev sündmus tekst:",
 			"showEventIcon": "Kuva sündmuse ikooni",
-			"showHiddenText": "Kas näidata summutatud teksti?"
+			"showHiddenText": "Kas näidata summutatud teksti?",
+			"showCalendarName": "Kuva kalendri nimi",
+			"showWeekNumber": "Näita nädala numbreid",
+			"showEventDate": "Näita sündmuste kuupäeva",
+			"showDatePerEvent": "Kuva kuupäev iga sündmuse kõrval",
+			"showTimeRemaining": "Näita järelejäänud aega"
 		}
 	},
 	"calendar": {

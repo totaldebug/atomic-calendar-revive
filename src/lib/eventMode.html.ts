@@ -28,23 +28,27 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
  * @returns TemplateResult containing title HTML
  */
 export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
-    const titletext: string = event.title;
     const titleColor: string =
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
     const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
+    let {title} = event;
+
+	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
+		title = event.title.slice(0, config.titleLength);
+	}
 
     if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
       return html`
         				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
-        					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${titletext} ${getMultiDayEventParts(config, event)} </div>
+        					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
         				</div>
         			`;
     } else {
       return html`
         				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
         					<div style="color: ${titleColor}">
-        						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${titletext} ${getMultiDayEventParts(config, event)} </span></div>
+        						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
         					</div>
         				</a>
         			`;
@@ -124,7 +128,7 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
  * @returns TemplateResult with current week html
  */
 export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
-    var currentWeekHTML = html``
+    let currentWeekHTML = html``
     if (currentWeek != day[0].startDateTime.week()) {
         currentWeek = day[0].startDateTime.week();
         currentWeekHTML = html`<div class="week-number">${localize('ui.common.week')} ${currentWeek.toString()}</div>`
@@ -137,18 +141,18 @@ export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
 
 export function getDescription(config: atomicCardConfig, event: EventClass) {
     if (config.showDescription && event.description) {
-        let desc = event.description;
+        let {description} = event;
         if (isHtml(event.description)) {
-            desc = unsafeHTML(event.description);
+            description = unsafeHTML(event.description);
         }
 
         if (!isHtml(event.description) && config.descLength && event.description.length >= config.descLength) {
-            desc = html`${event.description.slice(0, config.descLength)}`;
+            description = html`${event.description.slice(0, config.descLength)}`;
         }
         return html`<div class="event-right">
                         <div class="event-main">
                             <div class="event-description" style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%">
-                                ${desc}
+                                ${description}
                             </div>
                         </div>
                     </div>`;

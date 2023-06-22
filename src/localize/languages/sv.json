@@ -46,7 +46,14 @@
 			"showRelativeTime": "Show Relative Time",
 			"firstDayOfWeek": "First Day of Week 0-6",
 			"cardHeight": "kortets höjd",
-			"hideDuplicates": "dölja dubbletter"
+			"hideDuplicates": "dölja dubbletter",
+			"showMultiDay": "Dela flerdagarsevenemang",
+			"showMultiDayEventParts": "Visa flerdagarsevenemangsdelar",
+			"eventTitle": "Ange tom händelsetitel",
+			"compactMode": "Aktivera kompakt läge",
+			"hoursOnSameLine": "Visa öppettider på evenemangsraden",
+			"titleLength": "Max titellängd (0 för obegränsat)",
+			"descLength": "Max beskrivningslängd (0 för obegränsat)"
 		}
 	},
 	"event": {
@@ -67,7 +74,13 @@
 			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
 			"fullDayEventText": "Text för Heldagshändelse:",
 			"showEventIcon": "Show Event Icon",
-			"showHiddenText": "Visa dold händelsetext"
+			"showHiddenText": "Visa dold händelsetext",
+			"hiddenEventText": "Text för dolda händelser:",
+			"showCalendarName": "Visa kalendernamn",
+			"showWeekNumber": "Visa veckonummer",
+			"showEventDate": "Visa datum för evenemang",
+			"showDatePerEvent": "Visa datum bredvid varje evenemang",
+			"showTimeRemaining": "Visa återstående tid"
 		}
 	},
 	"calendar": {

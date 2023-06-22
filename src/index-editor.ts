@@ -114,6 +114,14 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		return this._config?.name || '';
 	}
 
+	get _titleLength(): number {
+		return this._config?.titleLength || 0;
+	}
+
+	get _descLength(): number {
+		return this._config?.descLength || 0;
+	}
+
 	get _firstDayOfWeek(): number {
 		return this._config?.firstDayOfWeek || 1;
 	}
@@ -458,6 +466,26 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											label="${localize('main.fields.name')}"
 											.value=${this._name}
 											.configValue=${'name'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-textfield
+											label="${localize('main.fields.titleLength')}"
+											type="number"
+											.value=${this._titleLength}
+											.configValue=${'titleLength'}
+											@input=${this._valueChanged}
+										></mwc-textfield>
+									</div>
+									<div>
+										<mwc-textfield
+											label="${localize('main.fields.descLength')}"
+											type="number"
+											.value=${this._descLength}
+											.configValue=${'descLength'}
 											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
