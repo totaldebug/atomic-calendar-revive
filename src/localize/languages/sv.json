@@ -80,7 +80,8 @@
 			"showWeekNumber": "Visa veckonummer",
 			"showEventDate": "Visa datum för evenemang",
 			"showDatePerEvent": "Visa datum bredvid varje evenemang",
-			"showTimeRemaining": "Visa återstående tid"
+			"showTimeRemaining": "Visa återstående tid",
+			"showAllDayHours": "Visa heldagshändelsetext"
 		}
 	},
 	"calendar": {

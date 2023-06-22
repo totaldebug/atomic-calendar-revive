@@ -81,7 +81,8 @@
 			"showWeekNumber": "Show week numbers",
 			"showEventDate": "Show date for events",
 			"showDatePerEvent": "Show date next to each event",
-			"showTimeRemaining": "Show time remaining"
+			"showTimeRemaining": "Show time remaining",
+			"showAllDayHours": "Show All Day event text"
 		}
 	},
 	"calendar": {

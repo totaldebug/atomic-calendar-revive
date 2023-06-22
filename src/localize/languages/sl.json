@@ -81,7 +81,8 @@
 			"showWeekNumber": "Prikaži številke tednov",
 			"showEventDate": "Pokaži datum za dogodke",
 			"showDatePerEvent": "Prikažite datum poleg vsakega dogodka",
-			"showTimeRemaining": "Pokaži preostali čas"
+			"showTimeRemaining": "Pokaži preostali čas",
+			"showAllDayHours": "Prikaži besedilo celodnevnega dogodka"
         }
     },
     "calendar": {

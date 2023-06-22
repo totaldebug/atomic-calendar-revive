@@ -81,7 +81,8 @@
 			"showWeekNumber": "Afficher les numéros de semaine",
 			"showEventDate": "Afficher la date des événements",
 			"showDatePerEvent": "Afficher la date à côté de chaque événement",
-			"showTimeRemaining": "Afficher le temps restant"
+			"showTimeRemaining": "Afficher le temps restant",
+			"showAllDayHours": "Afficher le texte de l'événement toute la journée"
 		}
 	},
 	"calendar": {

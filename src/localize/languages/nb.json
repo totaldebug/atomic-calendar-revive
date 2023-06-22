@@ -81,7 +81,8 @@
 			"showWeekNumber": "Vis ukenummer",
 			"showEventDate": "Vis dato for arrangementer",
 			"showDatePerEvent": "Vis dato ved siden av hvert arrangement",
-			"showTimeRemaining": "Vis gjenværende tid"
+			"showTimeRemaining": "Vis gjenværende tid",
+			"showAllDayHours": "Vis tekst for hele dagen"
 		}
 	},
 	"calendar": {

@@ -79,7 +79,8 @@
 			"showWeekNumber": "Näita nädala numbreid",
 			"showEventDate": "Näita sündmuste kuupäeva",
 			"showDatePerEvent": "Kuva kuupäev iga sündmuse kõrval",
-			"showTimeRemaining": "Näita järelejäänud aega"
+			"showTimeRemaining": "Näita järelejäänud aega",
+			"showAllDayHours": "Näita kogu päeva sündmuse teksti"
 		}
 	},
 	"calendar": {
