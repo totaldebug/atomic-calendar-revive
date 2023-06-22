@@ -1,6 +1,13 @@
 {
     "name": "Atomic Calendar Revive",
-    "dockerFile": "Dockerfile",
+    "build": {
+        "context": "..",
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceMount": "",
+    "runArgs": [
+        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+    ],
     "context": "..",
     "appPorts": [
         5000
