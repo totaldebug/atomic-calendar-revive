@@ -19,4 +19,5 @@ Event Mode Options
  showEventDate           boolean    v7.1.0   ``true`` Show the event date
  showDatePerEvent        boolean    v7.2.0   ``false`` Show the date next to each event entry
  showTimeRemaining       boolean    v7.3.0   ``false`` Show the amount of time remaining for an event
+ showAllDayHours         boolean    v7.5.0   ``true`` Show "All Day" text under full day events
 ======================= ========== ======== ===========================================================================================================

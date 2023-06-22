@@ -120,6 +120,7 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	compactMode?: boolean;
 	hoursOnSameLine?: boolean;
 	showTimeRemaining?: boolean;
+	showAllDayHours?: boolean;
 }
 
 export interface LongDateFormatSpec {

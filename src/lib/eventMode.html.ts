@@ -66,8 +66,14 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
     if (event.isEmpty) {
       return html`<div>&nbsp;</div>`;
     }
+    // if the option showAllDayHours is set to false, dont show "all day" text
+    if (!config.showAllDayHours && event.isAllDayEvent) {
+        return html``;
+    }
+
     // full day events, no hours set
     // 1. Starts any day, ends later -> 'All day, end date'
+
     if (event.isAllDayEvent && event.isMultiDay && event.startDateTime.isAfter(today, 'day')) {
       return html`
     				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}

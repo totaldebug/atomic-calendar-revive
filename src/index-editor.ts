@@ -264,6 +264,10 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		return this._config?.showTimeRemaining || false;
 	}
 
+	get _showAllDayHours(): boolean {
+		return this._config?.showTimeRemaining || false;
+	}
+
 	// EVENT SETTINGS END
 
 	// CALENDAR SETTINGS
@@ -937,6 +941,19 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											@change=${this._valueChanged}
 										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showTimeRemaining')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-switch
+											aria-label=${`Toggle ${this._showAllDayHours ? 'on' : 'off'}`}
+											.checked=${this._showAllDayHours !== false}
+											.configValue=${'showAllDayHours'}
+											@change=${this._valueChanged}
+										></mwc-switch>
+										<label class="mdc-label">${localize('event.fields.showAllDayHours')}</label>
+									</div>
+									<div>
 									</div>
 								</div>
 							</div>

@@ -30,13 +30,13 @@ export function removeDuplicates(dayEvents) {
  * @returns {boolean}
  */
 function checkBetweenTimeFilter(event: EventClass, startFilter, endFilter) {
-	var startTimeHour = startFilter.split(':', 1)[0];
-	var startTimeMin = startFilter.split(':', 2)[1];
-	var startTime = event.startDateTime.set('hour', startTimeHour).set('minutes', startTimeMin);
+	const startTimeHour = startFilter.split(':', 1)[0];
+	const startTimeMin = startFilter.split(':', 2)[1];
+	const startTime = event.startDateTime.set('hour', startTimeHour).set('minutes', startTimeMin);
 
-	var endTimeHour = endFilter.split(':', 1)[0];
-	var endTimeMin = endFilter.split(':', 2)[1];
-	var endTime = event.startDateTime.set('hour', endTimeHour).set('minutes', endTimeMin);
+	const endTimeHour = endFilter.split(':', 1)[0];
+	const endTimeMin = endFilter.split(':', 2)[1];
+	const endTime = event.startDateTime.set('hour', endTimeHour).set('minutes', endTimeMin);
 
 	return event.startDateTime.isBetween(startTime, endTime, 'minute', '[]');
 }
