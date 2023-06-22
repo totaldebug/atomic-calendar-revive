@@ -47,7 +47,14 @@
             "showRelativeTime": "Vis den relative tid",
             "firstDayOfWeek": "Første dag i ugen 0-6",
             "cardHeight": "Højde på kort",
-            "hideDuplicates": "Skjul dubletter"
+            "hideDuplicates": "Skjul dubletter",
+			"showMultiDay": "Opdelt flerdages begivenheder",
+			"showMultiDayEventParts": "Vis flere dages begivenhedsdele",
+			"eventTitle": "Indstil tom begivenhedstitel",
+			"compactMode": "Aktiver kompakt tilstand",
+			"hoursOnSameLine": "Vis timer på begivenhedslinjen",
+			"titleLength": "Max titellængde (0 for ubegrænset)",
+			"descLength": "Max beskrivelseslængde (0 for ubegrænset)"
         }
     },
     "event": {
@@ -69,7 +76,12 @@
             "fullDayEventText": "Hel dags tekst:",
             "showEventIcon": "Vis aftale ikon",
             "showHiddenText": "Vis skjulte aftaler tekst?",
-            "hiddenEventText": "Tekst til skjulte aftaler:"
+            "hiddenEventText": "Tekst til skjulte aftaler:",
+			"showCalendarName": "Vis kalendernavn",
+			"showWeekNumber": "Vis ugenumre",
+			"showEventDate": "Vis dato for arrangementer",
+			"showDatePerEvent": "Vis dato ud for hver begivenhed",
+			"showTimeRemaining": "Vis resterende tid"
         }
     },
     "calendar": {
