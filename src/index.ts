@@ -461,8 +461,7 @@ export class AtomicCalendarRevive extends LitElement {
     </td>
 	</tr>`;
 			});
-			var daysEvents = html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`;
-			return daysEvents;
+			return html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`;
 		});
 		const eventnotice = this._config.showHiddenText
 			? this.hiddenEvents > 0
@@ -526,7 +525,7 @@ export class AtomicCalendarRevive extends LitElement {
 		if (fromClick) {
 			this.clickedDate = day.date;
 		}
-		var dayEvents = day.allEvents;
+		let dayEvents = day.allEvents;
 
 		this.eventSummary = dayEvents.map((event: EventClass) => {
 			const eventColor =

@@ -74,7 +74,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 	// ENTITY SETTINGS
 	get _entityOptions() {
 		const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
-		var entityOptions
+		let entityOptions
 		if (typeof this._config?.entities != 'undefined') {
 			entityOptions = entities.map(eid => {
 				let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
@@ -1071,7 +1071,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
   		});
 	}
 	/**
-	  * change the calendar name of an entity
+	  * change the entity configuration
 	  * @param {*} ev
 	  */
 	private _entityValueChanged(ev) {
