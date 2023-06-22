@@ -80,7 +80,8 @@
 			"showWeekNumber": "Toon weeknummers",
 			"showEventDate": "Toon datum voor evenementen",
 			"showDatePerEvent": "Toon datum naast elk evenement",
-			"showTimeRemaining": "Laat de resterende tijd zien"
+			"showTimeRemaining": "Laat de resterende tijd zien",
+            "showAllDayHours": "Toon de tekst van de hele dag-gebeurtenis"
         }
     },
     "calendar": {

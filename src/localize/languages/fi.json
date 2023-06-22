@@ -81,7 +81,8 @@
 			"showWeekNumber": "Näytä viikkonumerot",
 			"showEventDate": "Näytä tapahtumien päivämäärä",
 			"showDatePerEvent": "Näytä päivämäärä jokaisen tapahtuman vieressä",
-			"showTimeRemaining": "Näytä jäljellä oleva aika"
+			"showTimeRemaining": "Näytä jäljellä oleva aika",
+			"showAllDayHours": "Näytä koko päivän tapahtuman teksti"
 		}
 	},
 	"calendar": {

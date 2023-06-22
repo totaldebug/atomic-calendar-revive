@@ -110,6 +110,7 @@ export default {
 	showDescription: false,
 	showEventDate: true,
 	showDatePerEvent: false,
+	showAllDayHours: true,
 
 	titleLength: 0,
 	descLength: 0
