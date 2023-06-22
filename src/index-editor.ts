@@ -902,7 +902,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 										<label class="mdc-label">${localize('event.fields.showDatePerEvent')}</label>
 									</div>
 									<div>
-									<div>
 										<mwc-switch
 											aria-label=${`Toggle ${this._showTimeRemaining ? 'on' : 'off'}`}
 											.checked=${this._showTimeRemaining !== false}
@@ -911,9 +910,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 										></mwc-switch>
 										<label class="mdc-label">${localize('event.fields.showTimeRemaining')}</label>
 									</div>
-									<div>
 								</div>
-
 							</div>
 					  `
 				: ''}
