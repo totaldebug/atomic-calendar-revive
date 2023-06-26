@@ -6,7 +6,7 @@
     },
     "workspaceMount": "",
     "runArgs": [
-        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}:Z"
+        "--volume=${localWorkspaceFolder}:/workspaces/${localWorkspaceFolderBasename}"
     ],
     "context": "..",
     "appPorts": [
