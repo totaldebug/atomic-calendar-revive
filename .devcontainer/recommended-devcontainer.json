@@ -2,28 +2,31 @@
     "name": "Atomic Calendar Revive",
     "dockerFile": "Dockerfile",
     "context": "..",
-    "appPorts": [
-        5000
-    ],
-    "postCreateCommand": "npm install",
-    "extensions": [
-        "github.vscode-pull-request-github",
-        "yzhang.markdown-all-in-one",
-        "bierner.lit-html",
-        "runem.lit-plugin",
-        "davidanson.vscode-markdownlint",
-        "redhat.vscode-yaml",
-        "eamodio.gitlens",
-        "ms-python.python",
-        "tht13.html-preview-vscode"
-    ],
-    "settings": {
-        "files.eol": "\n",
-        "editor.tabSize": 4,
-        "terminal.integrated.shell.linux": "/bin/zsh",
-        "editor.formatOnPaste": false,
-        "editor.formatOnSave": true,
-        "editor.formatOnType": true,
-        "files.trimTrailingWhitespace": true
-    }
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "files.eol": "\n",
+                "editor.tabSize": 4,
+                "terminal.integrated.shell.linux": "/bin/zsh",
+                "editor.formatOnPaste": false,
+                "editor.formatOnSave": true,
+                "editor.formatOnType": true,
+                "files.trimTrailingWhitespace": true
+            },
+            "extensions": [
+                "github.vscode-pull-request-github",
+                "yzhang.markdown-all-in-one",
+                "bierner.lit-html",
+                "runem.lit-plugin",
+                "davidanson.vscode-markdownlint",
+                "redhat.vscode-yaml",
+                "eamodio.gitlens",
+                "ms-python.python",
+                "tht13.html-preview-vscode",
+                "sourcery.sourcery",
+                "tabnine.tabnine-vscode"
+            ]
+        }
+    },
+    "postCreateCommand": "zsh ./.devcontainer/post-install.sh"
 }

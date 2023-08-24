@@ -4,6 +4,8 @@ dist/*
 .devcontainer/*
 !.devcontainer/recommended-devcontainer.json
 !.devcontainer/recommended-Dockerfile
+!.devcontainer/post-install.sh
+dist
 
 .vscode/*
 

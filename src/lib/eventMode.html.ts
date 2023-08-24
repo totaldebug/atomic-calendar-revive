@@ -17,7 +17,7 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 
     if (config.showEventIcon && event.entityConfig.icon != 'undefined') {
-      return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+        return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
     }
 }
 
@@ -32,20 +32,20 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
     const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
-    let {title} = event;
+    let { title } = event;
 
-	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
-		title = event.title.slice(0, config.titleLength);
-	}
+    if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
+        title = event.title.slice(0, config.titleLength);
+    }
 
     if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
-      return html`
+        return html`
         				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
         					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
         				</div>
         			`;
     } else {
-      return html`
+        return html`
         				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
         					<div style="color: ${titleColor}">
         						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
@@ -64,7 +64,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
 export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
     const today = dayjs();
     if (event.isEmpty) {
-      return html`<div>&nbsp;</div>`;
+        return html`<div>&nbsp;</div>`;
     }
     // if the option showAllDayHours is set to false, dont show "all day" text
     if (!config.showAllDayHours && event.isAllDayEvent) {
@@ -75,28 +75,28 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
     // 1. Starts any day, ends later -> 'All day, end date'
 
     if (event.isAllDayEvent && event.isMultiDay && event.startDateTime.isAfter(today, 'day')) {
-      return html`
+        return html`
     				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
     				${getCurrDayAndMonth(event.endDateTime)}
     			`;
     } else if (event.isAllDayEvent && event.isMultiDay &&
-                       (event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))) {
-             return html`
+        (event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))) {
+        return html`
                				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
                				${getCurrDayAndMonth(event.endDateTime)}
                			`;
-           } else if (event.isAllDayEvent) {
-                    return html`${config.fullDayEventText}`;
-                  } else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
-                           return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
-                         } else if (event.startTimeToShow.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) {
-                                  return html`${config.untilText} ${event.endDateTime.format('LT')} `;
-                                } else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
-                                         return html`${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
+    } else if (event.isAllDayEvent) {
+        return html`${config.fullDayEventText}`;
+    } else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
+        return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
+    } else if (event.startTimeToShow.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) {
+        return html`${config.untilText} ${event.endDateTime.format('LT')} `;
+    } else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
+        return html`${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
                                                     ${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}`;
-                                       } else {
-                                         return html`${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')} `;
-                                       }
+    } else {
+        return html`${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')} `;
+    }
 }
 
 
@@ -136,7 +136,12 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
 export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
     let currentWeekHTML = html``
     if (currentWeek != day[0].startDateTime.week()) {
-        currentWeek = day[0].startDateTime.week();
+        if (day[0].startDateTime.isBefore(dayjs())) {
+            currentWeek = dayjs().week()
+        } else {
+            currentWeek = day[0].startDateTime.week();
+        }
+
         currentWeekHTML = html`<div class="week-number">${localize('ui.common.week')} ${currentWeek.toString()}</div>`
         return { currentWeekHTML, currentWeek };
     } else {
@@ -147,7 +152,7 @@ export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
 
 export function getDescription(config: atomicCardConfig, event: EventClass) {
     if (config.showDescription && event.description) {
-        let {description} = event;
+        let { description } = event;
         if (isHtml(event.description)) {
             description = unsafeHTML(event.description);
         }

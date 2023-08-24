@@ -367,7 +367,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 												.value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
 												.configValue=${'endTimeFilter'}
 												.entityId="${entity.entity}"
-												@inputd="${this._entityValueChanged}"
+												@input="${this._entityValueChanged}"
 											></mwc-textfield>
 										</div>
 									</div>
@@ -560,11 +560,11 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											.configValue=${'defaultMode'}
 											.value=${this._defaultMode}
 											@selected=${this._valueChanged}
-											@closed=${ (ev) => ev.stopPropagation() }
+											@closed=${(ev) => ev.stopPropagation()}
 										>
 											${defaultModes.map((mode) => {
-												return html`<mwc-list-item .value=${mode}>${mode}</mwc-list-item> `;
-											})}
+					return html`<mwc-list-item .value=${mode}>${mode}</mwc-list-item> `;
+				})}
 										</mwc-select>
 									</div>
 									<div>
@@ -575,11 +575,11 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											.configValue=${'linkTarget'}
 											.value=${this._linkTarget}
 											@selected=${this._valueChanged}
-											@closed=${ (ev) => ev.stopPropagation() }
+											@closed=${(ev) => ev.stopPropagation()}
 										>
 											${linkTargets.map((linkTarget) => {
-												return html`<mwc-list-item .value=${linkTarget}>${linkTarget}</mwc-list-item> `;
-											})}
+					return html`<mwc-list-item .value=${linkTarget}>${linkTarget}</mwc-list-item> `;
+				})}
 										</mwc-select>
 									</div>
 								</div>
@@ -589,7 +589,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											label="${localize('main.fields.cardHeight')}"
 											.value=${this._cardHeight}
 											.configValue=${'cardHeight'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 									<div>
@@ -734,19 +734,17 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 									<div>
 										<mwc-textfield
 											label="${localize('event.fields.untilText')}"
-											type="text"
 											.value=${this._untilText}
 											.configValue=${'untilText'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 									<div>
 										<mwc-textfield
 											label="${localize('event.fields.fullDayEventText')}"
-											type="text"
 											.value=${this._fullDayEventText}
 											.configValue=${'fullDayEventText'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 								</div>
@@ -754,19 +752,17 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 									<div>
 										<mwc-textfield
 											label="${localize('event.fields.noEventsForNextDaysText')}"
-											type="text"
 											.value=${this._noEventsForNextDaysText}
 											.configValue=${'noEventsForNextDaysText'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 									<div>
 										<mwc-textfield
 											label="${localize('event.fields.noEventText')}"
-											type="text"
 											.value=${this._noEventText}
 											.configValue=${'noEventText'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 								</div>
@@ -774,10 +770,9 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 									<div>
 										<mwc-textfield
 											label="${localize('event.fields.hiddenEventText')}"
-											type="text"
 											.value=${this._hiddenEventText}
 											.configValue=${'hiddenEventText'}
-											@value-changed=${this._valueChanged}
+											@input=${this._valueChanged}
 										></mwc-textfield>
 									</div>
 									<div>
@@ -1085,7 +1080,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 			return;
 		}
 
-		const {target} = ev;
+		const { target } = ev;
 		if (this[`_${target.configValue}`] === target.value) {
 			return;
 		}
@@ -1109,11 +1104,11 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
 		// convert any legacy entity strings into objects
 		return entities.map(entity => {
-  			if (entity.entity) {
+			if (entity.entity) {
 				return entity;
 			}
-  			return { entity, name: entity };
-  		});
+			return { entity, name: entity };
+		});
 	}
 	/**
 	  * change the entity configuration
@@ -1124,7 +1119,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 			return;
 		}
 
-		const {target} = ev
+		const { target } = ev
 		let entityObjects = [...this.entities];
 
 		entityObjects = entityObjects.map(entity => {
@@ -1153,7 +1148,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 	 * @param {*} ev
 	 */
 	private _entityChanged(ev) {
-		const {target} = ev;
+		const { target } = ev;
 
 		if (this.cantFireEvent) {
 			return;
