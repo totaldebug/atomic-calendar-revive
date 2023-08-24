@@ -90,7 +90,7 @@
 	},
 	"release": {
 		"branches": [
-			"main"
+			"master"
 		],
 		"plugins": [
 			[
