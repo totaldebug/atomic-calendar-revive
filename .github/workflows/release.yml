@@ -1,80 +1,28 @@
-name: release
+name: Release
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - master  # Change this to your main branch name
 
 jobs:
   release:
-    name: Create release
     runs-on: ubuntu-latest
+
     steps:
-      - name: Getting your configuration from GitHub
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
 
-      - name: Install dependencies
-        run: yarn install
+    - name: Install dependencies
+      run: yarn install
 
-      - name: Check if TypeScript files changed
-        id: check-ts-changes
-        run: echo ::set-output name=changed::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.ts$' | wc -l)
+    - name: Build
+      run: yarn run build
 
-      - name: Get latest tag
-        id: get-latest-tag
-        run: echo ::set-output name=latest_tag::$(git describe --tags --abbrev=0 | sed 's/^v//')
-
-      - name: Get current version
-        id: get-version
-        run: echo ::set-output name=version::$(node -pe "require('./package.json').version")
-
-      - name: Check if version is higher
-        id: check-version
-        run: echo ::set-output name=is_higher::$(node -pe "const semver = require('semver'); semver.gt('${{ steps.get-version.outputs.version }}', '${{ steps.get-latest-tag.outputs.latest_tag }}')")
-
-      - name: Check if semver label is valid
-        id: check-semver
-        if: steps.check-ts-changes.outputs.changed == 'true'
-        run: |
-          const labelsInput = ${{ toJSON(github.event.pull_request.labels) }};
-          const currentVersion = ${{ steps.get-version.outputs.version }};
-          const isMajor = labelsInput.some(label => label.name === 'semver/major' || label.name === 'type/breaking');
-          const isMinor = labelsInput.some(label => label.name === 'semver/minor' || label.name === 'type/feature);
-          const isPatch = labelsInput.some(label => label.name === 'semver/patch' || label.name === 'type/bug);
-
-          const isSemverValid = () => {
-            if (isMajor) {
-              return currentVersion.includes('0.0.0');
-            } else if (isMinor) {
-              return currentVersion.includes('0.0.');
-            } else if (isPatch) {
-              return currentVersion.includes('0.');
-            } else {
-              return false
-            }
-          };
-          echo ::set-output name=is_valid::$(isSemverValid)
-
-      - name: Build project
-        if: steps.check-ts-changes.outputs.changed == 'true' && steps.check-semver.outputs.is_valid == 'true' && steps.check-version.outputs.is_higher == 'true'
-        run: yarn run build
-
-      - name: 🛎️ Create release
-        if: steps.check-ts-changes.outputs.changed == 'true' && steps.check-semver.outputs.is_valid == 'true' && steps.check-version.outputs.is_higher == 'true'
-        uses: softprops/action-gh-release@v1
-        with:
-          files: dist/atomic-calendar-revive.js
-          tag_name: ${{ steps.get-version.outputs.version }}
-          name: Release ${{ steps.get-version.outputs.version }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          generate_release_notes: true
-
-      - name: 🏷️ Update latest tag
-        if: steps.check-ts-changes.outputs.changed == 'true' && steps.check-semver.outputs.is_valid == 'true' && steps.check-version.outputs.is_higher == 'true'
-        uses: EndBug/latest-tag@latest
+    - name: Run Semantic Release
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
