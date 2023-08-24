@@ -1,16 +1,9 @@
-FROM node:latest
+FROM mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
 
-RUN apt update
+RUN apt update && apt upgrade -y
 
-RUN apt upgrade  -y
-
-RUN apt install python3 zsh -y
+RUN apt install -y zsh python3 python3-sphinx python3-pip
 
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
-
-RUN yarn install
-
-RUN pip3 install -r ../docs/requirements.txt
-RUN pip3 install sphinx
 
 CMD ["zsh"]

@@ -29,40 +29,6 @@
          alt="Buy me a Pizza"></a>
 </p>
 
-{% if prerelease %}
-
-### NB!: This is a Beta version!
-
-Not all features may function as expected when using pre-release versions.
-
-If using a pre-release, we do request that any bugs or unexpected behaviour is reported on Github
-
-{% endif %}
-
-{% if selected_tag.replace("v", "").replace(".","") | int = 700  %}
-
-# v7.0.0
-
-This release sees some major changes in the way the card functions, when upgrading
-please check your configuration **before** submitting an issue as many have changed.
-
-Documentation has been updated to reflect any changes made.
-
-# Changed configuration options
-
-- `blacklist` renamed to `blocklist`
-- `whitelist` renamed to `allowlist`
-- `locationWhitelist` changed to `allowlistLocation`
-- added `blocklistLocation`
-- Blocklist and allowlist now changed to use Regex for more flexibility
-- `showDeclined` changed to `hideDeclined`
-- `eventCalName` changed to `name` under each entity
-- added `showCalendarName`
-- added `showMultiDayEventParts`
-- added `showWeekNumber`
-
-{% endif %}
-
 # Atomic Calendar Revive
 
 A _Calendar Card_ for Home Assistant that adds **advanced settings** to allow much
@@ -78,17 +44,6 @@ Allowing for the use of both Google Calendars and CalDav, With two main viewing 
 Add either a Google calendar or CalDav calendar to home assistant.
 
 Setup & Configuration is all provided within the [documentation](https://docs.totaldebug.uk/atomic-calendar-revive)
-
-## Compatibility
-
-| Card Version    |     HA Version      |                                        Notes                                         |
-| --------------- | :-----------------: | :----------------------------------------------------------------------------------: |
-| v7.0.0          |   2022.6 Upwards    |                     Should work on older versions but not tested                     |
-| v6.0.0          |   2021.11 Upwards   |                   Progress bar will not work on older HA Versions                    |
-| v5.0.0 - v5.2.2 | 2021.6 to 2021.10.x | May work on older HA Versions but `hoursFormat` option will need to be manually set. |
-| v4.1.1          |    0.117 Upwards    |                                                                                      |
-
-Home Assistant 2022.5 will not work with the card you must upgrade to 2022.6
 
 ## Support
 

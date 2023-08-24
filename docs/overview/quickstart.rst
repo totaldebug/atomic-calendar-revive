@@ -25,7 +25,7 @@ HACS (Recommended)
 Install using `HACS` component:
 
 #. You need HACS installed and configured
-#. Go to plugins tab
+#. Go to frontend tab
 #. Search for ``Atomic Calendar Revive``
 #. Install the card
 
