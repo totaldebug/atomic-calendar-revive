@@ -44,7 +44,7 @@
 		"commitizen": "^4.3.0",
 		"conventional-changelog-conventionalcommits": "^6.1.0",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.47.0",
+		"eslint": "^8.48.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.0",
 		"prettier": "^3.0.2",
