@@ -11,6 +11,7 @@ export default class EventClass {
 	private _globalConfig: any;
 	private _startDateTime: dayjs.Dayjs | undefined;
 	private _endDateTime: dayjs.Dayjs | undefined;
+	private _customOriginName: string | undefined;
 
 	constructor(eventClass, globalConfig) {
 		this._eventClass = eventClass;
@@ -38,7 +39,14 @@ export default class EventClass {
 		return this._eventClass.entity || {};
 	}
 
+	set originName(value: string) {
+		this._customOriginName = value;
+	}
+
 	get originName() {
+		if (this._customOriginName !== undefined) {
+			return this._customOriginName;
+		}
 		const { originCalendar } = this;
 		if (originCalendar && originCalendar.name) {
 			return originCalendar.name;

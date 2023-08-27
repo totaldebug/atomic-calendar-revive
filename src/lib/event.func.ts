@@ -317,12 +317,34 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 	// if hideDuplicates remove any duplicate events where
 	// title, startDateTime and endDateTime match
 	if (config.hideDuplicates) {
-		newEvents = newEvents.filter(
-			(
-				(temp) => (a) =>
-					((k) => !temp[k] && (temp[k] = true))(a.title + '|' + a.startDateTime + '|' + a.endDateTime)
-			)(Object.create(null)),
-		);
+		// Create an object to keep track of event identifiers and associated calendar names
+		const eventMap: { [key: string]: { event: any, calendars: string[] } } = {};
+
+		const updatedEvents: any[] = [];
+
+		newEvents.forEach(event => {
+			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
+
+			if (!eventMap[eventIdentifier]) {
+				eventMap[eventIdentifier] = {
+					event,
+					calendars: [event.originName]
+				};
+				updatedEvents.push(event);
+			} else {
+				eventMap[eventIdentifier].calendars.push(event.originName);
+			}
+		});
+
+		// Update calendar names for the kept events and append removed calendar names
+		updatedEvents.forEach(event => {
+			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
+			event.originName = eventMap[eventIdentifier].calendars.join(', ');
+		});
+
+		console.log(updatedEvents);
+
+		newEvents = updatedEvents;
 	}
 
 	// sort events by date starting with soonest

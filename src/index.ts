@@ -373,7 +373,7 @@ export class AtomicCalendarRevive extends LitElement {
 				const eventCalName =
 					event.entityConfig.name && this._config.showCalendarName
 						? html`<div class="event-cal-name" style="color: ${calColor};">
-								<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event.entityConfig.name}
+								<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event.originName}
 						  </div>`
 						: ``;
 
