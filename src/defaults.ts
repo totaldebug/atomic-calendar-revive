@@ -111,6 +111,7 @@ export default {
 	showEventDate: true,
 	showDatePerEvent: false,
 	showAllDayHours: true,
+	showAllDayEvents: true,
 
 	titleLength: 0,
 	descLength: 0

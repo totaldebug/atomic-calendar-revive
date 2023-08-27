@@ -186,6 +186,9 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 	get _hoursOnSameLine(): boolean {
 		return this._config?.hoursOnSameLine || false;
 	}
+	get _showAllDayEvents(): boolean {
+		return this._config?.showAllDayEvents || true;
+	}
 
 	// MAIN SETTINGS END
 
@@ -712,6 +715,19 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											@change=${this._valueChanged}
 										></mwc-switch>
 										<label class="mdc-label">${localize('main.fields.hoursOnSameLine')}</label>
+									</div>
+								</div>
+								<div class="side-by-side">
+									<div>
+										<mwc-switch
+											aria-label=${`Toggle ${this._showAllDayEvents ? 'on' : 'off'}`}
+											.checked=${this._showAllDayEvents !== false}
+											.configValue=${'showAllDayEvents'}
+											@change=${this._valueChanged}
+										></mwc-switch>
+										<label class="mdc-label">${localize('main.fields.showAllDayEvents')}</label>
+									</div>
+									<div>
 									</div>
 								</div>
 							</div>

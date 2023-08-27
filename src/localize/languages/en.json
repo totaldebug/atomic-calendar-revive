@@ -14,7 +14,7 @@
 		"common": {
 			"previous": "Previous",
 			"next": "Next",
-            "week": "Week"
+			"week": "Week"
 		}
 	},
 	"errors": {
@@ -54,7 +54,8 @@
 			"compactMode": "Enable compact mode",
 			"hoursOnSameLine": "Show hours on the event line",
 			"titleLength": "Max title length (0 for unlimited)",
-			"descLength": "Max description length (0 for unlimited)"
+			"descLength": "Max description length (0 for unlimited)",
+			"showAllDayEvents": "Show all day events"
 		}
 	},
 	"event": {

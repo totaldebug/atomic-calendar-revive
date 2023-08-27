@@ -35,4 +35,3 @@ Please delete options that are not relevant.
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
 - [ ] Any dependent changes have been merged and published in downstream modules
-- [ ] I have updated the version in `package.json` following [semver](https://semver.org/)

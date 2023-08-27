@@ -91,7 +91,6 @@ export function getCurrDayAndMonth(locale) {
  * @returns TemplateResult containing part count
  */
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
-	console.log(event)
 	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) {
 		return
 	}
