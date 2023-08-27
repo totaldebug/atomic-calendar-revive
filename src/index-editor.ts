@@ -189,6 +189,9 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 	get _showAllDayEvents(): boolean {
 		return this._config?.showAllDayEvents || true;
 	}
+	get _offsetHeaderDate(): boolean {
+		return this._config?.offsetHeaderDate || false;
+	}
 
 	// MAIN SETTINGS END
 
@@ -728,6 +731,13 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 										<label class="mdc-label">${localize('main.fields.showAllDayEvents')}</label>
 									</div>
 									<div>
+										<mwc-switch
+											aria-label=${`Toggle ${this._offsetHeaderDate ? 'on' : 'off'}`}
+											.checked=${this._offsetHeaderDate !== false}
+											.configValue=${'offsetHeaderDate'}
+											@change=${this._valueChanged}
+										></mwc-switch>
+										<label class="mdc-label">${localize('main.fields.offsetHeaderDate')}</label>
 									</div>
 								</div>
 							</div>

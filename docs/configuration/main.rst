@@ -42,4 +42,5 @@ Main Options
  language                  string    optional        unknown    Not recommended to use, but can set the language code e.g. "gb" / "es"
  titleLength               integer   optional        v7.4.0     Sets the maximum length of the event titles
  showAllDayEvents          boolean   optional                   ``true`` if set false will hide all events that are a full day
+ offsetHeaderDate          boolean   optional                   ``false`` if set true the header date will match the startDaysAhead offset date
 ========================= ========= =============== ========== ==========================================================================================================================================================================================================================
