@@ -15,11 +15,11 @@ dayjs.extend(isBetween);
  */
 export function removeDuplicates(dayEvents) {
 	return dayEvents.filter(
- 		(
- 			(temp) => (a) =>
- 				((k) => !temp[k] && (temp[k] = true))(a.summary + '|' + a.startTime + '|' + a.endTime)
- 		)(Object.create(null)),
- 	);
+		(
+			(temp) => (a) =>
+				((k) => !temp[k] && (temp[k] = true))(a.summary + '|' + a.startTime + '|' + a.endTime)
+		)(Object.create(null)),
+	);
 }
 
 /**
@@ -75,8 +75,8 @@ export function groupEventsByDay(events) {
 	}, {});
 
 	return Object.keys(groupsOfEvents).map(function (k) {
- 		return groupsOfEvents[k];
- 	});
+		return groupsOfEvents[k];
+	});
 }
 
 /**
@@ -166,10 +166,10 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 		const entityEnd =
 			typeof entity.maxDaysToShow != 'undefined'
 				? today
-						.endOf('day')
-						.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-						.add(timeOffset, 'minutes')
-						.format(dateFormat)
+					.endOf('day')
+					.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
+					.add(timeOffset, 'minutes')
+					.format(dateFormat)
 				: endTime;
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${entityEnd}Z`;
@@ -213,25 +213,25 @@ function sortEventsByEntity(events: EventClass[], entities: EntityConfig[]): any
 	const otherEvents = events.filter((event) => !event.isAllDayEvent);
 
 	allDayEvents.sort((event1, event2) => {
-	  const entity1 = entities.find(
-		(entity) => entity.entity === event1.entity.entity_id
-	  );
-	  const entity2 = entities.find(
-		(entity) => entity.entity === event2.entity.entity_id
-	  );
-	  if (!entity1 || !entity2) {
-		return 0;
-	  }
-	  const index1 = entities.indexOf(entity1);
-	  const index2 = entities.indexOf(entity2);
-	  if (index1 === index2) {
-		return event1.title.localeCompare(event2.title);
-	  }
-	  return index1 - index2;
+		const entity1 = entities.find(
+			(entity) => entity.entity === event1.entity.entity_id
+		);
+		const entity2 = entities.find(
+			(entity) => entity.entity === event2.entity.entity_id
+		);
+		if (!entity1 || !entity2) {
+			return 0;
+		}
+		const index1 = entities.indexOf(entity1);
+		const index2 = entities.indexOf(entity2);
+		if (index1 === index2) {
+			return event1.title.localeCompare(event2.title);
+		}
+		return index1 - index2;
 	});
 
 	return [...allDayEvents, ...otherEvents];
-  }
+}
 
 /**
  * converts all calendar events to CalendarEvent objects
@@ -246,6 +246,11 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 
 		// if hideDeclined events then filter out
 		if (config.hideDeclined && newEvent.isDeclined) {
+			return events;
+		}
+
+		// if showAllDayEvents false then filter out
+		if (config.showAllDayEvents === false && newEvent.isAllDayEvent) {
 			return events;
 		}
 
@@ -282,8 +287,8 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		}
 
 		if (newEvent.entityConfig.startTimeFilter && newEvent.entityConfig.endTimeFilter && !checkBetweenTimeFilter(newEvent, newEvent.entityConfig.startTimeFilter, newEvent.entityConfig.endTimeFilter)) {
-        return events;
-  }
+			return events;
+		}
 
 		/**
 		 * if we want to split multi day events and its a multi day event then
@@ -312,12 +317,34 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 	// if hideDuplicates remove any duplicate events where
 	// title, startDateTime and endDateTime match
 	if (config.hideDuplicates) {
-		newEvents = newEvents.filter(
-			(
-				(temp) => (a) =>
-					((k) => !temp[k] && (temp[k] = true))(a.title + '|' + a.startDateTime + '|' + a.endDateTime)
-			)(Object.create(null)),
-		);
+		// Create an object to keep track of event identifiers and associated calendar names
+		const eventMap: { [key: string]: { event: any, calendars: string[] } } = {};
+
+		const updatedEvents: any[] = [];
+
+		newEvents.forEach(event => {
+			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
+
+			if (!eventMap[eventIdentifier]) {
+				eventMap[eventIdentifier] = {
+					event,
+					calendars: [event.originName]
+				};
+				updatedEvents.push(event);
+			} else {
+				eventMap[eventIdentifier].calendars.push(event.originName);
+			}
+		});
+
+		// Update calendar names for the kept events and append removed calendar names
+		updatedEvents.forEach(event => {
+			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
+			event.originName = eventMap[eventIdentifier].calendars.join(', ');
+		});
+
+		console.log(updatedEvents);
+
+		newEvents = updatedEvents;
 	}
 
 	// sort events by date starting with soonest
@@ -329,7 +356,7 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 	// that go over this limit, unless softLimit is set, in which case we
 	// will remove any events over the soft limit
 	if (config.maxEventCount && ((!config.softLimit && config.maxEventCount < newEvents.length) ||
- 			(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))) {
+		(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))) {
 		newEvents.length = config.maxEventCount;
 	}
 	newEvents = sortEventsByEntity(newEvents, config.entities)

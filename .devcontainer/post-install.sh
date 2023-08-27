@@ -9,6 +9,8 @@ yarn install
 
 # Install documentation dependencies
 pip3 install -r docs/requirements.txt
-pip3 install sphinx-autobuild
+pip3 install sphinx-autobuild pre-commit
+
+pre-commit install --hook-type commit-msg
 
 echo "Done!"

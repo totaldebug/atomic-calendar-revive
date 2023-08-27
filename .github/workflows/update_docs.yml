@@ -1,11 +1,12 @@
 ---
-
-name: Sphinx Documentation Update
+name: 📚 Update Docs
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - master
+    paths:
+      - "docs/**"
   workflow_dispatch:
 
 jobs:

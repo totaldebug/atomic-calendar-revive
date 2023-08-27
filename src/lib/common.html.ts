@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { html } from "lit";
 import { atomicCardConfig } from "../types";
 import EventClass from "./event.class";
@@ -61,7 +61,10 @@ export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 }
 
 export function getDate(config: atomicCardConfig) {
-	const date = dayjs().format(config.dateFormat);
+	let date = dayjs().format(config.dateFormat);
+	if (config.startDaysAhead && config.offsetHeaderDate) {
+		date = dayjs().add(config.startDaysAhead, 'day').format(config.dateFormat);
+	}
 	return html`${date}`;
 }
 
@@ -92,8 +95,9 @@ export function getCurrDayAndMonth(locale) {
  */
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
 	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) {
-   return
- }
+		return
+	}
+
 	return html`(${event.addDays + 1}/${event.daysLong})`
 }
 
