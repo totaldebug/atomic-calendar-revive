@@ -342,8 +342,6 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 			event.originName = eventMap[eventIdentifier].calendars.join(', ');
 		});
 
-		console.log(updatedEvents);
-
 		newEvents = updatedEvents;
 	}
 
