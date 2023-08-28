@@ -36,6 +36,7 @@
 		"@rollup/plugin-node-resolve": "^15.2.1",
 		"@rollup/plugin-terser": "^0.4.3",
 		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/exec": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
 		"@typescript-eslint/eslint-plugin": "^6.4.1",
 		"@typescript-eslint/parser": "^6.4.1",
