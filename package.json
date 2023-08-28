@@ -1,7 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "7.6.0",
-	"editor_version": "2.3.0",
+	"version": "7.6.1",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
@@ -107,18 +106,37 @@
 				}
 			],
 			[
+				"@semantic-release/exec",
+				{
+					"prepareCmd": "yarn run build"
+				}
+			],
+			[
 				"@semantic-release/npm",
 				{
-				  "npmPublish": false
+					"npmPublish": false
 				}
-			  ],
-			["@semantic-release/github", {
-				"assets": [
-				  {"path": "dist/atomic-calendar-revive.js"}
-				]
-			  }],
-			"@semantic-release/changelog"
-
+			],
+			[
+				"@semantic-release/github",
+				{
+					"assets": [
+						{
+							"path": "dist/atomic-calendar-revive.js"
+						}
+					]
+				}
+			],
+			"@semantic-release/changelog",
+			[
+				"@semantic-release/git",
+				{
+					"assets": [
+						"package.json"
+					],
+					"message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+				}
+			]
 		]
 	}
 }
