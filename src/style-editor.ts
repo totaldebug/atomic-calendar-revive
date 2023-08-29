@@ -2,12 +2,11 @@ import { css } from 'lit';
 
 export const style = css`
 	.option {
-		padding: 4px 0px;
+		padding: 4px 0px 4px;
 		cursor: pointer;
 	}
 	.row {
 		display: flex;
-		margin-bottom: -14px;
 		pointer-events: none;
 	}
 	.title {
@@ -43,4 +42,13 @@ export const style = css`
         width: 50%;
         margin-left: 35px;
     }
+	.icon {
+		--mdc-icon-size: 10px;
+		width: 10px;
+		height: 10px;
+		padding-top: 0px;
+		margin-top: -10px;
+		margin-right: -1px;
+		margin-left: -1px;
+	}
 `;

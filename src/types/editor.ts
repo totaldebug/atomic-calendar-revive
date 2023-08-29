@@ -20,8 +20,8 @@ export interface DropdownProperty extends Property {
     selected: number;
 }
 
-export interface InputProperty extends Property {
-    type: 'input';
+export interface TextProperty extends Property {
+    type: 'text';
 }
 
 export interface NumberProperty extends Property {
@@ -34,4 +34,4 @@ export interface SwitchProperty extends Property {
     type: 'switch';
 }
 
-export type UnionProperty = DropdownProperty | InputProperty | NumberProperty | SwitchProperty;
+export type UnionProperty = DropdownProperty | TextProperty | NumberProperty | SwitchProperty;

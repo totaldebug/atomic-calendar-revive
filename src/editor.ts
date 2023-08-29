@@ -13,7 +13,7 @@ import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin'
 import { atomicCardConfig } from './types/config';
 import {
     DropdownProperty,
-    InputProperty,
+    TextProperty,
     NumberProperty,
     Option,
     Property,
@@ -76,8 +76,9 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         return html`
       <div class="option" @click=${this._toggleOption} .option=${key}>
         <div class="row">
-          <ha-icon .icon=${`mdi:${option.icon}`}></ha-icon>
+          <ha-icon .icon=${`mdi:${option.icon}`} class="icon"></ha-icon>
           <div class="title">${option.name}</div>
+
         </div>
         <div class="secondary">${option.description}</div>
       </div>
@@ -93,8 +94,8 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
     }
 
     private renderProperty(property: UnionProperty): TemplateResult {
-        if (property.type == 'input') {
-            return this.renderInputProperty(property);
+        if (property.type == 'text') {
+            return this.renderTextProperty(property);
         }
         if (property.type == 'number') {
             return this.renderNumberProperty(property);
@@ -108,14 +109,14 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         return html``;
     }
 
-    private renderInputProperty(property: InputProperty): TemplateResult {
+    private renderTextProperty(property: TextProperty): TemplateResult {
         return html`
+        <br />
       <mwc-textfield
 		label=${property.label}
         placeholder=${property.default || ''}
 		.value="${this.getPropertyValue(property)}
 		.configValue=${property.name}
-        .configSection=${property.section}
 		@input=${this._valueChanged}
 	  ></mwc-textfield>
     `;
@@ -123,13 +124,13 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
     private renderNumberProperty(property: NumberProperty): TemplateResult {
         return html`
+        <br />
       <mwc-textfield
 		label=${property.label}
         placeholder=${property.default || ''}
 		type="number"
 	    .value=${this.getPropertyValue(property)}
 		.configValue=${property.name}
-        .configSection=${property.section}
         .number=${true}
 		@input=${this._valueChanged}
         min=${property.min}
@@ -145,7 +146,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
       <mwc-switch
 		.checked=${checked != undefined ? checked : property.default != undefined ? property.default : false}
 		.configValue=${property.name}
-          .configSection=${property.section}
 		@change=${this._valueChanged}
 	  ></mwc-switch>
 	  <label class="mdc-label">${property.label}</label>
@@ -154,12 +154,12 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
     private renderDropdownProperty(property: DropdownProperty): TemplateResult {
         return html`
+        <br />
       <mwc-select
 		naturalMenuWidth
 		fixedMenuPosition
 		label=${property.label}
 		.configValue=${property.name}
-        .configSection=${property.section}
 		.value=${this.getPropertyValue(property) || property.default || ''}
 		@selected=${this._valueChanged}
 		@closed=${(ev) => ev.stopPropagation()}
@@ -207,7 +207,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                 show: false,
                 properties: [
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'name',
                         label: localize('main.fields.name'),
                     },
@@ -247,17 +247,17 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         max: 99999999999,
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'dateFormat',
                         label: localize('main.fields.dateFormat')
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'hoursFormat',
                         label: localize('main.fields.hoursFormat'),
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'eventTitle',
                         label: localize('main.fields.eventTitle'),
                     },
@@ -278,7 +278,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         selected: defaultModes.indexOf(this._config.linkTarget),
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'cardHeight',
                         label: localize('main.fields.cardHeight'),
                     },
@@ -375,22 +375,25 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                 show: false,
                 properties: [
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'untilText',
                         label: localize('event.fields.untilText'),
+                        default: this._config.untilText
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'noEventsForNextDaysText',
                         label: localize('event.fields.noEventsForNextDaysText'),
+                        default: this._config.noEventsForNextDaysText
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'noEventText',
                         label: localize('event.fields.noEventText'),
+                        default: this._config.noEventText
                     },
                     {
-                        type: 'input',
+                        type: 'text',
                         name: 'hiddenEventText',
                         label: localize('event.fields.hiddenEventText'),
                     },
