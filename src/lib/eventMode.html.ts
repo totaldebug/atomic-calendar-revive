@@ -1,7 +1,7 @@
 import EventClass from "./event.class";
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { atomicCardConfig } from "../types";
+import { atomicCardConfig } from "../types/config";
 import dayjs from "dayjs";
 import { getCurrDayAndMonth, getMultiDayEventParts, isHtml } from "./common.html";
 import { localize } from '../localize/localize';

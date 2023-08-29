@@ -27,7 +27,7 @@ dayjs.extend(week);
 dayjs.extend(duration)
 
 // Import Card Editor
-import './index-editor';
+import './editor';
 
 import CalendarDay from './lib/calendar.class';
 import EventClass from './lib/event.class';
@@ -47,7 +47,7 @@ import {
 } from './lib/eventMode.html';
 import { getDate, setNoEventDays, showCalendarLink } from './lib/common.html';
 
-import { atomicCardConfig } from './types';
+import { atomicCardConfig } from './types/config';
 import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
