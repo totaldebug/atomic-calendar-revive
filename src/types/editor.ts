@@ -12,6 +12,7 @@ export interface Property {
     name: string;
     label: string;
     default?: string | boolean | number;
+    entity?: string;
 }
 
 export interface DropdownProperty extends Property {

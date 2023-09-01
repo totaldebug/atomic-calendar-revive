@@ -23,14 +23,6 @@ export const style = css`
 		padding-left: 16px;
 		background: var(--secondary-background-color);
 	}
-	ha-switch {
-		padding-bottom: 8px;
-		padding-top: 16px;
-	}
-	.mdc-label {
-		margin-left: 12px;
-		vertical-align: text-bottom;
-	}
 	.side-by-side {
 		display: flex;
 	}
@@ -50,5 +42,8 @@ export const style = css`
 		margin-top: -10px;
 		margin-right: -1px;
 		margin-left: -1px;
+	}
+	.mwc-text-field{
+		width: 97%;
 	}
 `;

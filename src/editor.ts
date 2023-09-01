@@ -27,10 +27,11 @@ import { textfieldDefinition } from '../elements/textfield';
 import { switchDefinition } from '../elements/switch';
 import { selectDefinition } from '../elements/select';
 import { style } from './style-editor';
+import defaultConfig from './defaults';
 
 @customElement('atomic-calendar-revive-editor')
 export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
-    @property({ attribute: false }) public hass?: HomeAssistant;
+    @property({ attribute: false }) public hass!: HomeAssistant;
     @state() private _config!: atomicCardConfig;
     @state() private _toggle?: boolean;
     @state() private _helpers?: any;
@@ -44,8 +45,17 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         ...selectDefinition,
     };
 
+    static get styles(): CSSResult {
+        return style;
+    }
+
     public setConfig(config: atomicCardConfig): void {
-        this._config = config;
+        const customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
+
+        this._config = {
+            ...defaultConfig,
+            ...customConfig,
+        };
 
         this.loadCardHelpers();
     }
@@ -58,12 +68,10 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         return true;
     }
 
-    protected render(): TemplateResult {
+    protected render(): TemplateResult | void {
         if (!this.hass || !this._helpers || !this.options) {
             return html``;
         }
-
-        this._helpers.importMoreInfoControl('climate');
 
         return html`
       <div class="card-config">
@@ -72,25 +80,30 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
     `;
     }
 
-    private renderOption(key: string, option: Option): TemplateResult {
+
+
+    private renderOption(key: string, option: Option): TemplateResult | void {
         return html`
-      <div class="option" @click=${this._toggleOption} .option=${key}>
-        <div class="row">
-          <ha-icon .icon=${`mdi:${option.icon}`} class="icon"></ha-icon>
-          <div class="title">${option.name}</div>
+            <div class="option" @click=${this._toggleOption} .option=${key}>
+                <div class="row">
+                <span>
+                    <ha-icon icon="mdi:${option.icon}" class="icon" style="color: white;" ></ha-icon>
+                </span>
+                <div class="title">${option.name}</div>
 
-        </div>
-        <div class="secondary">${option.description}</div>
-      </div>
-
-      ${option.show
-                ? html`
-            <div class="values">
-              ${option.properties.map(property => this.renderProperty(property))}
+                </div>
+                <div class="secondary">${option.description}</div>
             </div>
-          `
+
+            ${option.show
+                ? key === 'entities'
+                    ? this.renderEntities(option)
+                    : html`
+                    <div class="values">
+                    ${option.properties.map(property => this.renderProperty(property))}
+                    </div>`
                 : ''}
-    `;
+            `;
     }
 
     private renderProperty(property: UnionProperty): TemplateResult {
@@ -112,10 +125,10 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
     private renderTextProperty(property: TextProperty): TemplateResult {
         return html`
         <br />
-      <mwc-textfield
+        <mwc-textfield
+        class="mwc-text-field"
 		label=${property.label}
-        placeholder=${property.default || ''}
-		.value="${this.getPropertyValue(property)}
+	    .value=${this.getPropertyValue(property)}
 		.configValue=${property.name}
 		@input=${this._valueChanged}
 	  ></mwc-textfield>
@@ -126,8 +139,8 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         return html`
         <br />
       <mwc-textfield
+        class="mwc-text-field"
 		label=${property.label}
-        placeholder=${property.default || ''}
 		type="number"
 	    .value=${this.getPropertyValue(property)}
 		.configValue=${property.name}
@@ -200,6 +213,13 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         const defaultModes: string[] = ['Event', 'Calendar'];
 
         this.options = {
+            entities: {
+                icon: 'tune',
+                name: localize('required.name'),
+                description: localize('required.secondary'),
+                show: false,
+                properties: []
+            },
             main: {
                 icon: 'eye-settings',
                 name: localize('main.name'),
@@ -210,6 +230,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'text',
                         name: 'name',
                         label: localize('main.fields.name'),
+                        default: this._config.name
                     },
                     {
                         type: 'number',
@@ -281,6 +302,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'text',
                         name: 'cardHeight',
                         label: localize('main.fields.cardHeight'),
+                        default: this._config.cardHeight
                     },
                     {
                         type: 'switch',
@@ -396,6 +418,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'text',
                         name: 'hiddenEventText',
                         label: localize('event.fields.hiddenEventText'),
+                        default: this._config.hiddenEventText
                     },
                     {
                         type: 'switch',
@@ -611,7 +634,249 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         fireEvent(this, 'config-changed', { config: this._config });
     }
 
-    static get styles(): CSSResult {
-        return style;
+    /* TEMPORARY ENTITIES CODE, Needs reworking */
+    // ENTITY SETTINGS
+    get _entityOptions() {
+        const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
+        let entityOptions
+        if (typeof this._config?.entities != 'undefined') {
+            entityOptions = entities.map(eid => {
+                let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
+                const originalEntity = this.hass.states[eid];
+                if (matchingConfigEnitity === undefined) {
+
+                    matchingConfigEnitity = {
+                        entity: eid,
+                        name: originalEntity.attributes.friendly_name || eid,
+                        checked: !!matchingConfigEnitity
+                    }
+
+                } else {
+                    if (!('name' in matchingConfigEnitity)) {
+                        matchingConfigEnitity = { ...matchingConfigEnitity, name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid }
+                    }
+                    matchingConfigEnitity = { ...matchingConfigEnitity, checked: !!matchingConfigEnitity }
+
+                }
+                return matchingConfigEnitity
+            });
+        } else {
+            entityOptions = entities.map(eid => {
+                const originalEntity = this.hass.states[eid];
+                return {
+                    entity: eid,
+                    name: originalEntity.attributes.friendly_name || eid,
+                    checked: false
+                }
+            });
+        }
+        return entityOptions;
+    }
+    private renderEntities(option: Option): TemplateResult | void {
+        console.log(option)
+        return html`<div class="values">
+						${this._entityOptions.map(entity => {
+            return html`
+								  <div>
+								  	<mwc-switch
+										.checked=${entity.checked}
+										.entityId=${entity.entity}
+										@change="${this._entityChanged}"
+									></mwc-switch>
+									<label class="mdc-label">${entity.entity}</label>
+									${entity.checked ? html`
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+												label="Name"
+												.value="${entity.name}"
+												.configValue=${'name'}
+												.entityId="${entity.entity}"
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+											<mwc-textfield
+												label="Icon"
+												.value="${entity.icon === undefined ? '' : entity.icon}"
+												.configValue=${'icon'}
+												.entityId="${entity.entity}"
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+												label="startTimeFilter"
+												.value="${entity.startTimeFilter === undefined ? '' : entity.startTimeFilter}"
+												.configValue=${'startTimeFilter'}
+												.entityId="${entity.entity}"
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+											<mwc-textfield
+												label="endTimeFilter"
+												.value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
+												.configValue=${'endTimeFilter'}
+												.entityId="${entity.entity}"
+												@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+											label="maxDaysToShow"
+											.value="${entity.maxDaysToShow === undefined ? '' : entity.maxDaysToShow}"
+											.configValue=${'maxDaysToShow'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+											<mwc-textfield
+											label="showMultiDay"
+											.value="${entity.showMultiDay === undefined ? '' : entity.showMultiDay}"
+											.configValue=${'showMultiDay'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+											label="blocklist"
+											.value="${entity.blocklist === undefined ? '' : entity.blocklist}"
+											.configValue=${'blocklist'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+											<mwc-textfield
+											label="blocklistLocation"
+											.value="${entity.blocklistLocation === undefined ? '' : entity.blocklistLocation}"
+											.configValue=${'blocklistLocation'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+											label="allowlist"
+											.value="${entity.allowlist === undefined ? '' : entity.allowlist}"
+											.configValue=${'allowlist'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+											<mwc-textfield
+											label="allowlistLocation"
+											.value="${entity.allowlistLocation === undefined ? '' : entity.allowlistLocation}"
+											.configValue=${'allowlistLocation'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+									</div>
+									<div class="side-by-side">
+										<div>
+											<mwc-textfield
+											label="eventTitle"
+											.value="${entity.eventTitle === undefined ? '' : entity.eventTitle}"
+											.configValue=${'eventTitle'}
+											.entityId="${entity.entity}"
+											@input="${this._entityValueChanged}"
+											></mwc-textfield>
+										</div>
+										<div>
+										</div>
+									</div>` : html``
+                }
+
+								  </div>
+								`;
+        })
+            }
+							</div>
+					  `;
+    }
+
+    get entities() {
+        const entities = [...(this._config.entities || [])];
+
+        // convert any legacy entity strings into objects
+        return entities.map(entity => {
+            if (entity.entity) {
+                return entity;
+            }
+            return { entity, name: entity };
+        });
+    }
+    /**
+    * change the entity configuration
+    * @param {*} ev
+    */
+    private _entityValueChanged(ev) {
+        if (this.cantFireEvent) {
+            return;
+        }
+
+        const { target } = ev
+        let entityObjects = [...this.entities];
+
+        entityObjects = entityObjects.map(entity => {
+            if (entity.entity === target.entityId) {
+                if (this[`_${target.configValue}`] === target.value) {
+                    return;
+                }
+                if (target.configValue && target.value === '') {
+                    delete entity[target.configValue];
+                    return entity;
+                } else {
+                    entity = {
+                        ...entity,
+                        [target.configValue]: target.checked !== undefined ? target.checked : (isNaN(target.value)) ? target.value : parseInt(target.value),
+                    }
+                }
+            }
+            return entity;
+        });
+
+        this._config = Object.assign({}, this._config, { entities: entityObjects });
+        fireEvent(this, 'config-changed', { config: this._config });
+    }
+    /**
+     * add or remove calendar entities from config
+     * @param {*} ev
+     */
+    private _entityChanged(ev) {
+        const { target } = ev;
+
+        if (this.cantFireEvent) {
+            return;
+        }
+        let entityObjects = [...this.entities];
+        if (target.checked) {
+            const originalEntity = this.hass.states[target.entityId];
+            entityObjects.push({ entity: target.entityId, name: originalEntity.attributes.friendly_name || target.entityId });
+        } else {
+            entityObjects = entityObjects.filter(entity => entity.entity !== target.entityId);
+        }
+
+        this._config = Object.assign({}, this._config, { entities: entityObjects });
+        fireEvent(this, 'config-changed', { config: this._config });
+    }
+    /**
+    * stop events from firing if certains conditions not met
+    */
+    get cantFireEvent() {
+        return (!this._config || !this.hass);
     }
 }
