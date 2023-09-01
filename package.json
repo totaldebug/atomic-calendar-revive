@@ -72,7 +72,7 @@
 		"dayjs": "^1.11.9",
 		"lit": "^2.8.0",
 		"lit-element": "^3.3.3",
-		"npm": "^9.8.1",
+		"npm": "^10.0.0",
 		"typescript": "^5.2.2"
 	},
 	"resolutions": {
