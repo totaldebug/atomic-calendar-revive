@@ -639,7 +639,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
     get _entityOptions() {
         const entities = Object.keys(this.hass.states).filter(eid => eid.substr(0, eid.indexOf('.')) === 'calendar');
         let entityOptions
-        if (typeof this._config?.entities != 'undefined') {
+        if (typeof this._config?.entities != 'undefined' || typeof this._config?.entities != null) {
             entityOptions = entities.map(eid => {
                 let matchingConfigEnitity = this._config?.entities.find(entity => (entity && entity.entity || entity) === eid);
                 const originalEntity = this.hass.states[eid];
@@ -648,14 +648,14 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                     matchingConfigEnitity = {
                         entity: eid,
                         name: originalEntity.attributes.friendly_name || eid,
-                        checked: !!matchingConfigEnitity
+                        entityChecked: !!matchingConfigEnitity
                     }
 
                 } else {
                     if (!('name' in matchingConfigEnitity)) {
                         matchingConfigEnitity = { ...matchingConfigEnitity, name: (matchingConfigEnitity && matchingConfigEnitity.name) || originalEntity.attributes.friendly_name || eid }
                     }
-                    matchingConfigEnitity = { ...matchingConfigEnitity, checked: !!matchingConfigEnitity }
+                    matchingConfigEnitity = { ...matchingConfigEnitity, entityChecked: !!matchingConfigEnitity }
 
                 }
                 return matchingConfigEnitity
@@ -666,7 +666,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                 return {
                     entity: eid,
                     name: originalEntity.attributes.friendly_name || eid,
-                    checked: false
+                    entityChecked: false
                 }
             });
         }
@@ -677,127 +677,134 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         return html`<div class="values">
 						${this._entityOptions.map(entity => {
             return html`
-								  <div>
+								  <div class="entity-box">
 								  	<mwc-switch
-										.checked=${entity.checked}
+										.checked=${entity.entityChecked}
 										.entityId=${entity.entity}
 										@change="${this._entityChanged}"
 									></mwc-switch>
 									<label class="mdc-label">${entity.entity}</label>
-									${entity.checked ? html`
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-												label="Name"
-												.value="${entity.name}"
-												.configValue=${'name'}
-												.entityId="${entity.entity}"
-												@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-											<mwc-textfield
-												label="Icon"
-												.value="${entity.icon === undefined ? '' : entity.icon}"
-												.configValue=${'icon'}
-												.entityId="${entity.entity}"
-												@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-									</div>
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-												label="startTimeFilter"
-												.value="${entity.startTimeFilter === undefined ? '' : entity.startTimeFilter}"
-												.configValue=${'startTimeFilter'}
-												.entityId="${entity.entity}"
-												@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-											<mwc-textfield
-												label="endTimeFilter"
-												.value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
-												.configValue=${'endTimeFilter'}
-												.entityId="${entity.entity}"
-												@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-									</div>
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-											label="maxDaysToShow"
-											.value="${entity.maxDaysToShow === undefined ? '' : entity.maxDaysToShow}"
-											.configValue=${'maxDaysToShow'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-											<mwc-textfield
-											label="showMultiDay"
-											.value="${entity.showMultiDay === undefined ? '' : entity.showMultiDay}"
-											.configValue=${'showMultiDay'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-									</div>
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-											label="blocklist"
-											.value="${entity.blocklist === undefined ? '' : entity.blocklist}"
-											.configValue=${'blocklist'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-											<mwc-textfield
-											label="blocklistLocation"
-											.value="${entity.blocklistLocation === undefined ? '' : entity.blocklistLocation}"
-											.configValue=${'blocklistLocation'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-									</div>
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-											label="allowlist"
-											.value="${entity.allowlist === undefined ? '' : entity.allowlist}"
-											.configValue=${'allowlist'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-											<mwc-textfield
-											label="allowlistLocation"
-											.value="${entity.allowlistLocation === undefined ? '' : entity.allowlistLocation}"
-											.configValue=${'allowlistLocation'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-									</div>
-									<div class="side-by-side">
-										<div>
-											<mwc-textfield
-											label="eventTitle"
-											.value="${entity.eventTitle === undefined ? '' : entity.eventTitle}"
-											.configValue=${'eventTitle'}
-											.entityId="${entity.entity}"
-											@input="${this._entityValueChanged}"
-											></mwc-textfield>
-										</div>
-										<div>
-										</div>
-									</div>` : html``
+									${entity.entityChecked ? html`
+                                    <div class="entity-options">
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                    label="Name"
+                                                    .value="${entity.name}"
+                                                    .configValue=${'name'}
+                                                    .entityId="${entity.entity}"
+                                                    @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                                <mwc-textfield
+                                                    label="Icon"
+                                                    .value="${entity.icon === undefined ? '' : entity.icon}"
+                                                    .configValue=${'icon'}
+                                                    .entityId="${entity.entity}"
+                                                    @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                    label="startTimeFilter"
+                                                    .value="${entity.startTimeFilter === undefined ? '' : entity.startTimeFilter}"
+                                                    .configValue=${'startTimeFilter'}
+                                                    .entityId="${entity.entity}"
+                                                    @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                                <mwc-textfield
+                                                    label="endTimeFilter"
+                                                    .value="${entity.endTimeFilter === undefined ? '' : entity.endTimeFilter}"
+                                                    .configValue=${'endTimeFilter'}
+                                                    .entityId="${entity.entity}"
+                                                    @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                label="maxDaysToShow"
+                                                .value="${entity.maxDaysToShow === undefined ? '' : entity.maxDaysToShow}"
+                                                .configValue=${'maxDaysToShow'}
+                                                .entityId="${entity.entity}"
+                                                type="number"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                label="blocklist"
+                                                .value="${entity.blocklist === undefined ? '' : entity.blocklist}"
+                                                .configValue=${'blocklist'}
+                                                .entityId="${entity.entity}"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                                <mwc-textfield
+                                                label="blocklistLocation"
+                                                .value="${entity.blocklistLocation === undefined ? '' : entity.blocklistLocation}"
+                                                .configValue=${'blocklistLocation'}
+                                                .entityId="${entity.entity}"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                label="allowlist"
+                                                .value="${entity.allowlist === undefined ? '' : entity.allowlist}"
+                                                .configValue=${'allowlist'}
+                                                .entityId="${entity.entity}"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                                <mwc-textfield
+                                                label="allowlistLocation"
+                                                .value="${entity.allowlistLocation === undefined ? '' : entity.allowlistLocation}"
+                                                .configValue=${'allowlistLocation'}
+                                                .entityId="${entity.entity}"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-textfield
+                                                label="eventTitle"
+                                                .value="${entity.eventTitle === undefined ? '' : entity.eventTitle}"
+                                                .configValue=${'eventTitle'}
+                                                .entityId="${entity.entity}"
+                                                @input="${this._entityValueChanged}"
+                                                ></mwc-textfield>
+                                            </div>
+                                            <div>
+                                            </div>
+                                        </div>
+                                        <div class="side-by-side">
+                                            <div>
+                                                <mwc-switch
+                                                    .checked=${entity.showMultiDay !== false}
+                                                    .configValue=${'showMultiDay'}
+                                                    .entityId="${entity.entity}"
+                                                    @change=${this._entityValueChanged}
+                                                ></mwc-switch>
+                                                <label class="mdc-label">showMultiDay</label>
+                                            </div>
+                                        </div>
+                                    </div>` : html``
                 }
 
 								  </div>
@@ -830,19 +837,20 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
         const { target } = ev
         let entityObjects = [...this.entities];
-
         entityObjects = entityObjects.map(entity => {
-            if (entity.entity === target.entityId) {
-                if (this[`_${target.configValue}`] === target.value) {
-                    return;
-                }
-                if (target.configValue && target.value === '') {
+            if (entity.entity === target.entityId && target.configValue) {
+                if ((target.value === undefined && target.checked === undefined) || target.value === '') {
                     delete entity[target.configValue];
                     return entity;
-                } else {
+                }
+                else {
+                    const key = target.configValue;
+                    const rawValue = target.checked !== undefined ? target.checked : (isNaN(target.value)) ? target.value : parseInt(target.value);
+                    const value = target.number ? parseFloat(rawValue) : rawValue;
+
                     entity = {
                         ...entity,
-                        [target.configValue]: target.checked !== undefined ? target.checked : (isNaN(target.value)) ? target.value : parseInt(target.value),
+                        [key]: value,
                     }
                 }
             }
