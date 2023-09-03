@@ -1,6 +1,6 @@
 import dayjs, { Dayjs } from "dayjs";
 import { html } from "lit";
-import { atomicCardConfig } from "../types";
+import { atomicCardConfig } from "../types/config";
 import EventClass from "./event.class";
 
 export function showCalendarLink(config, selectedMonth) {

@@ -465,7 +465,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						<ha-icon icon=${`mdi:${options.main.icon}`}></ha-icon>
 						<div class="title">${localize('main.name')}</div>
 					</div>
-					<div class="secondary">${localize('main.secondary')}</div>
+					<div class="secondary">${l${localize('main.name')}}</div>
 				</div>
 				${options.main.show
 				? html`

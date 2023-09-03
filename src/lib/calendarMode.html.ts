@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { atomicCardConfig } from '../types';
+import { atomicCardConfig } from '../types/config';
 import CalendarDay from './calendar.class';
 import { isHtml } from './common.html';
 import EventClass from './event.class';

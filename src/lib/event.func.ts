@@ -2,8 +2,8 @@ import { computeStateDomain, HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
-import { AtomicCalendarReviveEditor } from '../index-editor';
-import { atomicCardConfig, EntityConfig } from '../types';
+import { atomicCardConfig } from '../types/config';
+import { EntityConfig } from '../types';
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
 
