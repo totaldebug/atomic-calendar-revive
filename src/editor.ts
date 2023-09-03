@@ -97,7 +97,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
             ${option.show
                 ? key === 'entities'
-                    ? this.renderEntities(option)
+                    ? this.renderEntities()
                     : html`
                     <div class="values">
                     ${option.properties.map(property => this.renderProperty(property))}
@@ -128,7 +128,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         <mwc-textfield
         class="mwc-text-field"
 		label=${property.label}
-	    .value=${this.getPropertyValue(property)}
+	    .value=${ this.getPropertyValue(property)}
 		.configValue=${property.name}
 		@input=${this._valueChanged}
 	  ></mwc-textfield>
@@ -672,8 +672,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         }
         return entityOptions;
     }
-    private renderEntities(option: Option): TemplateResult | void {
-        console.log(option)
+    private renderEntities(): TemplateResult | void {
         return html`<div class="values">
 						${this._entityOptions.map(entity => {
             return html`
