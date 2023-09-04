@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master  # Change this to your main branch name
-
+  workflow_dispatch:
 jobs:
   release:
     runs-on: ubuntu-latest
