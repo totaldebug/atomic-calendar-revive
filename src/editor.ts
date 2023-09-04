@@ -53,7 +53,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         const customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
         this._config = {
-            ...defaultConfig,
             ...customConfig,
         };
 
@@ -128,7 +127,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         <mwc-textfield
         class="mwc-text-field"
 		label=${property.label}
-	    .value=${ this.getPropertyValue(property)}
+	    .value=${this.getPropertyValue(property) || property.default || ''}
 		.configValue=${property.name}
 		@input=${this._valueChanged}
 	  ></mwc-textfield>
@@ -142,7 +141,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
         class="mwc-text-field"
 		label=${property.label}
 		type="number"
-	    .value=${this.getPropertyValue(property)}
+	    .value=${this.getPropertyValue(property) || property.default}
 		.configValue=${property.name}
         .number=${true}
 		@input=${this._valueChanged}
@@ -230,7 +229,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'text',
                         name: 'name',
                         label: localize('main.fields.name'),
-                        default: this._config.name
                     },
                     {
                         type: 'number',
@@ -238,6 +236,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         label: localize('main.fields.titleLength'),
                         min: 0,
                         max: 99999999999,
+                        default: defaultConfig.titleLength
                     },
                     {
                         type: 'number',
@@ -245,13 +244,15 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         label: localize('main.fields.descLength'),
                         min: 0,
                         max: 99999999999,
+                        default: defaultConfig.descLength
                     },
                     {
                         type: 'number',
                         name: 'firstDayOfWeek',
                         label: localize('main.fields.firstDayOfWeek'),
                         min: 0,
-                        max: 6
+                        max: 6,
+                        default: defaultConfig.firstDayOfWeek
                     },
                     {
                         type: 'number',
@@ -259,6 +260,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         label: localize('main.fields.maxDaysToShow'),
                         min: 0,
                         max: 99999999999,
+                        default: defaultConfig.maxDaysToShow
                     },
                     {
                         type: 'number',
@@ -266,11 +268,13 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         label: localize('main.fields.refreshInterval'),
                         min: 60,
                         max: 99999999999,
+                        default: defaultConfig.refreshInterval
                     },
                     {
                         type: 'text',
                         name: 'dateFormat',
-                        label: localize('main.fields.dateFormat')
+                        label: localize('main.fields.dateFormat'),
+                        default: defaultConfig.dateFormat
                     },
                     {
                         type: 'text',
@@ -288,7 +292,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         name: 'defaultMode',
                         section: 'main',
                         label: localize('main.fields.defaultMode'),
-                        selected: defaultModes.indexOf(this._config.defaultMode),
+                        selected: defaultModes.indexOf(this._config.defaultMode || defaultConfig.defaultMode),
                     },
                     {
                         type: 'dropdown',
@@ -296,97 +300,94 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         name: 'linkTarget',
                         section: 'main',
                         label: localize('main.fields.linkTarget'),
-                        selected: defaultModes.indexOf(this._config.linkTarget),
+                        selected: linkTargets.indexOf(this._config.linkTarget || defaultConfig.linkTarget),
                     },
                     {
                         type: 'text',
                         name: 'cardHeight',
                         label: localize('main.fields.cardHeight'),
-                        default: this._config.cardHeight
+                        default: defaultConfig.cardHeight
                     },
                     {
                         type: 'switch',
                         name: 'showLoader',
                         label: localize('main.fields.showLoader'),
-                        default: this._config.showLoader,
+                        default: defaultConfig.showLoader,
                     },
                     {
                         type: 'switch',
                         name: 'showDate',
                         label: localize('main.fields.showDate'),
-                        default: this._config.showDate,
+                        default: defaultConfig.showDate,
                     },
                     {
                         type: 'switch',
                         name: 'showDeclined',
                         label: localize('main.fields.showDeclined'),
-                        default: this._config.showDeclined,
                     },
                     {
                         type: 'switch',
                         name: 'sortByStartTime',
                         label: localize('main.fields.sortByStartTime'),
-                        default: this._config.sortByStartTime,
+                        default: defaultConfig.sortByStartTime,
                     },
                     {
                         type: 'switch',
                         name: 'hideFinishedEvents',
                         label: localize('main.fields.hideFinishedEvents'),
-                        default: this._config.hideFinishedEvents,
+                        default: defaultConfig.hideFinishedEvents,
                     },
                     {
                         type: 'switch',
                         name: 'showLocation',
                         label: localize('main.fields.showLocation'),
-                        default: this._config.showLocation,
+                        default: defaultConfig.showLocation,
                     },
                     {
                         type: 'switch',
                         name: 'showRelativeTime',
                         label: localize('main.fields.showRelativeTime'),
-                        default: this._config.showRelativeTime,
+                        default: defaultConfig.showRelativeTime,
                     },
                     {
                         type: 'switch',
                         name: 'hideDuplicates',
                         label: localize('main.fields.hideDuplicates'),
-                        default: this._config.hideDuplicates,
+                        default: defaultConfig.hideDuplicates,
                     },
                     {
                         type: 'switch',
                         name: 'showMultiDay',
                         label: localize('main.fields.showMultiDay'),
-                        default: this._config.showMultiDay,
+                        default: defaultConfig.showMultiDay,
                     },
                     {
                         type: 'switch',
                         name: 'showMultiDayEventParts',
                         label: localize('main.fields.showMultiDayEventParts'),
-                        default: this._config.showMultiDayEventParts,
+                        default: defaultConfig.showMultiDayEventParts,
                     },
                     {
                         type: 'switch',
                         name: 'compactMode',
                         label: localize('main.fields.compactMode'),
-                        default: this._config.compactMode,
                     },
                     {
                         type: 'switch',
                         name: 'hoursOnSameLine',
                         label: localize('main.fields.hoursOnSameLine'),
-                        default: this._config.hoursOnSameLine,
                     },
                     {
                         type: 'switch',
                         name: 'showAllDayEvents',
                         label: localize('main.fields.showAllDayEvents'),
-                        default: this._config.showAllDayEvents,
+                        default: defaultConfig.showAllDayEvents,
                     },
                     {
                         type: 'switch',
                         name: 'offsetHeaderDate',
                         label: localize('main.fields.offsetHeaderDate'),
-                        default: this._config.offsetHeaderDate,
+                        default: defaultConfig.offsetHeaderDate,
                     },
                 ],
             },
@@ -400,127 +401,126 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'text',
                         name: 'untilText',
                         label: localize('event.fields.untilText'),
-                        default: this._config.untilText
+                        default: defaultConfig.untilText
                     },
                     {
                         type: 'text',
                         name: 'noEventsForNextDaysText',
                         label: localize('event.fields.noEventsForNextDaysText'),
-                        default: this._config.noEventsForNextDaysText
+                        default: defaultConfig.noEventsForNextDaysText
                     },
                     {
                         type: 'text',
                         name: 'noEventText',
                         label: localize('event.fields.noEventText'),
-                        default: this._config.noEventText
+                        default: defaultConfig.noEventText
                     },
                     {
                         type: 'text',
                         name: 'hiddenEventText',
                         label: localize('event.fields.hiddenEventText'),
-                        default: this._config.hiddenEventText
+                        default: defaultConfig.hiddenEventText
                     },
                     {
                         type: 'switch',
                         name: 'showCurrentEventLine',
                         label: localize('event.fields.showCurrentEventLine'),
-                        default: this._config.showCurrentEventLine,
+                        default: defaultConfig.showCurrentEventLine,
                     },
                     {
                         type: 'switch',
                         name: 'showProgressBar',
                         label: localize('event.fields.showProgressBar'),
-                        default: this._config.showProgressBar,
+                        default: defaultConfig.showProgressBar,
                     },
                     {
                         type: 'switch',
                         name: 'showMonth',
                         label: localize('event.fields.showMonth'),
-                        default: this._config.showMonth,
+                        default: defaultConfig.showMonth,
                     },
                     {
                         type: 'switch',
                         name: 'showWeekDay',
                         label: localize('event.fields.showWeekDay'),
-                        default: this._config.showWeekDay,
+                        default: defaultConfig.showWeekDay,
                     },
                     {
                         type: 'switch',
                         name: 'showDescription',
                         label: localize('event.fields.showDescription'),
-                        default: this._config.showDescription,
+                        default: defaultConfig.showDescription,
                     },
                     {
                         type: 'switch',
                         name: 'disableEventLink',
                         label: localize('event.fields.disableEventLink'),
-                        default: this._config.disableEventLink,
+                        default: defaultConfig.disableEventLink,
                     },
                     {
                         type: 'switch',
                         name: 'disableLocationLink',
                         label: localize('event.fields.disableLocationLink'),
-                        default: this._config.disableLocationLink,
+                        default: defaultConfig.disableLocationLink,
                     },
                     {
                         type: 'switch',
                         name: 'showNoEventsForToday',
                         label: localize('event.fields.showNoEventsForToday'),
-                        default: this._config.showNoEventsForToday,
+                        default: defaultConfig.showNoEventsForToday,
                     },
                     {
                         type: 'switch',
                         name: 'showFullDayProgress',
                         label: localize('event.fields.showFullDayProgress'),
-                        default: this._config.showFullDayProgress,
+                        default: defaultConfig.showFullDayProgress,
                     },
                     {
                         type: 'switch',
                         name: 'showEventIcon',
                         label: localize('event.fields.showEventIcon'),
-                        default: this._config.showEventIcon,
+                        default: defaultConfig.showEventIcon,
                     },
                     {
                         type: 'switch',
                         name: 'showHiddenText',
                         label: localize('event.fields.showHiddenText'),
-                        default: this._config.showHiddenText,
+                        default: defaultConfig.showHiddenText,
                     },
                     {
                         type: 'switch',
                         name: 'showCalendarName',
                         label: localize('event.fields.showCalendarName'),
-                        default: this._config.showCalendarName,
+                        default: defaultConfig.showCalendarName,
                     },
                     {
                         type: 'switch',
                         name: 'showWeekNumber',
                         label: localize('event.fields.showWeekNumber'),
-                        default: this._config.showWeekNumber,
+                        default: defaultConfig.showWeekNumber,
                     },
                     {
                         type: 'switch',
                         name: 'showEventDate',
                         label: localize('event.fields.showEventDate'),
-                        default: this._config.showEventDate,
+                        default: defaultConfig.showEventDate,
                     },
                     {
                         type: 'switch',
                         name: 'showDatePerEvent',
                         label: localize('event.fields.showDatePerEvent'),
-                        default: this._config.showDatePerEvent,
+                        default: defaultConfig.showDatePerEvent,
                     },
                     {
                         type: 'switch',
                         name: 'showTimeRemaining',
                         label: localize('event.fields.showTimeRemaining'),
-                        default: this._config.showTimeRemaining,
                     },
                     {
                         type: 'switch',
                         name: 'showAllDayHours',
                         label: localize('event.fields.showAllDayHours'),
-                        default: this._config.showAllDayHours,
+                        default: defaultConfig.showAllDayHours,
                     },
                 ],
             },
@@ -534,31 +534,27 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'switch',
                         name: 'calShowDescription',
                         label: localize('calendar.fields.calShowDescription'),
-                        default: this._config.calShowDescription,
                     },
                     {
                         type: 'switch',
                         name: 'showLastCalendarWeek',
                         label: localize('calendar.fields.showLastCalendarWeek'),
-                        default: this._config.showLastCalendarWeek,
+                        default: defaultConfig.showLastCalendarWeek,
                     },
                     {
                         type: 'switch',
                         name: 'disableCalEventLink',
                         label: localize('calendar.fields.disableCalEventLink'),
-                        default: this._config.disableCalEventLink,
                     },
                     {
                         type: 'switch',
                         name: 'disableCalLocationLink',
                         label: localize('calendar.fields.disableCalLocationLink'),
-                        default: this._config.disableCalLocationLink,
                     },
                     {
                         type: 'switch',
                         name: 'disableCalLink',
                         label: localize('calendar.fields.disableCalLink'),
-                        default: this._config.disableCalLink,
                     },
                 ],
             },
@@ -572,7 +568,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'switch',
                         name: 'dimFinishedEvents',
                         label: localize('appearance.fields.dimFinishedEvents'),
-                        default: this._config.dimFinishedEvents,
+                        default: defaultConfig.dimFinishedEvents,
                     },
                 ],
             },
