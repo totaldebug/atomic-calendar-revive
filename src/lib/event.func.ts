@@ -299,10 +299,10 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		if (config.showMultiDay && newEvent.isMultiDay) {
 			const partialEvents = newEvent.splitIntoMultiDay(newEvent);
 			events = events.concat(partialEvents);
+
 		} else {
 			events.push(newEvent);
 		}
-
 		return events;
 	}, []);
 
