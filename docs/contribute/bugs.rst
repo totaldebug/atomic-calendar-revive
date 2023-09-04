@@ -4,7 +4,7 @@ Reporting Bugs
 
 This section guides you through submitting a bug report for Atomic Calendar Revive.
 Following these guidelines helps maintainers and the community understand your report
-:pencil:, reproduce the behavior :computer: :computer:, and find related reports
+:pencil:, reproduce the behaviour :computer: :computer:, and find related reports
 :mag_right:.
 
 Before creating bug reports, please check the below information as you might find out
@@ -41,9 +41,9 @@ Explain the problem and include additional details to help maintainers reproduce
 
 - **Use a clear and descriptive title** for the issue to identify the problem.
 - **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you installed the plugin. When listing steps, **don't just say what you did, but explain how you did it**. For example, did you use the Lovelace Editor or do the change in YAML directly.
-- **Provide specific examples to demonstrate the steps**. Include screenshots, or copy/pasteable configuration snippets, which you use in those examples. If you're providing snippets in the issue, use `Markdown code blocks <https://help.github.com/articles/markdown-basics/#multiple-lines>`_.
-- **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
-- **Explain which behavior you expected to see instead and why.**
+- **Provide specific examples to demonstrate the steps**. Include screenshots, or copy/paste configuration snippets, which you use in those examples. If you're providing snippets in the issue, use `Markdown code blocks <https://help.github.com/articles/markdown-basics/#multiple-lines>`_.
+- **Describe the behaviour you observed after following the steps** and point out what exactly is the problem with that behaviour.
+- **Explain which behaviour you expected to see instead and why.**
 - **Include screenshots and animated GIFs** which show you following the described steps and clearly demonstrate the problem.
 - **If Chrome's developer tools pane is showing errors**, include these in your report
 - **If the problem wasn't triggered by a specific action**, describe what you were doing before the problem happened and share more information using the guidelines below.
