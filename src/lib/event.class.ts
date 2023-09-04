@@ -95,9 +95,13 @@ export default class EventClass {
 	}
 
 	get daysLong() {
-		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
+		if (this._globalConfig.showMultiDay) {
+			return this.rawEvent.daysLong;
+		} else {
+			const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
 
-		return fullDays > 1 ? fullDays : undefined;
+			return fullDays > 1 ? fullDays : undefined;
+		}
 	}
 
 	get isFirstDay() {
@@ -221,7 +225,7 @@ export default class EventClass {
 		}
 
 		// check for days that are between multi days - they ARE all day
-		if (!this.isFirstDay && !this.isLastDay && this.daysLong) {
+		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this._globalConfig.showMultiDay) {
 			return true;
 		}
 
@@ -240,7 +244,6 @@ export default class EventClass {
 		// TODO: Confirm this works as expected
 		let daysLong = 2;
 		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
-
 		if (fullDays) {
 			daysLong = fullDays;
 		}
@@ -252,7 +255,7 @@ export default class EventClass {
 			copiedEvent.daysLong = daysLong;
 
 			copiedEvent._isFirstDay = i === 0;
-			copiedEvent._isLastDay = i <= daysLong - 1 && i > 0;
+			copiedEvent._isLastDay = i === (daysLong - 1) && i > 0;
 
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);

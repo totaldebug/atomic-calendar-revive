@@ -78,7 +78,7 @@ Testing
 
 There are no automated tests for this project, however it is expected that any
 development work is tested against a HA Server with both CalDav and Google Calendar
-attached, this ensures no advers impact is added with the feature or bugfix.
+attached, this ensures no adverse impact is added with the feature or bugfix.
 
 **********
 Versioning
@@ -90,7 +90,7 @@ This project follows `Semantic Versioning <http://semver.org>`_
 
 In the context of semantic versioning, the following should apply:
 
-* **Major** - A breaking change that requires user invervention, or a change to a
+* **Major** - A breaking change that requires user intervention, or a change to a
   default value.
 * **Minor** - A change that does not require intervention, or adds additional
   functionality in a backwards compatible manner.
@@ -113,7 +113,7 @@ Once you are happy with the changes, these can be committed:
 .. note::
 
     Commit messages should follow `conventional commits <https://www.conventionalcommits.org/en/v1.0.0/>`_
-    this ensures clear commit messages within the repository.
+    this ensures clear commit messages within the repository. Without this your change will be rejected as it is required for release.
 
 
 *******************
