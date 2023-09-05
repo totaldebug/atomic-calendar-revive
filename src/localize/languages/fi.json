@@ -104,7 +104,6 @@
 			"secondary": "Yleiset väriasetukset"
 		},
 		"fields": {
-			"locationLinkColor": "Sijaintilinkin väri:",
 			"dimFinishedEvents": "Himmennä päättyneet tapahtumat?"
 		}
 	}

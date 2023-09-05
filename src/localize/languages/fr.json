@@ -104,7 +104,6 @@
 			"secondary": "Paramètres globaux de couleur"
 		},
 		"fields": {
-			"locationLinkColor": "Couleur du lien d'un lieu:",
 			"dimFinishedEvents": "Diminuer la visibilité des événements terminés?"
 		}
 	}

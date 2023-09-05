@@ -104,7 +104,6 @@
             "secondary": "Global indstillinger for farver"
         },
         "fields": {
-            "locationLinkColor": "Placerings link farve:",
             "dimFinishedEvents": "Nedtone overståede aftaler?"
         }
     }

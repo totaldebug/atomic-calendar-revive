@@ -104,7 +104,6 @@
 			"secondary": "Valg som virker globalt"
 		},
 		"fields": {
-			"locationLinkColor": "Farge for posjonslenke:",
 			"dimFinishedEvents": "Tone ned avsluttede hendelser?"
 		}
 	}

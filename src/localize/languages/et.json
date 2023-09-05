@@ -102,7 +102,6 @@
 			"secondary": "Üldised värvuse sätted"
 		},
 		"fields": {
-			"locationLinkColor": "Asukohaviite värv:",
 			"dimFinishedEvents": "Kas tumendada lõppenud sündmused?"
 		}
 	}

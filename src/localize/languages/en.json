@@ -106,7 +106,6 @@
 			"secondary": "Global Color Settings"
 		},
 		"fields": {
-			"locationLinkColor": "Location Link Color:",
 			"dimFinishedEvents": "Dim finished events?"
 		}
 	}

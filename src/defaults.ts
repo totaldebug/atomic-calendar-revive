@@ -57,7 +57,6 @@ export default {
 	eventTitleSize: 100,
 
 	locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
-	locationLinkColor: 'var(--primary-text-color)',
 	locationTextSize: 90,
 
 	// finished events settings

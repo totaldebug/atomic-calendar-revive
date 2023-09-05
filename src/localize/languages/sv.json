@@ -102,7 +102,6 @@
 			"secondary": "Globala färginställningar"
 		},
 		"fields": {
-			"locationLinkColor": "Färg för platslänk:",
 			"dimFinishedEvents": "Dimma slutförda händelser?"
 		}
 	}

@@ -104,7 +104,6 @@
             "secondary": "Glavne barvne nastavitve"
         },
         "fields": {
-            "locationLinkColor": "Barva povezave do lokacije:",
             "dimFinishedEvents": "Zatemniti končane dogodke?"
         }
     }
