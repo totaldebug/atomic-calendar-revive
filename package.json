@@ -67,6 +67,7 @@
 		"@material/mwc-select": "^0.27.0",
 		"@material/mwc-switch": "^0.27.0",
 		"@material/mwc-textfield": "^0.27.0",
+		"@mdi/js": "^7.2.96",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"custom-card-helpers": "^1.9.0",
 		"dayjs": "^1.11.9",
