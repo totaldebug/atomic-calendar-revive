@@ -53,7 +53,10 @@
 			"compactMode": "Kompaktrežiimi lubamine",
 			"hoursOnSameLine": "Näidake sündmuse reale tundi",
 			"titleLength": "Pealkirja maksimaalne pikkus (0 piiramatu jaoks)",
-			"descLength": "Kirjelduse maksimaalne pikkus (0 piiramatu puhul)"
+			"descLength": "Kirjelduse maksimaalne pikkus (0 piiramatu puhul)",
+			"showAllDayEvents": "Näita kogu päeva sündmusi",
+			"offsetHeaderDate": "Nihke päise kuupäev",
+			"startDaysAhead": "Sündmused alates tänasest `x` päeva pärast"
 		}
 	},
 	"event": {

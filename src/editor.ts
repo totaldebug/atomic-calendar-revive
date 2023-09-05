@@ -264,6 +264,14 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                     },
                     {
                         type: 'number',
+                        name: 'startDaysAhead',
+                        label: localize('main.fields.startDaysAhead'),
+                        min: 0,
+                        max: 999,
+                        default: defaultConfig.startDaysAhead
+                    },
+                    {
+                        type: 'number',
                         name: 'refreshInterval',
                         label: localize('main.fields.refreshInterval'),
                         min: 60,

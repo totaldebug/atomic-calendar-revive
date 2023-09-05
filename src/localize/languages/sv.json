@@ -53,7 +53,10 @@
 			"compactMode": "Aktivera kompakt läge",
 			"hoursOnSameLine": "Visa öppettider på evenemangsraden",
 			"titleLength": "Max titellängd (0 för obegränsat)",
-			"descLength": "Max beskrivningslängd (0 för obegränsat)"
+			"descLength": "Max beskrivningslängd (0 för obegränsat)",
+			"showAllDayEvents": "Visa heldagshändelser",
+			"offsetHeaderDate": "Offset rubrikdatum",
+			"startDaysAhead": "Händelser som börjar `x` dagar från och med idag"
 		}
 	},
 	"event": {

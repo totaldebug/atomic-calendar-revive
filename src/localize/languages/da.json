@@ -48,13 +48,16 @@
             "firstDayOfWeek": "Første dag i ugen 0-6",
             "cardHeight": "Højde på kort",
             "hideDuplicates": "Skjul dubletter",
-			"showMultiDay": "Opdelt flerdages begivenheder",
-			"showMultiDayEventParts": "Vis flere dages begivenhedsdele",
-			"eventTitle": "Indstil tom begivenhedstitel",
-			"compactMode": "Aktiver kompakt tilstand",
-			"hoursOnSameLine": "Vis timer på begivenhedslinjen",
-			"titleLength": "Max titellængde (0 for ubegrænset)",
-			"descLength": "Max beskrivelseslængde (0 for ubegrænset)"
+            "showMultiDay": "Opdelt flerdages begivenheder",
+            "showMultiDayEventParts": "Vis flere dages begivenhedsdele",
+            "eventTitle": "Indstil tom begivenhedstitel",
+            "compactMode": "Aktiver kompakt tilstand",
+            "hoursOnSameLine": "Vis timer på begivenhedslinjen",
+            "titleLength": "Max titellængde (0 for ubegrænset)",
+            "descLength": "Max beskrivelseslængde (0 for ubegrænset)",
+            "showAllDayEvents": "Vis heldagsbegivenheder",
+            "offsetHeaderDate": "Forskudt overskriftsdato",
+            "startDaysAhead": "Begivenheder starter `x` dage fra i dag"
         }
     },
     "event": {
@@ -77,12 +80,12 @@
             "showEventIcon": "Vis aftale ikon",
             "showHiddenText": "Vis skjulte aftaler tekst?",
             "hiddenEventText": "Tekst til skjulte aftaler:",
-			"showCalendarName": "Vis kalendernavn",
-			"showWeekNumber": "Vis ugenumre",
-			"showEventDate": "Vis dato for arrangementer",
-			"showDatePerEvent": "Vis dato ud for hver begivenhed",
-			"showTimeRemaining": "Vis resterende tid",
-			"showAllDayHours": "Vis Heldagsbegivenhedstekst"
+            "showCalendarName": "Vis kalendernavn",
+            "showWeekNumber": "Vis ugenumre",
+            "showEventDate": "Vis dato for arrangementer",
+            "showDatePerEvent": "Vis dato ud for hver begivenhed",
+            "showTimeRemaining": "Vis resterende tid",
+            "showAllDayHours": "Vis Heldagsbegivenhedstekst"
         }
     },
     "calendar": {
