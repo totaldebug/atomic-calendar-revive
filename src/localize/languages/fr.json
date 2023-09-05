@@ -54,7 +54,10 @@
 			"compactMode": "Activer le mode compact",
 			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement",
 			"titleLength": "Longueur maximale du titre (0 pour illimité)",
-			"descLength": "Longueur maximale de la description (0 pour illimité)"
+			"descLength": "Longueur maximale de la description (0 pour illimité)",
+			"showAllDayEvents": "Afficher les événements de la journée",
+			"offsetHeaderDate": "Date d'en-tête décalée",
+			"startDaysAhead": "Événements commençant `x` jours à partir d’aujourd’hui"
 		}
 	},
 	"event": {
@@ -104,7 +107,6 @@
 			"secondary": "Paramètres globaux de couleur"
 		},
 		"fields": {
-			"locationLinkColor": "Couleur du lien d'un lieu:",
 			"dimFinishedEvents": "Diminuer la visibilité des événements terminés?"
 		}
 	}

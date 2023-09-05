@@ -54,7 +54,10 @@
 			"compactMode": "Aktiver kompakt modus",
 			"hoursOnSameLine": "Vis timer på arrangementslinjen",
 			"titleLength": "Maks tittellengde (0 for ubegrenset)",
-			"descLength": "Maks beskrivelseslengde (0 for ubegrenset)"
+			"descLength": "Maks beskrivelseslengde (0 for ubegrenset)",
+			"showAllDayEvents": "Vis heldagsbegivenheter",
+			"offsetHeaderDate": "Offset overskriftsdato",
+			"startDaysAhead": "Arrangementer som starter `x` dager fra i dag"
 		}
 	},
 	"event": {
@@ -104,7 +107,6 @@
 			"secondary": "Valg som virker globalt"
 		},
 		"fields": {
-			"locationLinkColor": "Farge for posjonslenke:",
 			"dimFinishedEvents": "Tone ned avsluttede hendelser?"
 		}
 	}

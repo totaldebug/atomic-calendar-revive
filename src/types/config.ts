@@ -60,7 +60,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
     eventTitleColor?: string;
     eventTitleSize?: number;
     locationIconColor?: string;
-    locationLinkColor?: string;
     locationTextSize?: number;
 
     // finished events settings

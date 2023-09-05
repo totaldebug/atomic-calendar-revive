@@ -4,6 +4,7 @@ import { HomeAssistant, LovelaceCardEditor, getLovelace } from 'custom-card-help
 import { formatTime } from './helpers/format-time';
 import { groupEventsByDay, getEventMode, getCalendarMode } from './lib/event.func';
 import { styles } from './style';
+import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
 
 // DayJS for managing date information
 import dayjs from 'dayjs';
@@ -498,11 +499,11 @@ export class AtomicCalendarRevive extends LitElement {
 			<ha-icon-button
 				class="prev"
 				style="--mdc-icon-color: ${this._config.calDateColor}"
-				icon="mdi:chevron-left"
+				.path=${mdiChevronLeft}
+				.label=${this.hass.localize('ui.common.previous')}
 				@click="${() => this.handleMonthChange(-1)}"
-				title=${this.hass.localize('ui.common.previous')}
+
 			>
-				<ha-icon icon="mdi:chevron-left"></ha-icon>
 			</ha-icon-button>
 			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
 				${this.selectedMonth.format('MMMM')} ${this.selectedMonth.format('YYYY')}
@@ -510,11 +511,11 @@ export class AtomicCalendarRevive extends LitElement {
 			<ha-icon-button
 				class="next"
 				style="--mdc-icon-color: ${this._config.calDateColor}"
-				icon="mdi:chevron-right"
+				.path=${mdiChevronRight}
+				.label=${this.hass.localize('ui.common.next')}
 				@click="${() => this.handleMonthChange(1)}"
-				title=${this.hass.localize('ui.common.next')}
+
 			>
-				<ha-icon icon="mdi:chevron-right"></ha-icon>
 			</ha-icon-button>
 		</div>`;
 	}

@@ -2,16 +2,16 @@ import dayjs, { Dayjs } from "dayjs";
 import { html } from "lit";
 import { atomicCardConfig } from "../types/config";
 import EventClass from "./event.class";
+import { mdiCalendar } from "@mdi/js";
 
 export function showCalendarLink(config, selectedMonth) {
 	if (!config.disableCalLink) {
 		return html`<div class="calIconSelector">
 				<ha-icon-button
-					icon="mdi:calendar"
+					.path=${mdiCalendar}
           style="--mdc-icon-color: ${config.calDateColor}"
 					onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format('YYYY')}/${selectedMonth.format('MM')}/1'), '${config.linkTarget}'"
 				>
-					<ha-icon icon="mdi:calendar"></ha-icon>
 				</ha-icon-button>
 			</div>`;
 	}

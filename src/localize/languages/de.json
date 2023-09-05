@@ -47,13 +47,16 @@
             "firstDayOfWeek": "Erster Wochentag 0-6",
             "cardHeight": "Kartenhöhe",
             "hideDuplicates": "Duplikate ausblenden",
-			"showMultiDay": "Split meerdaagse evenementen",
-			"showMultiDayEventParts": "Toon meerdaagse evenementonderdelen",
-			"eventTitle": "Lege evenementtitel instellen",
-			"compactMode": "Schakel de compacte modus in",
-			"hoursOnSameLine": "Toon uren op de gebeurtenisregel",
-			"titleLength": "Maximale titellengte (0 voor onbeperkt)",
-			"descLength": "Maximale beschrijvingslengte (0 voor onbeperkt)"
+            "showMultiDay": "Split meerdaagse evenementen",
+            "showMultiDayEventParts": "Toon meerdaagse evenementonderdelen",
+            "eventTitle": "Lege evenementtitel instellen",
+            "compactMode": "Schakel de compacte modus in",
+            "hoursOnSameLine": "Toon uren op de gebeurtenisregel",
+            "titleLength": "Maximale titellengte (0 voor onbeperkt)",
+            "descLength": "Maximale beschrijvingslengte (0 voor onbeperkt)",
+            "showAllDayEvents": "Toon evenementen die de hele dag duren",
+            "offsetHeaderDate": "Datum koptekst verschuiven",
+            "startDaysAhead": "Evenementen die `x` dagen vanaf vandaag beginnen"
         }
     },
     "event": {
@@ -76,11 +79,11 @@
             "showEventIcon": "Ereignis-Symbol anzeigen?",
             "showHiddenText": "Versteckten Ereignistext anzeigen?",
             "hiddenEventText": "Text für versteckte Ereignisse",
-			"showCalendarName": "Toon agendanaam",
-			"showWeekNumber": "Toon weeknummers",
-			"showEventDate": "Toon datum voor evenementen",
-			"showDatePerEvent": "Toon datum naast elk evenement",
-			"showTimeRemaining": "Laat de resterende tijd zien",
+            "showCalendarName": "Toon agendanaam",
+            "showWeekNumber": "Toon weeknummers",
+            "showEventDate": "Toon datum voor evenementen",
+            "showDatePerEvent": "Toon datum naast elk evenement",
+            "showTimeRemaining": "Laat de resterende tijd zien",
             "showAllDayHours": "Toon de tekst van de hele dag-gebeurtenis"
         }
     },
@@ -103,7 +106,6 @@
             "secondary": "Globale Farbeinstellungen"
         },
         "fields": {
-            "locationLinkColor": "Farbe für Links zu Ortsangaben:",
             "dimFinishedEvents": "Erledigte Einträge blasser anzeigen?"
         }
     }

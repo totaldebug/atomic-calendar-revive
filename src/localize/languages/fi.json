@@ -14,7 +14,7 @@
 		"common": {
 			"previous": "Edellinen",
 			"next": "Seuraava",
-            "week": "Viikko"
+			"week": "Viikko"
 		}
 	},
 	"errors": {
@@ -54,7 +54,10 @@
 			"compactMode": "Ota kompakti tila käyttöön",
 			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä",
 			"titleLength": "Otsikon enimmäispituus (0 rajattomasti)",
-			"descLength": "Kuvauksen enimmäispituus (0 rajattomasti)"
+			"descLength": "Kuvauksen enimmäispituus (0 rajattomasti)",
+			"showAllDayEvents": "Näytä koko päivän tapahtumat",
+			"offsetHeaderDate": "Offset otsikon päivämäärä",
+			"startDaysAhead": "Tapahtumat alkavat `x` päivän kuluttua tästä päivästä"
 		}
 	},
 	"event": {
@@ -104,7 +107,6 @@
 			"secondary": "Yleiset väriasetukset"
 		},
 		"fields": {
-			"locationLinkColor": "Sijaintilinkin väri:",
 			"dimFinishedEvents": "Himmennä päättyneet tapahtumat?"
 		}
 	}
