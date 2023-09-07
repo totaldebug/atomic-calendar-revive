@@ -218,18 +218,20 @@ export default class EventClass {
 	 * @return {Boolean}
 	 */
 	get isAllDayEvent() {
-		const isMidnightStart = this.startDateTime.startOf('day').diff(this.startDateTime) === 0;
-		const isMidnightEnd = this.endDateTime.startOf('day').diff(this.endDateTime) === 0;
-		if (isMidnightStart && isMidnightEnd) {
+		// if start and end are both "date" then it's an all day event
+		if (this.rawEvent.start.date && this.rawEvent.end.date) {
 			return true;
 		}
-
 		// check for days that are between multi days - they ARE all day
 		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this._globalConfig.showMultiDay) {
 			return true;
 		}
+		// if start and end are both "dateTime" then it's NOT an all day event
+		if (this.rawEvent.start.dateTime && this.rawEvent.end.dateTime) {
+			return false
+		}
 
-		return isMidnightStart && isMidnightEnd;
+		return undefined;
 	}
 
 	/**
