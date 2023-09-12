@@ -339,7 +339,9 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		// Update calendar names for the kept events and append removed calendar names
 		updatedEvents.forEach(event => {
 			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
-			event.originName = eventMap[eventIdentifier].calendars.join(', ');
+			if (eventMap[eventIdentifier]) { // Check if eventMap[eventIdentifier] is defined
+				event.originName = eventMap[eventIdentifier].calendars.join(', ');
+			}
 		});
 
 		newEvents = updatedEvents;
