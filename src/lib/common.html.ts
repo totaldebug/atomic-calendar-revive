@@ -97,8 +97,14 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
 	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) {
 		return
 	}
+	if (config.showMultiDayEventParts == true && event.addDays >= 1 && event.daysLong) {
+		return html`(${event.addDays}/${event.daysLong})`
+	}
+	if (config.showMultiDayEventParts == true && event.addDays == false && event.daysLong) {
+		const daysSinceStart = dayjs().diff(event.startDateTime, 'day')
+		return html`(${daysSinceStart}/${event.daysLong})`
+	}
 
-	return html`(${event.addDays + 1}/${event.daysLong})`
 }
 
 /**

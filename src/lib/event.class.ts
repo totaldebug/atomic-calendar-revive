@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
+dayjs.extend(utc)
 /**
  * Creates an generalized Calendar Event to use when creating the calendar card
  * There can be Google Events and CalDav Events. This class normalizes those
@@ -70,9 +72,12 @@ export default class EventClass {
 	 */
 	get startDateTime() {
 		if (this._startDateTime === undefined) {
-			const date =
-				(this.rawEvent.start && this.rawEvent.start.date) || this.rawEvent.start.dateTime || this.rawEvent.start || '';
-			this._startDateTime = this._processDate(date);
+			if (this.rawEvent.start.date) {
+				this._startDateTime = this._processDate(dayjs(this.rawEvent.start.date, 'YYYY-MM-DD').startOf('day'));
+			} else {
+				this._startDateTime = this._processDate(dayjs(this.rawEvent.start.dateTime));
+			}
+
 		}
 
 		return this._startDateTime!.clone();
@@ -84,12 +89,15 @@ export default class EventClass {
 	 */
 	get endDateTime() {
 		if (this._endDateTime === undefined) {
-			const date = (this.rawEvent.end && this.rawEvent.end.date) || this.rawEvent.end.dateTime || this.rawEvent.end;
-			this._endDateTime = this._processDate(date, true);
+			if (this.rawEvent.end.date) {
+				this._endDateTime = this._processDate(dayjs(this.rawEvent.end.date, 'YYYY-MM-DD').subtract(1, 'day').endOf('day'), true);
+			} else {
+				this._endDateTime = this._processDate(dayjs(this.rawEvent.end.dateTime), true);
+			}
 		}
-
 		return this._endDateTime!.clone();
 	}
+
 	get addDays() {
 		return this.rawEvent.addDays !== undefined ? this.rawEvent.addDays : false;
 	}
@@ -114,27 +122,22 @@ export default class EventClass {
 
 	/**
 	 *
-	 * @param {string} date
-	 * @param {boolean} isEndDate
+	 * @param {dayjs} date
+	 * @param {boolean} isEndDateTime
 	 */
-	_processDate(date, isEndDate = false) {
-		if (!date) {
-			return date;
-		}
-
-		date = dayjs(date);
+	_processDate(date, isEndDateTime = false) {
 
 		// add days to a start date for multi day event
 		if (this.addDays !== false) {
-			if (!isEndDate && this.addDays) {
+			if (!isEndDateTime && this.addDays) {
 				date = date.add(this.addDays, 'days');
 			}
 
 			// if not the last day and we are modifying the endDateTime then
 			// set end dateTimeDate as end of start day for that partial event
-			if (!this.isLastDay && isEndDate) {
-				date = dayjs(this.startDateTime).endOf('day');
-			} else if (this.isLastDay && !isEndDate) {
+			if (!this.isLastDay && isEndDateTime) {
+				date = this.startDateTime.endOf('day');
+			} else if (!this.isFirstDay && !isEndDateTime) {
 				// if last day and start time then set start as start of day
 				date = date.startOf('day');
 			}
@@ -148,6 +151,7 @@ export default class EventClass {
 	 * @return {boolean}
 	 */
 	get isRecurring() {
+
 		return !!this.rawEvent.recurringEventId;
 	}
 
@@ -218,18 +222,20 @@ export default class EventClass {
 	 * @return {Boolean}
 	 */
 	get isAllDayEvent() {
-		const isMidnightStart = this.startDateTime.startOf('day').diff(this.startDateTime) === 0;
-		const isMidnightEnd = this.endDateTime.startOf('day').diff(this.endDateTime) === 0;
-		if (isMidnightStart && isMidnightEnd) {
+		// if start and end are both "date" then it's an all day event
+		if (this.rawEvent.start.date && this.rawEvent.end.date) {
 			return true;
 		}
-
 		// check for days that are between multi days - they ARE all day
 		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this._globalConfig.showMultiDay) {
 			return true;
 		}
+		// if start and end are both "dateTime" then it's NOT an all day event
+		if (this.rawEvent.start.dateTime && this.rawEvent.end.dateTime) {
+			return false
+		}
 
-		return isMidnightStart && isMidnightEnd;
+		return undefined;
 	}
 
 	/**
@@ -248,14 +254,18 @@ export default class EventClass {
 			daysLong = fullDays;
 		}
 
-		for (let i = 0; i < daysLong; i++) {
+		for (let i = 1; i < daysLong; i++) {
 			// copy event then add the current day/total days to 'new' event
 			const copiedEvent = JSON.parse(JSON.stringify(newEvent.rawEvent));
+			// count the loops, this shows which day of the event we are on
 			copiedEvent.addDays = i;
+			// count the total number of days in the event
 			copiedEvent.daysLong = daysLong;
 
-			copiedEvent._isFirstDay = i === 0;
-			copiedEvent._isLastDay = i === (daysLong - 1) && i > 0;
+			// is this the first day of the event?
+			copiedEvent._isFirstDay = i === 1;
+			// is this the last day of the event?
+			copiedEvent._isLastDay = i === (daysLong - 1) && i > 1;
 
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);

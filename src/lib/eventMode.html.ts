@@ -79,22 +79,36 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
     				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
     				${getCurrDayAndMonth(event.endDateTime)}
     			`;
-    } else if (event.isAllDayEvent && event.isMultiDay &&
+    }
+    // 2. Is an all day event, over multiple days and the start time is before today or the
+    // end time is after today -> 'All dat, until end date'
+    else if (event.isAllDayEvent && event.isMultiDay &&
         (event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))) {
         return html`
                				${config.fullDayEventText}, ${config.untilText!.toLowerCase()}
                				${getCurrDayAndMonth(event.endDateTime)}
                			`;
-    } else if (event.isAllDayEvent) {
+    }
+    // 3. Is an all day event, not matching 1 or 2 -> 'All Day'
+    else if (event.isAllDayEvent) {
         return html`${config.fullDayEventText}`;
-    } else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
+    }
+    // 4. Starts before today, ends after today -> 'Until end date'
+    else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
         return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
-    } else if (event.startTimeToShow.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) {
+
+    }
+    // 5. starts before today, ends today -> 'Until end time'
+    else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day') || event.isLastDay && event.endDateTime.isSame(today, 'day')) {
         return html`${config.untilText} ${event.endDateTime.format('LT')} `;
-    } else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
+    }
+    // 6. Does not start before today, ends after start
+    else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
         return html`${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
-                                                    ${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}`;
-    } else {
+                    ${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}`;
+    }
+    // 7. anything that doesnt fit -> 'start time - end time'
+    else {
         return html`${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')} `;
     }
 }
