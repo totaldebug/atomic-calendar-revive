@@ -254,14 +254,18 @@ export default class EventClass {
 			daysLong = fullDays;
 		}
 
-		for (let i = 0; i < daysLong; i++) {
+		for (let i = 1; i < daysLong; i++) {
 			// copy event then add the current day/total days to 'new' event
 			const copiedEvent = JSON.parse(JSON.stringify(newEvent.rawEvent));
+			// count the loops, this shows which day of the event we are on
 			copiedEvent.addDays = i;
+			// count the total number of days in the event
 			copiedEvent.daysLong = daysLong;
 
-			copiedEvent._isFirstDay = i === 0;
-			copiedEvent._isLastDay = i === (daysLong - 1) && i > 0;
+			// is this the first day of the event?
+			copiedEvent._isFirstDay = i === 1;
+			// is this the last day of the event?
+			copiedEvent._isLastDay = i === (daysLong - 1) && i > 1;
 
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);

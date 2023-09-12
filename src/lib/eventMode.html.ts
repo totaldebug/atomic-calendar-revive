@@ -99,7 +99,7 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
 
     }
     // 5. starts before today, ends today -> 'Until end time'
-    else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) {
+    else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day') || event.isLastDay && event.endDateTime.isSame(today, 'day')) {
         return html`${config.untilText} ${event.endDateTime.format('LT')} `;
     }
     // 6. Does not start before today, ends after start

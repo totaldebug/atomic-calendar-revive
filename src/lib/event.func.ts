@@ -360,6 +360,5 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		newEvents.length = config.maxEventCount;
 	}
 	newEvents = sortEventsByEntity(newEvents, config.entities)
-
 	return newEvents;
 }
