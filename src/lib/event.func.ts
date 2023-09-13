@@ -149,8 +149,8 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 	const timeOffset = -dayjs().utcOffset();
 
-	const startTime = start.startOf('day').add(timeOffset, 'minutes').format(dateFormat);
-	const endTime = end.endOf('day').add(timeOffset, 'minutes').format(dateFormat);
+	const startTime = start.startOf('day').format(dateFormat);
+	const endTime = end.endOf('day').format(dateFormat);
 
 	// for each calendar entity get all events
 	// each entity may be a string of entity id or
@@ -168,7 +168,6 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 				? today
 					.endOf('day')
 					.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-					.add(timeOffset, 'minutes')
 					.format(dateFormat)
 				: endTime;
 
