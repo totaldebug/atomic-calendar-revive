@@ -102,7 +102,7 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
 	}
 	if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
 		const daysSinceStart = dayjs(event.rawEvent._startDateTime, 'YYYY-MM-DD').diff(event.startDateTime, 'day')
-		return html`(${daysSinceStart}/${event.daysLong})`
+		return html`(${Number.isNaN(daysSinceStart) ? 1 : daysSinceStart}/${event.daysLong})`
 	}
 
 }
