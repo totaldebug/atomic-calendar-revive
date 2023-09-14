@@ -1,4 +1,3 @@
-import { computeStateDomain, HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
@@ -112,7 +111,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
 	const today = dayjs();
 	const start = today.startOf('day').add(config.startDaysAhead!, 'day');
 	const end = today.endOf('day').add(daysToShow + config.startDaysAhead!, 'day');
-	return await getAllEvents(start, end, config, hass);
+	return await getAllEvents(start, end, config, hass, "Event");
 }
 
 /**
@@ -125,7 +124,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
  */
 export async function getCalendarMode(config: atomicCardConfig, hass, selectedMonth) {
 	const month = buildCalendar(config, selectedMonth);
-	const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass);
+	const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass, "Calendar");
 
 	// link events to the specific day of the month
 	month.map((day: CalendarDay) => {
@@ -143,14 +142,13 @@ export async function getCalendarMode(config: atomicCardConfig, hass, selectedMo
  * gets events from HA, this is for both Calendar and Event mode
  *
  */
-export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config: atomicCardConfig, hass) {
+export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config: atomicCardConfig, hass, mode: "Event" | "Calendar") {
 	// format times correctly
 	const today = dayjs();
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
-	const timeOffset = -dayjs().utcOffset();
 
-	const startTime = start.startOf('day').add(timeOffset, 'minutes').format(dateFormat);
-	const endTime = end.endOf('day').add(timeOffset, 'minutes').format(dateFormat);
+	const startTime = start.startOf('day').format(dateFormat);
+	const endTime = end.endOf('day').format(dateFormat);
 
 	// for each calendar entity get all events
 	// each entity may be a string of entity id or
@@ -168,7 +166,6 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 				? today
 					.endOf('day')
 					.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-					.add(timeOffset, 'minutes')
 					.format(dateFormat)
 				: endTime;
 
@@ -199,7 +196,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	});
 
 	await Promise.all(calendarEntityPromises);
-	return { failedEvents, events: processEvents(allEvents, config) };
+	return { failedEvents, events: processEvents(allEvents, config, mode) };
 }
 
 /**
@@ -238,13 +235,17 @@ function sortEventsByEntity(events: EventClass[], entities: EntityConfig[]): any
  * @param {Array<Events>} list of raw caldav calendar events
  * @return {Promise<Array<EventClass>>}
  */
-export function processEvents(allEvents: any[], config: atomicCardConfig) {
+export function processEvents(allEvents: any[], config: atomicCardConfig, mode: "Event" | "Calendar") {
+	// reduce all the events into the ones we care about
+	// events = all the events we care about
+	// calEvent = the current event that is being processed.
 	let newEvents = allEvents.reduce((events, calEvent) => {
 		calEvent.originCalendar = config.entities.find((entity) => entity.entity === calEvent.entity.entity);
 
 		const newEvent: EventClass = new EventClass(calEvent, config);
 
 		// if hideDeclined events then filter out
+		// TODO: no longer working as it was removed from the rest API
 		if (config.hideDeclined && newEvent.isDeclined) {
 			return events;
 		}
@@ -297,15 +298,14 @@ export function processEvents(allEvents: any[], config: atomicCardConfig) {
 		 * then add as 'new' event
 		 */
 		if (config.showMultiDay && newEvent.isMultiDay) {
-			const partialEvents = newEvent.splitIntoMultiDay(newEvent);
+			const partialEvents = newEvent.splitIntoMultiDay(newEvent, mode);
 			events = events.concat(partialEvents);
-
 		} else {
 			events.push(newEvent);
 		}
+
 		return events;
 	}, []);
-
 	// Check if the hideFinishedEvents is set, if it is, remove any events
 	// that are already finished
 	if (config.hideFinishedEvents) {

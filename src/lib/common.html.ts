@@ -94,15 +94,16 @@ export function getCurrDayAndMonth(locale) {
  * @returns TemplateResult containing part count
  */
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
-	if (!config.showMultiDayEventParts == true || event.addDays == false && event.daysLong == undefined) {
+	if (!config.showMultiDayEventParts === true || event.addDays === false && event.daysLong === undefined) {
 		return
 	}
-	if (config.showMultiDayEventParts == true && event.addDays >= 1 && event.daysLong) {
-		return html`(${event.addDays}/${event.daysLong})`
+	if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
+		return html`(${event.addDays + 1}/${event.daysLong})`
 	}
-	if (config.showMultiDayEventParts == true && event.addDays == false && event.daysLong) {
-		const daysSinceStart = dayjs().diff(event.startDateTime, 'day')
-		return html`(${daysSinceStart}/${event.daysLong})`
+	if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
+		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day')
+
+		return html`(${daysSinceStart + 1}/${event.daysLong})`
 	}
 
 }
