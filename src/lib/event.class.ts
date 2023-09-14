@@ -242,7 +242,7 @@ export default class EventClass {
 	 * split event into a multi day event where it crosses to a new day
 	 * @param {*} newEvent
 	 */
-	splitIntoMultiDay(newEvent) {
+	splitIntoMultiDay(newEvent, mode: "Event" | "Calendar") {
 		const partialEvents: any[] = [];
 
 		// multi days start at two days
@@ -269,16 +269,21 @@ export default class EventClass {
 
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
+
 			// only add event if start date is before the maxDaysToShow and after
 			// the current date
 			const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
 
 			if (
 				endDate.isAfter(partialEvent.startDateTime) &&
-				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime)
+				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime) && mode === "Event"
 			) {
 				partialEvents.push(partialEvent);
 			}
+			if (mode === "Calendar") {
+				partialEvents.push(partialEvent);
+			}
+
 		}
 		return partialEvents;
 	}
