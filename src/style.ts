@@ -299,17 +299,16 @@ export const styles: CSSResultGroup = css`
 			margin: auto;
 		}
 
-		.calDay.currentDay {
+		.currentDay {
+			position: relative;
+			width: 20px;
 			height: 20px;
 			background-color: var(--primary-color);
+			color: var(--text-primary-color) !important;
+			text-align: center;
+			line-height: 20px;
 			border-radius: 50%;
 			display: inline-block;
-			text-align: center;
-			white-space: nowrap;
-			width: max-content;
-			min-width: 20px;
-			line-height: 140%;
-			color: var(--text-primary-color) !important;
 		}
 
 		tr.cal {
