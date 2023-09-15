@@ -14,7 +14,7 @@
 		"common": {
 			"previous": "Eelmine",
 			"next": "Järgmine",
-            "week": "Nädal"
+			"week": "Nädal"
 		}
 	},
 	"errors": {
@@ -36,7 +36,8 @@
 			"showLoader": "Kuva laadimisel animatsiooni",
 			"showDate": "Kuva tänane kuupäev",
 			"showDeclined": "Kuva summutatud sündmused",
-			"sortByStartTime": "Järjesta ajaliselt",
+			"sortBy": "Sorteerima",
+			"allDayBottom": "Kuva allosas kogu päeva sündmused",
 			"hideFinishedEvents": "Peida lõppenud sündmused",
 			"dateFormat": "Kuupäeva vorming",
 			"hoursFormat": "Kellaaja vorming",

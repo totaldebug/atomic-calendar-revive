@@ -14,7 +14,7 @@
 		"common": {
 			"previous": "Föregående",
 			"next": "Nästa",
-            "week": "Vecka"
+			"week": "Vecka"
 		}
 	},
 	"errors": {
@@ -36,7 +36,8 @@
 			"showLoader": "Visa animation för laddning",
 			"showDate": "Visa datum på kortet",
 			"showDeclined": "Visa nekade händelser",
-			"sortByStartTime": "Sortera efter starttid",
+			"sortBy": "Sortera efter",
+			"allDayBottom": "Visa heldagshändelser längst ner",
 			"hideFinishedEvents": "Hide finished events Dölj avslutade händelser",
 			"dateFormat": "Datumformat",
 			"hoursFormat": "Timformat",

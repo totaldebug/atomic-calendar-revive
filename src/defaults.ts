@@ -22,7 +22,8 @@ export default {
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
-	sortByStartTime: true, // sort first by calendar, then by time
+	sortBy: "start", // sort first by start time or milestone
+	allDayBottom: false, // show all day events at the bottom of the day
 	disableEventLink: false, // disables links to event calendar
 	disableLocationLink: false, // disables links to event calendar
 	disableCalMonthLink: false, // disables the link on the month name in calendar mode

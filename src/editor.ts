@@ -210,6 +210,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
         const linkTargets: string[] = ['_blank', '_self', '_parent', '_top'];
         const defaultModes: string[] = ['Event', 'Calendar'];
+        const sortBy: string[] = ['start', 'milestone', 'none'];
 
         this.options = {
             entities: {
@@ -311,6 +312,14 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         selected: linkTargets.indexOf(this._config.linkTarget || defaultConfig.linkTarget),
                     },
                     {
+                        type: 'dropdown',
+                        items: sortBy,
+                        name: 'sortBy',
+                        section: 'main',
+                        label: localize('main.fields.sortBy'),
+                        selected: sortBy.indexOf(this._config.sortBy || defaultConfig.sortBy),
+                    },
+                    {
                         type: 'text',
                         name: 'cardHeight',
                         label: localize('main.fields.cardHeight'),
@@ -332,12 +341,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         type: 'switch',
                         name: 'showDeclined',
                         label: localize('main.fields.showDeclined'),
-                    },
-                    {
-                        type: 'switch',
-                        name: 'sortByStartTime',
-                        label: localize('main.fields.sortByStartTime'),
-                        default: defaultConfig.sortByStartTime,
                     },
                     {
                         type: 'switch',
@@ -396,6 +399,12 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         name: 'offsetHeaderDate',
                         label: localize('main.fields.offsetHeaderDate'),
                         default: defaultConfig.offsetHeaderDate,
+                    },
+                    {
+                        type: 'switch',
+                        name: 'allDayBottom',
+                        label: localize('main.fields.allDayBottom'),
+                        default: defaultConfig.allDayBottom,
                     },
                 ],
             },
