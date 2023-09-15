@@ -608,8 +608,8 @@ export class AtomicCalendarRevive extends LitElement {
    						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked} --cal-grid-color: ${this._config
 						.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
    					>
-   						<div class="calDay ${dayClassToday}">
-   							<div style="position: relative; top: 5%;">${day.date.date()}</div>
+   						<div class="calDay">
+   							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
    							<div>${handleCalendarIcons(day)}</div>
    						</div>
    					</td>

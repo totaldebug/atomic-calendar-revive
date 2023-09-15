@@ -14,7 +14,7 @@
 		"common": {
 			"previous": "Précédent",
 			"next": "Suivant",
-            "week": "Semaine"
+			"week": "Semaine"
 		}
 	},
 	"errors": {
@@ -37,7 +37,8 @@
 			"showLoader": "Afficher l'animation de chargement",
 			"showDate": "Afficher la date sur la carte",
 			"showDeclined": "Afficher les événements déclinés",
-			"sortByStartTime": "Trier par date de début",
+			"sortBy": "Trier par",
+			"allDayBottom": "Afficher les événements de la journée en bas",
 			"hideFinishedEvents": "Cacher les événements terminés",
 			"dateFormat": "Format de date",
 			"hoursFormat": "Format des heures",

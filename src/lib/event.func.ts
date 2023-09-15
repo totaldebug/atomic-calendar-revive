@@ -5,6 +5,7 @@ import { atomicCardConfig } from '../types/config';
 import { EntityConfig } from '../types';
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
+import sortEvents from '../functions/sort_events';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(isBetween);
@@ -200,37 +201,6 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 }
 
 /**
- * Sorts all day events into order of entities
- * @param {Array<Events>} list of events
- * @param {Array<EntityConfig>} all entities for card
- * @return {Promise<Array<EventClass>>}
- */
-function sortEventsByEntity(events: EventClass[], entities: EntityConfig[]): any[] {
-	const allDayEvents = events.filter((event) => event.isAllDayEvent);
-	const otherEvents = events.filter((event) => !event.isAllDayEvent);
-
-	allDayEvents.sort((event1, event2) => {
-		const entity1 = entities.find(
-			(entity) => entity.entity === event1.entity.entity_id
-		);
-		const entity2 = entities.find(
-			(entity) => entity.entity === event2.entity.entity_id
-		);
-		if (!entity1 || !entity2) {
-			return 0;
-		}
-		const index1 = entities.indexOf(entity1);
-		const index2 = entities.indexOf(entity2);
-		if (index1 === index2) {
-			return event1.title.localeCompare(event2.title);
-		}
-		return index1 - index2;
-	});
-
-	return [...allDayEvents, ...otherEvents];
-}
-
-/**
  * converts all calendar events to CalendarEvent objects
  * @param {Array<Events>} list of raw caldav calendar events
  * @return {Promise<Array<EventClass>>}
@@ -347,10 +317,8 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		newEvents = updatedEvents;
 	}
 
-	// sort events by date starting with soonest
-	if (config.sortByStartTime) {
-		newEvents.sort((a: EventClass, b: EventClass) => (a.startDateTime.isBefore(b.startDateTime) ? -1 : 1));
-	}
+	// sort events
+	newEvents = sortEvents(newEvents, config);
 
 	// check if the maxEventCount is set, if it is we will remove any events
 	// that go over this limit, unless softLimit is set, in which case we
@@ -359,6 +327,5 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))) {
 		newEvents.length = config.maxEventCount;
 	}
-	newEvents = sortEventsByEntity(newEvents, config.entities)
 	return newEvents;
 }

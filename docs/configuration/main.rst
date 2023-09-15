@@ -20,7 +20,7 @@ Main Options
  startDaysAhead            integer   optional        v0.7.3     ``0`` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow, if a negative number is used, events previous will be shown.
  showDescription           boolean   optional        v0.8.4     ``false`` Shows long description of event from Google Calendar.
  showNoEventsForToday      boolean   optional        v0.8.6     ``false`` Shows `No events for today` if no events, instead of omit the entry.
- sortByStartTime           boolean   optional        v0.9.0     ``false`` Sort events by start time first instead of grouping them by calendar.
+ sortBy                    boolean   optional                   ``start`` Sort events by start time. ``start|milestone|none``
  disableEventLink          boolean   optional        v0.10.0    ``false`` disables links in event title.
  disableLocationLink       boolean   optional        v0.10.0    ``false`` disables links in event location.
  linkTarget                string    optional        v0.11.0    ``_blank`` Allows custom target for links, default will open new tab.
@@ -43,4 +43,5 @@ Main Options
  titleLength               integer   optional        v7.4.0     Sets the maximum length of the event titles
  showAllDayEvents          boolean   optional                   ``true`` if set false will hide all events that are a full day
  offsetHeaderDate          boolean   optional                   ``false`` if set true the header date will match the startDaysAhead offset date
+ allDayBottom              boolean   optional                   ``false`` if set true all day events will show below other running events
 ========================= ========= =============== ========== ==========================================================================================================================================================================================================================
