@@ -70,7 +70,7 @@
 		"@mdi/js": "^7.2.96",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"custom-card-helpers": "^1.9.0",
-		"dayjs": "^1.11.9",
+		"dayjs": "^1.11.10",
 		"lit": "^2.8.0",
 		"lit-element": "^3.3.3",
 		"npm": "^10.1.0",
