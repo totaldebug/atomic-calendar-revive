@@ -1,7 +1,5 @@
 import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 
-dayjs.extend(utc)
 /**
  * Creates an generalized Calendar Event to use when creating the calendar card
  * There can be Google Events and CalDav Events. This class normalizes those
