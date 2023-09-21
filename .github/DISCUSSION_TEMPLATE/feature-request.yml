@@ -1,0 +1,44 @@
+labels: "type/feature"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to assist with improving this project!
+  - type: checkboxes
+    attributes:
+      label: Is there an existing feature request for this?
+      description: Please search to see if a feature request already exists for the feature you are requesting, and upvote that request instead.
+      options:
+        - label: I have searched the existing feature requests
+          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature description
+      description: A concise description of what feature you would like to see added.
+      placeholder: Tell us what you want!
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Possible Solutions
+      description: If you have an idea on how to implement this please let us know.
+    validations:
+      required: false
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      description: What mode does this feature apply to?
+      options:
+        - Event (default)
+        - Calendar
+        - Both
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Context / Reason
+      description: Providing further context or information helps us come up with a solution that is most useful in the real world.
+    validations:
+      required: false

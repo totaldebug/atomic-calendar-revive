@@ -16,6 +16,7 @@ import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import week from 'dayjs/plugin/weekOfYear';
 import duration from 'dayjs/plugin/duration';
+import timezone from 'dayjs/plugin/timezone';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -26,6 +27,7 @@ dayjs.extend(LocalizedFormat);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(week);
 dayjs.extend(duration)
+dayjs.extend(timezone);
 
 // Import Card Editor
 import './editor';
@@ -186,6 +188,8 @@ export class AtomicCalendarRevive extends LitElement {
 			);
 			console.log("Readme:", "https://github.com/totaldebug/atomic-calendar-revive");
 			console.log("Language:", `${this.language}`);
+			console.log("HASS Timezone:", `${this.hass.config.time_zone}`);
+			console.log("DayJS Timezone:", `${dayjs.tz.guess()}`);
 			console.groupEnd();
 
 			this.selectedMonth = dayjs();
