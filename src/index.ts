@@ -200,17 +200,18 @@ export class AtomicCalendarRevive extends LitElement {
 		}
 		this.updateCard();
 
+		const compactMode = this._config.compactMode ? 'compact' : '';
+
 		return html` <ha-card class="cal-card" style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}">
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html` <div class="header" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}">
+				? html` <div class="header ${compactMode}">
 						${this._config.name
-						? html`<div class="${this._config.compactMode ? 'headerNameSuperCompact' : 'headerName'}" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}" @click="${() => this.handleToggle()}">${this._config.name}</div>`
+						? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">${this._config.name}</div>`
 						: ''}
 						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
-						${this._config.showDate ? html`<div class="${this._config.compactMode ? 'headerDateSuperCompact' : 'headerDate'}" style="${this._config.compactMode ? 'font-size: 1rem ' : ''}">${getDate(this._config)}</div>` : ''}
+						${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
 				  </div>`
 				: ''}
-
 			<div class="cal-eventContainer" style="padding-top: 4px;">${this.content}</div>
 		</ha-card>`;
 	}
@@ -408,7 +409,7 @@ export class AtomicCalendarRevive extends LitElement {
 				// Show the hours
 				const hoursHTML = this._config.showHours
 					? html`<div
-							class="hoursHTML"
+							class="hours"
 							style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%"
 					  >
 							${getHoursHTML(this._config, event)}
@@ -419,7 +420,7 @@ export class AtomicCalendarRevive extends LitElement {
 				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
 					const now = dayjs()
 					var timeUntilRemaining = html`<div
-						class="relativeTime timeRemaining"
+						class="relative-time time-remaining"
 						style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%">
 						${this._config.showRelativeTime && (event.startDateTime.isAfter(now, 'minutes')) ? `(${event.startDateTime.fromNow()})` : this._config.showTimeRemaining && (event.startDateTime.isBefore(now, 'minutes') && event.endDateTime.isAfter(now, 'minutes')) ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}` : ''}
 			  		</div>`
@@ -427,46 +428,46 @@ export class AtomicCalendarRevive extends LitElement {
 				} else { var timeUntilRemaining = html`` }
 
 
-				const lastEventStyle = i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
+				const lastEventStyle = !this._config.compactMode && i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
-				const showDatePer = this._config.showDatePerEvent
+				const showDatePerEvent = this._config.showDatePerEvent
 					? true
 					: !!(i === 0);
 
 				// check and set the date format
+				const showMonth = showDatePerEvent && this._config.showMonth ? html`<div class="event-date-month">${event.startTimeToShow.format('MMM')}</div>` : '';
+				const showDay = showDatePerEvent ? html`<div class="event-date-day">${event.startTimeToShow.format('DD')}</div>` : '';
 				const eventDateFormat =
-					this._config.europeanDate == true
-						? html`${showDatePer ? event.startTimeToShow.format('DD') + ' ' : ''}${showDatePer && this._config.showMonth
-							? event.startTimeToShow.format('MMM')
-							: ''}`
-						: html`${showDatePer && this._config.showMonth ? event.startTimeToShow.format('MMM') + ' ' : ''}${showDatePer
-							? event.startTimeToShow.format('DD')
-							: ''}`;
+					this._config.europeanDate === true
+						? html`${showDay} ${showMonth}`
+						: html`${showMonth} ${showDay}`;
 
-				const dayClassTodayEvent = event.startDateTime.isSame(dayjs(), 'day') ? `event-leftCurrentDay` : ``;
+				const dayClassTodayEvent = event.startDateTime.isSame(dayjs(), 'day') ? `current-day` : ``;
+				const compactMode = this._config.compactMode ? `compact` : ``;
+				const hideDate = this._config.showEventDate ? `` : `hide-date`;
 
-
-				const eventLeft = this._config.showEventDate == true
-					? html`<td class="${this._config.compactMode ? 'event-leftSuperCompact' : 'event-left'}" style="color: ${this._config.dateColor};font-size: ${this._config.dateSize}%;">
-							<div class=${dayClassTodayEvent}>
-								${showDatePer && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
-							</div><div class=${dayClassTodayEvent}>${eventDateFormat}</div>
-							</td>`
+				const eventLeft = this._config.showEventDate === true
+					? html`<div class="event-left ${dayClassTodayEvent}">
+						<!--Show the weekday e.g. Mon / Tue -->
+						<div class="event-date-day">
+							${showDatePerEvent && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
+						</div>
+						<!--Show the event date, see eventDateFormat-->
+						${eventDateFormat}
+					</div>`
 					: html``;
-				return html`<tr class="${dayWrap}" style="${this._config.compactMode ? 'line-height: 80%; ' : ''} color:  ${this._config.dayWrapperLineColor};">${eventLeft}
-
-					<td style="width: 100%; ${this._config.compactMode ? 'padding-top: 2px; padding-bottom: 2px;' : ''} ${finishedEventsStyle} ${lastEventStyle}">
-			<div>${currentEventLine}</div>
-				<div class="event-right">
-					<div class="event-main">${getTitleHTML(this._config, event)}</div>
-					<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
-				</div>
-        <div class="event-right">${this._config.hoursOnSameLine ? '' : hoursHTML} ${timeUntilRemaining}</div>
-				${getDescription(this._config, event)}</div>
-				</div>
-				${progressBar}
-    </td>
-	</tr>`;
+				return html`
+					<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
+						${eventLeft}
+						<div class="event-right" style="${finishedEventsStyle}">
+							${currentEventLine}
+							<div class="event-main">${getTitleHTML(this._config, event)}</div>
+							<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
+							<div class="event-hours">${this._config.hoursOnSameLine ? '' : hoursHTML} ${timeUntilRemaining}</div>
+							${getDescription(this._config, event)}
+						</div>
+						${progressBar}
+					</div>`;
 			});
 			return html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`;
 		});
@@ -475,11 +476,7 @@ export class AtomicCalendarRevive extends LitElement {
 				? this.hiddenEvents + ' ' + this._config.hiddenEventText
 				: ''
 			: '';
-		this.content = html`<table style="width: 100%">
-				<tbody>
-					${htmlDays}
-				</tbody>
-			</table>
+		this.content = html`${htmlDays}
 			<span class="hidden-events">${eventnotice}</span>`;
 	}
 
