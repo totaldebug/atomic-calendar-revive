@@ -30,7 +30,7 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
 export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
     const titleColor: string =
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-    const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
+    const dayClassEventRunning = event.isRunning ? `running` : ``;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
     let { title } = event;
 
@@ -41,14 +41,14 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
     if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
         return html`
         				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
-        					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
+        					<div class="event-title ${dayClassEventRunning}">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
         				</div>
         			`;
     } else {
         return html`
         				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
         					<div style="color: ${titleColor}">
-        						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
+        						<div class="event-title ${dayClassEventRunning}">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
         					</div>
         				</a>
         			`;

@@ -142,12 +142,11 @@ export const styles: CSSResultGroup = css`
 		}
 
 		.event-title {
-			font-size: var(--event-title-size);
 			user-select: text;
 		}
 
-		.event-titleRunning {
-			font-size: var(--event-title-size);
+		.event-title.running {
+			user-select: text;
 		}
 
 		.event-location {

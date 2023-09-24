@@ -52,7 +52,6 @@ export default {
 	showRelativeTime: true,
 
 	eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
-	eventTitleSize: 100,
 
 	locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
 	locationTextSize: 90,

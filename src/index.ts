@@ -442,7 +442,7 @@ export class AtomicCalendarRevive extends LitElement {
 						? html`${showDay} ${showMonth}`
 						: html`${showMonth} ${showDay}`;
 
-				const dayClassTodayEvent = event.startDateTime.isSame(dayjs(), 'day') ? `current-day` : ``;
+				const dayClassTodayEvent = event.startTimeToShow.isSame(dayjs(), 'day') ? `current-day` : ``;
 				const compactMode = this._config.compactMode ? `compact` : ``;
 				const hideDate = this._config.showEventDate ? `` : `hide-date`;
 
