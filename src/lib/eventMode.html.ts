@@ -17,7 +17,7 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 
     if (config.showEventIcon && event.entityConfig.icon != 'undefined') {
-        return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+        return html`<ha-icon class="event-icon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
     }
 }
 

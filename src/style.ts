@@ -385,7 +385,7 @@ export const styles: CSSResultGroup = css`
 			margin-left: -1px;
 		}
 
-		.eventIcon {
+		.event-icon {
 			--mdc-icon-size: 15px !important;
 			padding-top: 0px;
 			margin-top: -10px;
