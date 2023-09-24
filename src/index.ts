@@ -408,24 +408,19 @@ export class AtomicCalendarRevive extends LitElement {
 
 				// Show the hours
 				const hoursHTML = this._config.showHours
-					? html`<div
-							class="hours"
-							style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%"
-					  >
-							${getHoursHTML(this._config, event)}
+					? html`<div class="hours">
+						${getHoursHTML(this._config, event)}
 					  </div>`
 					: html``;
 
 				// Show the relative time
 				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
 					const now = dayjs()
-					var timeUntilRemaining = html`<div
-						class="relative-time time-remaining"
-						style="--time-color: ${this._config.timeColor}; --time-size: ${this._config.timeSize}%">
+					const timeUntilRemaining = html`<div class="relative-time time-remaining">
 						${this._config.showRelativeTime && (event.startDateTime.isAfter(now, 'minutes')) ? `(${event.startDateTime.fromNow()})` : this._config.showTimeRemaining && (event.startDateTime.isBefore(now, 'minutes') && event.endDateTime.isAfter(now, 'minutes')) ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}` : ''}
 			  		</div>`
 
-				} else { var timeUntilRemaining = html`` }
+				} else { const timeUntilRemaining = html`` }
 
 
 				const lastEventStyle = !this._config.compactMode && i == arr.length - 1 ? 'padding-bottom: 8px;' : '';

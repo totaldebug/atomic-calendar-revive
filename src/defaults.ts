@@ -46,8 +46,6 @@ export default {
 	showNoEventDays: false,
 
 
-	timeColor: 'var(--primary-color)', // Time text color (center bottom)
-	timeSize: 90, //Time text size
 	showHours: true, //shows the bottom line (time, duration of event)
 	showRelativeTime: true,
 
