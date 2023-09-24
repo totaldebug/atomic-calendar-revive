@@ -37,9 +37,6 @@ export default {
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color
 
-	dateColor: 'var(--primary-text-color)', // Date text color (left side)
-	dateSize: 90, //Date text size (percent of standard text)
-
 	descColor: 'var(--primary-text-color)', // Description text color (left side)
 	descSize: 80, //Description text size (percent of standard text)
 
@@ -67,7 +64,6 @@ export default {
 	finishedEventFilter: 'grayscale(80%)', // css filter
 
 	// days separating
-	dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
 	eventBarColor: 'var(--primary-color)',
 
 	eventCalNameColor: 'var(--primary-text-color)',

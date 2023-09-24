@@ -446,12 +446,11 @@ export class AtomicCalendarRevive extends LitElement {
 				const compactMode = this._config.compactMode ? `compact` : ``;
 				const hideDate = this._config.showEventDate ? `` : `hide-date`;
 
+				const showWeekDay = showDatePerEvent && this._config.showWeekDay ? html`<div class="event-date-week-day">${event.startTimeToShow.format('ddd')}</div>` : ''
 				const eventLeft = this._config.showEventDate === true
 					? html`<div class="event-left ${dayClassTodayEvent}">
 						<!--Show the weekday e.g. Mon / Tue -->
-						<div class="event-date-day">
-							${showDatePerEvent && this._config.showWeekDay ? event.startTimeToShow.format('ddd') : ''}
-						</div>
+						${showWeekDay}
 						<!--Show the event date, see eventDateFormat-->
 						${eventDateFormat}
 					</div>`
@@ -463,7 +462,8 @@ export class AtomicCalendarRevive extends LitElement {
 							${currentEventLine}
 							<div class="event-main">${getTitleHTML(this._config, event)}</div>
 							<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
-							<div class="event-hours">${this._config.hoursOnSameLine ? '' : hoursHTML} ${timeUntilRemaining}</div>
+							${this._config.hoursOnSameLine ? '' : hoursHTML}
+							${timeUntilRemaining}
 							${getDescription(this._config, event)}
 						</div>
 						${progressBar}

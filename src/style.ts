@@ -75,7 +75,8 @@ export const styles: CSSResultGroup = css`
 		}
 
 		.event-date-day,
-		.event-date-month {
+		.event-date-month,
+		.event-date-week-day {
 			margin-right: 4px;
 		}
 
