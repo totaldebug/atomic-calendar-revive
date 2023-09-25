@@ -416,11 +416,11 @@ export class AtomicCalendarRevive extends LitElement {
 				// Show the relative time
 				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
 					const now = dayjs()
-					const timeUntilRemaining = html`<div class="relative-time time-remaining">
+					var timeUntilRemaining = html`<div class="relative-time time-remaining">
 						${this._config.showRelativeTime && (event.startDateTime.isAfter(now, 'minutes')) ? `(${event.startDateTime.fromNow()})` : this._config.showTimeRemaining && (event.startDateTime.isBefore(now, 'minutes') && event.endDateTime.isAfter(now, 'minutes')) ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}` : ''}
 			  		</div>`
 
-				} else { const timeUntilRemaining = html`` }
+				} else { var timeUntilRemaining = html`` }
 
 
 				const lastEventStyle = !this._config.compactMode && i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
