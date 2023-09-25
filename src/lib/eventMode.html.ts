@@ -37,8 +37,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
     if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
         title = event.title.slice(0, config.titleLength);
     }
-
-    if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
+    if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
         return html`
         				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
         					<div class="event-title ${dayClassEventRunning}">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
