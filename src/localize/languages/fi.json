@@ -53,7 +53,6 @@
 			"showMultiDayEventParts": "Näytä usean päivän tapahtuman osat",
 			"eventTitle": "Aseta tyhjä tapahtuman otsikko",
 			"compactMode": "Ota kompakti tila käyttöön",
-			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä",
 			"titleLength": "Otsikon enimmäispituus (0 rajattomasti)",
 			"descLength": "Kuvauksen enimmäispituus (0 rajattomasti)",
 			"showAllDayEvents": "Näytä koko päivän tapahtumat",
@@ -86,7 +85,8 @@
 			"showEventDate": "Näytä tapahtumien päivämäärä",
 			"showDatePerEvent": "Näytä päivämäärä jokaisen tapahtuman vieressä",
 			"showTimeRemaining": "Näytä jäljellä oleva aika",
-			"showAllDayHours": "Näytä koko päivän tapahtuman teksti"
+			"showAllDayHours": "Näytä koko päivän tapahtuman teksti",
+			"hoursOnSameLine": "Näytä tunnit tapahtumarivillä"
 		}
 	},
 	"calendar": {

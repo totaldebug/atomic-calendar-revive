@@ -53,7 +53,6 @@
             "showMultiDayEventParts": "Prikaži dele večdnevnega dogodka",
             "eventTitle": "Nastavite prazen naslov dogodka",
             "compactMode": "Omogoči kompaktni način",
-            "hoursOnSameLine": "Prikaži ure na vrstici dogodkov",
             "titleLength": "Največja dolžina naslova (0 za neomejeno)",
             "descLength": "Največja dolžina opisa (0 za neomejeno)",
             "showAllDayEvents": "Pokaži celodnevne dogodke",
@@ -86,7 +85,8 @@
             "showEventDate": "Pokaži datum za dogodke",
             "showDatePerEvent": "Prikažite datum poleg vsakega dogodka",
             "showTimeRemaining": "Pokaži preostali čas",
-            "showAllDayHours": "Prikaži besedilo celodnevnega dogodka"
+            "showAllDayHours": "Prikaži besedilo celodnevnega dogodka",
+            "hoursOnSameLine": "Prikaži ure na vrstici dogodkov"
         }
     },
     "calendar": {

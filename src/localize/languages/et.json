@@ -52,7 +52,6 @@
 			"showMultiDayEventParts": "Näita mitmepäevaste sündmuste osi",
 			"eventTitle": "Määra tühi sündmuse pealkiri",
 			"compactMode": "Kompaktrežiimi lubamine",
-			"hoursOnSameLine": "Näidake sündmuse reale tundi",
 			"titleLength": "Pealkirja maksimaalne pikkus (0 piiramatu jaoks)",
 			"descLength": "Kirjelduse maksimaalne pikkus (0 piiramatu puhul)",
 			"showAllDayEvents": "Näita kogu päeva sündmusi",
@@ -84,7 +83,8 @@
 			"showEventDate": "Näita sündmuste kuupäeva",
 			"showDatePerEvent": "Kuva kuupäev iga sündmuse kõrval",
 			"showTimeRemaining": "Näita järelejäänud aega",
-			"showAllDayHours": "Näita kogu päeva sündmuse teksti"
+			"showAllDayHours": "Näita kogu päeva sündmuse teksti",
+			"hoursOnSameLine": "Näidake sündmuse reale tundi"
 		}
 	},
 	"calendar": {

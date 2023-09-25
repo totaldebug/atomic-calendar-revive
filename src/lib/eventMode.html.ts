@@ -124,16 +124,13 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
     if (!event.location || !config.showLocation) {
         return html``;
     } else if (config.disableLocationLink) {
-        return html`<div><ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
-        `;
+        return html`<ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}`;
     } else {
         const loc: string = event.location;
         const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
-        return html`<div>
-            <a href=${location} target="${config.linkTarget}" class="location-link" style="--location-link-size: ${config.locationTextSize}%">
+        return html`<a href=${location} target="${config.linkTarget}" class="location-link" style="--location-link-size: ${config.locationTextSize}%">
                 <ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"> </ha-icon>&nbsp;${event.address}
-            </a>
-        </div>`;
+            </a>`;
     }
 }
 

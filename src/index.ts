@@ -455,10 +455,13 @@ export class AtomicCalendarRevive extends LitElement {
 						${eventLeft}
 						<div class="event-right" style="${finishedEventsStyle}">
 							${currentEventLine}
-							<div class="event-main">${getTitleHTML(this._config, event)}</div>
-							<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
-							${this._config.hoursOnSameLine ? '' : hoursHTML}
-							${timeUntilRemaining}
+							<div class="event-right-top">${getTitleHTML(this._config, event)}
+								<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
+							</div>
+							<div class="event-right-bottom">
+								${this._config.hoursOnSameLine ? '' : hoursHTML}
+								${timeUntilRemaining}
+							</div>
 							${getDescription(this._config, event)}
 						</div>
 						${progressBar}

@@ -53,7 +53,6 @@
 			"showMultiDayEventParts": "Vis flerdagers arrangementsdeler",
 			"eventTitle": "Angi en tom hendelsestittel",
 			"compactMode": "Aktiver kompakt modus",
-			"hoursOnSameLine": "Vis timer på arrangementslinjen",
 			"titleLength": "Maks tittellengde (0 for ubegrenset)",
 			"descLength": "Maks beskrivelseslengde (0 for ubegrenset)",
 			"showAllDayEvents": "Vis heldagsbegivenheter",
@@ -86,7 +85,8 @@
 			"showEventDate": "Vis dato for arrangementer",
 			"showDatePerEvent": "Vis dato ved siden av hvert arrangement",
 			"showTimeRemaining": "Vis gjenværende tid",
-			"showAllDayHours": "Vis tekst for hele dagen"
+			"showAllDayHours": "Vis tekst for hele dagen",
+			"hoursOnSameLine": "Vis timer på arrangementslinjen"
 		}
 	},
 	"calendar": {
