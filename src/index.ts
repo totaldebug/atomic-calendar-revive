@@ -330,7 +330,7 @@ export class AtomicCalendarRevive extends LitElement {
 		/**
 		 * If there are no events, post fake event with "No Events Today" text
 		 */
-		if (this._config.showNoEventsForToday && days[0][0].startDateTime.isAfter(dayjs(), 'day') && days[0].length > 0) {
+		if (this._config.showNoEventsForToday && days[0][0].startDateTime.isAfter(dayjs().add(this._config.startDaysAhead!, 'day').startOf('day'), 'day') && days[0].length > 0) {
 			const emptyEv = {
 				eventClass: '',
 				config: '',
