@@ -72,9 +72,7 @@ export const styles: CSSResultGroup = css`
 		-webkit-border-radius: 5px;
 		border-radius: 5px;
 		border: 2px solid;
-		padding: 0 4px;
 		margin: 5px 0;
-		line-height: 16px;
 		width: 100%;
 		text-align: center;
 	}
