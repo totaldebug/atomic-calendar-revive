@@ -463,8 +463,9 @@ export class AtomicCalendarRevive extends LitElement {
 								${timeUntilRemaining}
 							</div>
 							${getDescription(this._config, event)}
+							${progressBar}
 						</div>
-						${progressBar}
+
 					</div>`;
 			});
 			return html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`;
