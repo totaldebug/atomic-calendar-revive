@@ -3,7 +3,8 @@ name: Release
 on:
   push:
     branches:
-      - master  # Change this to your main branch name
+      - master
+      - beta
   workflow_dispatch:
 jobs:
   release:
