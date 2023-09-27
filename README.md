@@ -33,7 +33,7 @@
     <br />
     <a href="https://github.com/totaldebug/atomic-calendar-revive/issues/new?assignees=&labels=type%2Fbug&template=bug_report.yml">Report Bug</a>
     ·
-    <a href="https://github.com/totaldebug/atomic-calendar-revive/issues/new?assignees=&labels=type%2Ffeature&template=feature_request.yml">Request Feature</a>
+    <a href="https://github.com/totaldebug/atomic-calendar-revive/discussions/categories/feature-requests">Request Feature</a>
 
 </div>
 
@@ -139,7 +139,7 @@ Home Assistant 2022.5 will not work with the card you must upgrade to 2022.6
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [feature requests](https://github.com/totaldebug/atomic-calendar-revive/labels/type%2Ffeature) for a full list of requested features.
+See the [feature requests](https://github.com/totaldebug/atomic-calendar-revive/discussions/categories/feature-requests) for a full list of requested features.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

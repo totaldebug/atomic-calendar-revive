@@ -2,11 +2,6 @@
 FAQ
 ***
 
-How come Calendar View doesnt show all my items?
-################################################
-
-By default only 5 events will be pulled from Google Calendar, to change this you need to follow the instructions [here](/atomic-calendar-revive/quickstart#show-more-than-5-events)
-
 No card type configured error
 #############################
 

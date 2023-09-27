@@ -44,8 +44,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 
     // color and font settings
     nameColor?: string;
-    dateColor?: string;
-    dateSize?: number;
     descColor?: string;
     descSize?: number;
     titleLength?: number;
@@ -54,11 +52,8 @@ export interface atomicCardConfig extends LovelaceCardConfig {
     showNoEventDays?: boolean;
     noEventText?: string;
     noEventsForNextDaysText?: string;
-    timeColor?: string;
-    timeSize?: number;
     showHours?: boolean;
     eventTitleColor?: string;
-    eventTitleSize?: number;
     locationIconColor?: string;
     locationTextSize?: number;
 
@@ -69,7 +64,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
     finishedEventFilter?: string;
 
     // days separating
-    dayWrapperLineColor?: string;
     eventBarColor?: string;
     eventCalNameColor?: string;
     eventCalNameSize?: number;

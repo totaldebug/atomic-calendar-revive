@@ -52,7 +52,6 @@
 			"showMultiDayEventParts": "Visa flerdagarsevenemangsdelar",
 			"eventTitle": "Ange tom händelsetitel",
 			"compactMode": "Aktivera kompakt läge",
-			"hoursOnSameLine": "Visa öppettider på evenemangsraden",
 			"titleLength": "Max titellängd (0 för obegränsat)",
 			"descLength": "Max beskrivningslängd (0 för obegränsat)",
 			"showAllDayEvents": "Visa heldagshändelser",
@@ -85,7 +84,8 @@
 			"showEventDate": "Visa datum för evenemang",
 			"showDatePerEvent": "Visa datum bredvid varje evenemang",
 			"showTimeRemaining": "Visa återstående tid",
-			"showAllDayHours": "Visa heldagshändelsetext"
+			"showAllDayHours": "Visa heldagshändelsetext",
+			"hoursOnSameLine": "Visa öppettider på evenemangsraden"
 		}
 	},
 	"calendar": {

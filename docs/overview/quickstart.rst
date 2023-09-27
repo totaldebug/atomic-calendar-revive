@@ -53,30 +53,6 @@ Manual
 
    If you are upgrading, try to reload your browser cache by pressing ctrl-shift-r or shift-F5.
 
-.. note::
-
-   If you want to use ``Calendar mode`` follow the guide :ref:`more-than-5`, by default HA only gets 5 events from Google Calendar.
-
-
-.. _more-than-5:
-
-Show more than 5 events
-#######################
-
-In order to increase the amount of events that are shown you have to add `max_results` setting to `google_calendars.yaml` file
-
-For calendar mode we recommend that this is set to at least 42
-
-.. code-block:: yaml
-   :linenos:
-
-    - cal_id: xxxxxxxxxxxxxxxxxxxx@group.calendar.google.com
-      entities:
-      - device_id: calendar_id
-        name: Calendar_name
-        max_results: 42
-
-
 Configuration
 #############
 

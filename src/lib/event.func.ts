@@ -111,7 +111,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
 	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
 	const today = dayjs();
 	const start = today.startOf('day').add(config.startDaysAhead!, 'day');
-	const end = today.endOf('day').add(daysToShow + config.startDaysAhead!, 'day');
+	const end = start.endOf('day').add(daysToShow, 'day');
 	return await getAllEvents(start, end, config, hass, "Event");
 }
 
@@ -145,7 +145,6 @@ export async function getCalendarMode(config: atomicCardConfig, hass, selectedMo
  */
 export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config: atomicCardConfig, hass, mode: "Event" | "Calendar") {
 	// format times correctly
-	const today = dayjs();
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 
 	const startTime = start.startOf('day').format(dateFormat);
@@ -161,16 +160,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	config.entities.map((entity) => {
 		const calendarEntity = (entity && entity.entity) || entity;
 
-		// get correct end date if maxDaysToShow is set
-		const entityEnd =
-			typeof entity.maxDaysToShow != 'undefined'
-				? today
-					.endOf('day')
-					.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-					.format(dateFormat)
-				: endTime;
-
-		const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${entityEnd}Z`;
+		const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${endTime}Z`;
 
 		// make all requests at the same time
 		calendarEntityPromises.push(
@@ -213,6 +203,12 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		calEvent.originCalendar = config.entities.find((entity) => entity.entity === calEvent.entity.entity);
 
 		const newEvent: EventClass = new EventClass(calEvent, config);
+
+		// we need to filter the dates again or all day events will be wrong
+		// this is due to the API only bringing a date for full day events
+		if (newEvent.isAllDayEvent && newEvent.endDateTime.isBefore(dayjs().add(config.startDaysAhead!, 'day'))) {
+			return events
+		}
 
 		// if hideDeclined events then filter out
 		// TODO: no longer working as it was removed from the rest API

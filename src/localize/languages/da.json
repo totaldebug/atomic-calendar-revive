@@ -53,7 +53,6 @@
             "showMultiDayEventParts": "Vis flere dages begivenhedsdele",
             "eventTitle": "Indstil tom begivenhedstitel",
             "compactMode": "Aktiver kompakt tilstand",
-            "hoursOnSameLine": "Vis timer på begivenhedslinjen",
             "titleLength": "Max titellængde (0 for ubegrænset)",
             "descLength": "Max beskrivelseslængde (0 for ubegrænset)",
             "showAllDayEvents": "Vis heldagsbegivenheder",
@@ -86,7 +85,8 @@
             "showEventDate": "Vis dato for arrangementer",
             "showDatePerEvent": "Vis dato ud for hver begivenhed",
             "showTimeRemaining": "Vis resterende tid",
-            "showAllDayHours": "Vis Heldagsbegivenhedstekst"
+            "showAllDayHours": "Vis Heldagsbegivenhedstekst",
+            "hoursOnSameLine": "Vis timer på begivenhedslinjen"
         }
     },
     "calendar": {

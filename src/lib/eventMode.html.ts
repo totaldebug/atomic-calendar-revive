@@ -17,7 +17,7 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 
     if (config.showEventIcon && event.entityConfig.icon != 'undefined') {
-        return html`<ha-icon class="eventIcon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+        return html`<ha-icon class="event-icon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
     }
 }
 
@@ -30,25 +30,24 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
 export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
     const titleColor: string =
         typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-    const dayClassEventRunning = event.isRunning ? `event-titleRunning` : `event-title`;
+    const dayClassEventRunning = event.isRunning ? `running` : ``;
     const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
     let { title } = event;
 
     if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
         title = event.title.slice(0, config.titleLength);
     }
-
-    if (config.disableEventLink || event.htmlLink == 'undefined' || event.htmlLink === null) {
+    if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
         return html`
         				<div style="text-decoration: ${textDecoration};color: ${titleColor}">
-        					<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
+        					<div class="event-title ${dayClassEventRunning}">${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)} </div>
         				</div>
         			`;
     } else {
         return html`
         				<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
         					<div style="color: ${titleColor}">
-        						<div class="${dayClassEventRunning}" style="--event-title-size: ${config.eventTitleSize}%">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
+        						<div class="event-title ${dayClassEventRunning}">${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span></div>
         					</div>
         				</a>
         			`;
@@ -124,16 +123,13 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
     if (!event.location || !config.showLocation) {
         return html``;
     } else if (config.disableLocationLink) {
-        return html`<div><ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}</div>
-        `;
+        return html`<ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}`;
     } else {
         const loc: string = event.location;
         const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
-        return html`<div>
-            <a href=${location} target="${config.linkTarget}" class="location-link" style="--location-link-size: ${config.locationTextSize}%">
+        return html`<a href=${location} target="${config.linkTarget}" class="location-link" style="--location-link-size: ${config.locationTextSize}%">
                 <ha-icon class="event-location-icon" style="--location-icon-color: ${config.locationIconColor}" icon="mdi:map-marker"> </ha-icon>&nbsp;${event.address}
-            </a>
-        </div>`;
+            </a>`;
     }
 }
 

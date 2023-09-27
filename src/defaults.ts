@@ -37,9 +37,6 @@ export default {
 	// color and font settings
 	nameColor: 'var(--primary-text-color)', // Card Name color
 
-	dateColor: 'var(--primary-text-color)', // Date text color (left side)
-	dateSize: 90, //Date text size (percent of standard text)
-
 	descColor: 'var(--primary-text-color)', // Description text color (left side)
 	descSize: 80, //Description text size (percent of standard text)
 
@@ -49,13 +46,10 @@ export default {
 	showNoEventDays: false,
 
 
-	timeColor: 'var(--primary-color)', // Time text color (center bottom)
-	timeSize: 90, //Time text size
 	showHours: true, //shows the bottom line (time, duration of event)
 	showRelativeTime: true,
 
 	eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
-	eventTitleSize: 100,
 
 	locationIconColor: 'rgb(--primary-text-color)', //Location link settings (right side)
 	locationTextSize: 90,
@@ -67,7 +61,6 @@ export default {
 	finishedEventFilter: 'grayscale(80%)', // css filter
 
 	// days separating
-	dayWrapperLineColor: 'var(--primary-text-color)', // days separating line color
 	eventBarColor: 'var(--primary-color)',
 
 	eventCalNameColor: 'var(--primary-text-color)',

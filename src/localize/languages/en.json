@@ -53,7 +53,6 @@
 			"showMultiDayEventParts": "Show Multi-Day Event Parts",
 			"eventTitle": "Set blank event title",
 			"compactMode": "Enable compact mode",
-			"hoursOnSameLine": "Show hours on the event line",
 			"titleLength": "Max title length (0 for unlimited)",
 			"descLength": "Max description length (0 for unlimited)",
 			"showAllDayEvents": "Show all day events",
@@ -86,7 +85,8 @@
 			"showEventDate": "Show date for events",
 			"showDatePerEvent": "Show date next to each event",
 			"showTimeRemaining": "Show time remaining",
-			"showAllDayHours": "Show All Day event text"
+			"showAllDayHours": "Show All Day event text",
+			"hoursOnSameLine": "Show hours on the event line"
 		}
 	},
 	"calendar": {

@@ -184,7 +184,7 @@ export default class EventClass {
 	 * @return {String}
 	 */
 	get htmlLink() {
-		return this.rawEvent.htmlLink || '';
+		return this.rawEvent.htmlLink || undefined;
 	}
 
 	/**

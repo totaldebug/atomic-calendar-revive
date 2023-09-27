@@ -385,11 +385,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                     },
                     {
                         type: 'switch',
-                        name: 'hoursOnSameLine',
-                        label: localize('main.fields.hoursOnSameLine'),
-                    },
-                    {
-                        type: 'switch',
                         name: 'showAllDayEvents',
                         label: localize('main.fields.showAllDayEvents'),
                         default: defaultConfig.showAllDayEvents,
@@ -539,6 +534,11 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
                         label: localize('event.fields.showAllDayHours'),
                         default: defaultConfig.showAllDayHours,
                     },
+                    {
+                        type: 'switch',
+                        name: 'hoursOnSameLine',
+                        label: localize('event.fields.hoursOnSameLine'),
+                    }
                 ],
             },
             calendar: {

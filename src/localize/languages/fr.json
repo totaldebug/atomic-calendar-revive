@@ -53,7 +53,6 @@
 			"showMultiDayEventParts": "Afficher les parties de l'événement sur plusieurs jours",
 			"eventTitle": "Définir un titre d'événement vide",
 			"compactMode": "Activer le mode compact",
-			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement",
 			"titleLength": "Longueur maximale du titre (0 pour illimité)",
 			"descLength": "Longueur maximale de la description (0 pour illimité)",
 			"showAllDayEvents": "Afficher les événements de la journée",
@@ -86,7 +85,8 @@
 			"showEventDate": "Afficher la date des événements",
 			"showDatePerEvent": "Afficher la date à côté de chaque événement",
 			"showTimeRemaining": "Afficher le temps restant",
-			"showAllDayHours": "Afficher le texte de l'événement toute la journée"
+			"showAllDayHours": "Afficher le texte de l'événement toute la journée",
+			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement"
 		}
 	},
 	"calendar": {
