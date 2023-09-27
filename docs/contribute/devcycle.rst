@@ -31,28 +31,16 @@ from the main repository:
       git remote add upstream https://github.com/totaldebug/atomic-calendar-revive
 
 
-Checkout the master branch and pull the latest upstream version:
+Checkout the beta branch and pull the latest upstream version:
 
 .. code-block:: bash
 
-      git checkout master
+      git checkout beta
       git fetch upstream
-      git merge upstream/master
+      git merge upstream/beta
       git push
 
-Your fork should now be in sync with the main totaldebug repository, now a new branch
-is required for development.
-
-.. code-block:: bash
-
-      git checkout -b <issue-number>_<feature/bug-name>
-      git checkout -b 100_Fix-the-bug
-
-
-.. note::
-
-   The branch should have a relevant short name starting with the issue number
-   and then having a name for the fix / feature as shown in the example above.
+Your fork should now be in sync with the main totaldebug repository.
 
 ********************
 Install Dependencies
@@ -64,13 +52,16 @@ From the cloned repository, run the command to install the requirements:
 
       yarn install
 
-********************
-Make changes & Build
-********************
+.. note::
 
-#. Any changes to the card should be made in the folder ``src``
-#. Update the version number in ``package.json``
-#. Run the command ``yarn run build`` to create the latest distribution file
+   If you are using VSCode devcontainer this happens as part of the post steps.
+
+************
+Make changes
+************
+
+You are now ready to make changes to the code, all source code is in the ``src`` directory
+there should be no need to change any other files.
 
 *******
 Testing
@@ -80,11 +71,16 @@ There are no automated tests for this project, however it is expected that any
 development work is tested against a HA Server with both CalDav and Google Calendar
 attached, this ensures no adverse impact is added with the feature or bugfix.
 
+To create the card run the command ``yarn run build`` this output into the ``dist`` folder,
+this can then be uploaded to HA for testing.
+
 **********
 Versioning
 **********
 
-This project follows `Semantic Versioning <http://semver.org>`_
+You dont need to worry about versioning, the release process takes care of that for you!
+
+But in case you are curious this project follows `Semantic Versioning <http://semver.org>`_
 
 **MAJOR.MINOR.PATCH**
 
@@ -103,23 +99,35 @@ All changes are tracked in the `release notes <https://github.com/totaldebug/ato
 Commit Changes
 **************
 
-Once you are happy with the changes, these can be committed:
+Once you are happy with the changes, these can be committed (I recommend using commitizen):
+
+
+.. code-block:: bash
+
+   git add .
+   git cz
+
+Then follow the prompts and select the relevant options. If this resolves a specific issue, be sure to enter
+the issue number when prompted.
+
 
 .. code-block:: bash
 
     git add .
-    git commit -v -m "feat: 100 Added new feature"
+    git commit -v -m "feat: Added new feature #100"
 
 .. note::
 
-    Commit messages should follow `conventional commits <https://www.conventionalcommits.org/en/v1.0.0/>`_
+    Commit messages MUST follow `conventional commits <https://www.conventionalcommits.org/en/v1.0.0/>`_
     this ensures clear commit messages within the repository. Without this your change will be rejected as it is required for release.
+
+    Breaking changes are detected with ``!`` e.g. ``feat!: my breaking change``
 
 
 *******************
 Submit Pull Request
 *******************
 
-Once development & testing are completed a pull request can be submitted for
-the change that is required, ensure that all tests are passing and once they
-are a member of the team will review the request, test and merge if appropriate
+Once development & testing are completed a pull request can be created to the beta branch.
+
+A member of the team will review the request, test and merge if appropriate.
