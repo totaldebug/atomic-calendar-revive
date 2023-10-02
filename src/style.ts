@@ -116,12 +116,12 @@ export const styles: CSSResultGroup = css`
 	}
 	.hours {
 		color: var(--time-color);
-		font-size: var(--time-size) !important;
+		font-size: var(--time-size);
 		float: left;
 	}
 	.relative-time {
 		color: var(--time-color);
-		font-size: var(--time-size) !important;
+		font-size: var(--time-size);
 		float: right;
 		padding-left: 5px;
 	}
