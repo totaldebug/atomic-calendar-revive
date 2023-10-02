@@ -74,6 +74,17 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 
         return html`
       <div class="card-config">
+        <div class="sponsor">
+            <div>
+                Please consider sponsoring this project. <br />
+                This will help keep the project alive and continue development.
+            </div>
+            <div class="badge">
+                <a href="https://github.com/sponsors/marksie1988" target="_blank">
+                    <img src="https://img.shields.io/badge/sponsor-000?style=for-the-badge&logo=githubsponsors&logoColor=red" />
+                </a>
+            </div>
+        </div>
         ${Object.entries(this.options).map(option => this.renderOption(option[0], option[1]))}
       </div>
     `;

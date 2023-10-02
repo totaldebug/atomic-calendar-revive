@@ -57,4 +57,18 @@ export const style = css`
 	.mwc-text-field{
 		width: 97%;
 	}
+	.sponsor{
+		margin: 5px;
+		padding: 8px;
+		background-image: repeating-linear-gradient(27deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
+        background-size: 3px 100%, 100% 3px, 3px 100% , 100% 3px;
+        background-position: 0 0, 0 0, 100% 0, 0 100%;
+        background-repeat: no-repeat;
+		position: relative;
+	}
+	.badge {
+		position: absolute;
+    	top: 0px;
+    	right: 0px;
+	}
 `;
