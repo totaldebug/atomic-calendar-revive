@@ -148,7 +148,6 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 
 	const startTime = start.startOf('day').format(dateFormat);
-	const endTime = end.endOf('day').format(dateFormat);
 
 	// for each calendar entity get all events
 	// each entity may be a string of entity id or
@@ -159,6 +158,11 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	const calendarEntityPromises: any[] = [];
 	config.entities.map((entity) => {
 		const calendarEntity = (entity && entity.entity) || entity;
+
+		const endTime = entity.maxDaysToShow! !== undefined ? dayjs()
+			.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
+			.endOf('day')
+			.format('YYYY-MM-DDTHH:mm:ss') : end.endOf('day').format(dateFormat);;
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${endTime}Z`;
 

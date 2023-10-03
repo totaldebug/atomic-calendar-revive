@@ -303,7 +303,7 @@ export class AtomicCalendarRevive extends LitElement {
 		/**
 		 * If there are no events, put some text in
 		 */
-		if (days.length === 0 && this._config.maxDaysToShow == 1) {
+		if (days.length === 0 && (this._config.maxDaysToShow == 1 || this._config.maxDaysToShow == 0)) {
 			this.content = this._config.noEventText;
 			return;
 		} else if (days.length === 0) {
