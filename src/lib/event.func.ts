@@ -164,7 +164,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 			.endOf('day')
 			.format('YYYY-MM-DDTHH:mm:ss') : end.endOf('day').format(dateFormat);;
 
-		const url: string = `calendars/${entity.entity}?start=${startTime}Z&end=${endTime}Z`;
+		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
 
 		// make all requests at the same time
 		calendarEntityPromises.push(
