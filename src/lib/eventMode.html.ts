@@ -145,11 +145,11 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
  */
 export function getWeekNumberHTML(day: [EventClass], currentWeek: number) {
     let currentWeekHTML = html``
-    if (currentWeek != day[0].startDateTime.week()) {
+    if (currentWeek != day[0].startDateTime.isoWeek()) {
         if (day[0].startDateTime.isBefore(dayjs())) {
-            currentWeek = dayjs().week()
+            currentWeek = dayjs().isoWeek()
         } else {
-            currentWeek = day[0].startDateTime.week();
+            currentWeek = day[0].startDateTime.isoWeek();
         }
 
         currentWeekHTML = html`<div class="week-number">${localize('ui.common.week')} ${currentWeek.toString()}</div>`
