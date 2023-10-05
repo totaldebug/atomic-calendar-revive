@@ -2171,10 +2171,10 @@
     is-reference "1.2.1"
     magic-string "^0.27.0"
 
-"@rollup/plugin-eslint@^9.0.4":
-  version "9.0.4"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-eslint/-/plugin-eslint-9.0.4.tgz#be9c8d48318cdb213181cedfd8815d136ff1bc8a"
-  integrity sha512-JtXb8RFMsRB6pMsVAo7qR3wopb7XT7XlxnqQQk/5zdrhmCOgF/OoKBYWLzK0yaUXNfRZeuly9VLt6VgXIBrvkw==
+"@rollup/plugin-eslint@^9.0.5":
+  version "9.0.5"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-eslint/-/plugin-eslint-9.0.5.tgz#6153f5b72bad1833f5b5ce88cc03c3fe767a9c66"
+  integrity sha512-C4nh0sSeJuxVW5u5tDX+dCMjKcNfHm4hS+zeUVh1si7gttnhgGbrmPkUxIX7iZgYABwdEh/ewyMbZB+WXjSJdA==
   dependencies:
     "@rollup/pluginutils" "^5.0.1"
     eslint "^8.24.0"
