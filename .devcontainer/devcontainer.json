@@ -1,6 +1,6 @@
 {
     "name": "Atomic Calendar Revive",
-    "image": "totaldebug/bugbox:typescript",
+    "image": "totaldebug/debugbox:typescript",
     "postCreateCommand": "zsh ./.devcontainer/post-install.sh",
     "customizations": {
         "vscode": {
