@@ -54,7 +54,7 @@
 		"semantic-release": "^22.0.5"
 	},
 	"dependencies": {
-		"@formatjs/icu-messageformat-parser": "^2.6.2",
+		"@formatjs/icu-messageformat-parser": "^2.7.0",
 		"@lit-labs/scoped-registry-mixin": "^1.0.1",
 		"@lit/reactive-element": "^2.0.0",
 		"@material/mwc-formfield": "^0.27.0",
