@@ -13,25 +13,16 @@ Requirements
 
 * VS Code
 * Docker
-* Remote - Containers (VS Code extension)
+* Remote Development (VS Code extension pack)
 
 
-*************
-Configuration
-*************
+*****
+Usage
+*****
 
-#. Copy the files inside ``.devcontainer``
-#. Paste them in the same folder, renaming to remove the ``recommended-``
-#. In most cases no other changes will be required with these files
+#. Open VS Code
+#. Open the command pallete and type: ``Dev Continers: Clone repository in container volume``
 
-.. note::
-   Please ensure that the ``recommended-xxx`` files are not removed as this would remove
-   them from the repository
+This will then clone the repository directly into the development container and install
+all the recommended plugins. You can then start development without any further configuration
 
-When you open the repository with VS Code, a prompt to "Reopen in container" should
-now appear. This will start the build of the development container with all components
-and extensions pre-installed.
-
-.. note::
-   If you don't see the notification, open the command pallet and select
-   ``Remote-Containers: Open Folder in Container``

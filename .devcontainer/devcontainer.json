@@ -1,7 +1,7 @@
 {
     "name": "Atomic Calendar Revive",
-    "dockerFile": "Dockerfile",
-    "context": "..",
+    "image": "totaldebug/bugbox:typescript",
+    "postCreateCommand": "zsh ./.devcontainer/post-install.sh",
     "customizations": {
         "vscode": {
             "settings": {
@@ -24,9 +24,9 @@
                 "ms-python.python",
                 "tht13.html-preview-vscode",
                 "sourcery.sourcery",
-                "tabnine.tabnine-vscode"
+                "tabnine.tabnine-vscode",
+                "trond-snekvik.simple-rst"
             ]
         }
-    },
-    "postCreateCommand": "zsh ./.devcontainer/post-install.sh"
+    }
 }

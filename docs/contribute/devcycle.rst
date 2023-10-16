@@ -10,7 +10,7 @@ Setup Repository
 ****************
 
 * Fork the repo in `github <https://github.com/totaldebug/atomic-calendar-revive>`_
-* Clone the project to your development machine
+* Clone the project to your development machine (or follow the DevContainer instructions)
 
 .. code-block:: bash
 

@@ -2,8 +2,7 @@ dist/*
 !dist/atomic-calendar-revive.js
 
 .devcontainer/*
-!.devcontainer/recommended-devcontainer.json
-!.devcontainer/recommended-Dockerfile
+!.devcontainer/devcontainer.json
 !.devcontainer/post-install.sh
 dist
 
