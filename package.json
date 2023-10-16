@@ -79,7 +79,7 @@
 	"resolutions": {
 		"lit": "^2.2.6",
 		"lit-element": "^3.2.0",
-		"@lit/reactive-element": "1.2.1"
+		"@lit/reactive-element": "2.0.0"
 	},
 	"bugs": {
 		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"
