@@ -1,13 +1,19 @@
 {
     "name": "Atomic Calendar Revive",
     "image": "totaldebug/debugbox:typescript",
+    "workspaceFolder": "/workspaces/atomic-calendar-revive",
     "postCreateCommand": "zsh ./.devcontainer/post-install.sh",
     "customizations": {
         "vscode": {
             "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "zsh": {
+                        "path": "/bin/zsh"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "zsh",
                 "files.eol": "\n",
                 "editor.tabSize": 4,
-                "terminal.integrated.shell.linux": "/bin/zsh",
                 "editor.formatOnPaste": false,
                 "editor.formatOnSave": true,
                 "editor.formatOnType": true,
