@@ -30,7 +30,7 @@
 		"@babel/plugin-transform-template-literals": "^7.22.5",
 		"@babel/preset-env": "^7.23.2",
 		"@rollup/plugin-babel": "^6.0.4",
-		"@rollup/plugin-commonjs": "^25.0.4",
+		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-eslint": "^9.0.5",
 		"@rollup/plugin-json": "^6.0.1",
 		"@rollup/plugin-node-resolve": "^15.2.3",
