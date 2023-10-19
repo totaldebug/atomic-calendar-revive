@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Версия",
+		"show_warning": "Показать предупреждение",
+		"error": "Ошибка",
+		"description": "Продвинутая карта календаря для Home Assistant с Lovelace.",
+		"fullDayEventText": "Весь день",
+		"untilText": "До",
+		"noEventText": "Нет событий",
+		"noEventsForNextDaysText": "Нет событий в ближайшие дни",
+		"hiddenEventText": "события скрыты"
+	},
+	"ui": {
+		"common": {
+			"previous": "Предыдущий",
+			"next": "Следующий",
+			"week": "Неделя"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Неверная конфигурация",
+		"update_card": "Календарь не может быть загружен из компонента Home Assistant",
+		"no_entities": "Вы не указали никакие сущности"
+	},
+	"required": {
+		"name": "Обязательно",
+		"secondary": "Обязательные параметры для работы этой карты"
+	},
+	"main": {
+		"name": "Основные параметры",
+		"secondary": "Параметры, действующие глобально",
+		"fields": {
+			"name": "Название",
+			"showColors": "Показать цвета",
+			"maxDaysToShow": "Максимальное количество дней для отображения",
+			"showLocation": "Показать значок местоположения",
+			"showLoader": "Показать анимацию загрузки",
+			"showDate": "Показать дату на карте",
+			"showDeclined": "Показать отклоненные события",
+			"sortBy": "Сортировать по",
+			"allDayBottom": "Показать события на весь день внизу",
+			"hideFinishedEvents": "Скрыть завершенные события",
+			"dateFormat": "Формат даты",
+			"hoursFormat": "Формат часов",
+			"defaultMode": "Режим по умолчанию",
+			"linkTarget": "Цель ссылки",
+			"refreshInterval": "Интервал обновления",
+			"showRelativeTime": "Показать относительное время",
+			"firstDayOfWeek": "Первый день недели 0-6",
+			"cardHeight": "Высота карты",
+			"hideDuplicates": "Скрыть дубликаты",
+			"showMultiDay": "Разделить многодневные события",
+			"showMultiDayEventParts": "Показать части многодневных событий",
+			"eventTitle": "Установить пустой заголовок события",
+			"compactMode": "Включить компактный режим",
+			"titleLength": "Максимальная длина заголовка (0 для неограниченной",
+			"descLength": "Максимальная длина описания (0 для неограниченной)",
+			"showAllDayEvents": "Показать события на весь день",
+			"offsetHeaderDate": "Смещение заголовка даты",
+			"startDaysAhead": "События, начинающиеся через x дней сегодня"
+		}
+	},
+	"event": {
+		"name": "Режим события",
+		"secondary": "Специфические параметры режима события",
+		"fields": {
+			"showCurrentEventLine": "Показать линию перед событием?",
+			"showProgressBar": "Показать полосу прогресса?",
+			"showMonth": "Показать месяц?",
+			"showWeekDay": "Показать день недели",
+			"showDescription": "Показать описание?",
+			"disableEventLink": "Отключить ссылки в заголовке события?",
+			"disableLocationLink": "Отключить ссылки на местоположение?",
+			"showNoEventsForToday": "Показать сообщение 'Нет событий сегодня'?",
+			"showFullDayProgress": "Показать полосу прогресса для событий на весь день?",
+			"untilText": "текст 'до':",
+			"noEventText": "Текст 'Нет событий сегодня':",
+			"noEventsForNextDaysText": "Текст 'Нет событий в ближайшие дни':",
+			"fullDayEventText": "Текст для событий на весь день:",
+			"showEventIcon": "Показать значок события",
+			"showHiddenText": "Показать текст скрытых событий?",
+			"hiddenEventText": "Текст для скрытых событий:",
+			"showCalendarName": "Показать название календаря",
+			"showWeekNumber": "Показать номер недели",
+			"showEventDate": "Показать дату для событий",
+			"showDatePerEvent": "Показать дату рядом с каждым событием",
+			"showTimeRemaining": "Показать оставшееся время",
+			"showAllDayHours": "Показать текст события на весь день",
+			"hoursOnSameLine": "Показать часы на строке события"
+		}
+	},
+	"calendar": {
+		"name": "Режим календаря",
+		"secondary": "Специфические параметры режима календаря",
+		"fields": {
+			"showLastCalendarWeek": "Показать последнюю неделю календаря",
+			"disableCalEventLink": "Отключить ссылку на событие календаря",
+			"disableCalLocationLink": "Отключить ссылку на местоположение календаря",
+			"calShowDescription": "Показать описание",
+			"disableCalLink": "Отключить ссылку на календарь"
+		}
+	},
+	"appearance": {
+		"name": "Внешний вид",
+		"secondary": "Настроить цвета и т. д.",
+		"main": {
+			"name": "Основной",
+			"secondary": "Глобальные настройки цвета"
+		},
+		"fields": {
+			"dimFinishedEvents": "Затемнить завершенные события?"
+		}
+	}
+}
