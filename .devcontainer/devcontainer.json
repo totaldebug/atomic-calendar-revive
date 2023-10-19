@@ -2,6 +2,7 @@
     "name": "Atomic Calendar Revive",
     "image": "totaldebug/debugbox:typescript",
     "workspaceFolder": "/workspaces/atomic-calendar-revive",
+    "initializeCommand": "docker pull totaldebug/debugbox:typescript",
     "postCreateCommand": "zsh ./.devcontainer/post-install.sh",
     "customizations": {
         "vscode": {
@@ -28,7 +29,6 @@
                 "redhat.vscode-yaml",
                 "eamodio.gitlens",
                 "ms-python.python",
-                "tht13.html-preview-vscode",
                 "sourcery.sourcery",
                 "tabnine.tabnine-vscode",
                 "trond-snekvik.simple-rst"
