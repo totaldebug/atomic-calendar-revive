@@ -22,7 +22,7 @@ const languages: object = {
 	nb: nb,
 	ru: ru,
 	sl: sl,
-	sv: sv
+	sv: sv,
 };
 
 export function localize(string: string, search = '', replace = '') {

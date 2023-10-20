@@ -1,9 +1,11 @@
+import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import { getCurrDayAndMonth, getMultiDayEventParts, isHtml } from './common.html';
 import EventClass from './event.class';
+import { getEntityIcon } from '../helpers/get-entity-icon';
 import { localize } from '../localize/localize';
 import { atomicCardConfig } from '../types/config';
 
@@ -13,12 +15,21 @@ import { atomicCardConfig } from '../types/config';
  * @param event event to get icon from
  * @returns TemplateResult with Icon
  */
-export function getEventIcon(config: atomicCardConfig, event: EventClass) {
+export function getEventIcon(config: atomicCardConfig, event: EventClass, hass: HomeAssistant) {
 	const iconColor: string =
-		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
+		typeof event.entityConfig.color !== 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 
-	if (config.showEventIcon && event.entityConfig.icon != 'undefined') {
-		return html`<ha-icon class="event-icon" style="color:  ${iconColor};" icon="${event.entityConfig.icon}"></ha-icon>`;
+	let { icon } = event.entityConfig;
+
+	if (!icon || icon === 'undefined') {
+		// If icon is not set or is 'undefined', use getEntityIcon as a fallback
+		icon = getEntityIcon(event.entityConfig.entity, hass);
+	}
+
+	if (config.showEventIcon) {
+		return html`<ha-icon class="event-icon" style="color: ${iconColor};" icon="${icon}"></ha-icon>`;
+	} else {
+		return html``; // Return an empty HTML element if config.showEventIcon is false
 	}
 }
 
@@ -28,7 +39,7 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass) {
  * @param event event to get title html for
  * @returns TemplateResult containing title HTML
  */
-export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
+export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: HomeAssistant) {
 	const titleColor: string =
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
@@ -42,7 +53,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
 		return html`
 			<div style="text-decoration: ${textDecoration};color: ${titleColor}">
 				<div class="event-title ${dayClassEventRunning}">
-					${getEventIcon(config, event)} ${title} ${getMultiDayEventParts(config, event)}
+					${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
 				</div>
 			</div>
 		`;
@@ -51,7 +62,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass) {
 			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
 				<div style="color: ${titleColor}">
 					<div class="event-title ${dayClassEventRunning}">
-						${getEventIcon(config, event)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
+						${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
 					</div>
 				</div>
 			</a>

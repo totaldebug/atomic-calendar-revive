@@ -472,7 +472,7 @@ export class AtomicCalendarRevive extends LitElement {
 					<div class="event-right" style="${finishedEventsStyle}">
 						${currentEventLine}
 						<div class="event-right-top">
-							${getTitleHTML(this._config, event)}
+							${getTitleHTML(this._config, event, this.hass)}
 							<div class="event-location">
 								${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}
 							</div>
@@ -623,7 +623,7 @@ export class AtomicCalendarRevive extends LitElement {
 					>
 						<div class="calDay">
 							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-							<div>${handleCalendarIcons(day)}</div>
+							<div>${handleCalendarIcons(day, this.hass)}</div>
 						</div>
 					</td>
 					${i && i % 6 === 0 ? html`</tr>` : ''}

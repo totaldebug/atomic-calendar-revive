@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default-member */
+import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
@@ -6,6 +8,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import CalendarDay from './calendar.class';
 import { getMultiDayEventParts, isHtml } from './common.html';
 import EventClass from './event.class';
+import { getEntityIcon } from '../helpers/get-entity-icon';
 import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(isoWeek);
@@ -16,17 +19,24 @@ dayjs.extend(isoWeek);
  * @param day calendarDay
  * @returns mdi icons required for that day
  */
-export function handleCalendarIcons(day: CalendarDay) {
+export function handleCalendarIcons(day: CalendarDay, hass: HomeAssistant) {
 	const allIcons: any[] = [];
 	const myIcons: any[] = [];
 	day.allEvents.map((event: EventClass) => {
-		if (event.entityConfig.icon && event.entityConfig.icon.length > 0) {
-			const index = myIcons.findIndex((x) => x.icon == event.entityConfig.icon && x.color == event.entityConfig.color);
-			if (index === -1) {
-				myIcons.push({ icon: event.entityConfig.icon, color: event.entityConfig.color });
-			}
+		let { icon } = event.entityConfig;
+		if (!icon || icon.length === 0) {
+			// If icon is not set or is an empty string, use getEntityIcon as a fallback
+			icon = getEntityIcon(event.entity.entity_id, hass);
+		}
+
+		const index = myIcons.findIndex((x) => x.icon === icon && x.color === event.entityConfig.color);
+		if (index === -1) {
+			myIcons.push({ icon, color: event.entityConfig.color });
 		}
 	});
+	// Sort myIcons alphabetically by icon property
+	myIcons.sort((a, b) => a.icon.localeCompare(b.icon));
+
 	myIcons.map((icon) => {
 		const dayIcon = html`<span>
 			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};"></ha-icon>
