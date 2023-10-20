@@ -30,6 +30,7 @@ import './editor';
 import { CARD_VERSION } from './const';
 import defaultConfig from './defaults';
 import { formatTime } from './helpers/format-time';
+import { getDefaultConfig } from './helpers/get-default-config';
 import { setHass } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
 import CalendarDay from './lib/calendar.class';
@@ -104,11 +105,9 @@ export class AtomicCalendarRevive extends LitElement {
 		return document.createElement('atomic-calendar-revive-editor') as LovelaceCardEditor;
 	}
 
-	public static getStubConfig() {
-		return {
-			name: 'Calendar Card',
-			enableModeChange: true,
-		};
+	public static getStubConfig(hass: HomeAssistant): Record<string, unknown> {
+		// get available energy entities
+		return getDefaultConfig(hass);
 	}
 
 	public setConfig(config: atomicCardConfig): void {
