@@ -4,6 +4,7 @@ import * as en from './languages/en.json';
 import * as et from './languages/et.json';
 import * as fi from './languages/fi.json';
 import * as fr from './languages/fr.json';
+import * as hu from './languages/hu.json';
 import * as nb from './languages/nb.json';
 import * as ru from './languages/ru.json';
 import * as sl from './languages/sl.json';
@@ -17,10 +18,11 @@ const languages: object = {
 	et: et,
 	fi: fi,
 	fr: fr,
+	hu: hu,
 	nb: nb,
-	sl: sl,
-	sv: sv,
 	ru: ru,
+	sl: sl,
+	sv: sv
 };
 
 export function localize(string: string, search = '', replace = '') {
