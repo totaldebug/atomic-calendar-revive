@@ -1,7 +1,3 @@
-import { LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } from 'custom-card-helpers';
-
-
-
 export interface LongDateFormatSpec {
 	LTS: string;
 	LT: string;

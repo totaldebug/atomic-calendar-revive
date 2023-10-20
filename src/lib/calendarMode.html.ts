@@ -1,12 +1,12 @@
-import { handleClick, HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { atomicCardConfig } from '../types/config';
+
 import CalendarDay from './calendar.class';
 import { getMultiDayEventParts, isHtml } from './common.html';
 import EventClass from './event.class';
+import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(isoWeek);
 
@@ -29,7 +29,7 @@ export function handleCalendarIcons(day: CalendarDay) {
 	});
 	myIcons.map((icon) => {
 		const dayIcon = html`<span>
-			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};" ></ha-icon>
+			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};"></ha-icon>
 		</span>`;
 
 		allIcons.push(dayIcon);
@@ -50,14 +50,16 @@ export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass
 	}
 
 	if (config.disableCalEventLink || event.htmlLink === null) {
-		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${title} ${getMultiDayEventParts(config, event)}</span>`;
+		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}"
+			>${title} ${getMultiDayEventParts(config, event)}</span
+		>`;
 	} else {
 		return html`<a
-  			href="${event.htmlLink}"
-  			style="text-decoration: ${textDecoration};color: ${titleColor}"
-  			target="${config.linkTarget}"
-  			>${title} ${getMultiDayEventParts(config, event)}
-  		</a>`;
+			href="${event.htmlLink}"
+			style="text-decoration: ${textDecoration};color: ${titleColor}"
+			target="${config.linkTarget}"
+			>${title} ${getMultiDayEventParts(config, event)}
+		</a>`;
 	}
 }
 

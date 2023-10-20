@@ -1,11 +1,11 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
-import { atomicCardConfig } from '../types/config';
-import { EntityConfig } from '../types';
+
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
 import sortEvents from '../functions/sort_events';
+import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(isBetween);
@@ -112,7 +112,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
 	const today = dayjs();
 	const start = today.startOf('day').add(config.startDaysAhead!, 'day');
 	const end = start.endOf('day').add(daysToShow, 'day');
-	return await getAllEvents(start, end, config, hass, "Event");
+	return await getAllEvents(start, end, config, hass, 'Event');
 }
 
 /**
@@ -125,7 +125,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
  */
 export async function getCalendarMode(config: atomicCardConfig, hass, selectedMonth) {
 	const month = buildCalendar(config, selectedMonth);
-	const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass, "Calendar");
+	const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass, 'Calendar');
 
 	// link events to the specific day of the month
 	month.map((day: CalendarDay) => {
@@ -143,7 +143,13 @@ export async function getCalendarMode(config: atomicCardConfig, hass, selectedMo
  * gets events from HA, this is for both Calendar and Event mode
  *
  */
-export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config: atomicCardConfig, hass, mode: "Event" | "Calendar") {
+export async function getAllEvents(
+	start: dayjs.Dayjs,
+	end: dayjs.Dayjs,
+	config: atomicCardConfig,
+	hass,
+	mode: 'Event' | 'Calendar',
+) {
 	// format times correctly
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 
@@ -159,10 +165,13 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
 	config.entities.map((entity) => {
 		const calendarEntity = (entity && entity.entity) || entity;
 
-		const endTime = entity.maxDaysToShow! !== undefined ? dayjs()
-			.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-			.endOf('day')
-			.format('YYYY-MM-DDTHH:mm:ss') : end.endOf('day').format(dateFormat);;
+		const endTime =
+			entity.maxDaysToShow! !== undefined
+				? dayjs()
+						.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
+						.endOf('day')
+						.format('YYYY-MM-DDTHH:mm:ss')
+				: end.endOf('day').format(dateFormat);
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
 
@@ -199,7 +208,7 @@ export async function getAllEvents(start: dayjs.Dayjs, end: dayjs.Dayjs, config:
  * @param {Array<Events>} list of raw caldav calendar events
  * @return {Promise<Array<EventClass>>}
  */
-export function processEvents(allEvents: any[], config: atomicCardConfig, mode: "Event" | "Calendar") {
+export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 'Event' | 'Calendar') {
 	// reduce all the events into the ones we care about
 	// events = all the events we care about
 	// calEvent = the current event that is being processed.
@@ -211,7 +220,7 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		// we need to filter the dates again or all day events will be wrong
 		// this is due to the API only bringing a date for full day events
 		if (newEvent.isAllDayEvent && newEvent.endDateTime.isBefore(dayjs().add(config.startDaysAhead!, 'day'))) {
-			return events
+			return events;
 		}
 
 		// if hideDeclined events then filter out
@@ -257,7 +266,11 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 			}
 		}
 
-		if (newEvent.entityConfig.startTimeFilter && newEvent.entityConfig.endTimeFilter && !checkBetweenTimeFilter(newEvent, newEvent.entityConfig.startTimeFilter, newEvent.entityConfig.endTimeFilter)) {
+		if (
+			newEvent.entityConfig.startTimeFilter &&
+			newEvent.entityConfig.endTimeFilter &&
+			!checkBetweenTimeFilter(newEvent, newEvent.entityConfig.startTimeFilter, newEvent.entityConfig.endTimeFilter)
+		) {
 			return events;
 		}
 
@@ -292,13 +305,13 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 
 		const updatedEvents: any[] = [];
 
-		newEvents.forEach(event => {
+		newEvents.forEach((event) => {
 			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
 
 			if (!eventMap[eventIdentifier]) {
 				eventMap[eventIdentifier] = {
 					event,
-					calendars: [event.originName]
+					calendars: [event.originName],
 				};
 				updatedEvents.push(event);
 			} else {
@@ -307,9 +320,10 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		});
 
 		// Update calendar names for the kept events and append removed calendar names
-		updatedEvents.forEach(event => {
+		updatedEvents.forEach((event) => {
 			const eventIdentifier = event.title + '|' + event.startDateTime + '|' + event.endDateTime;
-			if (eventMap[eventIdentifier]) { // Check if eventMap[eventIdentifier] is defined
+			if (eventMap[eventIdentifier]) {
+				// Check if eventMap[eventIdentifier] is defined
 				event.originName = eventMap[eventIdentifier].calendars.join(', ');
 			}
 		});
@@ -323,8 +337,11 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 	// check if the maxEventCount is set, if it is we will remove any events
 	// that go over this limit, unless softLimit is set, in which case we
 	// will remove any events over the soft limit
-	if (config.maxEventCount && ((!config.softLimit && config.maxEventCount < newEvents.length) ||
-		(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))) {
+	if (
+		config.maxEventCount &&
+		((!config.softLimit && config.maxEventCount < newEvents.length) ||
+			(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))
+	) {
 		newEvents.length = config.maxEventCount;
 	}
 	return newEvents;

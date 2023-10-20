@@ -26,10 +26,28 @@ export const style = css`
 	.entity-box {
 		margin-top: 5px;
 		padding: 8px;
-		background-image: repeating-linear-gradient(27deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
-        background-size: 3px 100%, 100% 3px, 3px 100% , 100% 3px;
-        background-position: 0 0, 0 0, 100% 0, 0 100%;
-        background-repeat: no-repeat;
+		background-image: repeating-linear-gradient(
+				27deg,
+				#333333,
+				#333333 11px,
+				transparent 11px,
+				transparent 14px,
+				#333333 14px
+			),
+			repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
+			repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
+			repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
+		background-size:
+			3px 100%,
+			100% 3px,
+			3px 100%,
+			100% 3px;
+		background-position:
+			0 0,
+			0 0,
+			100% 0,
+			0 100%;
+		background-repeat: no-repeat;
 	}
 	.entity-options {
 		padding: 16px;
@@ -42,9 +60,9 @@ export const style = css`
 		padding-right: 4px;
 	}
 	.origin-calendar {
-        width: 50%;
-        margin-left: 35px;
-    }
+		width: 50%;
+		margin-left: 35px;
+	}
 	.icon {
 		--mdc-icon-size: 10px;
 		width: 10px;
@@ -54,21 +72,39 @@ export const style = css`
 		margin-right: -1px;
 		margin-left: -1px;
 	}
-	.mwc-text-field{
+	.mwc-text-field {
 		width: 97%;
 	}
-	.sponsor{
+	.sponsor {
 		margin: 5px;
 		padding: 8px;
-		background-image: repeating-linear-gradient(27deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px), repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
-        background-size: 3px 100%, 100% 3px, 3px 100% , 100% 3px;
-        background-position: 0 0, 0 0, 100% 0, 0 100%;
-        background-repeat: no-repeat;
+		background-image: repeating-linear-gradient(
+				27deg,
+				#333333,
+				#333333 11px,
+				transparent 11px,
+				transparent 14px,
+				#333333 14px
+			),
+			repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
+			repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
+			repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
+		background-size:
+			3px 100%,
+			100% 3px,
+			3px 100%,
+			100% 3px;
+		background-position:
+			0 0,
+			0 0,
+			100% 0,
+			0 100%;
+		background-repeat: no-repeat;
 		position: relative;
 	}
 	.badge {
 		position: absolute;
-    	top: 0px;
-    	right: 0px;
+		top: 0px;
+		right: 0px;
 	}
 `;

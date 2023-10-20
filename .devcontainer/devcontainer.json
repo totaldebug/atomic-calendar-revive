@@ -16,7 +16,7 @@
                 "files.eol": "\n",
                 "editor.tabSize": 4,
                 "editor.formatOnPaste": false,
-                "editor.formatOnSave": true,
+                "editor.formatOnSave": false,
                 "editor.formatOnType": true,
                 "files.trimTrailingWhitespace": true,
                 "editor.codeActionsOnSave": {
@@ -24,7 +24,8 @@
                 },
                 "eslint.validate": [
                     "typescript"
-                ]
+                ],
+                format
             },
             "extensions": [
                 "github.vscode-pull-request-github",

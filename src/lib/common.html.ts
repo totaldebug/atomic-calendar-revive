@@ -1,33 +1,33 @@
-import dayjs, { Dayjs } from "dayjs";
-import { html } from "lit";
-import { atomicCardConfig } from "../types/config";
-import EventClass from "./event.class";
-import { mdiCalendar } from "@mdi/js";
+import { mdiCalendar } from '@mdi/js';
+import dayjs from 'dayjs';
+import { html } from 'lit';
+
+import EventClass from './event.class';
+import { atomicCardConfig } from '../types/config';
 
 export function showCalendarLink(config, selectedMonth) {
 	if (!config.disableCalLink) {
 		return html`<div class="calIconSelector">
-				<ha-icon-button
-					.path=${mdiCalendar}
-          style="--mdc-icon-color: ${config.calDateColor}"
-					onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format('YYYY')}/${selectedMonth.format('MM')}/1'), '${config.linkTarget}'"
-				>
-				</ha-icon-button>
-			</div>`;
+			<ha-icon-button
+				.path=${mdiCalendar}
+				style="--mdc-icon-color: ${config.calDateColor}"
+				onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format(
+					'YYYY',
+				)}/${selectedMonth.format('MM')}/1'), '${config.linkTarget}'"
+			>
+			</ha-icon-button>
+		</div>`;
 	}
 }
-
 
 export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 	// Create an array of days to show
 	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-	let initialTime = dayjs()
-		.add(config.startDaysAhead!, 'day')
-		.startOf('day')
-		, endTime = dayjs()
+	let initialTime = dayjs().add(config.startDaysAhead!, 'day').startOf('day'),
+		endTime = dayjs()
 			.add(daysToShow + config.startDaysAhead!, 'day')
-			.endOf('day')
-		, allDates: any = [];
+			.endOf('day'),
+		allDates: any = [];
 	for (let q = initialTime; q.isBefore(endTime, 'day'); q = q.add(1, 'day')) {
 		allDates.push(q);
 	}
@@ -53,11 +53,9 @@ export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 			emptyEvent.isEmpty = true;
 			singleEvents.push(emptyEvent);
 			var isEvent = false;
-
 		}
 	});
-	return singleEvents
-
+	return singleEvents;
 }
 
 export function getDate(config: atomicCardConfig) {
@@ -94,18 +92,17 @@ export function getCurrDayAndMonth(locale) {
  * @returns TemplateResult containing part count
  */
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
-	if (!config.showMultiDayEventParts === true || event.addDays === false && event.daysLong === undefined) {
-		return
+	if (!config.showMultiDayEventParts === true || (event.addDays === false && event.daysLong === undefined)) {
+		return;
 	}
 	if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
-		return html`(${event.addDays + 1}/${event.daysLong})`
+		return html`(${event.addDays + 1}/${event.daysLong})`;
 	}
 	if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
-		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day')
+		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day');
 
-		return html`(${daysSinceStart + 1}/${event.daysLong})`
+		return html`(${daysSinceStart + 1}/${event.daysLong})`;
 	}
-
 }
 
 /**

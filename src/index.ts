@@ -1,22 +1,18 @@
-﻿import { LitElement, html, TemplateResult, CSSResultGroup } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+﻿/* eslint-disable import/no-named-as-default-member */
+import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import { HomeAssistant, LovelaceCardEditor, getLovelace } from 'custom-card-helpers';
-import { formatTime } from './helpers/format-time';
-import { groupEventsByDay, getEventMode, getCalendarMode } from './lib/event.func';
-import { styles } from './style';
-import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
-
-// DayJS for managing date information
 import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-import updateLocale from 'dayjs/plugin/updateLocale';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import isoWeek from 'dayjs/plugin/isoWeek';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import week from 'dayjs/plugin/weekOfYear';
 import duration from 'dayjs/plugin/duration';
+import isoWeek from 'dayjs/plugin/isoWeek';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import localeData from 'dayjs/plugin/localeData';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import timezone from 'dayjs/plugin/timezone';
+import updateLocale from 'dayjs/plugin/updateLocale';
+import week from 'dayjs/plugin/weekOfYear';
+import { CSSResultGroup, LitElement, TemplateResult, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -26,36 +22,30 @@ dayjs.extend(localeData);
 dayjs.extend(LocalizedFormat);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(week);
-dayjs.extend(duration)
+dayjs.extend(duration);
 dayjs.extend(timezone);
 
 // Import Card Editor
 import './editor';
-
+import { CARD_VERSION } from './const';
+import defaultConfig from './defaults';
+import { formatTime } from './helpers/format-time';
+import { setHass } from './helpers/globals';
+import { registerCustomCard } from './helpers/register-custom-card';
 import CalendarDay from './lib/calendar.class';
-import EventClass from './lib/event.class';
-
 import {
 	getCalendarDescriptionHTML,
 	getCalendarLocationHTML,
 	getCalendarTitleHTML,
 	handleCalendarIcons,
 } from './lib/calendarMode.html';
-import {
-	getDescription,
-	getHoursHTML,
-	getLocationHTML,
-	getTitleHTML,
-	getWeekNumberHTML,
-} from './lib/eventMode.html';
 import { getDate, setNoEventDays, showCalendarLink } from './lib/common.html';
-
-import { atomicCardConfig } from './types/config';
-import { CARD_VERSION } from './const';
-
+import EventClass from './lib/event.class';
+import { getCalendarMode, getEventMode, groupEventsByDay } from './lib/event.func';
+import { getDescription, getHoursHTML, getLocationHTML, getTitleHTML, getWeekNumberHTML } from './lib/eventMode.html';
 import { localize } from './localize/localize';
-import defaultConfig from './defaults';
-import { setHass } from './helpers/globals';
+import { styles } from './style';
+import { atomicCardConfig } from './types/config';
 
 @customElement('atomic-calendar-revive')
 export class AtomicCalendarRevive extends LitElement {
@@ -67,13 +57,13 @@ export class AtomicCalendarRevive extends LitElement {
 	lastCalendarUpdateTime!: dayjs.Dayjs;
 	lastEventsUpdateTime!: dayjs.Dayjs;
 	lastHTMLUpdateTime!: dayjs.Dayjs;
-	events!: object | any[];
+	events!: object | unknown[];
 	shouldUpdateHtml: boolean;
 	errorMessage: TemplateResult;
 	modeToggle: string;
 	refreshCalEvents: boolean;
 	monthToGet: string;
-	month!: Promise<any>;
+	month!: Promise<unknown>;
 	showLoader: boolean;
 	hiddenEvents: number;
 	eventSummary: TemplateResult | void | TemplateResult<1>[];
@@ -81,7 +71,7 @@ export class AtomicCalendarRevive extends LitElement {
 	isUpdating: boolean;
 	clickedDate!: dayjs.Dayjs;
 	language: string;
-	failedEvents!: object | any[];
+	failedEvents!: object | unknown[];
 
 	constructor() {
 		super();
@@ -168,12 +158,12 @@ export class AtomicCalendarRevive extends LitElement {
 
 			dayjs.locale(this.language);
 
-			let timeFormat =
+			const timeFormat =
 				typeof this._config.hoursFormat != 'undefined'
 					? this._config.hoursFormat
 					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-					? formatTime(this.hass.locale)
-					: dayjs().localeData().longDateFormat('LT');
+						? formatTime(this.hass.locale)
+						: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
@@ -191,7 +181,6 @@ export class AtomicCalendarRevive extends LitElement {
 				'color: white; background: #484848; font-weight: 700;',
 				'color: white; background: #cc5500; font-weight: 700;',
 			);
-			console.log("Readme:", "https://github.com/totaldebug/atomic-calendar-revive");
 			console.log(`'Language:'`, `${this.language}`);
 			console.log(`'HASS Timezone:'`, `${this.hass.config.time_zone}`);
 			console.log(`'DayJS Timezone:'`, `${dayjs.tz.guess()}`);
@@ -207,11 +196,16 @@ export class AtomicCalendarRevive extends LitElement {
 
 		const compactMode = this._config.compactMode ? 'compact' : '';
 
-		return html`<ha-card class="cal-card" style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}">
+		return html`<ha-card
+			class="cal-card"
+			style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}"
+		>
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name
-						? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">${this._config.name}</div>`
+						? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
+									${this._config.name}
+							  </div>`
 						: ''}
 						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
 						${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
@@ -228,8 +222,11 @@ export class AtomicCalendarRevive extends LitElement {
 		this.firstrun = false;
 
 		// check if an update is needed
-		if (!this.isUpdating && this.modeToggle == 'Event' && (!this.lastEventsUpdateTime ||
-			dayjs().diff(this.lastEventsUpdateTime, 'seconds') > this._config.refreshInterval)) {
+		if (
+			!this.isUpdating &&
+			this.modeToggle == 'Event' &&
+			(!this.lastEventsUpdateTime || dayjs().diff(this.lastEventsUpdateTime, 'seconds') > this._config.refreshInterval)
+		) {
 			this.showLoader = true;
 			this.hiddenEvents = 0;
 			this.isUpdating = true;
@@ -245,11 +242,11 @@ export class AtomicCalendarRevive extends LitElement {
 			} catch (error) {
 				console.log(error);
 				this.errorMessage = html`${localize('errors.update_card')}
-  						<a
-  							href="https://docs.totaldebug.uk/atomic-calendar-revive/overview/faq.html"
-  							target="${this._config.linkTarget}"
-  							>See Here</a
-  						>`;
+					<a
+						href="https://docs.totaldebug.uk/atomic-calendar-revive/overview/faq.html"
+						target="${this._config.linkTarget}"
+						>See Here</a
+					>`;
 				this.showLoader = false;
 			}
 
@@ -335,7 +332,11 @@ export class AtomicCalendarRevive extends LitElement {
 		/**
 		 * If there are no events, post fake event with "No Events Today" text
 		 */
-		if (this._config.showNoEventsForToday && days[0][0].startDateTime.isAfter(dayjs().add(this._config.startDaysAhead!, 'day').startOf('day'), 'day') && days[0].length > 0) {
+		if (
+			this._config.showNoEventsForToday &&
+			days[0][0].startDateTime.isAfter(dayjs().add(this._config.startDaysAhead!, 'day').startOf('day'), 'day') &&
+			days[0].length > 0
+		) {
 			const emptyEv = {
 				eventClass: '',
 				config: '',
@@ -347,7 +348,7 @@ export class AtomicCalendarRevive extends LitElement {
 			};
 			const emptyEvent = new EventClass(emptyEv, this._config);
 			emptyEvent.isEmpty = true;
-			const d: any[] = [];
+			const d: unknown[] = [];
 			d.push(emptyEvent);
 			days.unshift(d);
 		}
@@ -357,18 +358,21 @@ export class AtomicCalendarRevive extends LitElement {
 		 */
 		let currentWeek = 54;
 		htmlDays = days.map((day: [EventClass], di) => {
-			let weekNumberResults = getWeekNumberHTML(day, currentWeek);
+			const weekNumberResults = getWeekNumberHTML(day, currentWeek);
 			currentWeek = weekNumberResults.currentWeek;
 
-			var dayEvents = day;
+			const dayEvents = day;
 
 			/**
 			 * Loop through each event and add html
 			 */
 			const htmlEvents = dayEvents.map((event: EventClass, i, arr) => {
 				const dayWrap = i == 0 && di > 0 ? 'daywrap' : '';
-				const isEventNext =
-					!!(di == 0 && event.startDateTime.isAfter(dayjs()) && (i == 0 || !arr[i - 1].startDateTime.isAfter(dayjs())));
+				const isEventNext = !!(
+					di == 0 &&
+					event.startDateTime.isAfter(dayjs()) &&
+					(i == 0 || !arr[i - 1].startDateTime.isAfter(dayjs()))
+				);
 				//show line before next event
 				const currentEventLine =
 					this._config.showCurrentEventLine && isEventNext
@@ -413,65 +417,71 @@ export class AtomicCalendarRevive extends LitElement {
 
 				// Show the hours
 				const hoursHTML = this._config.showHours
-					? html`<div class="hours">
-						${getHoursHTML(this._config, event)}
-					  </div>`
+					? html`<div class="hours">${getHoursHTML(this._config, event)}</div>`
 					: html``;
 
 				// Show the relative time
 				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
-					const now = dayjs()
+					const now = dayjs();
 					var timeUntilRemaining = html`<div class="relative-time time-remaining">
-						${this._config.showRelativeTime && (event.startDateTime.isAfter(now, 'minutes')) ? `(${event.startDateTime.fromNow()})` : this._config.showTimeRemaining && (event.startDateTime.isBefore(now, 'minutes') && event.endDateTime.isAfter(now, 'minutes')) ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}` : ''}
-			  		</div>`
-
-				} else { var timeUntilRemaining = html`` }
-
+						${this._config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
+							? `(${event.startDateTime.fromNow()})`
+							: this._config.showTimeRemaining &&
+								event.startDateTime.isBefore(now, 'minutes') &&
+								event.endDateTime.isAfter(now, 'minutes')
+								? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
+								: ''}
+					</div>`;
+				} else {
+					var timeUntilRemaining = html``;
+				}
 
 				const lastEventStyle = !this._config.compactMode && i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
 
-				const showDatePerEvent = this._config.showDatePerEvent
-					? true
-					: !!(i === 0);
+				const showDatePerEvent = this._config.showDatePerEvent ? true : !!(i === 0);
 
 				// check and set the date format
-				const showMonth = showDatePerEvent && this._config.showMonth ? html`<div class="event-date-month">${event.startTimeToShow.format('MMM')}</div>` : '';
-				const showDay = showDatePerEvent ? html`<div class="event-date-day">${event.startTimeToShow.format('DD')}</div>` : '';
+				const showMonth =
+					showDatePerEvent && this._config.showMonth
+						? html`<div class="event-date-month">${event.startTimeToShow.format('MMM')}</div>`
+						: '';
+				const showDay = showDatePerEvent
+					? html`<div class="event-date-day">${event.startTimeToShow.format('DD')}</div>`
+					: '';
 				const eventDateFormat =
-					this._config.europeanDate === true
-						? html`${showDay} ${showMonth}`
-						: html`${showMonth} ${showDay}`;
+					this._config.europeanDate === true ? html`${showDay} ${showMonth}` : html`${showMonth} ${showDay}`;
 
 				const dayClassTodayEvent = event.startTimeToShow.isSame(dayjs(), 'day') ? `current-day` : ``;
 				const compactMode = this._config.compactMode ? `compact` : ``;
 				const hideDate = this._config.showEventDate ? `` : `hide-date`;
 
-				const showWeekDay = showDatePerEvent && this._config.showWeekDay ? html`<div class="event-date-week-day">${event.startTimeToShow.format('ddd')}</div>` : ''
-				const eventLeft = this._config.showEventDate === true
-					? html`<div class="event-left ${dayClassTodayEvent}">
-						<!--Show the weekday e.g. Mon / Tue -->
-						${showWeekDay}
-						<!--Show the event date, see eventDateFormat-->
-						${eventDateFormat}
-					</div>`
-					: html``;
-				return html`
-					<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
-						${eventLeft}
-						<div class="event-right" style="${finishedEventsStyle}">
-							${currentEventLine}
-							<div class="event-right-top">${getTitleHTML(this._config, event)}
-								<div class="event-location">${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}</div>
+				const showWeekDay =
+					showDatePerEvent && this._config.showWeekDay
+						? html`<div class="event-date-week-day">${event.startTimeToShow.format('ddd')}</div>`
+						: '';
+				const eventLeft =
+					this._config.showEventDate === true
+						? html`<div class="event-left ${dayClassTodayEvent}">
+								<!--Show the weekday e.g. Mon / Tue -->
+								${showWeekDay}
+								<!--Show the event date, see eventDateFormat-->
+								${eventDateFormat}
+						  </div>`
+						: html``;
+				return html`<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
+					${eventLeft}
+					<div class="event-right" style="${finishedEventsStyle}">
+						${currentEventLine}
+						<div class="event-right-top">
+							${getTitleHTML(this._config, event)}
+							<div class="event-location">
+								${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}
 							</div>
-							<div class="event-right-bottom">
-								${this._config.hoursOnSameLine ? '' : hoursHTML}
-								${timeUntilRemaining}
-							</div>
-							${getDescription(this._config, event)}
-							${progressBar}
 						</div>
-
-					</div>`;
+						<div class="event-right-bottom">${this._config.hoursOnSameLine ? '' : hoursHTML} ${timeUntilRemaining}</div>
+						${getDescription(this._config, event)} ${progressBar}
+					</div>
+				</div>`;
 			});
 			return html`${this._config.showWeekNumber ? weekNumberResults.currentWeekHTML : ''}${htmlEvents}`;
 		});
@@ -480,8 +490,7 @@ export class AtomicCalendarRevive extends LitElement {
 				? this.hiddenEvents + ' ' + this._config.hiddenEventText
 				: ''
 			: '';
-		this.content = html`${htmlDays}
-			<span class="hidden-events">${eventnotice}</span>`;
+		this.content = html`${htmlDays} <span class="hidden-events">${eventnotice}</span>`;
 	}
 
 	/**
@@ -507,7 +516,6 @@ export class AtomicCalendarRevive extends LitElement {
 				.path=${mdiChevronLeft}
 				.label=${this.hass.localize('ui.common.previous')}
 				@click="${() => this.handleMonthChange(-1)}"
-
 			>
 			</ha-icon-button>
 			<span class="date" style="text-decoration: none; color: ${this._config.calDateColor};">
@@ -519,7 +527,6 @@ export class AtomicCalendarRevive extends LitElement {
 				.path=${mdiChevronRight}
 				.label=${this.hass.localize('ui.common.next')}
 				@click="${() => this.handleMonthChange(1)}"
-
 			>
 			</ha-icon-button>
 		</div>`;
@@ -533,7 +540,7 @@ export class AtomicCalendarRevive extends LitElement {
 		if (fromClick) {
 			this.clickedDate = day.date;
 		}
-		let dayEvents = day.allEvents;
+		const dayEvents = day.allEvents;
 
 		this.eventSummary = dayEvents.map((event: EventClass) => {
 			const eventColor =
@@ -560,7 +567,9 @@ export class AtomicCalendarRevive extends LitElement {
 					</div>
 				</div>`;
 			} else {
-				const eventTime = this._config.showHours ? `${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}` : '';
+				const eventTime = this._config.showHours
+					? `${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}`
+					: '';
 
 				const bulletType: string = event.isDeclined ? 'bullet-event-div-declined' : 'bullet-event-div-accepted';
 
@@ -606,20 +615,20 @@ export class AtomicCalendarRevive extends LitElement {
 			}
 			if (i < 35 || showLastRow) {
 				return html`
-   					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
-   					<td
-   						@click="${() => this.handleCalendarEventSummary(day, true)}"
-   						class="cal"
-   						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked} --cal-grid-color: ${this._config
+					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
+					<td
+						@click="${() => this.handleCalendarEventSummary(day, true)}"
+						class="cal"
+						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked} --cal-grid-color: ${this._config
 						.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
-   					>
-   						<div class="calDay">
-   							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-   							<div>${handleCalendarIcons(day)}</div>
-   						</div>
-   					</td>
-   					${i && i % 6 === 0 ? html`</tr>` : ''}
-   				`;
+					>
+						<div class="calDay">
+							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
+							<div>${handleCalendarIcons(day)}</div>
+						</div>
+					</td>
+					${i && i % 6 === 0 ? html`</tr>` : ''}
+				`;
 			}
 		});
 	}
@@ -671,11 +680,8 @@ export class AtomicCalendarRevive extends LitElement {
 	}
 }
 
-
-(window as any).customCards = (window as any).customCards || [];
-(window as any).customCards.push({
+registerCustomCard({
 	type: 'atomic-calendar-revive',
 	name: 'Atomic Calendar Revive',
-	preview: true,
 	description: localize('common.description'),
 });
