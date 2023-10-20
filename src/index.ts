@@ -55,6 +55,7 @@ import { CARD_VERSION } from './const';
 
 import { localize } from './localize/localize';
 import defaultConfig from './defaults';
+import { setHass } from './helpers/globals';
 
 @customElement('atomic-calendar-revive')
 export class AtomicCalendarRevive extends LitElement {
@@ -66,7 +67,7 @@ export class AtomicCalendarRevive extends LitElement {
 	lastCalendarUpdateTime!: dayjs.Dayjs;
 	lastEventsUpdateTime!: dayjs.Dayjs;
 	lastHTMLUpdateTime!: dayjs.Dayjs;
-	events!: {} | any[];
+	events!: object | any[];
 	shouldUpdateHtml: boolean;
 	errorMessage: TemplateResult;
 	modeToggle: string;
@@ -80,7 +81,7 @@ export class AtomicCalendarRevive extends LitElement {
 	isUpdating: boolean;
 	clickedDate!: dayjs.Dayjs;
 	language: string;
-	failedEvents!: {} | any[];
+	failedEvents!: object | any[];
 
 	constructor() {
 		super();
@@ -103,6 +104,10 @@ export class AtomicCalendarRevive extends LitElement {
 		this.isUpdating = false;
 		this.language = '';
 		this.hiddenEvents = 0;
+	}
+
+	onConnect() {
+		setHass(this.hass);
 	}
 
 	public static async getConfigElement(): Promise<LovelaceCardEditor> {
@@ -167,8 +172,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.hoursFormat != 'undefined'
 					? this._config.hoursFormat
 					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-						? formatTime(this.hass.locale)
-						: dayjs().localeData().longDateFormat('LT');
+					? formatTime(this.hass.locale)
+					: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
@@ -187,9 +192,9 @@ export class AtomicCalendarRevive extends LitElement {
 				'color: white; background: #cc5500; font-weight: 700;',
 			);
 			console.log("Readme:", "https://github.com/totaldebug/atomic-calendar-revive");
-			console.log("Language:", `${this.language}`);
-			console.log("HASS Timezone:", `${this.hass.config.time_zone}`);
-			console.log("DayJS Timezone:", `${dayjs.tz.guess()}`);
+			console.log(`'Language:'`, `${this.language}`);
+			console.log(`'HASS Timezone:'`, `${this.hass.config.time_zone}`);
+			console.log(`'DayJS Timezone:'`, `${dayjs.tz.guess()}`);
 			console.groupEnd();
 
 			this.selectedMonth = dayjs();
@@ -202,7 +207,7 @@ export class AtomicCalendarRevive extends LitElement {
 
 		const compactMode = this._config.compactMode ? 'compact' : '';
 
-		return html` <ha-card class="cal-card" style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}">
+		return html`<ha-card class="cal-card" style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}">
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name

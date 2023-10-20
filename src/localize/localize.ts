@@ -5,12 +5,12 @@ import * as et from './languages/et.json';
 import * as fi from './languages/fi.json';
 import * as fr from './languages/fr.json';
 import * as nb from './languages/nb.json';
+import * as ru from './languages/ru.json';
 import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
-import * as ru from './languages/ru.json';
+import { globalData } from '../helpers/globals';
 
-
-const languages: any = {
+const languages: object = {
 	da: da,
 	de: de,
 	en: en,
@@ -24,7 +24,10 @@ const languages: any = {
 };
 
 export function localize(string: string, search = '', replace = '') {
-	const lang = (localStorage.getItem('selectedLanguage') || 'en').replace(/['"]+/g, '').replace('-', '_');
+	const langFromLocalStorage = (localStorage.getItem('selectedLanguage') || 'en')
+		.replace(/['"]+/g, '')
+		.replace('-', '_');
+	const lang = `${globalData.hass?.locale?.language || globalData.hass?.language || langFromLocalStorage}`;
 
 	let translated: string;
 
