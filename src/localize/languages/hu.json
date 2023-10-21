@@ -7,7 +7,7 @@
 		"fullDayEventText": "Egész nap",
 		"untilText": "Amíg",
 		"noEventText": "Nincs esemény",
-		"noEventsForNextDaysText": "Nincsenek események a kovetkező napokra",
+		"noEventsForNextDaysText": "Nincsenek események a következő napokra",
 		"hiddenEventText": "az események elrejtve"
 	},
 	"ui": {
@@ -57,7 +57,7 @@
 			"descLength": "Leírás max hossza (0: végtelen)",
 			"showAllDayEvents": "Egész napos események megjelenítése",
 			"offsetHeaderDate": "Fejléc dátum eltolás",
-			"startDaysAhead": " Az `x` nap múlva kezdődő események"
+			"startDaysAhead": " Az x nap múlva kezdődő események"
 		}
 	},
 	"event": {
@@ -72,12 +72,12 @@
 			"disableEventLink": "Az esemény címén lévő link letiltása?",
 			"disableLocationLink": "A helyhez kapcsolódó link letiltása?",
 			"showNoEventsForToday": "Jelezzük, hogy ma nincs esemény?",
-			"showFullDayProgress": "Mutassuk az egésznapos esemény folyamatát?",
+			"showFullDayProgress": "Mutassuk az egész napos esemény folyamatát?",
 			"untilText": "amíg szövege:",
 			"noEventText": "Ma nincs esemény szövege:",
 			"noEventsForNextDaysText": "A következő napokon nincs esemény szövege:",
 			"fullDayEventText": "Egész napos esemény szövege:",
-			"showEventIcon": "Esemény ikonjának megjelenítésa",
+			"showEventIcon": "Esemény ikonjának megjelenítése",
 			"showHiddenText": "Mutassuk a rejtett esemény szöveget?",
 			"hiddenEventText": "Rejtett esemény szövege:",
 			"showCalendarName": "Naptár nevének megjelenítése",
@@ -85,7 +85,7 @@
 			"showEventDate": "Esemény dátumának megjelenítése",
 			"showDatePerEvent": "Dátum megjelenítése az események mellett",
 			"showTimeRemaining": "Hátralévő idő megjelenítése",
-			"showAllDayHours": "Egésznapos esemény szöveg megjelenítése",
+			"showAllDayHours": "Egész napos esemény szöveg megjelenítése",
 			"hoursOnSameLine": "Az idő megjelenítése az esemény sorában"
 		}
 	},
@@ -108,7 +108,7 @@
 			"secondary": "Globális szín beállítások"
 		},
 		"fields": {
-			"dimFinishedEvents": "Befelyezett események elhalványítása?"
+			"dimFinishedEvents": "Befejezett események elhalványítása?"
 		}
 	}
 }
