@@ -34,16 +34,11 @@ import { getDefaultConfig } from './helpers/get-default-config';
 import { setHass } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
 import CalendarDay from './lib/calendar.class';
-import {
-	getCalendarDescriptionHTML,
-	getCalendarLocationHTML,
-	getCalendarTitleHTML,
-	handleCalendarIcons,
-} from './lib/calendarMode.html';
-import { getDate, setNoEventDays, showCalendarLink } from './lib/common.html';
+import { getCalendarDescriptionHTML, getCalendarLocationHTML, handleCalendarIcons } from './lib/calendarMode.html';
+import { getDate, getTitleHTML, setNoEventDays, showCalendarLink } from './lib/common.html';
 import EventClass from './lib/event.class';
 import { getCalendarMode, getEventMode, groupEventsByDay } from './lib/event.func';
-import { getDescription, getHoursHTML, getLocationHTML, getTitleHTML, getWeekNumberHTML } from './lib/eventMode.html';
+import { getDescription, getHoursHTML, getLocationHTML, getWeekNumberHTML } from './lib/eventMode.html';
 import { localize } from './localize/localize';
 import { styles } from './style';
 import { atomicCardConfig } from './types/config';
@@ -472,7 +467,7 @@ export class AtomicCalendarRevive extends LitElement {
 					<div class="event-right" style="${finishedEventsStyle}">
 						${currentEventLine}
 						<div class="event-right-top">
-							${getTitleHTML(this._config, event, this.hass)}
+							${getTitleHTML(this._config, event, this.hass, this.modeToggle)}
 							<div class="event-location">
 								${getLocationHTML(this._config, event)} ${eventCalName} ${this._config.hoursOnSameLine ? hoursHTML : ''}
 							</div>
@@ -557,31 +552,24 @@ export class AtomicCalendarRevive extends LitElement {
 
 				return html`<div class="${bulletType}" style="border-color:  ${eventColor}; ${finishedEventsStyle}">
 					<div aria-hidden="true">
-						<div class="bullet-event-span">
-							${getCalendarTitleHTML(this._config, event)} ${getCalendarLocationHTML(this._config, event)}
-						</div>
-						<div class="calMain">
-							${this._config.calShowDescription ? getCalendarDescriptionHTML(this._config, event) : ''}
-						</div>
+						${getTitleHTML(this._config, event, this.hass, this.modeToggle)}
+						${getCalendarLocationHTML(this._config, event)}
+						${this._config.calShowDescription ? getCalendarDescriptionHTML(this._config, event) : ''}
 					</div>
 				</div>`;
 			} else {
 				const eventTime = this._config.showHours
-					? `${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}`
+					? html`<div class="hours">${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}</div>`
 					: '';
 
 				const bulletType: string = event.isDeclined ? 'bullet-event-div-declined' : 'bullet-event-div-accepted';
 
 				return html`
-					<div class="summary-event-div" style="${finishedEventsStyle}">
+					<div class="summary-event-div" style="color: ${eventColor}; ${finishedEventsStyle}">
 						<div class="${bulletType}" style="border-color: ${eventColor}"></div>
-						<div class="bullet-event-span" style="color: ${eventColor};">
-							${eventTime} - ${getCalendarTitleHTML(this._config, event)}
-							${getCalendarLocationHTML(this._config, event)}
-						</div>
-						<div class="calMain">
-							${this._config.calShowDescription ? getCalendarDescriptionHTML(this._config, event) : ''}
-						</div>
+						${eventTime} - ${getTitleHTML(this._config, event, this.hass, this.modeToggle)}
+						${getCalendarLocationHTML(this._config, event)}
+						${this._config.calShowDescription ? getCalendarDescriptionHTML(this._config, event) : ''}
 					</div>
 				`;
 			}

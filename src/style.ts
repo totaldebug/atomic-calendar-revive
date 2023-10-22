@@ -96,6 +96,9 @@ export const styles: CSSResultGroup = css`
 	.event-title.running {
 		user-select: text;
 	}
+	.event-title.Calendar {
+		display: inline-block
+	}
 	.event-location {
 		text-align: right;
 		display: inline-block;
@@ -119,7 +122,7 @@ export const styles: CSSResultGroup = css`
 	.hours {
 		color: var(--time-color);
 		font-size: var(--time-size);
-		float: left;
+		display: inline-block;
 	}
 	.relative-time {
 		color: var(--time-color);

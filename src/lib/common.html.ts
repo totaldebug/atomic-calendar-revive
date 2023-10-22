@@ -1,8 +1,10 @@
 import { mdiCalendar } from '@mdi/js';
+import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import { html } from 'lit';
 
 import EventClass from './event.class';
+import { getEventIcon } from '../helpers/get-icon';
 import { atomicCardConfig } from '../types/config';
 
 export function showCalendarLink(config, selectedMonth) {
@@ -23,7 +25,7 @@ export function showCalendarLink(config, selectedMonth) {
 export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 	// Create an array of days to show
 	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-	let initialTime = dayjs().add(config.startDaysAhead!, 'day').startOf('day'),
+	const initialTime = dayjs().add(config.startDaysAhead!, 'day').startOf('day'),
 		endTime = dayjs()
 			.add(daysToShow + config.startDaysAhead!, 'day')
 			.endOf('day'),
@@ -112,4 +114,40 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
  */
 export function isHtml(input) {
 	return /<[a-z]+\d?(\s+[\w-]+=("[^"]*"|'[^']*'))*\s*\/?>|&#?\w+;/i.test(input);
+}
+
+/**
+ * Gets the title html for an event mode event
+ * @param config card configuration
+ * @param event event to get title html for
+ * @returns TemplateResult containing title HTML
+ */
+export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: HomeAssistant, mode: string) {
+	const titleColor: string =
+		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
+	const dayClassEventRunning = event.isRunning ? `running` : ``;
+	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
+	let { title } = event;
+
+	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
+		title = event.title.slice(0, config.titleLength);
+	}
+	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
+		return html`
+			<div
+				class="event-title ${dayClassEventRunning} ${mode}"
+				style="text-decoration: ${textDecoration};color: ${titleColor}"
+			>
+				${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
+			</div>
+		`;
+	} else {
+		return html`
+			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
+				<div class="event-title ${dayClassEventRunning} ${mode}" style="color: ${titleColor}">
+					${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
+				</div>
+			</a>
+		`;
+	}
 }

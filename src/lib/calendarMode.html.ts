@@ -6,9 +6,9 @@ import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import CalendarDay from './calendar.class';
-import { getMultiDayEventParts, isHtml } from './common.html';
+import { isHtml } from './common.html';
 import EventClass from './event.class';
-import { getEntityIcon } from '../helpers/get-entity-icon';
+import { getEntityIcon } from '../helpers/get-icon';
 import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(isoWeek);
@@ -46,31 +46,6 @@ export function handleCalendarIcons(day: CalendarDay, hass: HomeAssistant) {
 	});
 
 	return allIcons;
-}
-
-// generate Calendar title
-export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass) {
-	const titleColor: string =
-		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
-	let { title } = event;
-
-	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
-		title = event.title.slice(0, config.titleLength);
-	}
-
-	if (config.disableCalEventLink || event.htmlLink === null) {
-		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}"
-			>${title} ${getMultiDayEventParts(config, event)}</span
-		>`;
-	} else {
-		return html`<a
-			href="${event.htmlLink}"
-			style="text-decoration: ${textDecoration};color: ${titleColor}"
-			target="${config.linkTarget}"
-			>${title} ${getMultiDayEventParts(config, event)}
-		</a>`;
-	}
 }
 
 /**

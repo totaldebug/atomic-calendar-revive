@@ -1,74 +1,11 @@
-import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
-import { getCurrDayAndMonth, getMultiDayEventParts, isHtml } from './common.html';
+import { getCurrDayAndMonth, isHtml } from './common.html';
 import EventClass from './event.class';
-import { getEntityIcon } from '../helpers/get-entity-icon';
 import { localize } from '../localize/localize';
 import { atomicCardConfig } from '../types/config';
-
-/**
- * Gets the icon for a specific event
- * @param config card configuration
- * @param event event to get icon from
- * @returns TemplateResult with Icon
- */
-export function getEventIcon(config: atomicCardConfig, event: EventClass, hass: HomeAssistant) {
-	const iconColor: string =
-		typeof event.entityConfig.color !== 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-
-	let { icon } = event.entityConfig;
-
-	if (!icon || icon === 'undefined') {
-		// If icon is not set or is 'undefined', use getEntityIcon as a fallback
-		icon = getEntityIcon(event.entityConfig.entity, hass);
-	}
-
-	if (config.showEventIcon) {
-		return html`<ha-icon class="event-icon" style="color: ${iconColor};" icon="${icon}"></ha-icon>`;
-	} else {
-		return html``; // Return an empty HTML element if config.showEventIcon is false
-	}
-}
-
-/**
- * Gets the title html for an event mode event
- * @param config card configuration
- * @param event event to get title html for
- * @returns TemplateResult containing title HTML
- */
-export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: HomeAssistant) {
-	const titleColor: string =
-		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-	const dayClassEventRunning = event.isRunning ? `running` : ``;
-	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
-	let { title } = event;
-
-	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
-		title = event.title.slice(0, config.titleLength);
-	}
-	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
-		return html`
-			<div style="text-decoration: ${textDecoration};color: ${titleColor}">
-				<div class="event-title ${dayClassEventRunning}">
-					${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
-				</div>
-			</div>
-		`;
-	} else {
-		return html`
-			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-				<div style="color: ${titleColor}">
-					<div class="event-title ${dayClassEventRunning}">
-						${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
-					</div>
-				</div>
-			</a>
-		`;
-	}
-}
 
 /**
  * generates the HTML for time until event
