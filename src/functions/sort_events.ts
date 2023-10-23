@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import EventClass from '../lib/event.class';
 
 // Function to sort events
 export default function sortEvents(events, config) {
@@ -40,20 +41,28 @@ export default function sortEvents(events, config) {
 
 	// Combine sorted all-day and non-all-day events
 	const sortedEvents = [...events];
-	sortedEvents.forEach((event, index) => {
-		const allDayIndex = allDayEvents.findIndex((adEvent) => adEvent.id === event.id);
-		if (allDayIndex !== -1) {
+
+	// Create an array to store the all day events.
+	const allDayEventsArray: EventClass[] = [];
+
+	// Iterate over the sorted events array and move all of the all day events to the allDayEvents array.
+	sortedEvents.forEach((event: EventClass, index) => {
+		if (event.isAllDayEvent) {
+			allDayEventsArray.push(event);
 			sortedEvents.splice(index, 1);
-			sortedEvents.push(allDayEvents[allDayIndex]);
 		}
 	});
 
-	// Apply all-day sorting based on the 'config.allDayBottom' boolean
+	// If config.allDayBottom is true, add the all day events to the end of the sorted events array.
 	if (config.allDayBottom) {
-		sortedEvents.sort((a, b) => b.startDateTime.diff(a.startDateTime));
-	} else {
-		sortedEvents.sort((a, b) => a.startDateTime.diff(b.startDateTime));
+		sortedEvents.push(...allDayEventsArray);
 	}
+
+	// Otherwise, add the all day events to the beginning of the sorted events array.
+	else {
+		sortedEvents.unshift(...allDayEventsArray);
+	}
+
 
 	if (config.sortBy === 'milestone') {
 		// Move finished events to the bottom when sorting by milestone
@@ -64,6 +73,6 @@ export default function sortEvents(events, config) {
 			return 0;
 		});
 	}
-
+	console.log(sortedEvents);
 	return sortedEvents;
 }
