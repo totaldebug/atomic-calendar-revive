@@ -21,7 +21,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/totaldebug/atomic-calendar-revive">
-    <img src=".github/img/atomic_calendar_revive.png" alt="Logo">
+    <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/atomic_calendar_revive.png" alt="Logo">
   </a>
 
   <h3 align="center">Atomic Calendar Revive</h3>
@@ -76,8 +76,8 @@ Allowing for the use of both Google Calendars and CalDav, With two main viewing 
 
 | Event Mode | Calendar Mode |
 | ------------- | ---------- |
-| <img src=".github/img/event-mode-example.png" width="300"/> | <img src=".github/img/calendar-mode-allday.png" width="300"/> |
-| <img src=".github/img/event-mode-no-date.png" width="300"/> | <img src=".github/img/calendar-mode-today.png" width="300"/> |
+| <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/event-mode-example.png" width="300"/> | <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/calendar-mode-allday.png" width="300"/> |
+| <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/event-mode-no-date.png" width="300"/> | <img src="https://raw.githubusercontent.com/totaldebug/atomic-calendar-revive/master/.github/img/calendar-mode-today.png" width="300"/> |
 
 Please keep in mind, these screenshots show a basic configuration, this card allows so much more customisation!
 

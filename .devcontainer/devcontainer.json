@@ -16,9 +16,16 @@
                 "files.eol": "\n",
                 "editor.tabSize": 4,
                 "editor.formatOnPaste": false,
-                "editor.formatOnSave": true,
+                "editor.formatOnSave": false,
                 "editor.formatOnType": true,
-                "files.trimTrailingWhitespace": true
+                "files.trimTrailingWhitespace": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll": true
+                },
+                "eslint.validate": [
+                    "typescript"
+                ],
+                format
             },
             "extensions": [
                 "github.vscode-pull-request-github",
@@ -31,7 +38,8 @@
                 "ms-python.python",
                 "sourcery.sourcery",
                 "tabnine.tabnine-vscode",
-                "trond-snekvik.simple-rst"
+                "trond-snekvik.simple-rst",
+                "dbaeumer.vscode-eslint"
             ]
         }
     }

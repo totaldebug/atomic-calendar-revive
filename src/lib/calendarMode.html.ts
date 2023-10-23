@@ -1,12 +1,15 @@
-import { handleClick, HomeAssistant } from 'custom-card-helpers';
+/* eslint-disable import/no-named-as-default-member */
+import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { atomicCardConfig } from '../types/config';
+
 import CalendarDay from './calendar.class';
-import { getMultiDayEventParts, isHtml } from './common.html';
+import { isHtml } from './common.html';
 import EventClass from './event.class';
+import { getEntityIcon } from '../helpers/get-icon';
+import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(isoWeek);
 
@@ -16,49 +19,33 @@ dayjs.extend(isoWeek);
  * @param day calendarDay
  * @returns mdi icons required for that day
  */
-export function handleCalendarIcons(day: CalendarDay) {
+export function handleCalendarIcons(day: CalendarDay, hass: HomeAssistant) {
 	const allIcons: any[] = [];
 	const myIcons: any[] = [];
 	day.allEvents.map((event: EventClass) => {
-		if (event.entityConfig.icon && event.entityConfig.icon.length > 0) {
-			const index = myIcons.findIndex((x) => x.icon == event.entityConfig.icon && x.color == event.entityConfig.color);
-			if (index === -1) {
-				myIcons.push({ icon: event.entityConfig.icon, color: event.entityConfig.color });
-			}
+		let { icon } = event.entityConfig;
+		if (!icon || icon.length === 0) {
+			// If icon is not set or is an empty string, use getEntityIcon as a fallback
+			icon = getEntityIcon(event.entity.entity_id, hass);
+		}
+
+		const index = myIcons.findIndex((x) => x.icon === icon && x.color === event.entityConfig.color);
+		if (index === -1) {
+			myIcons.push({ icon, color: event.entityConfig.color });
 		}
 	});
+	// Sort myIcons alphabetically by icon property
+	myIcons.sort((a, b) => a.icon.localeCompare(b.icon));
+
 	myIcons.map((icon) => {
 		const dayIcon = html`<span>
-			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};" ></ha-icon>
+			<ha-icon icon="${icon.icon}" class="calIcon" style="color: ${icon.color};"></ha-icon>
 		</span>`;
 
 		allIcons.push(dayIcon);
 	});
 
 	return allIcons;
-}
-
-// generate Calendar title
-export function getCalendarTitleHTML(config: atomicCardConfig, event: EventClass) {
-	const titleColor: string =
-		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
-	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
-	let { title } = event;
-
-	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
-		title = event.title.slice(0, config.titleLength);
-	}
-
-	if (config.disableCalEventLink || event.htmlLink === null) {
-		return html`<span style="text-decoration: ${textDecoration};color: ${titleColor}">${title} ${getMultiDayEventParts(config, event)}</span>`;
-	} else {
-		return html`<a
-  			href="${event.htmlLink}"
-  			style="text-decoration: ${textDecoration};color: ${titleColor}"
-  			target="${config.linkTarget}"
-  			>${title} ${getMultiDayEventParts(config, event)}
-  		</a>`;
-	}
 }
 
 /**

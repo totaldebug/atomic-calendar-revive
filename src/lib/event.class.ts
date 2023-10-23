@@ -75,7 +75,6 @@ export default class EventClass {
 			} else {
 				this._startDateTime = this._processDate(dayjs(this.rawEvent.start.dateTime));
 			}
-
 		}
 
 		return this._startDateTime!.clone();
@@ -88,7 +87,10 @@ export default class EventClass {
 	get endDateTime() {
 		if (this._endDateTime === undefined) {
 			if (this.rawEvent.end.date) {
-				this._endDateTime = this._processDate(dayjs(this.rawEvent.end.date, 'YYYY-MM-DD').subtract(1, 'day').endOf('day'), true);
+				this._endDateTime = this._processDate(
+					dayjs(this.rawEvent.end.date, 'YYYY-MM-DD').subtract(1, 'day').endOf('day'),
+					true,
+				);
 			} else {
 				this._endDateTime = this._processDate(dayjs(this.rawEvent.end.dateTime), true);
 			}
@@ -104,7 +106,9 @@ export default class EventClass {
 		if (this._globalConfig.showMultiDay) {
 			return this.rawEvent.daysLong;
 		} else {
-			const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
+			const fullDays = Math.round(
+				this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24,
+			);
 
 			return fullDays > 1 ? fullDays : undefined;
 		}
@@ -124,7 +128,6 @@ export default class EventClass {
 	 * @param {boolean} isEndDateTime
 	 */
 	_processDate(date, isEndDateTime = false) {
-
 		// add days to a start date for multi day event
 		if (this.addDays !== false) {
 			if (!isEndDateTime && this.addDays) {
@@ -149,7 +152,6 @@ export default class EventClass {
 	 * @return {boolean}
 	 */
 	get isRecurring() {
-
 		return !!this.rawEvent.recurringEventId;
 	}
 
@@ -230,7 +232,7 @@ export default class EventClass {
 		}
 		// if start and end are both "dateTime" then it's NOT an all day event
 		if (this.rawEvent.start.dateTime && this.rawEvent.end.dateTime) {
-			return false
+			return false;
 		}
 
 		return undefined;
@@ -240,14 +242,16 @@ export default class EventClass {
 	 * split event into a multi day event where it crosses to a new day
 	 * @param {*} newEvent
 	 */
-	splitIntoMultiDay(newEvent, mode: "Event" | "Calendar") {
+	splitIntoMultiDay(newEvent, mode: 'Event' | 'Calendar') {
 		const partialEvents: any[] = [];
 
 		// multi days start at two days
 		// every 24 hours is a day. if we do get some full days then just add to 1 daysLong
 		// TODO: Confirm this works as expected
 		let daysLong = 2;
-		const fullDays = Math.round(this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24)
+		const fullDays = Math.round(
+			this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24,
+		);
 		if (fullDays) {
 			daysLong = fullDays;
 		}
@@ -263,7 +267,7 @@ export default class EventClass {
 			// is this the first day of the event?
 			copiedEvent._isFirstDay = i === 0;
 			// is this the last day of the event?
-			copiedEvent._isLastDay = i === (daysLong - 1) && i > 0;
+			copiedEvent._isLastDay = i === daysLong - 1 && i > 0;
 
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
@@ -274,14 +278,14 @@ export default class EventClass {
 
 			if (
 				endDate.isAfter(partialEvent.startDateTime) &&
-				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime) && mode === "Event"
+				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime) &&
+				mode === 'Event'
 			) {
 				partialEvents.push(partialEvent);
 			}
-			if (mode === "Calendar") {
+			if (mode === 'Calendar') {
 				partialEvents.push(partialEvent);
 			}
-
 		}
 		return partialEvents;
 	}
@@ -297,9 +301,9 @@ export default class EventClass {
 	get title() {
 		if (!this.rawEvent.summary) {
 			if (this.entityConfig.eventTitle) {
-				return this.entityConfig.eventTitle
+				return this.entityConfig.eventTitle;
 			} else {
-				return this._globalConfig.eventTitle
+				return this._globalConfig.eventTitle;
 			}
 		} else {
 			return this.rawEvent.summary;

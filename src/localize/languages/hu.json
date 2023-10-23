@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Verzió",
+		"show_warning": "Figyelmeztetés megjelenítése",
+		"error": "Hiba",
+		"description": "Egy fejlett naptár kártya a Home Assistanthoz Lovelace-al.",
+		"fullDayEventText": "Egész nap",
+		"untilText": "Amíg",
+		"noEventText": "Nincs esemény",
+		"noEventsForNextDaysText": "Nincsenek események a következő napokra",
+		"hiddenEventText": "az események elrejtve"
+	},
+	"ui": {
+		"common": {
+			"previous": "Előző",
+			"next": "Következő",
+			"week": "hét"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Érvénytelen konfiguráció",
+		"update_card": "A naptárat nem lehet Home Assistant komponensből betölteni",
+		"no_entities": "Nem adtál meg egyetlen entitást sem"
+	},
+	"required": {
+		"name": "Szükséges",
+		"secondary": "A kártya működéséhez szükséges beállítások"
+	},
+	"main": {
+		"name": "Általános beállítások",
+		"secondary": "Globálisan alkalmazott beállítások",
+		"fields": {
+			"name": "Név",
+			"showColors": "Színek mutatása",
+			"maxDaysToShow": "Max megjelenített napok",
+			"showLocation": "Hely ikon megjelenítése",
+			"showLoader": "Betöltő animáció megjelenítése",
+			"showDate": "Dátum megjelenítése a kártyán",
+			"showDeclined": "Elutasított események megjelenítése",
+			"sortBy": "Rendezés",
+			"allDayBottom": "Az egész napos események megjelenítése legalul",
+			"hideFinishedEvents": "Befejezett események elrejtése",
+			"dateFormat": "Dátum formátum",
+			"hoursFormat": "Idő formátum",
+			"defaultMode": "Alapértelmezett mód",
+			"linkTarget": "Link cél",
+			"refreshInterval": "Frissítési időköz",
+			"showRelativeTime": "Relatív idő megjelenítése",
+			"firstDayOfWeek": "A hét első napja 0-6",
+			"cardHeight": "Kártya magassága",
+			"hideDuplicates": "Ismétlődések elrejtése",
+			"showMultiDay": "Többnapos események szétválasztása",
+			"showMultiDayEventParts": "Többnapos esemény részeinek megjelenítése",
+			"eventTitle": "Üres esemény címének meghatározása",
+			"compactMode": "Kompakt mód engedélyezése",
+			"titleLength": "Cím max hossza (0: végtelen)",
+			"descLength": "Leírás max hossza (0: végtelen)",
+			"showAllDayEvents": "Egész napos események megjelenítése",
+			"offsetHeaderDate": "Fejléc dátum eltolás",
+			"startDaysAhead": " Az x nap múlva kezdődő események"
+		}
+	},
+	"event": {
+		"name": "Esemény mód",
+		"secondary": "Esemény módhoz tartozó beállítások",
+		"fields": {
+			"showCurrentEventLine": "Mutassunk vonalat az esemény előtt?",
+			"showProgressBar": "Mutassuk a folyamatjelzőt?",
+			"showMonth": "Mutassuk a hónapot?",
+			"showWeekDay": "Hét napjainak megjelenítése",
+			"showDescription": "Mutassuk a leírást?",
+			"disableEventLink": "Az esemény címén lévő link letiltása?",
+			"disableLocationLink": "A helyhez kapcsolódó link letiltása?",
+			"showNoEventsForToday": "Jelezzük, hogy ma nincs esemény?",
+			"showFullDayProgress": "Mutassuk az egész napos esemény folyamatát?",
+			"untilText": "amíg szövege:",
+			"noEventText": "Ma nincs esemény szövege:",
+			"noEventsForNextDaysText": "A következő napokon nincs esemény szövege:",
+			"fullDayEventText": "Egész napos esemény szövege:",
+			"showEventIcon": "Esemény ikonjának megjelenítése",
+			"showHiddenText": "Mutassuk a rejtett esemény szöveget?",
+			"hiddenEventText": "Rejtett esemény szövege:",
+			"showCalendarName": "Naptár nevének megjelenítése",
+			"showWeekNumber": "Hét számának megjelenítése",
+			"showEventDate": "Esemény dátumának megjelenítése",
+			"showDatePerEvent": "Dátum megjelenítése az események mellett",
+			"showTimeRemaining": "Hátralévő idő megjelenítése",
+			"showAllDayHours": "Egész napos esemény szöveg megjelenítése",
+			"hoursOnSameLine": "Az idő megjelenítése az esemény sorában"
+		}
+	},
+	"calendar": {
+		"name": "Naptár mód",
+		"secondary": "Naptár módhoz tartozó beállítások",
+		"fields": {
+			"showLastCalendarWeek": "Az utolsó naptári hét megjelenítése",
+			"disableCalEventLink": "Naptár esemény linkjének letiltása",
+			"disableCalLocationLink": "Naptár hely linkjének letiltása",
+			"calShowDescription": "Leírás megjelenítése",
+			"disableCalLink": "Naptár link letiltása"
+		}
+	},
+	"appearance": {
+		"name": "Kinézet",
+		"secondary": "Színek és egyéb testreszabása",
+		"main": {
+			"name": "Alap",
+			"secondary": "Globális szín beállítások"
+		},
+		"fields": {
+			"dimFinishedEvents": "Befejezett események elhalványítása?"
+		}
+	}
+}

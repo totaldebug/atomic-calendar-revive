@@ -5,28 +5,27 @@ import dayjs from 'dayjs';
  *
  */
 export default class CalendarDay {
-    calendarDay: dayjs.Dayjs;
-    _lp: any;
-    ymd: string;
-    private _allEvents: any[];
+	calendarDay: dayjs.Dayjs;
+	_lp: any;
+	ymd: string;
+	private _allEvents: any[];
 
-    constructor(calendarDay, d) {
-        this.calendarDay = calendarDay;
-        this._lp = d;
-        this.ymd = dayjs(calendarDay).format('YYYY-MM-DD');
-        this._allEvents = [];
-    }
+	constructor(calendarDay, d) {
+		this.calendarDay = calendarDay;
+		this._lp = d;
+		this.ymd = dayjs(calendarDay).format('YYYY-MM-DD');
+		this._allEvents = [];
+	}
 
-    get date() {
-        return dayjs(this.calendarDay);
-    }
+	get date() {
+		return dayjs(this.calendarDay);
+	}
 
-    set allEvents(events) {
-        this._allEvents = events;
-    }
+	set allEvents(events) {
+		this._allEvents = events;
+	}
 
-    get allEvents() {
-        return this._allEvents;
-    }
-
+	get allEvents() {
+		return this._allEvents;
+	}
 }

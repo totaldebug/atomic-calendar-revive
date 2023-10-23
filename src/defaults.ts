@@ -1,7 +1,7 @@
 import { localize } from './localize/localize';
 
 export default {
-	cardHeight: "100%",
+	cardHeight: '100%',
 
 	// text translations
 	fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
@@ -22,7 +22,7 @@ export default {
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
-	sortBy: "start", // sort first by start time or milestone
+	sortBy: 'start', // sort first by start time or milestone
 	allDayBottom: false, // show all day events at the bottom of the day
 	disableEventLink: false, // disables links to event calendar
 	disableLocationLink: false, // disables links to event calendar
@@ -44,7 +44,6 @@ export default {
 	noEventText: localize('common.noEventText'),
 	noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
 	showNoEventDays: false,
-
 
 	showHours: true, //shows the bottom line (time, duration of event)
 	showRelativeTime: true,
@@ -108,5 +107,5 @@ export default {
 	offsetHeaderDate: false,
 
 	titleLength: 0,
-	descLength: 0
+	descLength: 0,
 };

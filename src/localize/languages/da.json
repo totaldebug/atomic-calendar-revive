@@ -1,114 +1,114 @@
 {
-    "common": {
-        "version": "Version",
-        "show_warning": "Vis Advarsel",
-        "error": "Fejl",
-        "description": "Et avanceret kalender kort til Home Assistant.",
-        "fullDayEventText": "Hele dagen",
-        "untilText": "Indtil",
-        "noEventText": "Ingen aftaler",
-        "noEventsForNextDaysText": "Ingen aftaler de næste få dage",
-        "hiddenEventText": "Aftaler er skjulte"
-    },
-    "ui": {
-        "common": {
-            "previous": "Forrige",
-            "next": "Næste",
-            "week": "Uge"
-        }
-    },
-    "errors": {
-        "invalid_configuration": "Konfiguration er ikke korrekt",
-        "update_card": "Kalender kan ikke blive indlæste fra Home Assistant atomic-calendar-revive",
-        "no_entities": "Der er ikke valgt nogen entiteter"
-    },
-    "required": {
-        "name": "Påkrævet",
-        "secondary": "Valg er påkrævet for at atomic-calendar-revive skal virke"
-    },
-    "main": {
-        "name": "Hoved muligheder",
-        "secondary": "Muligheder der virker globalt",
-        "fields": {
-            "name": "Navn",
-            "showColors": "Vis Farver",
-            "maxDaysToShow": "Antal max dage at vise",
-            "showLocation": "Vis placerings ikon",
-            "showLoader": "Vis animeret indlæsning",
-            "showDate": "Vis dato på kort",
-            "showDeclined": "Vis afviste aftaler",
-            "sortBy": "Sorter på",
-            "allDayBottom": "Vis heldagsbegivenheder nederst",
-            "hideFinishedEvents": "Skjul overståede aftaler",
-            "dateFormat": "Dato format",
-            "hoursFormat": "Time format",
-            "defaultMode": "Default mode",
-            "linkTarget": "Link mål",
-            "refreshInterval": "Opdaterings interval",
-            "showRelativeTime": "Vis den relative tid",
-            "firstDayOfWeek": "Første dag i ugen 0-6",
-            "cardHeight": "Højde på kort",
-            "hideDuplicates": "Skjul dubletter",
-            "showMultiDay": "Opdelt flerdages begivenheder",
-            "showMultiDayEventParts": "Vis flere dages begivenhedsdele",
-            "eventTitle": "Indstil tom begivenhedstitel",
-            "compactMode": "Aktiver kompakt tilstand",
-            "titleLength": "Max titellængde (0 for ubegrænset)",
-            "descLength": "Max beskrivelseslængde (0 for ubegrænset)",
-            "showAllDayEvents": "Vis heldagsbegivenheder",
-            "offsetHeaderDate": "Forskudt overskriftsdato",
-            "startDaysAhead": "Begivenheder starter `x` dage fra i dag"
-        }
-    },
-    "event": {
-        "name": "Tilstand for aftaler",
-        "secondary": "Tilstand for specifikke muligheder",
-        "fields": {
-            "showCurrentEventLine": "Vis en linie før aftale?",
-            "showProgressBar": "Vis status bar?",
-            "showMonth": "Vis måned?",
-            "showWeekDay": "Vis ugedag",
-            "showDescription": "Vis beskrivelse?",
-            "disableEventLink": "Fjern link i titel på aftale?",
-            "disableLocationLink": "Fjern link på placering?",
-            "showNoEventsForToday": "Vis Ingen aftaler i dag?",
-            "showFullDayProgress": "Vis fremskridt på hel dags aftaler?",
-            "untilText": "Indtil næste gang:",
-            "noEventText": "Hvis ingen aftale, vis tekst:",
-            "noEventsForNextDaysText": "Tekst der vises, Ingen aftaler de næste dage:",
-            "fullDayEventText": "Hel dags tekst:",
-            "showEventIcon": "Vis aftale ikon",
-            "showHiddenText": "Vis skjulte aftaler tekst?",
-            "hiddenEventText": "Tekst til skjulte aftaler:",
-            "showCalendarName": "Vis kalendernavn",
-            "showWeekNumber": "Vis ugenumre",
-            "showEventDate": "Vis dato for arrangementer",
-            "showDatePerEvent": "Vis dato ud for hver begivenhed",
-            "showTimeRemaining": "Vis resterende tid",
-            "showAllDayHours": "Vis Heldagsbegivenhedstekst",
-            "hoursOnSameLine": "Vis timer på begivenhedslinjen"
-        }
-    },
-    "calendar": {
-        "name": "Tilstand for kalender",
-        "secondary": "Specifikke kalender tilstande muligheder",
-        "fields": {
-            "showLastCalendarWeek": "Vis sidste kalender uge",
-            "disableCalEventLink": "Fjern kalender aftale link",
-            "disableCalLocationLink": "Fjern kalender lokation link",
-            "calShowDescription": "Vis beskrivelse",
-            "disableCalLink": "Fjern kalender link"
-        }
-    },
-    "appearance": {
-        "name": "Appearance",
-        "secondary": "Tilpas farver etc.",
-        "main": {
-            "name": "Main",
-            "secondary": "Global indstillinger for farver"
-        },
-        "fields": {
-            "dimFinishedEvents": "Nedtone overståede aftaler?"
-        }
-    }
+	"common": {
+		"version": "Version",
+		"show_warning": "Vis Advarsel",
+		"error": "Fejl",
+		"description": "Et avanceret kalender kort til Home Assistant.",
+		"fullDayEventText": "Hele dagen",
+		"untilText": "Indtil",
+		"noEventText": "Ingen aftaler",
+		"noEventsForNextDaysText": "Ingen aftaler de næste få dage",
+		"hiddenEventText": "Aftaler er skjulte"
+	},
+	"ui": {
+		"common": {
+			"previous": "Forrige",
+			"next": "Næste",
+			"week": "Uge"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Konfiguration er ikke korrekt",
+		"update_card": "Kalender kan ikke blive indlæste fra Home Assistant atomic-calendar-revive",
+		"no_entities": "Der er ikke valgt nogen entiteter"
+	},
+	"required": {
+		"name": "Påkrævet",
+		"secondary": "Valg er påkrævet for at atomic-calendar-revive skal virke"
+	},
+	"main": {
+		"name": "Hoved muligheder",
+		"secondary": "Muligheder der virker globalt",
+		"fields": {
+			"name": "Navn",
+			"showColors": "Vis Farver",
+			"maxDaysToShow": "Antal max dage at vise",
+			"showLocation": "Vis placerings ikon",
+			"showLoader": "Vis animeret indlæsning",
+			"showDate": "Vis dato på kort",
+			"showDeclined": "Vis afviste aftaler",
+			"sortBy": "Sorter på",
+			"allDayBottom": "Vis heldagsbegivenheder nederst",
+			"hideFinishedEvents": "Skjul overståede aftaler",
+			"dateFormat": "Dato format",
+			"hoursFormat": "Time format",
+			"defaultMode": "Default mode",
+			"linkTarget": "Link mål",
+			"refreshInterval": "Opdaterings interval",
+			"showRelativeTime": "Vis den relative tid",
+			"firstDayOfWeek": "Første dag i ugen 0-6",
+			"cardHeight": "Højde på kort",
+			"hideDuplicates": "Skjul dubletter",
+			"showMultiDay": "Opdelt flerdages begivenheder",
+			"showMultiDayEventParts": "Vis flere dages begivenhedsdele",
+			"eventTitle": "Indstil tom begivenhedstitel",
+			"compactMode": "Aktiver kompakt tilstand",
+			"titleLength": "Max titellængde (0 for ubegrænset)",
+			"descLength": "Max beskrivelseslængde (0 for ubegrænset)",
+			"showAllDayEvents": "Vis heldagsbegivenheder",
+			"offsetHeaderDate": "Forskudt overskriftsdato",
+			"startDaysAhead": "Begivenheder starter `x` dage fra i dag"
+		}
+	},
+	"event": {
+		"name": "Tilstand for aftaler",
+		"secondary": "Tilstand for specifikke muligheder",
+		"fields": {
+			"showCurrentEventLine": "Vis en linie før aftale?",
+			"showProgressBar": "Vis status bar?",
+			"showMonth": "Vis måned?",
+			"showWeekDay": "Vis ugedag",
+			"showDescription": "Vis beskrivelse?",
+			"disableEventLink": "Fjern link i titel på aftale?",
+			"disableLocationLink": "Fjern link på placering?",
+			"showNoEventsForToday": "Vis Ingen aftaler i dag?",
+			"showFullDayProgress": "Vis fremskridt på hel dags aftaler?",
+			"untilText": "Indtil næste gang:",
+			"noEventText": "Hvis ingen aftale, vis tekst:",
+			"noEventsForNextDaysText": "Tekst der vises, Ingen aftaler de næste dage:",
+			"fullDayEventText": "Hel dags tekst:",
+			"showEventIcon": "Vis aftale ikon",
+			"showHiddenText": "Vis skjulte aftaler tekst?",
+			"hiddenEventText": "Tekst til skjulte aftaler:",
+			"showCalendarName": "Vis kalendernavn",
+			"showWeekNumber": "Vis ugenumre",
+			"showEventDate": "Vis dato for arrangementer",
+			"showDatePerEvent": "Vis dato ud for hver begivenhed",
+			"showTimeRemaining": "Vis resterende tid",
+			"showAllDayHours": "Vis Heldagsbegivenhedstekst",
+			"hoursOnSameLine": "Vis timer på begivenhedslinjen"
+		}
+	},
+	"calendar": {
+		"name": "Tilstand for kalender",
+		"secondary": "Specifikke kalender tilstande muligheder",
+		"fields": {
+			"showLastCalendarWeek": "Vis sidste kalender uge",
+			"disableCalEventLink": "Fjern kalender aftale link",
+			"disableCalLocationLink": "Fjern kalender lokation link",
+			"calShowDescription": "Vis beskrivelse",
+			"disableCalLink": "Fjern kalender link"
+		}
+	},
+	"appearance": {
+		"name": "Appearance",
+		"secondary": "Tilpas farver etc.",
+		"main": {
+			"name": "Main",
+			"secondary": "Global indstillinger for farver"
+		},
+		"fields": {
+			"dimFinishedEvents": "Nedtone overståede aftaler?"
+		}
+	}
 }
