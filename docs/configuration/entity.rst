@@ -16,6 +16,7 @@ Entity Options
  showMultiDay         boolean   v7.0.0   ``false`` Split multi-day events across all days
  name                 string    v7.0.0   ``null`` Add a calendar name to be shown with event
  eventTitle           string    v7.3.0   Where no event title exists, add this string instead, Will only add to this entity, can also be globally set
+ color                string             ``null`` Default color for this calendar's event titles
 ==================== ========= ======== =============================================================================================================
 
 .. note::
