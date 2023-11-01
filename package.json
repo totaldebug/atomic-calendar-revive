@@ -53,7 +53,7 @@
 		"rollup": "^4.2.0",
 		"rollup-plugin-serve": "^2.0.2",
 		"rollup-plugin-typescript2": "^0.36.0",
-		"semantic-release": "^22.0.5"
+		"semantic-release": "^22.0.6"
 	},
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "^2.7.0",
