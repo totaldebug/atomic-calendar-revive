@@ -5531,10 +5531,10 @@ lit@^2.0.0, "lit@^2.0.0 || ^3.0.0", lit@^2.1.1, lit@^2.2.6:
     lit-element "^3.3.0"
     lit-html "^2.7.0"
 
-lit@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/lit/-/lit-3.0.1.tgz#bc9136cf9303ae8c23d0adcf7847c971cc94aee9"
-  integrity sha512-CYFv7/gwrs6bfPm299O9LD/HB4dgHvsEf/yqUOI//fi469i2OrT4xaptUcmhr05DNQEgsBFecFH8EJnN5So8oQ==
+lit@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/lit/-/lit-3.0.2.tgz#e22e90c2cbcc3f37bf3c2558df66f3af4331c9cf"
+  integrity sha512-ZoVUPGgXOQocP4OvxehEOBmC4rWB4cRYDPaz7aFmH8DFytsCi/NeACbr4C6vNPGDEC07BrhUos7uVNayDKLQ2Q==
   dependencies:
     "@lit/reactive-element" "^2.0.0"
     lit-element "^4.0.0"

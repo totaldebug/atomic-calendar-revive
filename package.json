@@ -73,7 +73,7 @@
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"custom-card-helpers": "^1.9.0",
 		"dayjs": "^1.11.10",
-		"lit": "^3.0.0",
+		"lit": "^3.0.2",
 		"lit-element": "^4.0.0",
 		"npm": "^10.2.3",
 		"typescript": "^5.2.2"
