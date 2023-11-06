@@ -44,17 +44,14 @@ export default function sortEvents(events, config) {
 		}
 	}
 
-	console.log('3');
-	console.log(allDayEventsArray);
-
 	// Sort the all day events.
 	allDayEventsArray.sort((a, b) => {
 		if (a.entity !== b.entity) {
-		  return a.entity.localeCompare(b.entity);
+			return a.entity.entity_id.localeCompare(b.entity);
 		} else {
-		  return a.title.localeCompare(b.title);
+			return a.title.localeCompare(b.title);
 		}
-	  });
+	});
 
 	// If config.allDayBottom is true, add the all day events to the end of the sorted events array.
 	if (config.allDayBottom) {
