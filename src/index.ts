@@ -147,8 +147,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.language != 'undefined'
 					? this._config.language!
 					: this.hass.locale
-						? this.hass.locale.language.toLowerCase()
-						: this.hass.language.toLowerCase();
+					? this.hass.locale.language.toLowerCase()
+					: this.hass.language.toLowerCase();
 
 			dayjs.locale(this.language);
 
@@ -156,8 +156,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.hoursFormat != 'undefined'
 					? this._config.hoursFormat
 					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-						? formatTime(this.hass.locale)
-						: dayjs().localeData().longDateFormat('LT');
+					? formatTime(this.hass.locale)
+					: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
@@ -197,10 +197,10 @@ export class AtomicCalendarRevive extends LitElement {
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name
-						? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
+							? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
 									${this._config.name}
 							  </div>`
-						: ''}
+							: ''}
 						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
 						${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
 				  </div>`
@@ -415,19 +415,20 @@ export class AtomicCalendarRevive extends LitElement {
 					: html``;
 
 				// Show the relative time
+				let timeUntilRemaining;
 				if (this._config.showRelativeTime || this._config.showTimeRemaining) {
 					const now = dayjs();
-					var timeUntilRemaining = html`<div class="relative-time time-remaining">
+					timeUntilRemaining = html`<div class="relative-time time-remaining">
 						${this._config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
 							? `(${event.startDateTime.fromNow()})`
 							: this._config.showTimeRemaining &&
-								event.startDateTime.isBefore(now, 'minutes') &&
-								event.endDateTime.isAfter(now, 'minutes')
-								? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
-								: ''}
+							  event.startDateTime.isBefore(now, 'minutes') &&
+							  event.endDateTime.isAfter(now, 'minutes')
+							? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
+							: ''}
 					</div>`;
 				} else {
-					var timeUntilRemaining = html``;
+					timeUntilRemaining = html``;
 				}
 
 				const lastEventStyle = !this._config.compactMode && i == arr.length - 1 ? 'padding-bottom: 8px;' : '';
@@ -546,9 +547,7 @@ export class AtomicCalendarRevive extends LitElement {
 
 			// is it a full day event? if so then use border instead of bullet else, use a bullet
 			if (event.isAllDayEvent) {
-				const bulletType: string = typeof event.isDeclined
-					? 'summary-fullday-div-declined'
-					: 'summary-fullday-div-accepted';
+				const bulletType: string = event.isDeclined ? 'summary-fullday-div-declined' : 'summary-fullday-div-accepted';
 
 				return html`<div class="${bulletType}" style="border-color:  ${eventColor}; ${finishedEventsStyle}">
 					<div aria-hidden="true">
@@ -607,7 +606,7 @@ export class AtomicCalendarRevive extends LitElement {
 						@click="${() => this.handleCalendarEventSummary(day, true)}"
 						class="cal"
 						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked} --cal-grid-color: ${this._config
-						.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
+							.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
 					>
 						<div class="calDay">
 							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
