@@ -73,6 +73,5 @@ export default function sortEvents(events, config) {
 			return 0;
 		});
 	}
-	console.log(sortedEvents);
 	return sortedEvents;
 }
