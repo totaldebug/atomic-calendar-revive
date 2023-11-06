@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+
 import EventClass from '../lib/event.class';
 
 // Function to sort events
@@ -28,17 +29,6 @@ export default function sortEvents(events, config) {
 		}
 	});
 
-	// Sort all-day events by entity and title
-	const allDayEvents = events.filter((event) => event.isAllDay);
-
-	allDayEvents.sort((a, b) => {
-		if (a.entity !== b.entity) {
-			return a.entity.localeCompare(b.entity);
-		} else {
-			return a.title.localeCompare(b.title);
-		}
-	});
-
 	// Combine sorted all-day and non-all-day events
 	const sortedEvents = [...events];
 
@@ -46,12 +36,25 @@ export default function sortEvents(events, config) {
 	const allDayEventsArray: EventClass[] = [];
 
 	// Iterate over the sorted events array and move all of the all day events to the allDayEvents array.
-	sortedEvents.forEach((event: EventClass, index) => {
+	for (let i = sortedEvents.length - 1; i >= 0; i--) {
+		const event = sortedEvents[i];
 		if (event.isAllDayEvent) {
 			allDayEventsArray.push(event);
-			sortedEvents.splice(index, 1);
+			sortedEvents.splice(i, 1);
 		}
-	});
+	}
+
+	console.log('3');
+	console.log(allDayEventsArray);
+
+	// Sort the all day events.
+	allDayEventsArray.sort((a, b) => {
+		if (a.entity !== b.entity) {
+		  return a.entity.localeCompare(b.entity);
+		} else {
+		  return a.title.localeCompare(b.title);
+		}
+	  });
 
 	// If config.allDayBottom is true, add the all day events to the end of the sorted events array.
 	if (config.allDayBottom) {
@@ -62,7 +65,6 @@ export default function sortEvents(events, config) {
 	else {
 		sortedEvents.unshift(...allDayEventsArray);
 	}
-
 
 	if (config.sortBy === 'milestone') {
 		// Move finished events to the bottom when sorting by milestone
