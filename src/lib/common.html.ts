@@ -49,7 +49,6 @@ export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 				end: { dateTime: day.endOf('day') },
 				summary: config.noEventText,
 				isFinished: false,
-				htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
 			};
 			const emptyEvent = new EventClass(emptyEv, config);
 			emptyEvent.isEmpty = true;
