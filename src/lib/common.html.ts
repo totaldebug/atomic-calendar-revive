@@ -34,11 +34,11 @@ export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 		allDates.push(q);
 	}
 	allDates.map((day) => {
-		var isEvent: boolean = false;
+		let isEvent: boolean = false;
 
-		for (var i = 0; i < singleEvents.length; i++) {
+		for (let i = 0; i < singleEvents.length; i++) {
 			if (singleEvents[i].startDateTime.isSame(day, 'day')) {
-				var isEvent = true;
+				isEvent = true;
 			}
 		}
 		if (!isEvent) {
@@ -53,7 +53,7 @@ export function setNoEventDays(config: atomicCardConfig, singleEvents) {
 			const emptyEvent = new EventClass(emptyEv, config);
 			emptyEvent.isEmpty = true;
 			singleEvents.push(emptyEvent);
-			var isEvent = false;
+			isEvent = false;
 		}
 	});
 	return singleEvents;

@@ -40,6 +40,5 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass, hass: 
 		return html``; // Return an empty HTML element if config.showEventIcon is false
 	} else {
 		return html`<ha-icon class="event-icon" style="color: ${iconColor};" icon="${icon}"></ha-icon>`;
-
 	}
 }

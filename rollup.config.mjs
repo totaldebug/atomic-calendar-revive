@@ -1,14 +1,15 @@
-import typescript from 'rollup-plugin-typescript2';
-import commonjs from '@rollup/plugin-commonjs';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
-import terser from "@rollup/plugin-terser";
-import json from '@rollup/plugin-json';
+import commonjs from '@rollup/plugin-commonjs';
 import eslint from '@rollup/plugin-eslint';
-import ignore from './rollup-plugins/ignore';
-import { ignoreTextfieldFiles } from './elements/ignore/textfield';
-import { ignoreSwitchFiles } from './elements/ignore/switch';
+import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import typescript from 'rollup-plugin-typescript2';
+
 import { ignoreSelectFiles } from './elements/ignore/select';
+import { ignoreSwitchFiles } from './elements/ignore/switch';
+import { ignoreTextfieldFiles } from './elements/ignore/textfield';
+import ignore from './rollup-plugins/ignore';
 
 const plugins = [
 	nodeResolve({
@@ -23,40 +24,31 @@ const plugins = [
 		exclude: 'node_modules/**',
 		babelHelpers: 'bundled',
 		compact: true,
-		extensions: [
-			'.js',
-			'.ts',
-		],
+		extensions: ['.js', '.ts'],
 		presets: [
 			[
 				'@babel/env',
 				{
-					"modules": false,
-					"targets": "> 2.5%, not dead"
-				}
+					modules: false,
+					targets: '> 2.5%, not dead',
+				},
 			],
 		],
 		plugins: [
 			[
-				"@babel/plugin-proposal-decorators",
+				'@babel/plugin-proposal-decorators',
 				{
-					"legacy": true
-				}
+					legacy: true,
+				},
 			],
-			[
-				"@babel/plugin-proposal-class-properties"
-			],
-			[
-				"@babel/plugin-transform-template-literals"
-			]
-		]
+			['@babel/plugin-proposal-class-properties'],
+			['@babel/plugin-transform-template-literals'],
+		],
 	}),
 	terser(),
-	ignore(
-		{
-			files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
-		}
-	),
+	ignore({
+		files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
+	}),
 ];
 
 export default {
