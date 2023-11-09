@@ -97,7 +97,7 @@ export const styles: CSSResultGroup = css`
 		user-select: text;
 	}
 	.event-title.Calendar {
-		display: inline-block
+		display: inline-block;
 	}
 	.event-location {
 		text-align: right;

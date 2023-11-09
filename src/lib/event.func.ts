@@ -1,12 +1,10 @@
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
-import { html } from 'lit';
 
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
 import sortEvents from '../functions/sort_events';
-import { getEntityIcon } from '../helpers/get-icon';
 import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(customParseFormat);
@@ -170,9 +168,9 @@ export async function getAllEvents(
 		const endTime =
 			entity.maxDaysToShow! !== undefined
 				? dayjs()
-					.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-					.endOf('day')
-					.format('YYYY-MM-DDTHH:mm:ss')
+						.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
+						.endOf('day')
+						.format('YYYY-MM-DDTHH:mm:ss')
 				: end.endOf('day').format(dateFormat);
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
@@ -303,7 +301,7 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 	// title, startDateTime and endDateTime match
 	if (config.hideDuplicates) {
 		// Create an object to keep track of event identifiers and associated calendar names
-		const eventMap: { [key: string]: { event: any, calendars: string[] } } = {};
+		const eventMap: { [key: string]: { event: any; calendars: string[] } } = {};
 
 		const updatedEvents: any[] = [];
 
