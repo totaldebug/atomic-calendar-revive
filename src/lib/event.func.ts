@@ -125,7 +125,7 @@ export async function getEventMode(config: atomicCardConfig, hass) {
  */
 export async function getCalendarMode(config: atomicCardConfig, hass, selectedMonth) {
 	const month = buildCalendar(config, selectedMonth);
-	const { events, failedEvents } = await getAllEvents(month[0].date, month[41].date, config, hass, 'Calendar');
+	const { events } = await getAllEvents(month[0].date, month[41].date, config, hass, 'Calendar');
 
 	// link events to the specific day of the month
 	month.map((day: CalendarDay) => {
