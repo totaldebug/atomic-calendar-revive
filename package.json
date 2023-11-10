@@ -115,7 +115,7 @@
 			[
 				"@semantic-release/exec",
 				{
-					"prepareCmd": "yarn run build"
+					"prepareCmd": "yarn install && yarn run build"
 				}
 			],
 			[
