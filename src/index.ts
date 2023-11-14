@@ -338,7 +338,6 @@ export class AtomicCalendarRevive extends LitElement {
 				end: { dateTime: dayjs().endOf('day') },
 				summary: this._config.noEventText,
 				isFinished: false,
-				htmlLink: 'https://calendar.google.com/calendar/r/day?sf=true',
 			};
 			const emptyEvent = new EventClass(emptyEv, this._config);
 			emptyEvent.isEmpty = true;
@@ -422,10 +421,10 @@ export class AtomicCalendarRevive extends LitElement {
 						${this._config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
 							? `(${event.startDateTime.fromNow()})`
 							: this._config.showTimeRemaining &&
-							  event.startDateTime.isBefore(now, 'minutes') &&
-							  event.endDateTime.isAfter(now, 'minutes')
-							? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
-							: ''}
+							    event.startDateTime.isBefore(now, 'minutes') &&
+							    event.endDateTime.isAfter(now, 'minutes')
+							  ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
+							  : ''}
 					</div>`;
 				} else {
 					timeUntilRemaining = html``;
