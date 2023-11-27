@@ -38,7 +38,7 @@
 		"@semantic-release/changelog": "^6.0.3",
 		"@semantic-release/exec": "^6.0.3",
 		"@semantic-release/git": "^10.0.1",
-		"@typescript-eslint/eslint-plugin": "^6.11.0",
+		"@typescript-eslint/eslint-plugin": "^6.13.0",
 		"@typescript-eslint/parser": "^6.11.0",
 		"babel-preset-minify": "^0.5.2",
 		"commitizen": "^4.3.0",
