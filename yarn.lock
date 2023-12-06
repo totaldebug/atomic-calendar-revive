@@ -1265,10 +1265,10 @@
   resolved "https://registry.yarnpkg.com/@lit-labs/ssr-dom-shim/-/ssr-dom-shim-1.1.2.tgz#d693d972974a354034454ec1317eb6afd0b00312"
   integrity sha512-jnOD+/+dSrfTWYfSXBXlo5l5f0q1UuJo3tkbMDCYA2lKUYq79jaxqtGEvnRoh049nt1vdo1+45RinipU6FGY2g==
 
-"@lit/reactive-element@2.0.1", "@lit/reactive-element@^1.0.0 || ^2.0.0", "@lit/reactive-element@^2.0.0", "@lit/reactive-element@^2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-2.0.1.tgz#b17d8818d9c72ccc489f44e35d87cfa18a9c8c93"
-  integrity sha512-eu50SQXHRthFwWJMp0oAFg95Rvm6MTPjxSXWuvAu7It90WVFLFpNBoIno7XOXSDvVgTrtKnUV4OLJqys2Svn4g==
+"@lit/reactive-element@2.0.2", "@lit/reactive-element@^1.0.0 || ^2.0.0", "@lit/reactive-element@^2.0.0", "@lit/reactive-element@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-2.0.2.tgz#779ae9d265407daaf7737cb892df5ec2a86e22a0"
+  integrity sha512-SVOwLAWUQg3Ji1egtOt1UiFe4zdDpnWHyc5qctSceJ5XIu0Uc76YmGpIjZgx9YJ0XtdW0Jm507sDvjOu+HnB8w==
   dependencies:
     "@lit-labs/ssr-dom-shim" "^1.1.2"
 
