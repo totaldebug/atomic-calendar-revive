@@ -11,6 +11,8 @@ yarn install
 pip3 install -r docs/requirements.txt
 pip3 install sphinx-autobuild pre-commit
 
+export PATH="${PATH}:/home/debug/.local/bin"
+
 pre-commit install --hook-type commit-msg
 
 echo "Done!"

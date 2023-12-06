@@ -5,8 +5,12 @@ import EventClass from '../lib/event.class';
 import { atomicCardConfig } from '../types/config';
 
 // Function to get the icon for a specific entity
-export function getEntityIcon(entityId: string, hass: HomeAssistant): string {
+export function getEntityIcon(entityId: string, hass: HomeAssistant): string | null {
 	const stateObj = hass.states[entityId];
+
+	if (entityId === undefined) {
+		return null;
+	}
 
 	if (stateObj) {
 		return stateObj.attributes.icon || 'mdi:circle';
@@ -32,9 +36,9 @@ export function getEventIcon(config: atomicCardConfig, event: EventClass, hass: 
 		icon = getEntityIcon(event.entityConfig.entity, hass);
 	}
 
-	if (config.showEventIcon) {
-		return html`<ha-icon class="event-icon" style="color: ${iconColor};" icon="${icon}"></ha-icon>`;
-	} else {
+	if (!config.showEventIcon || icon === null) {
 		return html``; // Return an empty HTML element if config.showEventIcon is false
+	} else {
+		return html`<ha-icon class="event-icon" style="color: ${iconColor};" icon="${icon}"></ha-icon>`;
 	}
 }

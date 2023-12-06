@@ -133,7 +133,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		`;
 	}
 
-
 	private renderNumberProperty(property: NumberProperty): TemplateResult {
 		return html`
 			<br />
@@ -650,7 +649,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 	get _entityOptions() {
 		const entities = Object.keys(this.hass.states).filter((eid) => eid.substr(0, eid.indexOf('.')) === 'calendar');
 		let entityOptions;
-		if (typeof this._config?.entities != 'undefined' || typeof this._config?.entities != null) {
+		if (this._config?.entities != 'undefined' || this._config?.entities != 'null') {
 			entityOptions = entities.map((eid) => {
 				let matchingConfigEnitity = this._config?.entities.find(
 					(entity) => ((entity && entity.entity) || entity) === eid,
