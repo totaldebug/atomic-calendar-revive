@@ -74,7 +74,7 @@
 		"custom-card-helpers": "^1.9.0",
 		"dayjs": "^1.11.10",
 		"lit": "^3.0.2",
-		"npm": "^10.2.3",
+		"npm": "^10.2.5",
 		"typescript": "^5.2.2"
 	},
 	"resolutions": {
