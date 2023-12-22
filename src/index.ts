@@ -147,8 +147,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.language != 'undefined'
 					? this._config.language!
 					: this.hass.locale
-					? this.hass.locale.language.toLowerCase()
-					: this.hass.language.toLowerCase();
+					  ? this.hass.locale.language.toLowerCase()
+					  : this.hass.language.toLowerCase();
 
 			dayjs.locale(this.language);
 
@@ -156,8 +156,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.hoursFormat != 'undefined'
 					? this._config.hoursFormat
 					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-					? formatTime(this.hass.locale)
-					: dayjs().localeData().longDateFormat('LT');
+					  ? formatTime(this.hass.locale)
+					  : dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
