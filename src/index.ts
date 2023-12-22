@@ -162,11 +162,6 @@ export class AtomicCalendarRevive extends LitElement {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
 					LT: timeFormat,
-					LTS: 'HH:mm:ss',
-					L: 'DD/MM/YYYY',
-					LL: 'D MMMM YYYY',
-					LLL: 'MMM D YYYY HH:mm',
-					LLLL: 'dddd, D MMMM YYYY HH:mm',
 				},
 			});
 
