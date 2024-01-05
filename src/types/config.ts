@@ -27,7 +27,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	startDaysAhead?: number;
 	showLastCalendarWeek?: boolean;
 	showCalNameInEvent?: boolean;
-	sortByStartTime?: boolean;
 	disableEventLink?: boolean;
 	disableLocationLink?: boolean;
 	linkTarget: string;
