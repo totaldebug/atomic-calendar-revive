@@ -27,7 +27,7 @@ export default function sortEvents(events: EventClass[], config) {
 		}
 	});
 
-	if (config.sortBy === 'milestone') {
+	if (config.sortBy === 'start') {
 		sortedEvents.sort((a, b) => {
 			const aStartDiff = a.startDateTime.diff(currentDateTime);
 			const bStartDiff = b.startDateTime.diff(currentDateTime);
@@ -49,22 +49,9 @@ export default function sortEvents(events: EventClass[], config) {
 				return aStartDiff - bStartDiff;
 			}
 		});
-
-		// Move finished events to the bottom when sorting by milestone
-		sortedEvents.sort((a, b) => {
-			if (a.isFinished !== b.isFinished) {
-				return a.isFinished ? 1 : -1;
-			}
-			// If both events are finished, sort them by their endDateTime in ascending order.
-			if (a.isFinished) {
-				return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
-			}
-			return 0;
-		});
 	}
 
-	// Sort events by their start time, finished events are moved to the bottom.
-	if (config.sortBy === 'start') {
+	if (config.sortBy === 'milestone') {
 		sortedEvents.sort((a, b) => {
 			const isRunningA = currentDateTime.isBetween(a.startDateTime, a.endDateTime);
 			const isRunningB = currentDateTime.isBetween(b.startDateTime, b.endDateTime);
@@ -88,6 +75,17 @@ export default function sortEvents(events: EventClass[], config) {
 			}
 		});
 	}
+	// Move finished events to the bottom
+	sortedEvents.sort((a, b) => {
+		if (a.isFinished !== b.isFinished) {
+			return a.isFinished ? 1 : -1;
+		}
+		// If both events are finished, sort them by their endDateTime in ascending order.
+		if (a.isFinished) {
+			return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
+		}
+		return 0;
+	});
 
 	// If config.allDayBottom is true, add the all-day events to the end of the sorted events array.
 	if (config.allDayBottom) {
