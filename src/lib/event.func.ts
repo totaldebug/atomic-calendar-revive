@@ -129,7 +129,7 @@ export async function getCalendarMode(config: atomicCardConfig, hass, selectedMo
 
 	// link events to the specific day of the month
 	month.map((day: CalendarDay) => {
-		events.map((event: EventClass) => {
+		events[0].map((event: EventClass) => {
 			if (event.startDateTime.isSame(day.date, 'day')) {
 				day.allEvents.push(event);
 			}
