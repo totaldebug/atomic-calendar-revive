@@ -165,12 +165,11 @@ export async function getAllEvents(
 	config.entities.map((entity) => {
 		const calendarEntity = (entity && entity.entity) || entity;
 
+		const daysToShow = entity.maxDaysToShow! == 0 ? entity.maxDaysToShow! : config.maxDaysToShow! - 1;
+
 		const endTime =
 			entity.maxDaysToShow! !== undefined
-				? dayjs()
-						.add(entity.maxDaysToShow! - 1 + config.startDaysAhead!, 'day')
-						.endOf('day')
-						.format('YYYY-MM-DDTHH:mm:ss')
+				? start.endOf('day').add(daysToShow, 'day').format('YYYY-MM-DDTHH:mm:ss')
 				: end.endOf('day').format(dateFormat);
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
@@ -209,6 +208,7 @@ export async function getAllEvents(
  * @return {Promise<Array<EventClass>>}
  */
 export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 'Event' | 'Calendar') {
+	let hiddenEvents: number = 0;
 	// reduce all the events into the ones we care about
 	// events = all the events we care about
 	// calEvent = the current event that is being processed.
@@ -342,7 +342,8 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		((!config.softLimit && config.maxEventCount < newEvents.length) ||
 			(config.softLimit && newEvents.length > config.maxEventCount + config.softLimit))
 	) {
+		hiddenEvents = newEvents.length - config.maxEventCount;
 		newEvents.length = config.maxEventCount;
 	}
-	return newEvents;
+	return [newEvents, hiddenEvents];
 }
