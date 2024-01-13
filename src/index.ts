@@ -147,8 +147,8 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.language != 'undefined'
 					? this._config.language!
 					: this.hass.locale
-					? this.hass.locale.language.toLowerCase()
-					: this.hass.language.toLowerCase();
+						? this.hass.locale.language.toLowerCase()
+						: this.hass.language.toLowerCase();
 
 			dayjs.locale(this.language);
 
@@ -156,17 +156,12 @@ export class AtomicCalendarRevive extends LitElement {
 				typeof this._config.hoursFormat != 'undefined'
 					? this._config.hoursFormat
 					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-					? formatTime(this.hass.locale)
-					: dayjs().localeData().longDateFormat('LT');
+						? formatTime(this.hass.locale)
+						: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
 				formats: {
 					LT: timeFormat,
-					LTS: 'HH:mm:ss',
-					L: 'DD/MM/YYYY',
-					LL: 'D MMMM YYYY',
-					LLL: 'MMM D YYYY HH:mm',
-					LLLL: 'dddd, D MMMM YYYY HH:mm',
 				},
 			});
 
@@ -199,11 +194,11 @@ export class AtomicCalendarRevive extends LitElement {
 						${this._config.name
 							? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
 									${this._config.name}
-							  </div>`
+								</div>`
 							: ''}
 						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
 						${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
-				  </div>`
+					</div>`
 				: ''}
 			<div class="cal-eventContainer" style="padding-top: 4px;">${this.content}</div>
 		</ha-card>`;
@@ -226,7 +221,8 @@ export class AtomicCalendarRevive extends LitElement {
 			this.isUpdating = true;
 			try {
 				const { events, failedEvents } = await getEventMode(this._config, this.hass);
-				this.events = events;
+				this.events = events[0];
+				this.hiddenEvents = events[1];
 				this.failedEvents = failedEvents;
 				// Check no event days and display
 				if (this._config.showNoEventDays) {
@@ -371,7 +367,7 @@ export class AtomicCalendarRevive extends LitElement {
 					this._config.showCurrentEventLine && isEventNext
 						? html`<div class="eventBar">
 								<hr class="event" style="--event-bar-color: ${this._config.eventBarColor} " />
-						  </div>`
+							</div>`
 						: ``;
 
 				const calColor =
@@ -382,7 +378,7 @@ export class AtomicCalendarRevive extends LitElement {
 					event.entityConfig.name && this._config.showCalendarName
 						? html`<div class="event-cal-name" style="color: ${calColor};">
 								<ha-icon icon="mdi:calendar" class="event-cal-name-icon"></ha-icon>&nbsp;${event.originName}
-						  </div>`
+							</div>`
 						: ``;
 
 				//show current event progress bar
@@ -421,10 +417,10 @@ export class AtomicCalendarRevive extends LitElement {
 						${this._config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
 							? `(${event.startDateTime.fromNow()})`
 							: this._config.showTimeRemaining &&
-							    event.startDateTime.isBefore(now, 'minutes') &&
-							    event.endDateTime.isAfter(now, 'minutes')
-							  ? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
-							  : ''}
+								  event.startDateTime.isBefore(now, 'minutes') &&
+								  event.endDateTime.isAfter(now, 'minutes')
+								? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
+								: ''}
 					</div>`;
 				} else {
 					timeUntilRemaining = html``;
@@ -460,7 +456,7 @@ export class AtomicCalendarRevive extends LitElement {
 								${showWeekDay}
 								<!--Show the event date, see eventDateFormat-->
 								${eventDateFormat}
-						  </div>`
+							</div>`
 						: html``;
 				return html`<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
 					${eventLeft}

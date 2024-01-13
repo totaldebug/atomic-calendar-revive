@@ -1,3 +1,4 @@
+import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
 import * as de from './languages/de.json';
 import * as en from './languages/en.json';
@@ -12,6 +13,7 @@ import * as sv from './languages/sv.json';
 import { globalData } from '../helpers/globals';
 
 const languages: object = {
+	cs: cs,
 	da: da,
 	de: de,
 	en: en,
