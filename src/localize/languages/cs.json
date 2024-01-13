@@ -1,0 +1,104 @@
+{
+	"common": {
+		"version": "Verze",
+		"show_warning": "Zobrazit varování",
+		"error": "Chyba",
+		"description": "Karta pokročilého kalendáře pro Home Assistant s Lovelace.",
+		"fullDayEventText": "Celý den",
+		"untilText": "Do",
+		"noEventText": "Žádné události",
+		"noEventsForNextDaysText": "Žádné události v následujících dnech",
+		"hiddenEventText": "události jsou skyty"
+	},
+	"ui": {
+		"common": {
+			"previous": "Předchozí",
+			"next": "Následující",
+            "week": "Týden"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Neplatná konfigurace",
+		"update_card": "Nelze načíst kalendář Home Assistant komponentou",
+		"no_entities": "Nejsou specifikovány žádné entity"
+	},
+	"required": {
+		"name": "Vyžadováno",
+		"secondary": "Vyžadovaný parametr pro správné fungování"
+	},
+	"main": {
+		"name": "Hlavní nastavení",
+		"secondary": "Globálně aplikovaná nastavení",
+		"fields": {
+			"name": "Název",
+			"showColors": "Zobrazit barvy",
+			"maxDaysToShow": "Max. počet dní k zobrazení",
+			"showLocation": "Zobrazit ikonu umístění",
+			"showLoader": "Zobrazit animaci načítání",
+			"showDate": "Zobrazit datum na kartě",
+			"showDeclined": "Zobrazit zrušené události",
+			"sortByStartTime": "Seřadit podle počátečních časů",
+			"hideFinishedEvents": "Skrýt dokončené události",
+			"dateFormat": "Formát data",
+			"hoursFormat": "Formát hodin",
+			"defaultMode": "Výchozí režim",
+			"linkTarget": "Cíl odkazu",
+			"refreshInterval": "Interval obnovení",
+			"showRelativeTime": "Zobrazit relativní čas",
+			"firstDayOfWeek": "První den v týdnu 0-6",
+			"cardHeight": "Výška karty",
+			"hideDuplicates": "Skrýt duplicity",
+			"showMultiDay": "Spojit vícedenní události",
+			"showMultiDayEventParts": "Zobrazit části vícedenních událostí"
+		}
+	},
+	"event": {
+		"name": "Režim událostí",
+		"secondary": "Nastavení pro režim událostí",
+		"fields": {
+			"showCurrentEventLine": "Zobrazit řádek před událostí",
+			"showProgressBar": "Zobrazit průběh",
+			"showMonth": "Zobrazit měsíc",
+			"showWeekDay": "Zobrazit den v týdnu",
+			"showDescription": "Zobrazit popisek",
+			"disableEventLink": "Zakázat odkazy v titulku události",
+			"disableLocationLink": "Zakázat odkazy na lokace",
+			"showNoEventsForToday": "Zobrazit text pro žádné události",
+			"showFullDayProgress": "Zobrazit průběh u celodenních událostí",
+			"untilText": "do textu:",
+			"noEventText": "Text pro žádné události:",
+			"noEventsForNextDaysText": "Text pro žádné události následující dny:",
+			"fullDayEventText": "Text celodenní události:",
+			"showEventIcon": "Zobrazit ikonu události",
+			"showHiddenText": "Zobrazit text skryté události",
+			"hiddenEventText": "Text pro skryté události:",
+			"showCalendarName": "Zobrazit název kalendáře",
+			"showWeekNumber": "Zobrazit číslo týdne",
+			"showEventDate": "Zobrazit datum události",
+			"showDatePerEvent": "Zobrazit datum u každé události"
+		}
+	},
+	"calendar": {
+		"name": "Režim kalendáře",
+		"secondary": "Nastavení pro režim kalendáře",
+		"fields": {
+			"showLastCalendarWeek": "Zobrazit poslední týden kalendáře",
+			"disableCalEventLink": "Zakázat odkazy na události",
+			"disableCalLocationLink": "Zakázat odkazy na lokace",
+			"calShowDescription": "Zobrazit popisek",
+			"disableCalLink": "Zakázat odkaz na kalendář"
+		}
+	},
+	"appearance": {
+		"name": "Nastavení zobrazení",
+		"secondary": "Přizpůsobení barev atd.",
+		"main": {
+			"name": "Hlavní",
+			"secondary": "Globální nastavení barev"
+		},
+		"fields": {
+			"locationLinkColor": "Barva odkazu na lokaci:",
+			"dimFinishedEvents": "Ztlumit jas dokončené události"
+		}
+	}
+}
