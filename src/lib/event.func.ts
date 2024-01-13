@@ -6,6 +6,7 @@ import CalendarDay from './calendar.class';
 import EventClass from './event.class';
 import sortEvents from '../functions/sort_events';
 import { atomicCardConfig } from '../types/config';
+import { mdiEmailOpenMultipleOutline } from '@mdi/js';
 
 dayjs.extend(customParseFormat);
 dayjs.extend(isBetween);
@@ -165,12 +166,12 @@ export async function getAllEvents(
 	config.entities.map((entity) => {
 		const calendarEntity = (entity && entity.entity) || entity;
 
-		const daysToShow = entity.maxDaysToShow! == 0 ? entity.maxDaysToShow! : config.maxDaysToShow! - 1;
+		const daysToShow = entity.maxDaysToShow! == 0 ? entity.maxDaysToShow! : entity.maxDaysToShow! - 1;
 
 		const endTime =
-			entity.maxDaysToShow! !== undefined
-				? start.endOf('day').add(daysToShow, 'day').format('YYYY-MM-DDTHH:mm:ss')
-				: end.endOf('day').format(dateFormat);
+			entity.maxDaysToShow === undefined
+				? end.endOf('day').format(dateFormat)
+				: start.endOf('day').add(daysToShow, 'day').format(dateFormat);
 
 		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
 
