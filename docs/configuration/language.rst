@@ -31,13 +31,16 @@ The Configuration editor supports the following locales:
 ========= ===========
  Locale    Language
 ========= ===========
+ cs        Czech
  da        Danish
  de        German
  en        English
  et        Estonian
  fi        Finnish
  fr        French
+ hu        Hungarian
  nb        Norwegian
+ ru        Russian
  sl        Slovenian
  sv        Swedish
 ========= ===========
