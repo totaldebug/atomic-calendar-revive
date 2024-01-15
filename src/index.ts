@@ -583,10 +583,10 @@ export class AtomicCalendarRevive extends LitElement {
 
 		return month.map((day: CalendarDay, i) => {
 			const dayDate = dayjs(day.date);
-			const dayStyleOtherMonth = dayDate.isSame(this.selectedMonth, 'month') ? '' : `opacity: .35;`;
+			const dayStyleOtherMonth = dayDate.isSame(this.selectedMonth, 'month') ? '' : `differentMonth`;
 			const dayClassToday = dayDate.isSame(dayjs(), 'day') ? `currentDay` : ``;
-			const dayStyleSat = dayDate.isoWeekday() == 6 ? `background-color: ${this._config.calEventSatColor};` : ``;
-			const dayStyleSun = dayDate.isoWeekday() == 7 ? `background-color: ${this._config.calEventSunColor};` : ``;
+			const dayStyleSat = dayDate.isoWeekday() == 6 ? `weekendSat` : ``;
+			const dayStyleSun = dayDate.isoWeekday() == 7 ? `weekendSun` : ``;
 			const dayStyleClicked = dayDate.isSame(dayjs(this.clickedDate), 'day')
 				? `background-color: ${this._config.calActiveEventBackgroundColor};`
 				: ``;
@@ -599,8 +599,8 @@ export class AtomicCalendarRevive extends LitElement {
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
 					<td
 						@click="${() => this.handleCalendarEventSummary(day, true)}"
-						class="cal"
-						style="${dayStyleOtherMonth}${dayStyleSat}${dayStyleSun}${dayStyleClicked} --cal-grid-color: ${this._config
+						class="cal ${dayStyleSat} ${dayStyleSun} ${dayStyleOtherMonth}"
+						style="${dayStyleClicked} --cal-grid-color: ${this._config
 							.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
 					>
 						<div class="calDay">
