@@ -8,7 +8,7 @@
 		"untilText": "Bis",
 		"noEventText": "Keine Einträge",
 		"noEventsForNextDaysText": "Keine Einträge in den nächsten Tagen",
-		"hiddenEventText": "Einige Einträge sind ausgeblendet."
+		"hiddenEventText": "Einträge sind ausgeblendet."
 	},
 	"ui": {
 		"common": {
@@ -20,6 +20,7 @@
 	"errors": {
 		"invalid_configuration": "Ungültige Konfiguration",
 		"update_card": "Der Kalender kann von der Home Assistant-Komponente nicht geladen werden!"
+		"no_entities": "Sie haben keine Entitäten festgelegt!"
 	},
 	"required": {
 		"name": "Benötigt",
@@ -48,15 +49,15 @@
 			"firstDayOfWeek": "Erster Wochentag 0-6",
 			"cardHeight": "Kartenhöhe",
 			"hideDuplicates": "Duplikate ausblenden",
-			"showMultiDay": "Split meerdaagse evenementen",
-			"showMultiDayEventParts": "Toon meerdaagse evenementonderdelen",
-			"eventTitle": "Lege evenementtitel instellen",
-			"compactMode": "Schakel de compacte modus in",
-			"titleLength": "Maximale titellengte (0 voor onbeperkt)",
-			"descLength": "Maximale beschrijvingslengte (0 voor onbeperkt)",
-			"showAllDayEvents": "Toon evenementen die de hele dag duren",
-			"offsetHeaderDate": "Datum koptekst verschuiven",
-			"startDaysAhead": "Evenementen die `x` dagen vanaf vandaag beginnen"
+			"showMultiDay": "Mehrtägige Ereignisse aufteilen",
+			"showMultiDayEventParts": "Mehrtägige Ereignisteile anzeigen",
+			"eventTitle": "Leeren Ereignistitel setzen",
+			"compactMode": "Kompaktmodus einschalten",
+			"titleLength": "Maximale Titellänge (0 für unbegrenzt)",
+			"descLength": "Maximale Länge der Beschreibung (0 für unbegrenzt)",
+			"showAllDayEvents": "Alle Tagesereignisse anzeigen",
+			"offsetHeaderDate": "Kopfdatum verschieben",
+			"startDaysAhead": "Ereignisse, die in `x` Tagen von heute an beginnen"
 		}
 	},
 	"event": {
@@ -79,18 +80,18 @@
 			"showEventIcon": "Ereignis-Symbol anzeigen?",
 			"showHiddenText": "Versteckten Ereignistext anzeigen?",
 			"hiddenEventText": "Text für versteckte Ereignisse",
-			"showCalendarName": "Toon agendanaam",
-			"showWeekNumber": "Toon weeknummers",
-			"showEventDate": "Toon datum voor evenementen",
-			"showDatePerEvent": "Toon datum naast elk evenement",
-			"showTimeRemaining": "Laat de resterende tijd zien",
-			"showAllDayHours": "Toon de tekst van de hele dag-gebeurtenis",
-			"hoursOnSameLine": "Toon uren op de gebeurtenisregel"
+			"showCalendarName": "Kalendername anzeigen?",
+			"showWeekNumber": "Kalenderwochen anzeigen?",
+			"showEventDate": "Datum für Ereignisse anzeigen?",
+			"showDatePerEvent": "Datum neben dem jeweiligen Ereignis anzeigen?",
+			"showTimeRemaining": "Verbleibende Zeit anzeigen?",
+			"showAllDayHours": "Ganztägigen Ereignistext anzeigen?",
+			"hoursOnSameLine": "Stunden auf der Ereigniszeile anzeigen?"
 		}
 	},
 	"calendar": {
 		"name": "Kalendermodus",
-		"secondary": "Kalendermodus-spezifische Optionen",
+		"secondary": "Kalendermodus: Spezifische Optionen",
 		"fields": {
 			"showLastCalendarWeek": "Letzte Kalenderwoche anzeigen?",
 			"disableCalEventLink": "Links für Kalendereinträge deaktivieren?",
