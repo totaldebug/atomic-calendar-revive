@@ -50,7 +50,7 @@
 		"eslint-plugin-import": "^2.29.1",
 		"eslint-plugin-prettier": "^5.1.1",
 		"prettier": "^3.1.1",
-		"rollup": "^4.9.1",
+		"rollup": "^4.9.5",
 		"rollup-plugin-serve": "^3.0.0",
 		"rollup-plugin-typescript2": "^0.36.0",
 		"semantic-release": "^22.0.12"
