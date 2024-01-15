@@ -74,18 +74,19 @@ export default function sortEvents(events: EventClass[], config) {
 				return timeDiffA - timeDiffB;
 			}
 		});
+		// Move finished events to the bottom
+		sortedEvents.sort((a, b) => {
+			if (a.isFinished !== b.isFinished) {
+				return a.isFinished ? 1 : -1;
+			}
+			// If both events are finished, sort them by their endDateTime in ascending order.
+			if (a.isFinished) {
+				return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
+			}
+			return 0;
+		});
 	}
-	// Move finished events to the bottom
-	sortedEvents.sort((a, b) => {
-		if (a.isFinished !== b.isFinished) {
-			return a.isFinished ? 1 : -1;
-		}
-		// If both events are finished, sort them by their endDateTime in ascending order.
-		if (a.isFinished) {
-			return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
-		}
-		return 0;
-	});
+
 
 	// If config.allDayBottom is true, add the all-day events to the end of the sorted events array.
 	if (config.allDayBottom) {
