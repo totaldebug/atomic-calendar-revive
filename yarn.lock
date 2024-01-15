@@ -1759,10 +1759,10 @@
     "@material/theme" "14.0.0-canary.53b3cad2f.0"
     tslib "^2.1.0"
 
-"@mdi/js@^7.3.67":
-  version "7.3.67"
-  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-7.3.67.tgz#23bfca863b87a9433815717dcaa6ae43eac7db58"
-  integrity sha512-MnRjknFqpTC6FifhGHjZ0+QYq2bAkZFQqIj8JA2AdPZbBxUvr8QSgB2yPAJ8/ob/XkR41xlg5majDR3c1JP1hw==
+"@mdi/js@^7.4.47":
+  version "7.4.47"
+  resolved "https://registry.yarnpkg.com/@mdi/js/-/js-7.4.47.tgz#7d8a4edc9631bffeed80d1ec784f9beae559a76a"
+  integrity sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==
 
 "@nicolo-ribaudo/chokidar-2@2.1.8-no-fsevents.3":
   version "2.1.8-no-fsevents.3"
