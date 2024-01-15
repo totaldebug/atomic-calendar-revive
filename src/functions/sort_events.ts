@@ -20,9 +20,13 @@ export default function sortEvents(events: EventClass[], config) {
 
 	// Sort the all-day events.
 	allDayEventsArray.sort((a, b) => {
-		if (a.entity !== b.entity) {
-			return a.entity.entity_id.localeCompare(b.entity);
+		// First, compare dates
+		const dateComparison = a.startDateTime.diff(b.startDateTime);
+
+		if (dateComparison !== 0) {
+			return dateComparison; // If dates are different, sort by date
 		} else {
+			// If dates are the same, sort by title
 			return a.title.localeCompare(b.title);
 		}
 	});
