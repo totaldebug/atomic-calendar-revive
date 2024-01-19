@@ -279,15 +279,15 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.weekendSat {
-		background-color: rgba(255, 255, 255, .05);
+		background-color: rgba(255, 255, 255, 0.05);
 	}
 
 	.weekendSun {
-		background-color: rgba(255, 255, 255, .15);
+		background-color: rgba(255, 255, 255, 0.15);
 	}
 
 	.differentMonth {
-		opacity: .35;
+		opacity: 0.35;
 	}
 
 	tr.cal {

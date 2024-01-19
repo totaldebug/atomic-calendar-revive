@@ -1,4 +1,3 @@
-import { mdiCurrencyMnt } from '@mdi/js';
 import dayjs from 'dayjs';
 
 import EventClass from '../lib/event.class';
@@ -90,7 +89,6 @@ export default function sortEvents(events: EventClass[], config) {
 			return 0;
 		});
 	}
-
 
 	// If config.allDayBottom is true, add the all-day events to the end of the sorted events array.
 	if (config.allDayBottom) {

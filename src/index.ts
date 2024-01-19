@@ -39,7 +39,7 @@ import { getDate, getTitleHTML, setNoEventDays, showCalendarLink } from './lib/c
 import EventClass from './lib/event.class';
 import { getCalendarMode, getEventMode, groupEventsByDay } from './lib/event.func';
 import { getDescription, getHoursHTML, getLocationHTML, getWeekNumberHTML } from './lib/eventMode.html';
-import { localize } from './localize/localize';
+import localize from './localize/localize';
 import { styles } from './style';
 import { atomicCardConfig } from './types/config';
 
@@ -92,10 +92,6 @@ export class AtomicCalendarRevive extends LitElement {
 		this.hiddenEvents = 0;
 	}
 
-	onConnect() {
-		setHass(this.hass);
-	}
-
 	public static async getConfigElement(): Promise<LovelaceCardEditor> {
 		return document.createElement('atomic-calendar-revive-editor') as LovelaceCardEditor;
 	}
@@ -106,6 +102,7 @@ export class AtomicCalendarRevive extends LitElement {
 	}
 
 	public setConfig(config: atomicCardConfig): void {
+		setHass(this.hass);
 		if (!config) {
 			throw new Error(localize('errors.invalid_configuration'));
 		}
@@ -142,6 +139,7 @@ export class AtomicCalendarRevive extends LitElement {
 	}
 
 	protected render(): TemplateResult | void {
+		setHass(this.hass);
 		if (this.firstrun) {
 			this.language =
 				typeof this._config.language != 'undefined'
@@ -296,10 +294,10 @@ export class AtomicCalendarRevive extends LitElement {
 		 * If there are no events, put some text in
 		 */
 		if (days.length === 0 && (this._config.maxDaysToShow == 1 || this._config.maxDaysToShow == 0)) {
-			this.content = this._config.noEventText;
+			this.content = this._config.noEventText ?? localize('common.noEventText');
 			return;
 		} else if (days.length === 0) {
-			this.content = this._config.noEventsForNextDaysText;
+			this.content = this._config.noEventsForNextDaysText ?? localize('common.noEventsForNextDaysText');
 			return;
 		}
 
@@ -332,7 +330,7 @@ export class AtomicCalendarRevive extends LitElement {
 				config: '',
 				start: { dateTime: dayjs().endOf('day') },
 				end: { dateTime: dayjs().endOf('day') },
-				summary: this._config.noEventText,
+				summary: this._config.noEventText ?? localize('common.noEventText'),
 				isFinished: false,
 			};
 			const emptyEvent = new EventClass(emptyEv, this._config);
@@ -477,7 +475,7 @@ export class AtomicCalendarRevive extends LitElement {
 		});
 		const eventnotice = this._config.showHiddenText
 			? this.hiddenEvents > 0
-				? this.hiddenEvents + ' ' + this._config.hiddenEventText
+				? this.hiddenEvents + ' ' + (this._config.hiddenEventText ?? localize('common.hiddenEventText'))
 				: ''
 			: '';
 		this.content = html`${htmlDays} <span class="hidden-events">${eventnotice}</span>`;
@@ -600,8 +598,8 @@ export class AtomicCalendarRevive extends LitElement {
 					<td
 						@click="${() => this.handleCalendarEventSummary(day, true)}"
 						class="cal ${dayStyleSat} ${dayStyleSun} ${dayStyleOtherMonth}"
-						style="${dayStyleClicked} --cal-grid-color: ${this._config
-							.calGridColor}; --cal-day-color: ${this._config.calDayColor}"
+						style="${dayStyleClicked} --cal-grid-color: ${this._config.calGridColor}; --cal-day-color: ${this._config
+							.calDayColor}"
 					>
 						<div class="calDay">
 							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
@@ -664,5 +662,5 @@ export class AtomicCalendarRevive extends LitElement {
 registerCustomCard({
 	type: 'atomic-calendar-revive',
 	name: 'Atomic Calendar Revive',
-	description: localize('common.description'),
+	description: "An advanced calendar card for Home Assistant with Lovelace.",
 });

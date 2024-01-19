@@ -4,7 +4,7 @@ import { CSSResult, LitElement, TemplateResult, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import defaultConfig from './defaults';
-import { localize } from './localize/localize';
+import localize from './localize/localize';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types/config';
 import {
@@ -410,25 +410,21 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						type: 'text',
 						name: 'untilText',
 						label: localize('event.fields.untilText'),
-						default: defaultConfig.untilText,
 					},
 					{
 						type: 'text',
 						name: 'noEventsForNextDaysText',
 						label: localize('event.fields.noEventsForNextDaysText'),
-						default: defaultConfig.noEventsForNextDaysText,
 					},
 					{
 						type: 'text',
 						name: 'noEventText',
 						label: localize('event.fields.noEventText'),
-						default: defaultConfig.noEventText,
 					},
 					{
 						type: 'text',
 						name: 'hiddenEventText',
 						label: localize('event.fields.hiddenEventText'),
-						default: defaultConfig.hiddenEventText,
 					},
 					{
 						type: 'switch',
