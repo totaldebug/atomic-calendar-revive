@@ -82,8 +82,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	calEventBackgroundFilter?: string;
 	calActiveEventBackgroundColor?: string;
 	calActiveEventBackgroundFilter?: string;
-	calEventSatColor?: string;
-	calEventSunColor?: string;
 	calEventHolidayColor?: string;
 	calEventHolidayFilter?: string;
 	calEventIcon1?: string;

@@ -1,4 +1,3 @@
-import { mdiCurrencyMnt } from '@mdi/js';
 import dayjs from 'dayjs';
 
 import EventClass from '../lib/event.class';
@@ -20,9 +19,13 @@ export default function sortEvents(events: EventClass[], config) {
 
 	// Sort the all-day events.
 	allDayEventsArray.sort((a, b) => {
-		if (a.entity !== b.entity) {
-			return a.entity.entity_id.localeCompare(b.entity);
+		// First, compare dates
+		const dateComparison = a.startDateTime.diff(b.startDateTime);
+
+		if (dateComparison !== 0) {
+			return dateComparison; // If dates are different, sort by date
 		} else {
+			// If dates are the same, sort by title
 			return a.title.localeCompare(b.title);
 		}
 	});
@@ -74,18 +77,18 @@ export default function sortEvents(events: EventClass[], config) {
 				return timeDiffA - timeDiffB;
 			}
 		});
+		// Move finished events to the bottom
+		sortedEvents.sort((a, b) => {
+			if (a.isFinished !== b.isFinished) {
+				return a.isFinished ? 1 : -1;
+			}
+			// If both events are finished, sort them by their endDateTime in ascending order.
+			if (a.isFinished) {
+				return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
+			}
+			return 0;
+		});
 	}
-	// Move finished events to the bottom
-	sortedEvents.sort((a, b) => {
-		if (a.isFinished !== b.isFinished) {
-			return a.isFinished ? 1 : -1;
-		}
-		// If both events are finished, sort them by their endDateTime in ascending order.
-		if (a.isFinished) {
-			return dayjs(a.endDateTime).isBefore(b.endDateTime) ? -1 : 1;
-		}
-		return 0;
-	});
 
 	// If config.allDayBottom is true, add the all-day events to the end of the sorted events array.
 	if (config.allDayBottom) {

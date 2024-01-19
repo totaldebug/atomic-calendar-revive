@@ -4,7 +4,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import { getCurrDayAndMonth, isHtml } from './common.html';
 import EventClass from './event.class';
-import { localize } from '../localize/localize';
+import localize from '../localize/localize';
 import { atomicCardConfig } from '../types/config';
 
 /**
@@ -28,7 +28,8 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
 
 	if (event.isAllDayEvent && event.isMultiDay && event.startDateTime.isAfter(today, 'day')) {
 		return html`
-			${config.fullDayEventText}, ${config.untilText!.toLowerCase()} ${getCurrDayAndMonth(event.endDateTime)}
+			${config.fullDayEventText ?? localize('common.fullDayEventText')},
+			${(config.untilText! ?? localize('common.untilText')).toLowerCase()} ${getCurrDayAndMonth(event.endDateTime)}
 		`;
 	}
 	// 2. Is an all day event, over multiple days and the start time is before today or the
@@ -39,28 +40,30 @@ export function getHoursHTML(config: atomicCardConfig, event: EventClass) {
 		(event.startDateTime.isBefore(today, 'day') || event.endDateTime.isAfter(today, 'day'))
 	) {
 		return html`
-			${config.fullDayEventText}, ${config.untilText!.toLowerCase()} ${getCurrDayAndMonth(event.endDateTime)}
+			${config.fullDayEventText ?? localize('common.fullDayEventText')},
+			${(config.untilText! ?? localize('common.untilText')).toLowerCase()} ${getCurrDayAndMonth(event.endDateTime)}
 		`;
 	}
 	// 3. Is an all day event, not matching 1 or 2 -> 'All Day'
 	else if (event.isAllDayEvent) {
-		return html`${config.fullDayEventText}`;
+		return html`${config.fullDayEventText ?? localize('common.fullDayEventText')}`;
 	}
 	// 4. Starts before today, ends after today -> 'Until end date'
 	else if (event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(today, 'day')) {
-		return html`${config.untilText} ${getCurrDayAndMonth(event.endDateTime)}`;
+		return html`${config.untilText! ?? localize('common.untilText')} ${getCurrDayAndMonth(event.endDateTime)}`;
 	}
 	// 5. starts before today, ends today -> 'Until end time'
 	else if (
 		(event.startDateTime.isBefore(today, 'day') && event.endDateTime.isSame(today, 'day')) ||
 		(event.isLastDay && event.endDateTime.isSame(today, 'day'))
 	) {
-		return html`${config.untilText} ${event.endDateTime.format('LT')} `;
+		return html`${config.untilText! ?? localize('common.untilText')} ${event.endDateTime.format('LT')} `;
 	}
 	// 6. Does not start before today, ends after start
 	else if (!event.startDateTime.isBefore(today, 'day') && event.endDateTime.isAfter(event.startDateTime, 'day')) {
-		return html`${event.startDateTime.format('LT')}, ${config.untilText!.toLowerCase()}
-		${getCurrDayAndMonth(event.endDateTime)} ${event.endDateTime.format('HH:mm')}`;
+		return html`${event.startDateTime.format('LT')},
+		${(config.untilText! ?? localize('common.untilText')).toLowerCase()} ${getCurrDayAndMonth(event.endDateTime)}
+		${event.endDateTime.format('HH:mm')}`;
 	}
 	// 7. anything that doesnt fit -> 'start time - end time'
 	else {
