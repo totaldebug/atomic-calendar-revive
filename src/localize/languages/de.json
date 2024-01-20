@@ -19,7 +19,7 @@
 	},
 	"errors": {
 		"invalid_configuration": "Ungültige Konfiguration",
-		"update_card": "Der Kalender kann von der Home Assistant-Komponente nicht geladen werden!"
+		"update_card": "Der Kalender kann von der Home Assistant-Komponente nicht geladen werden!",
 		"no_entities": "Sie haben keine Entitäten festgelegt!"
 	},
 	"required": {
