@@ -662,5 +662,5 @@ export class AtomicCalendarRevive extends LitElement {
 registerCustomCard({
 	type: 'atomic-calendar-revive',
 	name: 'Atomic Calendar Revive',
-	description: "An advanced calendar card for Home Assistant with Lovelace.",
+	description: 'An advanced calendar card for Home Assistant with Lovelace.',
 });
