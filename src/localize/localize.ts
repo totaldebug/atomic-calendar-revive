@@ -18,7 +18,7 @@ const languages: object = {
 	da,
 	de,
 	en,
-	"en-GB": en_GB,
+	'en-GB': en_GB,
 	et,
 	fi,
 	fr,

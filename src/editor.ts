@@ -810,7 +810,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 											<label class="mdc-label">showMultiDay</label>
 										</div>
 									</div>
-							  </div>`
+								</div>`
 							: html``}
 					</div>
 				`;
