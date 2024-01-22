@@ -1,3 +1,4 @@
+import * as ca from './languages/ca.json';
 import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
 import * as de from './languages/de.json';
