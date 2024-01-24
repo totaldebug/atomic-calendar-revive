@@ -5,7 +5,7 @@ import EventClass from '../lib/event.class';
 // Function to sort events
 export default function sortEvents(events: EventClass[], config) {
 	const currentDateTime = dayjs(); // Current date and time
-	const sortedEvents: EventClass[] = [...events]; // Array to manipulate events.
+	const sortedEvents: EventClass[] = events.sort((a, b) => a.startDateTime.diff(b.startDateTime)); // Array to manipulate events.
 
 	// Step 1: Split array by startDateTime per day
 	const eventsByDay: { [key: string]: EventClass[] } = {};
