@@ -16,6 +16,7 @@
    configuration/event
    configuration/calendar
    configuration/language
+   configuration/styling
 
 .. toctree::
    :caption: Contribute

@@ -1,11 +1,5 @@
-import { localize } from './localize/localize';
-
 export default {
 	cardHeight: '100%',
-
-	// text translations
-	fullDayEventText: localize('common.fullDayEventText'), // "All day" custom text
-	untilText: localize('common.untilText'), // "Until" custom text
 
 	// main settings
 	maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
@@ -31,7 +25,6 @@ export default {
 	hideDeclined: false, // hide declined events in the calendar
 	showPrivate: true, // hide private events
 	showHiddenText: true, //show the hidden events text
-	hiddenEventText: localize('common.hiddenEventText'),
 	showCalendarName: false,
 
 	// color and font settings
@@ -41,8 +34,6 @@ export default {
 	descSize: 80, //Description text size (percent of standard text)
 
 	showNoEventsForToday: false,
-	noEventText: localize('common.noEventText'),
-	noEventsForNextDaysText: localize('common.noEventsForNextDaysText'),
 	showNoEventDays: false,
 
 	showHours: true, //shows the bottom line (time, duration of event)
@@ -84,8 +75,6 @@ export default {
 	calEventBackgroundColor: 'rgba(86, 100, 86, .35)',
 
 	calActiveEventBackgroundColor: 'rgba(86, 128, 86, .35)',
-	calEventSatColor: 'rgba(255, 255, 255, .05)',
-	calEventSunColor: 'rgba(255, 255, 255, .15)',
 
 	calEventTime: false, // show calendar event summary time
 

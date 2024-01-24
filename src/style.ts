@@ -278,6 +278,18 @@ export const styles: CSSResultGroup = css`
 		display: inline-block;
 	}
 
+	.weekendSat {
+		background-color: rgba(255, 255, 255, 0.05);
+	}
+
+	.weekendSun {
+		background-color: rgba(255, 255, 255, 0.15);
+	}
+
+	.differentMonth {
+		opacity: 0.35;
+	}
+
 	tr.cal {
 		width: 100%;
 	}

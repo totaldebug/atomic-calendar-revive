@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Verzia",
+		"show_warning": "Zobraziť upozornenie",
+		"error": "Error",
+		"description": "Pokročilá karta kalendára pre domáceho asistenta s Lovelace.",
+		"fullDayEventText": "Všetky dni",
+		"untilText": "Dokiaľ",
+		"noEventText": "Žiadne udalosti",
+		"noEventsForNextDaysText": "Žiadne udalosti v najbližších dňoch",
+		"hiddenEventText": "udalosti sú skryté"
+	},
+	"ui": {
+		"common": {
+			"previous": "Predchádzajúci",
+			"next": "Nasledujúci",
+			"week": "Týždeň"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Neplatná konfigurácia",
+		"update_card": "Kalendár sa nedá načítať z komponentu Home Assistant",
+		"no_entities": "Nezadali ste žiadne udalosti"
+	},
+	"required": {
+		"name": "Požadované",
+		"secondary": "Požadované možnosti pre fungovanie tejto karty"
+	},
+	"main": {
+		"name": "Hlavné možnosti",
+		"secondary": "Možnosti, ktoré platia globálne",
+		"fields": {
+			"name": "Názov",
+			"showColors": "Zobraziť farby",
+			"maxDaysToShow": "Maximálny počet dní na zobrazenie",
+			"showLocation": "Zobraziť ikonu polohy",
+			"showLoader": "Zobraziť animáciu nakladača",
+			"showDate": "Zobraziť dátum na karte",
+			"showDeclined": "Zobraziť odmietnuté udalosti",
+			"sortBy": "Triediť podľa",
+			"allDayBottom": "Zobraziť celodenné udalosti v dolnej časti",
+			"hideFinishedEvents": "Skryť dokončené udalosti",
+			"dateFormat": "Formát dátumu",
+			"hoursFormat": "Formát hodín",
+			"defaultMode": "Predvolený režim",
+			"linkTarget": "Cieľ odkazu",
+			"refreshInterval": "Interval obnovenia",
+			"showRelativeTime": "Zobraziť relatívny čas",
+			"firstDayOfWeek": "Prvý deň v týždni 0-6",
+			"cardHeight": "Výška karty",
+			"hideDuplicates": "Skryť duplikáty",
+			"showMultiDay": "Rozdelené viacdňové podujatia",
+			"showMultiDayEventParts": "Zobraziť časti viacdňovej udalosti",
+			"eventTitle": "Nastavte prázdny názov udalosti",
+			"compactMode": "Povoliť kompaktný režim",
+			"titleLength": "Maximálna dĺžka názvu (0 pre neobmedzené)",
+			"descLength": "Maximálna dĺžka popisu (0 pre neobmedzené)",
+			"showAllDayEvents": "Zobraziť celodenné udalosti",
+			"offsetHeaderDate": "Dátum posunutia hlavičky",
+			"startDaysAhead": "Udalosti začínajúce `x` dní odo dneška"
+		}
+	},
+	"event": {
+		"name": "Režim udalosti",
+		"secondary": "Špecifické možnosti režimu udalosti",
+		"fields": {
+			"showCurrentEventLine": "Zobraziť riadok pred udalosťou?",
+			"showProgressBar": "Zobraziť indikátor priebehu?",
+			"showMonth": "Zobraziť mesiac?",
+			"showWeekDay": "Zobraziť Deň týždňa",
+			"showDescription": "Zobraziť popis?",
+			"disableEventLink": "Zakázať odkazy v názve udalosti?",
+			"disableLocationLink": "Zakázať odkazy na polohu?",
+			"showNoEventsForToday": "Zobraziť dnes žiadne udalosti?",
+			"showFullDayProgress": "Zobraziť priebeh celodennej udalosti?",
+			"untilText": "do textu:",
+			"noEventText": "Žiadne dnešné udalosti text:",
+			"noEventsForNextDaysText": "Žiadne udalosti v najbližších dňoch text:",
+			"fullDayEventText": "Text celodenného podujatia:",
+			"showEventIcon": "Zobraziť ikonu udalosti",
+			"showHiddenText": "Zobraziť skrytý text udalosti?",
+			"hiddenEventText": "Text pre skryté udalosti:",
+			"showCalendarName": "Zobraziť názov kalendára",
+			"showWeekNumber": "Zobraziť čísla týždňov",
+			"showEventDate": "Zobraziť dátumy udalostí",
+			"showDatePerEvent": "Zobraziť dátum vedľa každej udalosti",
+			"showTimeRemaining": "Zobraziť zostávajúci čas",
+			"showAllDayHours": "Zobraziť text celodennej udalosti",
+			"hoursOnSameLine": "Zobraziť hodiny na riadku udalosti"
+		}
+	},
+	"calendar": {
+		"name": "Režim kalendára",
+		"secondary": "Špecifické možnosti režimu kalendára",
+		"fields": {
+			"showLastCalendarWeek": "Zobraziť posledný kalendárny týždeň",
+			"disableCalEventLink": "Zakázať odkaz na udalosť kalendára",
+			"disableCalLocationLink": "Zakázať odkaz na umiestnenie kalendára",
+			"calShowDescription": "Zobraziť popis",
+			"disableCalLink": "Zakázať odkaz na kalendár"
+		}
+	},
+	"appearance": {
+		"name": "Vzhľad",
+		"secondary": "Prispôsobte farby atď.",
+		"main": {
+			"name": "Hlavná",
+			"secondary": "Globálne nastavenia farieb"
+		},
+		"fields": {
+			"dimFinishedEvents": "Stlmiť dokončené udalosti?"
+		}
+	}
+}
