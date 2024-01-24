@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Versió",
+		"show_warning": "Mostrar alerta",
+		"error": "Error",
+		"description": "Una targeta de calendari avançada per a Home Assistant amb Lovelace.",
+		"fullDayEventText": "Tot el dia",
+		"untilText": "Fins",
+		"noEventText": "Sense esdeveniments",
+		"noEventsForNextDaysText": "Sense esdeveniments en els propers dies",
+		"hiddenEventText": "esdeveniments ocults"
+	},
+	"ui": {
+		"common": {
+			"previous": "Anterior",
+			"next": "Següent",
+			"week": "Setmana"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Configuració incorrecte",
+		"update_card": "No es pot carregar el calendari des del component de Home Assistant",
+		"no_entities": "No has especificat cap entitat"
+	},
+	"required": {
+		"name": "Requerit",
+		"secondary": "Opcions requerides per al funcionament d'aquesta targeta"
+	},
+	"main": {
+		"name": "Opcions Principals",
+		"secondary": "Opcions aplicades globalment",
+		"fields": {
+			"name": "Nom",
+			"showColors": "Mostrar Colors",
+			"maxDaysToShow": "Màxim de dies a mostrar",
+			"showLocation": "Mostrar icona de localització",
+			"showLoader": "Mostrar animació de càrrega",
+			"showDate": "Mostrar data a la targeta",
+			"showDeclined": "Mostrar esdeveniments declinats",
+			"sortBy": "Ordena per",
+			"allDayBottom": "Mostrar esdeveniments de tot el dia al final",
+			"hideFinishedEvents": "Ocultar esdeveniments finalitzats",
+			"dateFormat": "Format de data",
+			"hoursFormat": "Format d'hora",
+			"defaultMode": "Modalitat per defecte",
+			"linkTarget": "Enllaçar destí",
+			"refreshInterval": "Interval de refresc",
+			"showRelativeTime": "Mostrar tems relatiu",
+			"firstDayOfWeek": "Primer dia de la setmana 0-6",
+			"cardHeight": "Alçada targeta",
+			"hideDuplicates": "Oculta duplicats",
+			"showMultiDay": "Divideix esdeveniments multi-dia",
+			"showMultiDayEventParts": "Mostrar parts d'esdeveniments multi-dia",
+			"eventTitle": "Estableix títol d'esdeveniment en blanc",
+			"compactMode": "Habilitar mode compacte",
+			"titleLength": "Màxima longitut del títol (0 per il·limitat)",
+			"descLength": "Màxima longitut de la descripció (0 per il·limitat)",
+			"showAllDayEvents": "Mostrat esdeveniments de tot el dia",
+			"offsetHeaderDate": "Compensació de la data de la capçalera",
+			"startDaysAhead": "Esdeveniments que comencen `x` dies a partir d'ara"
+		}
+	},
+	"event": {
+		"name": "Mode Esdeveniment",
+		"secondary": "Opcions específiques del Mode Esdeveniment",
+		"fields": {
+			"showCurrentEventLine": "Mostrar línia abans de l'esdeveniment?",
+			"showProgressBar": "Mostrar barra de progrés?",
+			"showMonth": "Mostrar mes?",
+			"showWeekDay": "Mostrar dia de la setmana",
+			"showDescription": "Mostrar descripció?",
+			"disableEventLink": "Desactivar enllaços al títol de l'esdeveniment?",
+			"disableLocationLink": "Desactivar enllaços a la localització?",
+			"showNoEventsForToday": "Mostrar No hi ha esdeveniments avui?",
+			"showFullDayProgress": "Mostrar progres dels esdeveniments de tot el dia?",
+			"untilText": "Text fins:",
+			"noEventText": "Text No hi ha esdeveniments avui:",
+			"noEventsForNextDaysText": "Text No hi ha esdeveniments els propers dies:",
+			"fullDayEventText": "Text Esdeveniment de tot el dia:",
+			"showEventIcon": "Mostrar icona d'esdeveniment",
+			"showHiddenText": "Mostrar text dels esdeveniments ocults?",
+			"hiddenEventText": "Text per als esdeveniments ocults:",
+			"showCalendarName": "Mostrar nom del calendari",
+			"showWeekNumber": "Mostrar número de la setmana",
+			"showEventDate": "Mostrar data als dels esdeveniments",
+			"showDatePerEvent": "Mostrar data al costat de cada esdeveniment",
+			"showTimeRemaining": "Mostrar temps restant",
+			"showAllDayHours": "Mostrar text d'esdeveniment de tot el dia",
+			"hoursOnSameLine": "Mostrar hores a la línia de l'esdeveniment"
+		}
+	},
+	"calendar": {
+		"name": "Mode Calendari",
+		"secondary": "Opcions específiques del Mode Calendari",
+		"fields": {
+			"showLastCalendarWeek": "Mostrar última setmana del calendari",
+			"disableCalEventLink": "Desactivar enllaços als esdeveniments del calendari",
+			"disableCalLocationLink": "Desactivar enllaços a la localització en el calendari",
+			"calShowDescription": "Mostrar descripció",
+			"disableCalLink": "Desactivar enllaç al calendari"
+		}
+	},
+	"appearance": {
+		"name": "Aparença",
+		"secondary": "Pesonalitzar els colors etc.",
+		"main": {
+			"name": "Principal",
+			"secondary": "Ajust del color global"
+		},
+		"fields": {
+			"dimFinishedEvents": "Atenuar esdeveniments finalitzats?"
+		}
+	}
+}
