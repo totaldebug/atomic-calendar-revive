@@ -16,6 +16,7 @@ import * as sv from './languages/sv.json';
 import { globalData } from '../helpers/globals';
 
 const languages: object = {
+	ca,
 	cs,
 	da,
 	de,
