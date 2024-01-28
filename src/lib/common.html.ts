@@ -129,7 +129,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	let { title } = event;
 
 	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
-		title = event.title.slice(0, config.titleLength);
+		title = event.title.slice(0, config.titleLength) + '...';
 	}
 	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
 		return html`
