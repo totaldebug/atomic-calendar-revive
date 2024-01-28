@@ -41,6 +41,7 @@ The Configuration editor supports the following locales:
  fr        French
  hu        Hungarian
  nb        Norwegian
+ pt        Portuguese
  ru        Russian
  sl        Slovenian
  sv        Swedish
