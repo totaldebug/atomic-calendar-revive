@@ -9,6 +9,7 @@ import * as fi from './languages/fi.json';
 import * as fr from './languages/fr.json';
 import * as hu from './languages/hu.json';
 import * as nb from './languages/nb.json';
+import * as pt from './languages/pt.json';
 import * as ru from './languages/ru.json';
 import * as sk from './languages/sk.json';
 import * as sl from './languages/sl.json';
@@ -27,6 +28,7 @@ const languages: object = {
 	fr,
 	hu,
 	nb,
+	pt,
 	ru,
 	sk,
 	sl,

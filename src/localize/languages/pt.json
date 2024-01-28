@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Versão",
+		"show_warning": "Mostrar alerta",
+		"error": "Erro",
+		"description": "Um cartão de calendário avançado para o Home Assistant com Lovelace.",
+		"fullDayEventText": "Todo o dia",
+		"untilText": "Até",
+		"noEventText": "Sem eventos",
+		"noEventsForNextDaysText": "Sem eventos nos próximos dias",
+		"hiddenEventText": "eventos escondidos"
+	},
+	"ui": {
+		"common": {
+			"previous": "Anterior",
+			"next": "Próximo",
+			"week": "Semana"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Configuração inválida",
+		"update_card": "O calendário não pode ser carregado pelo componente do Home Assistant",
+		"no_entities": "Não configurou nenhuma entidade"
+	},
+	"required": {
+		"name": "Obrigatório",
+		"secondary": "Opções obrigatórias para que este cartão funcione"
+	},
+	"main": {
+		"name": "Opções principais",
+		"secondary": "Opções globais",
+		"fields": {
+			"name": "Nome",
+			"showColors": "Mostrar cores",
+			"maxDaysToShow": "Máximo de dias a mostrar",
+			"showLocation": "Mostrar icon localização",
+			"showLoader": "Mostrar animação carregamento",
+			"showDate": "Mostrar data no cartão",
+			"showDeclined": "Mostrar convites rejeitados",
+			"sortBy": "Ordenar por",
+			"allDayBottom": "Mostrar eventos dia completo no final",
+			"hideFinishedEvents": "Esconder eventos concluídos",
+			"dateFormat": "Formato data",
+			"hoursFormat": "Formato hora",
+			"defaultMode": "Modo por default",
+			"linkTarget": "Destino link",
+			"refreshInterval": "Intervalo atualização",
+			"showRelativeTime": "Mostrar tempo relativo",
+			"firstDayOfWeek": "Primeiro dia da semana 0-6",
+			"cardHeight": "Altura cartão",
+			"hideDuplicates": "Esconder duplicados",
+			"showMultiDay": "Dividir eventos de mutiplos dias",
+			"showMultiDayEventParts": "Mostrar partes de eventos de multiplos dias",
+			"eventTitle": "Nome para eventos sem titulo",
+			"compactMode": "Ativar modo compacto",
+			"titleLength": "Tamanho máximo titulo (0 para ilimitado)",
+			"descLength": "Tamanho máximo descrição (0 para ilimitado)",
+			"showAllDayEvents": "Mostrar eventos dia completo",
+			"offsetHeaderDate": "Desfasamento data cabeçalho",
+			"startDaysAhead": "Eventos a iniciar a `x` dias desde hoje"
+		}
+	},
+	"event": {
+		"name": "Modo evento",
+		"secondary": "Opções do modo evento",
+		"fields": {
+			"showCurrentEventLine": "Mostrar linha antes do evento?",
+			"showProgressBar": "Mostrar linha de progresso?",
+			"showMonth": "Mostrar mês?",
+			"showWeekDay": "Mostrar dia da semana",
+			"showDescription": "Mostrar descrição?",
+			"disableEventLink": "Desativar links no titulo do evento?",
+			"disableLocationLink": "Desativar links para localização?",
+			"showNoEventsForToday": "Mostrar mensagem sem eventos hoje?",
+			"showFullDayProgress": "Mostrar progresso eventos dia completo?",
+			"untilText": "até texto:",
+			"noEventText": "Texto mensagem sem eventos hoje:",
+			"noEventsForNextDaysText": "Texto mensagem sem eventos nos próximos dias:",
+			"fullDayEventText": "Texto evento dia completo:",
+			"showEventIcon": "Mostrar icon do evento",
+			"showHiddenText": "Mostrar texto de evento oculto?",
+			"hiddenEventText": "Texto para eventos ocultos:",
+			"showCalendarName": "Mostrar nome calendário",
+			"showWeekNumber": "Mostrar números de semana",
+			"showEventDate": "Mostrar data dos eventos",
+			"showDatePerEvent": "Mostrar data junto a cada evento",
+			"showTimeRemaining": "Mostrar tempo restante",
+			"showAllDayHours": "Mostrar texto evento dia completo",
+			"hoursOnSameLine": "Mostrar horas na linha do evento"
+		}
+	},
+	"calendar": {
+		"name": "Modo calendário",
+		"secondary": "Opções do modo calendário",
+		"fields": {
+			"showLastCalendarWeek": "Mostrar última semana de calendário",
+			"disableCalEventLink": "Desativar link para evento calendário",
+			"disableCalLocationLink": "Desativar link para localização",
+			"calShowDescription": "Mostrar descrição",
+			"disableCalLink": "Desativar link calendário"
+		}
+	},
+	"appearance": {
+		"name": "Aparência",
+		"secondary": "Personalizar cores, etc.",
+		"main": {
+			"name": "Main",
+			"secondary": "Configuração global de cores"
+		},
+		"fields": {
+			"dimFinishedEvents": "Colocar eventos concluidos a cinzento?"
+		}
+	}
+}
