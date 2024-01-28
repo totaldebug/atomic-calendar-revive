@@ -31,6 +31,7 @@ The Configuration editor supports the following locales:
 ========= ===========
  Locale    Language
 ========= ===========
+ ca        Catalan
  cs        Czech
  da        Danish
  de        German
@@ -52,6 +53,7 @@ The card date information supports the following locales:
 ========= ==============================
  Locale    Language
 ========= ==============================
+ ca        Catalan
  cs        Czech
  da        Danish
  de-at     German (Austria)

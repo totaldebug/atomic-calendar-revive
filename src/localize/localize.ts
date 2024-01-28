@@ -1,3 +1,4 @@
+import * as ca from './languages/ca.json';
 import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
 import * as de from './languages/de.json';
@@ -9,11 +10,13 @@ import * as fr from './languages/fr.json';
 import * as hu from './languages/hu.json';
 import * as nb from './languages/nb.json';
 import * as ru from './languages/ru.json';
+import * as sk from './languages/sk.json';
 import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
 import { globalData } from '../helpers/globals';
 
 const languages: object = {
+	ca,
 	cs,
 	da,
 	de,
@@ -25,6 +28,7 @@ const languages: object = {
 	hu,
 	nb,
 	ru,
+	sk,
 	sl,
 	sv,
 };
