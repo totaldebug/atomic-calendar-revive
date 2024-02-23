@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import * as ca from './languages/ca.json';
 import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
@@ -15,6 +16,7 @@ import * as sk from './languages/sk.json';
 import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
 import { globalData } from '../helpers/globals';
+import { FEATURE_REQUEST } from '../const';
 
 const languages: object = {
 	ca,
@@ -46,13 +48,22 @@ function getTranslatedString(key: string, lang: string): string | undefined {
 	}
 }
 
+let languageNotSupportedMessage = false;
+
 export default function localize(key: string) {
 	const lang =
 		(globalData.hass?.locale?.language || globalData.hass?.language || localStorage.getItem('selectedLanguage')) ??
 		DEFAULT_LANG;
-	let translated = getTranslatedString(key, lang);
-	if (!translated) {
+	if (languages[lang]) {
+		// eslint-disable-next-line no-var
+		var translated = getTranslatedString(key, lang);
+	} else {
 		translated = getTranslatedString(key, DEFAULT_LANG);
+		if (!languageNotSupportedMessage) {
+			console.warn(`Language "${lang}" not supported by Atomic Calendar, request it ${FEATURE_REQUEST}`);
+			languageNotSupportedMessage = true;
+		}
 	}
+
 	return translated ?? key;
 }
