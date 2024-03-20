@@ -74,7 +74,7 @@ export const styles: CSSResultGroup = css`
 		border-radius: 5px;
 		border: 2px solid;
 		margin: 5px 0;
-		width: 100%;
+		width: 6em;
 		text-align: center;
 	}
 	.event-right {
