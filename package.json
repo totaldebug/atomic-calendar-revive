@@ -24,7 +24,7 @@
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/cli": "^7.23.9",
-		"@babel/core": "^7.23.9",
+		"@babel/core": "^7.24.3",
 		"@babel/plugin-proposal-class-properties": "^7.18.6",
 		"@babel/plugin-proposal-decorators": "^7.23.9",
 		"@babel/plugin-transform-template-literals": "^7.23.3",
