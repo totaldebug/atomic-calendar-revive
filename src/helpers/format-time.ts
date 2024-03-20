@@ -1,25 +1,27 @@
-import { FrontendLocaleData, TimeFormat } from 'custom-card-helpers';
+import { HassConfig } from 'home-assistant-js-websocket';
+import memoizeOne from 'memoize-one';
 
-/**
- * Formats a number based on the specified language with thousands separator(s) and decimal character for better legibility.
- * @param locale The user-selected language and number format, from `hass.locale`
- */
-export const formatTime = (locale?: FrontendLocaleData): string => {
-	let format: string | string[] | undefined;
+import { FrontendLocaleData, TimeFormat } from '../types/translation';
 
-	switch (locale?.time_format) {
-		case TimeFormat.am_pm:
-			format = 'hh:mma';
-			break;
-		case TimeFormat.twenty_four:
-			format = 'HH:mm';
-			break;
-		case TimeFormat.system:
-			format = undefined;
-			break;
-		default:
-			format = undefined;
+export const useAmPm = memoizeOne((locale: FrontendLocaleData): boolean => {
+	if (locale.time_format === TimeFormat.language || locale.time_format === TimeFormat.system) {
+		const testLanguage = locale.time_format === TimeFormat.language ? locale.language : undefined;
+		const test = new Date().toLocaleString(testLanguage);
+		return test.includes('AM') || test.includes('PM');
 	}
 
-	return format ? format.toString() : '';
-};
+	return locale.time_format === TimeFormat.am_pm;
+});
+
+export const formatTime = (dateObj: Date, locale: FrontendLocaleData, config: HassConfig) =>
+	formatTimeMem(locale, config.time_zone).format(dateObj);
+
+const formatTimeMem = memoizeOne(
+	(locale: FrontendLocaleData, serverTimeZone: string) =>
+		new Intl.DateTimeFormat(locale.language === 'en' && !useAmPm(locale) ? 'en-u-hc-h23' : locale.language, {
+			hour: 'numeric',
+			minute: '2-digit',
+			hour12: useAmPm(locale),
+			timeZone: locale.time_zone === 'server' ? serverTimeZone : undefined,
+		}),
+);

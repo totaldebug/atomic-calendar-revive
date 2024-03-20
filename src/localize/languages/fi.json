@@ -41,7 +41,6 @@
 			"allDayBottom": "Näytä koko päivän tapahtumat alareunassa",
 			"hideFinishedEvents": "Piilota valmiit tapahtumat",
 			"dateFormat": "Päivämäärämuoto",
-			"hoursFormat": "Tuntien muoto",
 			"defaultMode": "Oletustila",
 			"linkTarget": "Linkin kohde",
 			"refreshInterval": "Päivitysväli",

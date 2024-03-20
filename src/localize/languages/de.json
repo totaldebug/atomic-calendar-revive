@@ -41,7 +41,6 @@
 			"allDayBottom": "Ganztägige Ereignisse unten anzeigen",
 			"hideFinishedEvents": "Beendete Einträge ausblenden",
 			"dateFormat": "Datumsformat",
-			"hoursFormat": "Stundenformat",
 			"defaultMode": "Standardmodus",
 			"linkTarget": "Verknüpfungsziel",
 			"refreshInterval": "Aktualisierungsintervall",

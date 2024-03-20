@@ -4,7 +4,7 @@ import isBetween from 'dayjs/plugin/isBetween';
 
 import CalendarDay from './calendar.class';
 import EventClass from './event.class';
-import sortEvents from '../functions/sort_events';
+import sortEvents from '../common/sort_events';
 import { atomicCardConfig } from '../types/config';
 
 dayjs.extend(customParseFormat);
@@ -223,9 +223,9 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 			return events;
 		}
 
-		// if hideDeclined events then filter out
+		// if !showDeclined events then filter out
 		// TODO: no longer working as it was removed from the rest API
-		if (config.hideDeclined && newEvent.isDeclined) {
+		if (!config.showDeclined && newEvent.isDeclined) {
 			return events;
 		}
 

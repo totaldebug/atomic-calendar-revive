@@ -41,7 +41,6 @@
 			"allDayBottom": "Vis heldagshendelser nederst",
 			"hideFinishedEvents": "Skjul avsluttede hendelser",
 			"dateFormat": "Datoformat",
-			"hoursFormat": "Timesformat",
 			"defaultMode": "Standardmodus",
 			"linkTarget": "Lenkemål",
 			"refreshInterval": "Oppdateringsintervall",

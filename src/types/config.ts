@@ -1,6 +1,4 @@
-import { LovelaceCardConfig } from 'custom-card-helpers';
-
-export interface atomicCardConfig extends LovelaceCardConfig {
+export interface atomicCardConfig {
 	entities?: any;
 	type: string;
 	name?: string;
@@ -8,6 +6,11 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	language?: string;
 	daysToSort?: number;
 	eventTitle?: string;
+	cardHeight?: string;
+	sortBy?: string;
+	showMultiDay: boolean;
+	showMultiDayEventParts?: boolean;
+	hideDuplicates: boolean;
 
 	// text translations
 	fullDayEventText?: string;
@@ -23,7 +26,6 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	showCurrentEventLine?: boolean;
 	showDate?: boolean;
 	dateFormat?: string;
-	hoursFormat?: string;
 	startDaysAhead?: number;
 	showLastCalendarWeek?: boolean;
 	showCalNameInEvent?: boolean;
@@ -40,6 +42,10 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	showEventIcon: boolean;
 	showEventDate: boolean;
 	showDatePerEvent: boolean;
+	showRelativeTime?: boolean;
+	europeanDate?: boolean;
+	showWeekNumber?: boolean;
+	showAllDayEvents: boolean;
 
 	// color and font settings
 	nameColor?: string;
@@ -67,12 +73,13 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	eventCalNameColor?: string;
 	eventCalNameSize?: number;
 	showProgressBar?: boolean;
+	progressBarBackgroundColor: string;
 	showFullDayProgress?: boolean;
 	progressBarColor?: string;
 	enableModeChange?: boolean;
 	defaultMode: string;
 
-	// Calendar Mode Default Settings
+	// Calendar Mode Settings
 	calGridColor?: string;
 	calDayColor?: string;
 	calWeekDayColor?: string;
@@ -94,15 +101,19 @@ export interface atomicCardConfig extends LovelaceCardConfig {
 	calEventIcon3Color?: string;
 	calEventIcon3Filter?: string;
 	calEventTime?: boolean;
+	calShowDescription: boolean;
 	firstDayOfWeek?: number;
 	blacklist?: string;
 	whitelist?: string;
 	locationFilter?: string;
 	disableCalLink?: boolean;
 	removeDuplicates?: boolean;
+	disableCalLocationLink?: boolean;
+	offsetHeaderDate?: boolean;
 
 	compactMode?: boolean;
 	hoursOnSameLine?: boolean;
 	showTimeRemaining?: boolean;
 	showAllDayHours?: boolean;
+	showCalendarName?: boolean;
 }

@@ -41,7 +41,6 @@
 			"allDayBottom": "Show all day events at the bottom",
 			"hideFinishedEvents": "Hide finished events",
 			"dateFormat": "Date format",
-			"hoursFormat": "Hours format",
 			"defaultMode": "Default mode",
 			"linkTarget": "Link target",
 			"refreshInterval": "Refresh Interval",

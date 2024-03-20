@@ -41,7 +41,6 @@
 			"allDayBottom": "Mostrar esdeveniments de tot el dia al final",
 			"hideFinishedEvents": "Ocultar esdeveniments finalitzats",
 			"dateFormat": "Format de data",
-			"hoursFormat": "Format d'hora",
 			"defaultMode": "Modalitat per defecte",
 			"linkTarget": "Enllaçar destí",
 			"refreshInterval": "Interval de refresc",

@@ -41,7 +41,6 @@
 			"allDayBottom": "Показать события на весь день внизу",
 			"hideFinishedEvents": "Скрыть завершенные события",
 			"dateFormat": "Формат даты",
-			"hoursFormat": "Формат часов",
 			"defaultMode": "Режим по умолчанию",
 			"linkTarget": "Цель ссылки",
 			"refreshInterval": "Интервал обновления",

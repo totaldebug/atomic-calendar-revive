@@ -1,8 +1,8 @@
-import { HomeAssistant } from 'custom-card-helpers';
 import { html } from 'lit';
 
 import EventClass from '../lib/event.class';
 import { atomicCardConfig } from '../types/config';
+import { HomeAssistant } from '../types/homeassistant';
 
 // Function to get the icon for a specific entity
 export function getEntityIcon(entityId: string, hass: HomeAssistant): string | null {

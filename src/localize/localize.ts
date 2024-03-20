@@ -15,8 +15,8 @@ import * as ru from './languages/ru.json';
 import * as sk from './languages/sk.json';
 import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
-import { globalData } from '../helpers/globals';
 import { FEATURE_REQUEST } from '../const';
+import { globalData } from '../helpers/globals';
 
 const languages: object = {
 	ca,

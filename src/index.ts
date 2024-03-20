@@ -1,6 +1,5 @@
 ﻿/* eslint-disable import/no-named-as-default-member */
 import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
-import { HomeAssistant, LovelaceCardEditor, getLovelace } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import isoWeek from 'dayjs/plugin/isoWeek';
@@ -29,7 +28,6 @@ dayjs.extend(timezone);
 import './editor';
 import { CARD_VERSION } from './const';
 import defaultConfig from './defaults';
-import { formatTime } from './helpers/format-time';
 import { getDefaultConfig } from './helpers/get-default-config';
 import { setHass } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
@@ -42,6 +40,8 @@ import { getDescription, getHoursHTML, getLocationHTML, getWeekNumberHTML } from
 import localize from './localize/localize';
 import { styles } from './style';
 import { atomicCardConfig } from './types/config';
+import { HomeAssistant, TimeFormat } from './types/homeassistant';
+import { LovelaceCardEditor } from './types/lovelace';
 
 @customElement('atomic-calendar-revive')
 export class AtomicCalendarRevive extends LitElement {
@@ -109,9 +109,6 @@ export class AtomicCalendarRevive extends LitElement {
 		if (!config.entities || !config.entities.length) {
 			throw new Error(localize('errors.no_entities'));
 		}
-		if (config.test_gui) {
-			getLovelace().setEditMode(true);
-		}
 
 		const customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
 
@@ -151,10 +148,10 @@ export class AtomicCalendarRevive extends LitElement {
 			dayjs.locale(this.language);
 
 			const timeFormat =
-				typeof this._config.hoursFormat != 'undefined'
-					? this._config.hoursFormat
-					: this.hass.locale?.time_format == '12' || this.hass.locale?.time_format == '24'
-						? formatTime(this.hass.locale)
+				this.hass.locale?.time_format == TimeFormat.am_pm
+					? 'hh:mma'
+					: this.hass.locale?.time_format == TimeFormat.twenty_four
+						? 'HH:mm'
 						: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
 				weekStart: this._config.firstDayOfWeek!,
@@ -579,7 +576,7 @@ export class AtomicCalendarRevive extends LitElement {
 			showLastRow = false;
 		}
 
-		return month.map((day: CalendarDay, i) => {
+		return month.map((day: CalendarDay, i: number) => {
 			const dayDate = dayjs(day.date);
 			const dayStyleOtherMonth = dayDate.isSame(this.selectedMonth, 'month') ? '' : `differentMonth`;
 			const dayClassToday = dayDate.isSame(dayjs(), 'day') ? `currentDay` : ``;
@@ -608,6 +605,8 @@ export class AtomicCalendarRevive extends LitElement {
 					</td>
 					${i && i % 6 === 0 ? html`</tr>` : ''}
 				`;
+			} else {
+				return html``;
 			}
 		});
 	}

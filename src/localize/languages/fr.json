@@ -41,7 +41,6 @@
 			"allDayBottom": "Afficher les événements de la journée en bas",
 			"hideFinishedEvents": "Cacher les événements terminés",
 			"dateFormat": "Format de date",
-			"hoursFormat": "Format des heures",
 			"defaultMode": "Mode par défaut",
 			"linkTarget": "Lien cible",
 			"refreshInterval": "Interval de raffraîchissement",

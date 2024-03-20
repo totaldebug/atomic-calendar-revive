@@ -20,10 +20,11 @@ export default {
 	allDayBottom: false, // show all day events at the bottom of the day
 	disableEventLink: false, // disables links to event calendar
 	disableLocationLink: false, // disables links to event calendar
+	disableCalLocationLink: false,
 	disableCalMonthLink: false, // disables the link on the month name in calendar mode
 	linkTarget: '_blank', // Target for links, can use any HTML target type
-	hideDeclined: false, // hide declined events in the calendar
-	showPrivate: true, // hide private events
+	showDeclined: true, // show declined events in the calendar
+	showPrivate: true, // show private events
 	showHiddenText: true, //show the hidden events text
 	showCalendarName: false,
 

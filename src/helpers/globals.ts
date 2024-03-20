@@ -1,4 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant } from '../types/homeassistant';
 
 // Globalise the hass object so that localize can utilise it.
 

@@ -32,7 +32,7 @@ Main Options
  showNoEventDays           boolean   optional        v4.1.0     ``false`` Shows days that have no events, instead of only showing event days
  descLength                integer   optional        v4.8.0     Sets the length of descriptions
  hideDuplicates            boolean   optional        v5.1.0     ``false`` Removes any duplicate items based on summary, start time and end time.
- hideDeclined              boolean   optional        v7.0.0     ``false`` show/hide events that have been declined
+ showDeclined              boolean   optional        v7.0.0     ``false`` show/hide events that have been declined
  showMultiDay              boolean   optional        v7.0.0     ``false`` if set true will show multi-day events on each day
  showMultiDayEventParts    boolean   optional        v7.0.0     ``false`` if set true will show how many days in event and which day it is
  hideFinishedEvents        boolean   optional        v7.0.0     ``false`` if set true will hide any finished events

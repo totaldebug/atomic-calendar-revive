@@ -1,11 +1,11 @@
 import { mdiCalendar } from '@mdi/js';
-import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import { html } from 'lit';
 
 import EventClass from './event.class';
 import { getEventIcon } from '../helpers/get-icon';
 import { atomicCardConfig } from '../types/config';
+import { HomeAssistant } from '../types/homeassistant';
 
 export function showCalendarLink(config, selectedMonth) {
 	if (!config.disableCalLink) {
@@ -19,6 +19,8 @@ export function showCalendarLink(config, selectedMonth) {
 			>
 			</ha-icon-button>
 		</div>`;
+	} else {
+		return html``;
 	}
 }
 
@@ -95,14 +97,14 @@ export function getCurrDayAndMonth(locale) {
 export function getMultiDayEventParts(config: atomicCardConfig, event: EventClass) {
 	if (!config.showMultiDayEventParts === true || (event.addDays === false && event.daysLong === undefined)) {
 		return;
-	}
-	if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
+	} else if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
 		return html`(${event.addDays + 1}/${event.daysLong})`;
-	}
-	if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
+	} else if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
 		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day');
 
 		return html`(${daysSinceStart + 1}/${event.daysLong})`;
+	} else {
+		return html``;
 	}
 }
 

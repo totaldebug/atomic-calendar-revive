@@ -1,8 +1,8 @@
 import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
-import { HomeAssistant, LovelaceCardEditor, fireEvent } from 'custom-card-helpers';
 import { CSSResult, LitElement, TemplateResult, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
+import { fireEvent } from './common/fire-event';
 import defaultConfig from './defaults';
 import localize from './localize/localize';
 import { style } from './style-editor';
@@ -16,6 +16,8 @@ import {
 	TextProperty,
 	UnionProperty,
 } from './types/editor';
+import { HomeAssistant } from './types/homeassistant';
+import { LovelaceCardEditor } from './types/lovelace';
 import { formfieldDefinition } from '../elements/formfield';
 import { selectDefinition } from '../elements/select';
 import { switchDefinition } from '../elements/switch';
@@ -281,11 +283,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						name: 'dateFormat',
 						label: localize('main.fields.dateFormat'),
 						default: defaultConfig.dateFormat,
-					},
-					{
-						type: 'text',
-						name: 'hoursFormat',
-						label: localize('main.fields.hoursFormat'),
 					},
 					{
 						type: 'text',
@@ -637,6 +634,8 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 				}
 			}
 		}
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		fireEvent(this, 'config-changed', { config: this._config });
 	}
 
@@ -861,6 +860,8 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		});
 
 		this._config = Object.assign({}, this._config, { entities: entityObjects });
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		fireEvent(this, 'config-changed', { config: this._config });
 	}
 	/**
@@ -882,6 +883,8 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		}
 
 		this._config = Object.assign({}, this._config, { entities: entityObjects });
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
 		fireEvent(this, 'config-changed', { config: this._config });
 	}
 	/**

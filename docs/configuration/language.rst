@@ -13,7 +13,6 @@ Language Options
  noEventsForNextDaysText    string    v0.8.6   ``No events in the next days`` Custom text for ``No events in the next days`` text
  noEventText                string    v4.1.0   ``No events`` Custom text for ``No events`` text, only if ``showNoEventsForToday`` or ``showNoEventDays`` is true
  dateFormat                 string    v0.7.2   ``LL`` Custom date format - see `list of localized formats <https://day.js.org/docs/en/display/format#localized-formats>`_
- hoursFormat                string    v5.0.0   This is now set via your HA profile settings, you can still set this to override if required - see `List of all available formats <https://day.js.org/docs/en/display/format#list-of-all-available-formats`_
 ========================== ========= ======== ===============================================================================================================================================================================================================
 
 

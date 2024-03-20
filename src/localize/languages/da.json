@@ -41,7 +41,6 @@
 			"allDayBottom": "Vis heldagsbegivenheder nederst",
 			"hideFinishedEvents": "Skjul overståede aftaler",
 			"dateFormat": "Dato format",
-			"hoursFormat": "Time format",
 			"defaultMode": "Default mode",
 			"linkTarget": "Link mål",
 			"refreshInterval": "Opdaterings interval",
