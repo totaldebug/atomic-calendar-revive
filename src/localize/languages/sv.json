@@ -40,7 +40,6 @@
 			"allDayBottom": "Visa heldagshändelser längst ner",
 			"hideFinishedEvents": "Hide finished events Dölj avslutade händelser",
 			"dateFormat": "Datumformat",
-			"hoursFormat": "Timformat",
 			"defaultMode": "Standard-mode",
 			"linkTarget": "Länkmål",
 			"refreshInterval": "Refresh Interval",

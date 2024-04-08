@@ -1,6 +1,6 @@
 {
 	"name": "atomic-calendar-revive",
-	"version": "9.6.2",
+	"version": "9.7.0-beta.1",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
@@ -71,9 +71,10 @@
 		"@material/mwc-textfield": "^0.27.0",
 		"@mdi/js": "^7.4.47",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
-		"custom-card-helpers": "^1.9.0",
 		"dayjs": "^1.11.10",
-		"lit": "^3.1.1",
+		"home-assistant-js-websocket": "^9.1.0",
+		"lit": "^3.0.2",
+		"memoize-one": "^6.0.0",
 		"npm": "^10.4.0",
 		"typescript": "^5.3.3"
 	},

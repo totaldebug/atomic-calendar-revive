@@ -37,8 +37,6 @@
 
 </div>
 
-
-
 <!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
@@ -61,8 +59,6 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
@@ -81,9 +77,7 @@ Allowing for the use of both Google Calendars and CalDav, With two main viewing 
 
 Please keep in mind, these screenshots show a basic configuration, this card allows so much more customisation!
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 ### Built With
 
@@ -156,7 +150,6 @@ Got something you would like to add? check out the contributing guide in the [do
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
 <!-- LICENSE -->
 ## License
 
@@ -165,7 +158,6 @@ Got something you would like to add? check out the contributing guide in the [do
 * Copyright © [Total Debug](https://totaldebug.uk).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- CONTACT -->
 ## Contact
@@ -184,7 +176,6 @@ Below are a list of resources that I used to assist with this project.
 * This card wouldnt exist without the original author [atomic7777](https://github.com/atomic7777)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
@@ -211,7 +202,6 @@ Below are a list of resources that I used to assist with this project.
 [lines]: https://img.shields.io/tokei/lines/github/totaldebug/atomic-calendar-revive?style=flat-square
 [lines-url]: https://github.com/totaldebug/atomic-calendar-revive
 [code-size]: https://img.shields.io/github/languages/code-size/totaldebug/atomic-calendar-revive?style=flat-square
-
 
 [Sponsor]: https://img.shields.io/badge/sponsor-000?style=flat-square&logo=githubsponsors&logoColor=red
 [Sponsor-url]: https://github.com/sponsors/marksie1988

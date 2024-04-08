@@ -40,7 +40,6 @@
 			"sortByStartTime": "Seřadit podle počátečních časů",
 			"hideFinishedEvents": "Skrýt dokončené události",
 			"dateFormat": "Formát data",
-			"hoursFormat": "Formát hodin",
 			"defaultMode": "Výchozí režim",
 			"linkTarget": "Cíl odkazu",
 			"refreshInterval": "Interval obnovení",

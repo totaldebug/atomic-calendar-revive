@@ -10,17 +10,18 @@
     ],
     "noEmit": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": false,
+    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "strict": true,
     "noImplicitAny": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "experimentalDecorators": true,
+    "sourceMap": true,
     "allowSyntheticDefaultImports": true,
   },
   "include": [
     "src/*",
-    "src/locale.dayjs.ts"
-, "src/localize"  ]
+    "src/**/*",
+  ]
 }

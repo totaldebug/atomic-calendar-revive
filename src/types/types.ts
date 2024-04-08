@@ -55,3 +55,5 @@ export interface EditorTarget extends EventTarget {
 	checked?: boolean;
 	configValue?: string;
 }
+
+export type Constructor<T = any> = new (...args: any[]) => T;

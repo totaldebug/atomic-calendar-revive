@@ -1,0 +1,114 @@
+{
+	"common": {
+		"version": "Versie",
+		"show_warning": "Toon Waarschuwing",
+		"error": "Fout",
+		"description": "Een geavanceerde kalenderkaart voor Home Assistant met Lovelace.",
+		"fullDayEventText": "Hele Dag",
+		"untilText": "Tot",
+		"noEventText": "Geen evenementen",
+		"noEventsForNextDaysText": "Geen evenementen in de komende dagen",
+		"hiddenEventText": "evenementen zijn verborgen"
+	},
+	"ui": {
+		"common": {
+			"previous": "Vorige",
+			"next": "Volgende",
+			"week": "Week"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Ongeldige Configuratie",
+		"update_card": "De kalender kan niet worden geladen vanuit de Home Assistant component",
+		"no_entities": "Je hebt geen entiteiten gespecificeerd"
+	},
+	"required": {
+		"name": "Vereist",
+		"secondary": "Vereiste opties voor deze kaart om te functioneren"
+	},
+	"main": {
+		"name": "Hoofdopties",
+		"secondary": "Opties die globaal van toepassing zijn",
+		"fields": {
+			"name": "Naam",
+			"showColors": "Toon Kleuren",
+			"maxDaysToShow": "Max dagen om te tonen",
+			"showLocation": "Toon locatie-icoon",
+			"showLoader": "Toon laadanimatie",
+			"showDate": "Toon datum op kaart",
+			"showDeclined": "Toon afgewezen evenementen",
+			"sortBy": "Sorteer op",
+			"allDayBottom": "Toon hele dag evenementen onderaan",
+			"hideFinishedEvents": "Verberg voltooide evenementen",
+			"dateFormat": "Datumformaat",
+			"hoursFormat": "Urenformaat",
+			"defaultMode": "Standaardmodus",
+			"linkTarget": "Linkdoel",
+			"refreshInterval": "Verversingsinterval",
+			"showRelativeTime": "Toon Relatieve Tijd",
+			"firstDayOfWeek": "Eerste Dag van de Week 0-6",
+			"cardHeight": "Kaarthoogte",
+			"hideDuplicates": "Verberg duplicaten",
+			"showMultiDay": "Splits Meerdaagse Evenementen",
+			"showMultiDayEventParts": "Toon Onderdelen van Meerdaagse Evenementen",
+			"eventTitle": "Stel lege evenementstitel in",
+			"compactMode": "Compacte modus inschakelen",
+			"titleLength": "Max titellengte (0 voor onbeperkt)",
+			"descLength": "Max beschrijvingslengte (0 voor onbeperkt)",
+			"showAllDayEvents": "Toon hele dag evenementen",
+			"offsetHeaderDate": "Datum van koptekst verschuiven",
+			"startDaysAhead": "Evenementen die `x` dagen vanaf vandaag beginnen"
+		}
+	},
+	"event": {
+		"name": "Evenementmodus",
+		"secondary": "Specifieke opties voor evenementmodus",
+		"fields": {
+			"showCurrentEventLine": "Toon lijn voor evenement?",
+			"showProgressBar": "Toon voortgangsbalk?",
+			"showMonth": "Toon maand?",
+			"showWeekDay": "Toon Weekdag",
+			"showDescription": "Toon Beschrijving?",
+			"disableEventLink": "Schakel links in evenementstitel uit?",
+			"disableLocationLink": "Schakel links naar locatie uit?",
+			"showNoEventsForToday": "Toon Geen Evenementen Vandaag?",
+			"showFullDayProgress": "Toon voortgang hele dag evenement?",
+			"untilText": "tot tekst:",
+			"noEventText": "Geen evenementen vandaag tekst:",
+			"noEventsForNextDaysText": "Geen evenementen in de komende dagen tekst:",
+			"fullDayEventText": "Tekst voor hele dag evenement:",
+			"showEventIcon": "Toon Evenementicoon",
+			"showHiddenText": "Toon tekst voor verborgen evenementen?",
+			"hiddenEventText": "Tekst voor verborgen evenementen:",
+			"showCalendarName": "Toon kalendernaam",
+			"showWeekNumber": "Toon weeknummers",
+			"showEventDate": "Toon datum voor evenementen",
+			"showDatePerEvent": "Toon datum naast elk evenement",
+			"showTimeRemaining": "Toon resterende tijd",
+			"showAllDayHours": "Toon tekst voor hele dag evenementen",
+			"hoursOnSameLine": "Toon uren op de evenementlijn"
+		},
+		"calendar": {
+			"name": "Kalendermodus",
+			"secondary": "Specifieke opties voor kalendermodus",
+			"fields": {
+				"showLastCalendarWeek": "Toon de laatste kalenderweek",
+				"disableCalEventLink": "Schakel kalenderevenementlink uit",
+				"disableCalLocationLink": "Schakel kalenderlocatielink uit",
+				"calShowDescription": "Toon Beschrijving",
+				"disableCalLink": "Schakel kalenderlink uit"
+			}
+		},
+		"appearance": {
+			"name": "Uiterlijk",
+			"secondary": "Pas de kleuren etc. aan",
+			"main": {
+				"name": "Hoofd",
+				"secondary": "Globale Kleurinstellingen"
+			},
+			"fields": {
+				"dimFinishedEvents": "Dim voltooide evenementen?"
+			}
+		}
+	}
+}

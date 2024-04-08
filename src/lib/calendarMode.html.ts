@@ -1,5 +1,4 @@
 /* eslint-disable import/no-named-as-default-member */
-import { HomeAssistant } from 'custom-card-helpers';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import { html } from 'lit';
@@ -10,6 +9,7 @@ import { isHtml } from './common.html';
 import EventClass from './event.class';
 import { getEntityIcon } from '../helpers/get-icon';
 import { atomicCardConfig } from '../types/config';
+import { HomeAssistant } from '../types/homeassistant';
 
 dayjs.extend(isoWeek);
 
@@ -69,6 +69,8 @@ export function getCalendarDescriptionHTML(config: atomicCardConfig, event: Even
 		>
 			- ${description}
 		</div>`;
+	} else {
+		return html`;`;
 	}
 }
 

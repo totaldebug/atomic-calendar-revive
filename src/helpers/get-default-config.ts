@@ -1,4 +1,4 @@
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant } from '../types/homeassistant';
 
 export function getDefaultConfig(hass: HomeAssistant) {
 	// Get an array of calendar entities with their full objects
