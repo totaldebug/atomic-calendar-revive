@@ -5,7 +5,7 @@ import * as da from './languages/da.json';
 import * as de from './languages/de.json';
 import * as en from './languages/en.json';
 import * as en_GB from './languages/es.json';
-import * as es from './languages/en.json';
+import * as es from './languages/es.json';
 import * as et from './languages/et.json';
 import * as fi from './languages/fi.json';
 import * as fr from './languages/fr.json';
