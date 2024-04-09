@@ -4,7 +4,8 @@ import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
 import * as de from './languages/de.json';
 import * as en from './languages/en.json';
-import * as en_GB from './languages/en.json';
+import * as en_GB from './languages/es.json';
+import * as es from './languages/en.json';
 import * as et from './languages/et.json';
 import * as fi from './languages/fi.json';
 import * as fr from './languages/fr.json';
@@ -26,6 +27,7 @@ const languages: object = {
 	de,
 	en,
 	'en-GB': en_GB,
+	es,
 	et,
 	fi,
 	fr,
