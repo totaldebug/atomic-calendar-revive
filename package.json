@@ -76,7 +76,7 @@
 		"lit": "^3.0.2",
 		"memoize-one": "^6.0.0",
 		"npm": "^10.4.0",
-		"typescript": "^5.3.3"
+		"typescript": "^5.4.5"
 	},
 	"resolutions": {
 		"lit": "^3.0.2",
