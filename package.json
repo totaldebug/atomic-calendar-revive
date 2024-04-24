@@ -72,7 +72,7 @@
 		"@mdi/js": "^7.4.47",
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"dayjs": "^1.11.10",
-		"home-assistant-js-websocket": "^9.1.0",
+		"home-assistant-js-websocket": "^9.3.0",
 		"lit": "^3.0.2",
 		"memoize-one": "^6.0.0",
 		"npm": "^10.4.0",
