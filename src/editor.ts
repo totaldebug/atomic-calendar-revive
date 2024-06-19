@@ -18,10 +18,10 @@ import {
 } from './types/editor';
 import { HomeAssistant } from './types/homeassistant';
 import { LovelaceCardEditor } from './types/lovelace';
-import { formfieldDefinition } from '../elements/formfield';
-import { selectDefinition } from '../elements/select';
-import { switchDefinition } from '../elements/switch';
-import { textfieldDefinition } from '../elements/textfield';
+import { formfieldDefinition } from '../elements/formfield.js';
+import { selectDefinition } from '../elements/select.js';
+import { switchDefinition } from '../elements/switch.js';
+import { textfieldDefinition } from '../elements/textfield.js';
 
 @customElement('atomic-calendar-revive-editor')
 export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {

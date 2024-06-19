@@ -4,6 +4,7 @@ import eslint from '@rollup/plugin-eslint';
 import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
+import serve from 'rollup-plugin-serve';
 import typescript from 'rollup-plugin-typescript2';
 
 import { ignoreSelectFiles } from './elements/ignore/select.js';
@@ -21,6 +22,7 @@ const plugins = [
 	typescript(),
 	json(),
 	babel({
+		// exclude: 'node_modules/**',
 		include: ['node_modules/lit*/**', 'node_modules/@lit/**'],
 		babelHelpers: 'bundled',
 		compact: true,
@@ -47,6 +49,15 @@ const plugins = [
 		],
 	}),
 	terser(),
+	serve({
+		contentBase: './dist',
+		host: '0.0.0.0',
+		port: 5500,
+		allowCrossOrigin: true,
+		headers: {
+			'Access-Control-Allow-Origin': '*',
+		},
+	}),
 	ignore({
 		files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
 	}),
