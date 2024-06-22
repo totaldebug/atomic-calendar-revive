@@ -6,6 +6,7 @@ dist/*
 !.devcontainer/post-install.sh
 dist
 
+.DS_Store
 .vscode/*
 
 # Logs
