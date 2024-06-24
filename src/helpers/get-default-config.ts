@@ -15,14 +15,15 @@ export function getDefaultConfig(hass: HomeAssistant) {
 			);
 		});
 
+	// Return default config, ensuring entities array is not empty
 	return {
 		type: 'custom:atomic-calendar-revive',
 		name: 'Calendar',
 		enableModeChange: true,
 		entities: [
 			{
-				entity: calendarEntities[0]['entity_id'] ?? '',
-				icon: calendarEntities[0]['stateObj']?.attributes?.icon ?? '',
+				entity: calendarEntities[0]?.entity_id ?? '',
+				icon: calendarEntities[0]?.stateObj?.attributes?.icon ?? '',
 			},
 		],
 	};
