@@ -1,0 +1,113 @@
+{
+	"common": {
+		"version": "Версія",
+		"show_warning": "Показати попередження",
+		"error": "Помилка",
+		"description": "Розширена картка календаря для Home Assistant з Lovelace.",
+		"fullDayEventText": "Увесь день",
+		"untilText": "До",
+		"noEventText": "Немає подій",
+		"noEventsForNextDaysText": "Немає подій на найближчі дні",
+		"hiddenEventText": "події приховані"
+	},
+	"ui": {
+		"common": {
+			"previous": "Попередній",
+			"next": "Наступний",
+			"week": "Тиждень"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Невірна конфігурація",
+		"update_card": "Неможливо завантажити календар з компоненту Home Assistant",
+		"no_entities": "Ви не вказали жодних сутностей"
+	},
+	"required": {
+		"name": "Обов'язково",
+		"secondary": "Обов'язкові налаштування для функціонування цієї картки"
+	},
+	"main": {
+		"name": "Основні налаштування",
+		"secondary": "Налаштування, які застосовуються глобально",
+		"fields": {
+			"name": "Назва",
+			"showColors": "Показувати кольори",
+			"maxDaysToShow": "Макс. днів для показу",
+			"showLocation": "Показувати значок місцезнаходження",
+			"showLoader": "Показувати анімацію завантаження",
+			"showDate": "Показувати дату на картці",
+			"showDeclined": "Показувати відхилені події",
+			"sortBy": "Сортувати за",
+			"allDayBottom": "Показувати цілоденні події внизу",
+			"hideFinishedEvents": "Приховати завершені події",
+			"dateFormat": "Формат дати",
+			"defaultMode": "Стандартний режим",
+			"linkTarget": "Ціль посилання",
+			"refreshInterval": "Інтервал оновлення",
+			"showRelativeTime": "Показувати час до початку події",
+			"firstDayOfWeek": "Перший день тижня 0-6",
+			"cardHeight": "Висота картки",
+			"hideDuplicates": "Приховати дублікати",
+			"showMultiDay": "Розділити багатоденні події",
+			"showMultiDayEventParts": "Показувати частини багатоденних подій",
+			"eventTitle": "Встановити заголовок порожніх подій",
+			"compactMode": "Увімкнути компактний режим",
+			"titleLength": "Макс. довжина заголовка (0 для необмеженої)",
+			"descLength": "Макс. довжина опису (0 для необмеженої)",
+			"showAllDayEvents": "Показувати цілоденні події",
+			"offsetHeaderDate": "Змістити дату в заголовку",
+			"startDaysAhead": "Події, що починаються `х` днів від сьогодні"
+		}
+	},
+	"event": {
+		"name": "Режим подій",
+		"secondary": "Специфічні налаштування режиму подій",
+		"fields": {
+			"showCurrentEventLine": "Показати лінію перед подією?",
+			"showProgressBar": "Показувати індикатор прогресу?",
+			"showMonth": "Показувати місяць?",
+			"showWeekDay": "Показувати день тижня?",
+			"showDescription": "Показувати опис?",
+			"disableEventLink": "Вимкнути посилання в заголовку події?",
+			"disableLocationLink": "Вимкнути посилання на місцезнаходження?",
+			"showNoEventsForToday": "Показати, що сьогодні немає подій?",
+			"showFullDayProgress": "Показувати прогрес цілоденних подій?",
+			"untilText": "текст до:",
+			"noEventText": "Текст за відсутності подій сьогодні:",
+			"noEventsForNextDaysText": "Текст за відсутності подій на найближчі дні:",
+			"fullDayEventText": "Текст цілоденної події:",
+			"showEventIcon": "Показувати значок події",
+			"showHiddenText": "Показувати текст прихованих подій?",
+			"hiddenEventText": "Текст для прихованих подій:",
+			"showCalendarName": "Показувати назву календаря",
+			"showWeekNumber": "Показувати номер тижня",
+			"showEventDate": "Показувати дату події",
+			"showDatePerEvent": "Показувати дату поруч з кожною подією",
+			"showTimeRemaining": "Показувати залишок часу",
+			"showAllDayHours": "Показувати текст цілоденних подій",
+			"hoursOnSameLine": "Показувати години на лінії події"
+		}
+	},
+	"calendar": {
+		"name": "Режим календаря",
+		"secondary": "Специфічні налаштування режиму календаря",
+		"fields": {
+			"showLastCalendarWeek": "Показувати останній тиждень календаря",
+			"disableCalEventLink": "Вимкнути посилання на подію календаря",
+			"disableCalLocationLink": "Вимкнути посилання на місцезнаходження в календарі",
+			"calShowDescription": "Показувати опис",
+			"disableCalLink": "Вимкнути посилання календаря"
+		}
+	},
+	"appearance": {
+		"name": "Зовнішній вигляд",
+		"secondary": "Налаштування кольорів тощо.",
+		"main": {
+			"name": "Основне",
+			"secondary": "Глобальні налаштування кольорів"
+		},
+		"fields": {
+			"dimFinishedEvents": "Зменшити яскравість завершених подій?"
+		}
+	}
+}
