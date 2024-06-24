@@ -65,7 +65,6 @@
 			"showCurrentEventLine": "Visa länk före händelsen?",
 			"showProgressBar": "Visa förlopp?",
 			"showMonth": "Visa månad?",
-			"showWeekDay": "Visa veckodag?",
 			"showDescription": "Visa beskrivning?",
 			"disableEventLink": "Inaktivera länkar i händelsetitel?",
 			"disableLocationLink": "Inaktivera länkar till plats?",
@@ -84,7 +83,8 @@
 			"showDatePerEvent": "Visa datum bredvid varje evenemang",
 			"showTimeRemaining": "Visa återstående tid",
 			"showAllDayHours": "Visa heldagshändelsetext",
-			"hoursOnSameLine": "Visa öppettider på evenemangsraden"
+			"hoursOnSameLine": "Visa öppettider på evenemangsraden",
+			"eventDateFormat": "Händelsedatumformat"
 		}
 	},
 	"calendar": {

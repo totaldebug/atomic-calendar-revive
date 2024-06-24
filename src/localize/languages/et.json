@@ -65,7 +65,6 @@
 			"showCurrentEventLine": "Kas kuvada sündmuse ees eraldaja",
 			"showProgressBar": "Kas kuvada edenemise riba?",
 			"showMonth": "Kas kuvada kuu?",
-			"showWeekDay": "Kuva nädalapäev",
 			"showDescription": "Kas kuvada kirjeldust?",
 			"disableEventLink": "Kas keelata viited sündmuse päises?",
 			"disableLocationLink": "Kas keelata asukoha viited?",
@@ -83,7 +82,8 @@
 			"showDatePerEvent": "Kuva kuupäev iga sündmuse kõrval",
 			"showTimeRemaining": "Näita järelejäänud aega",
 			"showAllDayHours": "Näita kogu päeva sündmuse teksti",
-			"hoursOnSameLine": "Näidake sündmuse reale tundi"
+			"hoursOnSameLine": "Näidake sündmuse reale tundi",
+			"eventDateFormat": "Sündmuse kuupäeva vorming"
 		}
 	},
 	"calendar": {

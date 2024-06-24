@@ -7,6 +7,13 @@
     "customizations": {
         "vscode": {
             "settings": {
+                "[json]": {
+                    "editor.tabSize": 4,
+                    "editor.formatOnPaste": true,
+                    "editor.formatOnSave": true,
+                    "editor.formatOnType": true,
+                    "files.trimTrailingWhitespace": true
+                },
                 "terminal.integrated.profiles.linux": {
                     "zsh": {
                         "path": "/bin/zsh"
@@ -20,12 +27,11 @@
                 "editor.formatOnType": true,
                 "files.trimTrailingWhitespace": true,
                 "editor.codeActionsOnSave": {
-                    "source.fixAll": true
+                    "source.fixAll": "always"
                 },
                 "eslint.validate": [
                     "typescript"
-                ],
-                format
+                ]
             },
             "extensions": [
                 "github.vscode-pull-request-github",

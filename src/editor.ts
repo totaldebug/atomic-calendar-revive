@@ -424,6 +424,12 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						label: localize('event.fields.hiddenEventText'),
 					},
 					{
+						type: 'text',
+						name: 'eventDateFormat',
+						label: localize('event.fields.eventDateFormat'),
+						default: defaultConfig.eventDateFormat,
+					},
+					{
 						type: 'switch',
 						name: 'showCurrentEventLine',
 						label: localize('event.fields.showCurrentEventLine'),
@@ -440,12 +446,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						name: 'showMonth',
 						label: localize('event.fields.showMonth'),
 						default: defaultConfig.showMonth,
-					},
-					{
-						type: 'switch',
-						name: 'showWeekDay',
-						label: localize('event.fields.showWeekDay'),
-						default: defaultConfig.showWeekDay,
 					},
 					{
 						type: 'switch',

@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Показати лінію перед подією?",
 			"showProgressBar": "Показувати індикатор прогресу?",
 			"showMonth": "Показувати місяць?",
-			"showWeekDay": "Показувати день тижня?",
 			"showDescription": "Показувати опис?",
 			"disableEventLink": "Вимкнути посилання в заголовку події?",
 			"disableLocationLink": "Вимкнути посилання на місцезнаходження?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Показувати дату поруч з кожною подією",
 			"showTimeRemaining": "Показувати залишок часу",
 			"showAllDayHours": "Показувати текст цілоденних подій",
-			"hoursOnSameLine": "Показувати години на лінії події"
+			"hoursOnSameLine": "Показувати години на лінії події",
+			"eventDateFormat": "Формат дати події"
 		}
 	},
 	"calendar": {
