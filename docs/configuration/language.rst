@@ -5,15 +5,15 @@ Language Options
 .. note:
    Week / month names are translated automatically
 
-========================== ========= ======== ===============================================================================================================================================================================================================
- Name                       Type      Since    Description
-========================== ========= ======== ===============================================================================================================================================================================================================
- untilText                  string    v0.3.0   ``Until`` Custom text for ``Until`` text
- fullDayEventText           string    v0.3.0   ``All day`` Custom text for ``All day`` text
- noEventsForNextDaysText    string    v0.8.6   ``No events in the next days`` Custom text for ``No events in the next days`` text
- noEventText                string    v4.1.0   ``No events`` Custom text for ``No events`` text, only if ``showNoEventsForToday`` or ``showNoEventDays`` is true
- dateFormat                 string    v0.7.2   ``LL`` Custom date format - see `list of localized formats <https://day.js.org/docs/en/display/format#localized-formats>`_
-========================== ========= ======== ===============================================================================================================================================================================================================
+========================== ========= ===============================================================================================================================================================================================================
+ Name                       Type      Description
+========================== ========= ===============================================================================================================================================================================================================
+ untilText                  string    ``Until`` Custom text for ``Until`` text
+ fullDayEventText           string    ``All day`` Custom text for ``All day`` text
+ noEventsForNextDaysText    string    ``No events in the next days`` Custom text for ``No events in the next days`` text
+ noEventText                string    ``No events`` Custom text for ``No events`` text, only if ``showNoEventsForToday`` or ``showNoEventDays`` is true
+ dateFormat                 string    ``LL`` Custom date format - see `list of localized formats <https://day.js.org/docs/en/display/format#localized-formats>`_
+========================== ========= ===============================================================================================================================================================================================================
 
 
 **************
