@@ -58,7 +58,6 @@
 			"showCurrentEventLine": "Zobrazit řádek před událostí",
 			"showProgressBar": "Zobrazit průběh",
 			"showMonth": "Zobrazit měsíc",
-			"showWeekDay": "Zobrazit den v týdnu",
 			"showDescription": "Zobrazit popisek",
 			"disableEventLink": "Zakázat odkazy v titulku události",
 			"disableLocationLink": "Zakázat odkazy na lokace",
@@ -74,7 +73,8 @@
 			"showCalendarName": "Zobrazit název kalendáře",
 			"showWeekNumber": "Zobrazit číslo týdne",
 			"showEventDate": "Zobrazit datum události",
-			"showDatePerEvent": "Zobrazit datum u každé události"
+			"showDatePerEvent": "Zobrazit datum u každé události",
+			"eventDateFormat": "Formát data události"
 		}
 	},
 	"calendar": {

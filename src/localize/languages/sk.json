@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Zobraziť riadok pred udalosťou?",
 			"showProgressBar": "Zobraziť indikátor priebehu?",
 			"showMonth": "Zobraziť mesiac?",
-			"showWeekDay": "Zobraziť Deň týždňa",
 			"showDescription": "Zobraziť popis?",
 			"disableEventLink": "Zakázať odkazy v názve udalosti?",
 			"disableLocationLink": "Zakázať odkazy na polohu?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Zobraziť dátum vedľa každej udalosti",
 			"showTimeRemaining": "Zobraziť zostávajúci čas",
 			"showAllDayHours": "Zobraziť text celodennej udalosti",
-			"hoursOnSameLine": "Zobraziť hodiny na riadku udalosti"
+			"hoursOnSameLine": "Zobraziť hodiny na riadku udalosti",
+			"eventDateFormat": "Formát dátumu udalosti"
 		}
 	},
 	"calendar": {

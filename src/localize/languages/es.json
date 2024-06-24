@@ -1,0 +1,113 @@
+{
+	"common": {
+		"version": "Versión",
+		"show_warning": "Mostrar Advertencia",
+		"error": "Error",
+		"description": "Una tarjeta de calendario avanzada para Home Assistant con Lovelace.",
+		"fullDayEventText": "Todo el Día",
+		"untilText": "Hasta",
+		"noEventText": "Sin eventos",
+		"noEventsForNextDaysText": "Sin eventos en los próximos días",
+		"hiddenEventText": "eventos están ocultos"
+	},
+	"ui": {
+		"common": {
+			"previous": "Anterior",
+			"next": "Siguiente",
+			"week": "Semana"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Configuración Inválida",
+		"update_card": "No se puede cargar el calendario desde el componente de Home Assistant",
+		"no_entities": "No ha especificado ninguna entidad"
+	},
+	"required": {
+		"name": "Requerido",
+		"secondary": "Opciones requeridas para que esta tarjeta funcione"
+	},
+	"main": {
+		"name": "Opciones Principales",
+		"secondary": "Opciones que se aplican globalmente",
+		"fields": {
+			"name": "Nombre",
+			"showColors": "Mostrar Colores",
+			"maxDaysToShow": "Máximo de días a mostrar",
+			"showLocation": "Mostrar icono de ubicación",
+			"showLoader": "Mostrar animación de carga",
+			"showDate": "Mostrar fecha en la tarjeta",
+			"showDeclined": "Mostrar eventos rechazados",
+			"sortBy": "Ordenar por",
+			"allDayBottom": "Mostrar eventos de todo el día al final",
+			"hideFinishedEvents": "Ocultar eventos finalizados",
+			"dateFormat": "Formato de fecha",
+			"defaultMode": "Modo predeterminado",
+			"linkTarget": "Objetivo del enlace",
+			"refreshInterval": "Intervalo de actualización",
+			"showRelativeTime": "Mostrar Tiempo Relativo",
+			"firstDayOfWeek": "Primer día de la semana 0-6",
+			"cardHeight": "Altura de la tarjeta",
+			"hideDuplicates": "Ocultar duplicados",
+			"showMultiDay": "Dividir Eventos de Varios Días",
+			"showMultiDayEventParts": "Mostrar Partes de Eventos de Varios Días",
+			"eventTitle": "Establecer título de evento en blanco",
+			"compactMode": "Activar modo compacto",
+			"titleLength": "Longitud máxima del título (0 para ilimitado)",
+			"descLength": "Longitud máxima de la descripción (0 para ilimitado)",
+			"showAllDayEvents": "Mostrar eventos de todo el día",
+			"offsetHeaderDate": "Fecha de encabezado de compensación",
+			"startDaysAhead": "Eventos que comienzan `x` días desde hoy"
+		}
+	},
+	"event": {
+		"name": "Modo de Evento",
+		"secondary": "Opciones específicas del Modo de Evento",
+		"fields": {
+			"showCurrentEventLine": "¿Mostrar línea antes del evento?",
+			"showProgressBar": "¿Mostrar barra de progreso?",
+			"showMonth": "¿Mostrar mes?",
+			"showDescription": "¿Mostrar descripción?",
+			"disableEventLink": "¿Desactivar enlaces en el título del evento?",
+			"disableLocationLink": "¿Desactivar enlaces a la ubicación?",
+			"showNoEventsForToday": "¿Mostrar No Hay Eventos Hoy?",
+			"showFullDayProgress": "¿Mostrar progreso de eventos de todo el día?",
+			"untilText": "texto de hasta:",
+			"noEventText": "Texto de No hay eventos hoy:",
+			"noEventsForNextDaysText": "Texto de No hay eventos en los próximos días:",
+			"fullDayEventText": "Texto de evento de todo el día:",
+			"showEventIcon": "¿Mostrar ícono de evento?",
+			"showHiddenText": "¿Mostrar texto de evento oculto?",
+			"hiddenEventText": "Texto para eventos ocultos:",
+			"showCalendarName": "¿Mostrar nombre del calendario?",
+			"showWeekNumber": "¿Mostrar números de semana?",
+			"showEventDate": "¿Mostrar fecha para eventos?",
+			"showDatePerEvent": "¿Mostrar fecha junto a cada evento?",
+			"showTimeRemaining": "¿Mostrar tiempo restante?",
+			"showAllDayHours": "¿Mostrar texto de evento de todo el día?",
+			"hoursOnSameLine": "¿Mostrar horas en la línea de evento?",
+			"eventDateFormat": "Formato de fecha del evento"
+		}
+	},
+	"calendar": {
+		"name": "Modo de Calendario",
+		"secondary": "Opciones específicas del Modo de Calendario",
+		"fields": {
+			"showLastCalendarWeek": "¿Mostrar la última semana del calendario?",
+			"disableCalEventLink": "¿Desactivar enlace de evento del calendario?",
+			"disableCalLocationLink": "¿Desactivar enlace de ubicación del calendario?",
+			"calShowDescription": "¿Mostrar descripción del calendario?",
+			"disableCalLink": "¿Desactivar enlace del calendario?"
+		}
+	},
+	"appearance": {
+		"name": "Apariencia",
+		"secondary": "Personalizar los colores, etc.",
+		"main": {
+			"name": "Principal",
+			"secondary": "Configuración de color global"
+		},
+		"fields": {
+			"dimFinishedEvents": "¿Atenuar eventos finalizados?"
+		}
+	}
+}

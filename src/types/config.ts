@@ -21,7 +21,6 @@ export interface atomicCardConfig {
 	showLoader?: boolean;
 	showLocation?: boolean;
 	showMonth?: boolean;
-	showWeekDay?: boolean;
 	fullTextTime?: boolean;
 	showCurrentEventLine?: boolean;
 	showDate?: boolean;
@@ -43,7 +42,7 @@ export interface atomicCardConfig {
 	showEventDate: boolean;
 	showDatePerEvent: boolean;
 	showRelativeTime?: boolean;
-	europeanDate?: boolean;
+	eventDateFormat: string;
 	showWeekNumber?: boolean;
 	showAllDayEvents: boolean;
 

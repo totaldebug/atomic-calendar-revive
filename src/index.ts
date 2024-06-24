@@ -426,31 +426,19 @@ export class AtomicCalendarRevive extends LitElement {
 				const showDatePerEvent = this._config.showDatePerEvent ? true : !!(i === 0);
 
 				// check and set the date format
-				const showMonth =
-					showDatePerEvent && this._config.showMonth
-						? html`<div class="event-date-month">${event.startTimeToShow.format('MMM')}</div>`
-						: '';
-				const showDay = showDatePerEvent
-					? html`<div class="event-date-day">${event.startTimeToShow.format('DD')}</div>`
-					: '';
-				const eventDateFormat =
-					this._config.europeanDate === true ? html`${showDay} ${showMonth}` : html`${showMonth} ${showDay}`;
+				const eventDate = showDatePerEvent
+					? html`<div class="event-date-day">${event.startTimeToShow.format(this._config.eventDateFormat)}</div>`
+					: html``;
 
 				const dayClassTodayEvent = event.startTimeToShow.isSame(dayjs(), 'day') ? `current-day` : ``;
 				const compactMode = this._config.compactMode ? `compact` : ``;
 				const hideDate = this._config.showEventDate ? `` : `hide-date`;
 
-				const showWeekDay =
-					showDatePerEvent && this._config.showWeekDay
-						? html`<div class="event-date-week-day">${event.startTimeToShow.format('ddd')}</div>`
-						: '';
 				const eventLeft =
 					this._config.showEventDate === true
 						? html`<div class="event-left ${dayClassTodayEvent}">
-								<!--Show the weekday e.g. Mon / Tue -->
-								${showWeekDay}
 								<!--Show the event date, see eventDateFormat-->
-								${eventDateFormat}
+								${eventDate}
 							</div>`
 						: html``;
 				return html`<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">

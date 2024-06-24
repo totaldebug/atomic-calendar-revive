@@ -8,7 +8,6 @@ export default {
 
 	showLocation: true, // show location (right side)
 	showMonth: false, // show month under day (left side)
-	showWeekDay: false, // show day name under day (left side)
 	fullTextTime: true, // show advanced time messages, like: All day, until Friday 12
 	showCurrentEventLine: false, // show a line between last and next event
 	showDate: false,
@@ -83,7 +82,7 @@ export default {
 	refreshInterval: 60,
 
 	showEventIcon: false,
-	europeanDate: false,
+	eventDateFormat: 'ddd D MMM',
 	hideDuplicates: false,
 
 	showMultiDay: false,

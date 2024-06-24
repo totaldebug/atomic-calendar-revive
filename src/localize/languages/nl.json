@@ -67,7 +67,6 @@
 			"showCurrentEventLine": "Toon lijn voor evenement?",
 			"showProgressBar": "Toon voortgangsbalk?",
 			"showMonth": "Toon maand?",
-			"showWeekDay": "Toon Weekdag",
 			"showDescription": "Toon Beschrijving?",
 			"disableEventLink": "Schakel links in evenementstitel uit?",
 			"disableLocationLink": "Schakel links naar locatie uit?",
@@ -86,7 +85,8 @@
 			"showDatePerEvent": "Toon datum naast elk evenement",
 			"showTimeRemaining": "Toon resterende tijd",
 			"showAllDayHours": "Toon tekst voor hele dag evenementen",
-			"hoursOnSameLine": "Toon uren op de evenementlijn"
+			"hoursOnSameLine": "Toon uren op de evenementlijn",
+			"eventDateFormat": "Datumformaat evenement"
 		},
 		"calendar": {
 			"name": "Kalendermodus",

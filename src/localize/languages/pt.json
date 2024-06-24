@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Mostrar linha antes do evento?",
 			"showProgressBar": "Mostrar linha de progresso?",
 			"showMonth": "Mostrar mês?",
-			"showWeekDay": "Mostrar dia da semana",
 			"showDescription": "Mostrar descrição?",
 			"disableEventLink": "Desativar links no titulo do evento?",
 			"disableLocationLink": "Desativar links para localização?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Mostrar data junto a cada evento",
 			"showTimeRemaining": "Mostrar tempo restante",
 			"showAllDayHours": "Mostrar texto evento dia completo",
-			"hoursOnSameLine": "Mostrar horas na linha do evento"
+			"hoursOnSameLine": "Mostrar horas na linha do evento",
+			"eventDateFormat": "Formato de data do evento"
 		}
 	},
 	"calendar": {

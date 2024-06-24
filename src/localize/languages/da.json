@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Vis en linie før aftale?",
 			"showProgressBar": "Vis status bar?",
 			"showMonth": "Vis måned?",
-			"showWeekDay": "Vis ugedag",
 			"showDescription": "Vis beskrivelse?",
 			"disableEventLink": "Fjern link i titel på aftale?",
 			"disableLocationLink": "Fjern link på placering?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Vis dato ud for hver begivenhed",
 			"showTimeRemaining": "Vis resterende tid",
 			"showAllDayHours": "Vis Heldagsbegivenhedstekst",
-			"hoursOnSameLine": "Vis timer på begivenhedslinjen"
+			"hoursOnSameLine": "Vis timer på begivenhedslinjen",
+			"eventDateFormat": "Begivenhedsdatoformat"
 		}
 	},
 	"calendar": {

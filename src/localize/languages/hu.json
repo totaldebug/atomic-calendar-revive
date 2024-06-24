@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Mutassunk vonalat az esemény előtt?",
 			"showProgressBar": "Mutassuk a folyamatjelzőt?",
 			"showMonth": "Mutassuk a hónapot?",
-			"showWeekDay": "Hét napjainak megjelenítése",
 			"showDescription": "Mutassuk a leírást?",
 			"disableEventLink": "Az esemény címén lévő link letiltása?",
 			"disableLocationLink": "A helyhez kapcsolódó link letiltása?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Dátum megjelenítése az események mellett",
 			"showTimeRemaining": "Hátralévő idő megjelenítése",
 			"showAllDayHours": "Egész napos esemény szöveg megjelenítése",
-			"hoursOnSameLine": "Az idő megjelenítése az esemény sorában"
+			"hoursOnSameLine": "Az idő megjelenítése az esemény sorában",
+			"eventDateFormat": "Esemény dátumának formátuma"
 		}
 	},
 	"calendar": {

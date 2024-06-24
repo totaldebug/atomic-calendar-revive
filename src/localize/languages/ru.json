@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Показать линию перед событием?",
 			"showProgressBar": "Показать полосу прогресса?",
 			"showMonth": "Показать месяц?",
-			"showWeekDay": "Показать день недели",
 			"showDescription": "Показать описание?",
 			"disableEventLink": "Отключить ссылки в заголовке события?",
 			"disableLocationLink": "Отключить ссылки на местоположение?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Показать дату рядом с каждым событием",
 			"showTimeRemaining": "Показать оставшееся время",
 			"showAllDayHours": "Показать текст события на весь день",
-			"hoursOnSameLine": "Показать часы на строке события"
+			"hoursOnSameLine": "Показать часы на строке события",
+			"eventDateFormat": "Формат даты события"
 		}
 	},
 	"calendar": {

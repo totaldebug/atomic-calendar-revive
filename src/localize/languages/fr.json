@@ -66,7 +66,6 @@
 			"showCurrentEventLine": "Afficher une ligne avant l'événement?",
 			"showProgressBar": "Afficher la barre de progression?",
 			"showMonth": "Afficher le mois?",
-			"showWeekDay": "Afficher le jour de la semaine?",
 			"showDescription": "Afficher la description?",
 			"disableEventLink": "Désactiver les liens dans les titres d'événements?",
 			"disableLocationLink": "Désactiver les liens vers le lieu?",
@@ -85,7 +84,8 @@
 			"showDatePerEvent": "Afficher la date à côté de chaque événement",
 			"showTimeRemaining": "Afficher le temps restant",
 			"showAllDayHours": "Afficher le texte de l'événement toute la journée",
-			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement"
+			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement",
+			"eventDateFormat": "Format de la date de l'événement"
 		}
 	},
 	"calendar": {

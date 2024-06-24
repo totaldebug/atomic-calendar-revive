@@ -18,10 +18,10 @@ import {
 } from './types/editor';
 import { HomeAssistant } from './types/homeassistant';
 import { LovelaceCardEditor } from './types/lovelace';
-import { formfieldDefinition } from '../elements/formfield';
-import { selectDefinition } from '../elements/select';
-import { switchDefinition } from '../elements/switch';
-import { textfieldDefinition } from '../elements/textfield';
+import { formfieldDefinition } from '../elements/formfield.js';
+import { selectDefinition } from '../elements/select.js';
+import { switchDefinition } from '../elements/switch.js';
+import { textfieldDefinition } from '../elements/textfield.js';
 
 @customElement('atomic-calendar-revive-editor')
 export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
@@ -424,6 +424,12 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						label: localize('event.fields.hiddenEventText'),
 					},
 					{
+						type: 'text',
+						name: 'eventDateFormat',
+						label: localize('event.fields.eventDateFormat'),
+						default: defaultConfig.eventDateFormat,
+					},
+					{
 						type: 'switch',
 						name: 'showCurrentEventLine',
 						label: localize('event.fields.showCurrentEventLine'),
@@ -440,12 +446,6 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						name: 'showMonth',
 						label: localize('event.fields.showMonth'),
 						default: defaultConfig.showMonth,
-					},
-					{
-						type: 'switch',
-						name: 'showWeekDay',
-						label: localize('event.fields.showWeekDay'),
-						default: defaultConfig.showWeekDay,
 					},
 					{
 						type: 'switch',
