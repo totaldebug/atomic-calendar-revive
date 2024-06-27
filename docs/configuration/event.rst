@@ -20,5 +20,5 @@ Event Mode Options
  showTimeRemaining       boolean    ``false`` Show the amount of time remaining for an event
  hoursOnSameLine         boolean    ``false`` if set true will move hours to show on the same line as the summary.
  showAllDayHours         boolean    ``true`` Show "All Day" text under full day events
- eventDateFormat         string     ``ddd D MMM`` Set the date format for events
+ eventDateFormat         string     ``ddd D MMM`` Set the date format for events (`Reference <https://day.js.org/docs/en/display/format>`_)
 ======================= ========== ===========================================================================================================
