@@ -87,28 +87,28 @@
 			"showAllDayHours": "Toon tekst voor hele dag evenementen",
 			"hoursOnSameLine": "Toon uren op de evenementlijn",
 			"eventDateFormat": "Datumformaat evenement"
+		}
+	},
+	"calendar": {
+		"name": "Kalendermodus",
+		"secondary": "Specifieke opties voor kalendermodus",
+		"fields": {
+			"showLastCalendarWeek": "Toon de laatste kalenderweek",
+			"disableCalEventLink": "Schakel kalenderevenementlink uit",
+			"disableCalLocationLink": "Schakel kalenderlocatielink uit",
+			"calShowDescription": "Toon Beschrijving",
+			"disableCalLink": "Schakel kalenderlink uit"
+		}
+	},
+	"appearance": {
+		"name": "Uiterlijk",
+		"secondary": "Pas de kleuren etc. aan",
+		"main": {
+			"name": "Hoofd",
+			"secondary": "Globale Kleurinstellingen"
 		},
-		"calendar": {
-			"name": "Kalendermodus",
-			"secondary": "Specifieke opties voor kalendermodus",
-			"fields": {
-				"showLastCalendarWeek": "Toon de laatste kalenderweek",
-				"disableCalEventLink": "Schakel kalenderevenementlink uit",
-				"disableCalLocationLink": "Schakel kalenderlocatielink uit",
-				"calShowDescription": "Toon Beschrijving",
-				"disableCalLink": "Schakel kalenderlink uit"
-			}
-		},
-		"appearance": {
-			"name": "Uiterlijk",
-			"secondary": "Pas de kleuren etc. aan",
-			"main": {
-				"name": "Hoofd",
-				"secondary": "Globale Kleurinstellingen"
-			},
-			"fields": {
-				"dimFinishedEvents": "Dim voltooide evenementen?"
-			}
+		"fields": {
+			"dimFinishedEvents": "Dim voltooide evenementen?"
 		}
 	}
 }
