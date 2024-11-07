@@ -1,0 +1,220 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Development Cycle &mdash; Atomic Calendar Revive  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Documentation" href="docs.html" />
+    <link rel="prev" title="VS Code - DevContainer" href="devcontainer.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview/quickstart.html">🚀 Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../overview/faq.html">FAQ</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Configuration</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/main.html">Main Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/entity.html">Entity Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/event.html">Event Mode Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/calendar.html">Calendar Mode Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/language.html">Language Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../configuration/styling.html">Styling</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contribute</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="bugs.html">Reporting Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devcontainer.html">VS Code - DevContainer</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Development Cycle</a></li>
+<li class="toctree-l1"><a class="reference internal" href="docs.html">Documentation</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Atomic Calendar Revive</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Development Cycle</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contribute/devcycle.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="development-cycle">
+<h1>Development Cycle<a class="headerlink" href="#development-cycle" title="Link to this heading"></a></h1>
+<p>The below will provide a guide on how you should develop for this plugin to have your
+code reviewed and accepted.</p>
+<section id="setup-repository">
+<h2>Setup Repository<a class="headerlink" href="#setup-repository" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Fork the repo in <a class="reference external" href="https://github.com/totaldebug/atomic-calendar-revive">github</a></p></li>
+<li><p>Clone the project to your development machine (or follow the DevContainer instructions)</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/your-username/atomic-calendar-revive.git
+</pre></div>
+</div>
+</section>
+<section id="create-topic-branch">
+<h2>Create Topic Branch<a class="headerlink" href="#create-topic-branch" title="Link to this heading"></a></h2>
+<p>You should always work on a new topic branch for each feature / bug you are working on.
+Also you must ensure that you have pulled the latest version from upstream see below.</p>
+<p>Start by setting up an upstream remote, this will be used to pull the latest version
+from the main repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/totaldebug/atomic-calendar-revive
+</pre></div>
+</div>
+<p>Checkout the beta branch and pull the latest upstream version:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>checkout<span class="w"> </span>beta
+git<span class="w"> </span>fetch<span class="w"> </span>upstream
+git<span class="w"> </span>merge<span class="w"> </span>upstream/beta
+git<span class="w"> </span>push
+</pre></div>
+</div>
+<p>Your fork should now be in sync with the main totaldebug repository.</p>
+</section>
+<section id="install-dependencies">
+<h2>Install Dependencies<a class="headerlink" href="#install-dependencies" title="Link to this heading"></a></h2>
+<p>From the cloned repository, run the command to install the requirements:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>yarn<span class="w"> </span>install
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using VSCode devcontainer this happens as part of the post steps.</p>
+</div>
+</section>
+<section id="make-changes">
+<h2>Make changes<a class="headerlink" href="#make-changes" title="Link to this heading"></a></h2>
+<p>You are now ready to make changes to the code, all source code is in the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory
+there should be no need to change any other files.</p>
+</section>
+<section id="testing">
+<h2>Testing<a class="headerlink" href="#testing" title="Link to this heading"></a></h2>
+<p>There are no automated tests for this project, however it is expected that any
+development work is tested against a HA Server with both CalDav and Google Calendar
+attached, this ensures no adverse impact is added with the feature or bugfix.</p>
+<p>To create the card run the command <code class="docutils literal notranslate"><span class="pre">yarn</span> <span class="pre">run</span> <span class="pre">build</span></code> this output into the <code class="docutils literal notranslate"><span class="pre">dist</span></code> folder,
+this can then be uploaded to HA for testing.</p>
+</section>
+<section id="versioning">
+<h2>Versioning<a class="headerlink" href="#versioning" title="Link to this heading"></a></h2>
+<p>You dont need to worry about versioning, the release process takes care of that for you!</p>
+<p>But in case you are curious this project follows <a class="reference external" href="http://semver.org">Semantic Versioning</a></p>
+<p><strong>MAJOR.MINOR.PATCH</strong></p>
+<p>In the context of semantic versioning, the following should apply:</p>
+<ul class="simple">
+<li><p><strong>Major</strong> - A breaking change that requires user intervention, or a change to a
+default value.</p></li>
+<li><p><strong>Minor</strong> - A change that does not require intervention, or adds additional
+functionality in a backwards compatible manner.</p></li>
+<li><p><strong>Patch</strong> - A change that resolves a specific bug.</p></li>
+</ul>
+<p>All changes are tracked in the <a class="reference external" href="https://github.com/totaldebug/atomic-calendar-revive/releases">release notes</a></p>
+</section>
+<section id="commit-changes">
+<h2>Commit Changes<a class="headerlink" href="#commit-changes" title="Link to this heading"></a></h2>
+<p>Once you are happy with the changes, these can be committed (I recommend using commitizen):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>cz
+</pre></div>
+</div>
+<p>Then follow the prompts and select the relevant options. If this resolves a specific issue, be sure to enter
+the issue number when prompted.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-v<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: Added new feature #100&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Commit messages MUST follow <a class="reference external" href="https://www.conventionalcommits.org/en/v1.0.0/">conventional commits</a>
+this ensures clear commit messages within the repository. Without this your change will be rejected as it is required for release.</p>
+<p>Breaking changes are detected with <code class="docutils literal notranslate"><span class="pre">!</span></code> e.g. <code class="docutils literal notranslate"><span class="pre">feat!:</span> <span class="pre">my</span> <span class="pre">breaking</span> <span class="pre">change</span></code></p>
+</div>
+</section>
+<section id="submit-pull-request">
+<h2>Submit Pull Request<a class="headerlink" href="#submit-pull-request" title="Link to this heading"></a></h2>
+<p>Once development &amp; testing are completed a pull request can be created to the beta branch.</p>
+<p>A member of the team will review the request, test and merge if appropriate.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="devcontainer.html" class="btn btn-neutral float-left" title="VS Code - DevContainer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="docs.html" class="btn btn-neutral float-right" title="Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, TotalDebug.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
