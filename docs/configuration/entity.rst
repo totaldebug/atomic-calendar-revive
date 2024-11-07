@@ -11,7 +11,7 @@ Entity Options
  maxDaysToShow        integer   ``7`` Maximum number of days to show. Overrides main configuration maxDaysToShow for this calendar
  blocklist            string    ``null`` Simple case insensitive regex to ignore events that match title
  blocklistLocation    string    ``null`` Simple case insensitive regex to ignore events that match location
- allowlist            string    ``null`` Simple case insensitive regex to ignore events that match title
+ allowlist            string    ``null`` Simple case insensitive regex to only add events that match title
  allowlistLocation    string    ``null`` Simple case insensitive regex to only add events that match location
  showMultiDay         boolean   ``false`` Split multi-day events across all days
  name                 string    ``null`` Add a calendar name to be shown with event
