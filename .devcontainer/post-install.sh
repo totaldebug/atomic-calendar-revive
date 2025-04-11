@@ -4,7 +4,7 @@ set -ex
 # Convenience workspace directory for later use
 WORKSPACE_DIR=$(pwd)
 
-apt update -y & apt upgrade -y
+apt update -y && apt upgrade -y
 
 # Now install all dependencies
 yarn install
