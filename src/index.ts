@@ -588,7 +588,9 @@ export class AtomicCalendarRevive extends LitElement {
 					>
 						<div class="calDay">
 							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-							<div>${handleCalendarIcons(day, this.hass)}</div>
+							<div class="iconDiv">
+    							${handleCalendarIcons(day, this.hass)}
+  							</div>
 						</div>
 					</td>
 					${i && i % 6 === 0 ? html`</tr>` : ''}

@@ -73,7 +73,7 @@
 		"@webcomponents/webcomponentsjs": "^2.8.0",
 		"dayjs": "^1.11.11",
 		"home-assistant-js-websocket": "^9.4.0",
-		"lit": "^3.1.4",
+		"lit": "^3.0.2",
 		"memoize-one": "^6.0.0",
 		"npm": "^10.8.1",
 		"typescript": "^5.5.2"

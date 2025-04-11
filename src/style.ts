@@ -266,6 +266,19 @@ export const styles: CSSResultGroup = css`
 		margin: auto;
 	}
 
+	.calDay .iconDiv {
+		white-space: nowrap;
+	}
+
+	.calendar-icon-container {
+		display: inline-block;
+		margin-right: 10px; /* adjust this value to fit your layout */
+	}
+
+	.calendar-icon-container:nth-child(4n) {
+		margin-right: 0;
+	}
+	
 	.currentDay {
 		position: relative;
 		width: 20px;
