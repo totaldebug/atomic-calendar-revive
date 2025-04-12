@@ -43,7 +43,6 @@
                 "eamodio.gitlens",
                 "ms-python.python",
                 "sourcery.sourcery",
-                "tabnine.tabnine-vscode",
                 "trond-snekvik.simple-rst",
                 "dbaeumer.vscode-eslint"
             ]
