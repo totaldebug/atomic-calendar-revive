@@ -30,7 +30,7 @@ const plugins = [
 				'@babel/env',
 				{
 					modules: false,
-					targets: 'iOS 12, > 2.5%, not dead',
+					targets: '> 2.5%, not dead',
 				},
 			],
 		],
@@ -56,12 +56,20 @@ export default {
 	input: ['./src/index.ts'],
 	output: {
 		file: 'dist/atomic-calendar-revive.js',
-		format: 'umd',
+		format: 'esm',
 		name: 'AtomicCalendarRevive',
-		inlineDynamicImports: false,
+		inlineDynamicImports: true,
 	},
 	watch: {
 		clearScreen: false,
 	},
 	plugins: [...plugins],
+	onwarn: function (warning, handler) {
+        if (warning.code === 'THIS_IS_UNDEFINED') {
+            return;
+        }
+
+        // console.warn everything else
+        handler(warning);
+    }
 };
