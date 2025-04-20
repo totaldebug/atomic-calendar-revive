@@ -1,4 +1,5 @@
 /* eslint-disable import/no-duplicates */
+import { FEATURE_REQUEST } from '../const';
 import * as ca from './languages/ca.json';
 import * as cs from './languages/cs.json';
 import * as da from './languages/da.json';
@@ -18,7 +19,6 @@ import * as sk from './languages/sk.json';
 import * as sl from './languages/sl.json';
 import * as sv from './languages/sv.json';
 import * as uk from './languages/uk.json';
-import { FEATURE_REQUEST } from '../const';
 import { globalData } from '../helpers/globals';
 
 const languages: object = {

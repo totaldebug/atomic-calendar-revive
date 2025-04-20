@@ -1,5 +1,4 @@
-﻿/* eslint-disable import/no-named-as-default-member */
-import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
+﻿import { mdiChevronLeft, mdiChevronRight } from '@mdi/js';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import isoWeek from 'dayjs/plugin/isoWeek';
@@ -71,11 +70,7 @@ export class AtomicCalendarRevive extends LitElement {
 
 	constructor() {
 		super();
-		this.lastCalendarUpdateTime;
-		this.lastEventsUpdateTime;
-		this.lastHTMLUpdateTime;
-		this.events;
-		this.failedEvents;
+
 		this.content = html``;
 		this.shouldUpdateHtml = true;
 		this.errorMessage = html``;
@@ -83,7 +78,6 @@ export class AtomicCalendarRevive extends LitElement {
 		this.selectedMonth = dayjs();
 		this.refreshCalEvents = true;
 		this.monthToGet = dayjs().format('MM');
-		this.month;
 		this.showLoader = false;
 		this.eventSummary = html`&nbsp;`;
 		this.firstrun = true;
@@ -588,9 +582,7 @@ export class AtomicCalendarRevive extends LitElement {
 					>
 						<div class="calDay">
 							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-							<div class="iconDiv">
-    							${handleCalendarIcons(day, this.hass)}
-  							</div>
+							<div class="iconDiv">${handleCalendarIcons(day, this.hass)}</div>
 						</div>
 					</td>
 					${i && i % 6 === 0 ? html`</tr>` : ''}

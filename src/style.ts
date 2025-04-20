@@ -278,7 +278,7 @@ export const styles: CSSResultGroup = css`
 	.calendar-icon-container:nth-child(4n) {
 		margin-right: 0;
 	}
-	
+
 	.currentDay {
 		position: relative;
 		width: 20px;
