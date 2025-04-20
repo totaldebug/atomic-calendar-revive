@@ -22,6 +22,6 @@
   },
   "include": [
     "src/*",
-    "src/**/*",
+    "src/**/*", "eslint.config.mjs",
   ]
 }
