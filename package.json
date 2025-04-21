@@ -72,7 +72,7 @@
 		"@material/mwc-textfield": "0.27.0",
 		"@mdi/js": "7.4.47",
 		"@webcomponents/webcomponentsjs": "2.8.0",
-		"dayjs": "1.11.11",
+		"dayjs": "1.11.13",
 		"home-assistant-js-websocket": "9.5.0",
 		"lit": "3.0.2",
 		"memoize-one": "6.0.0",
