@@ -418,4 +418,111 @@ export const styles: CSSResultGroup = css`
 			transform: rotate(360deg);
 		}
 	}
+	.month-view-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.month-weekdays {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 1px solid var(--primary-color);
+		padding-bottom: 5px;
+		margin-bottom: 5px;
+	}
+
+	.month-days-grid {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		gap: 2px;
+	}
+
+	.month-day {
+		border: 1px solid var(--divider-color);
+		min-height: 100px;
+		padding: 4px;
+	}
+
+	.month-day.currentDay {
+		background-color: var(--primary-color);
+		color: var(--text-primary-color);
+	}
+
+	.month-day-number {
+		font-weight: bold;
+		margin-bottom: 4px;
+	}
+
+	.month-event {
+		padding: 2px 4px;
+		border-radius: 4px;
+		color: white;
+		margin-bottom: 2px;
+		font-size: 0.8em;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	.week-view-container {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.week-view-header-row,
+	.week-view-calendar-row {
+		display: grid;
+		/* Use a CSS variable to set the column count dynamically */
+		grid-template-columns: 150px repeat(var(--days-to-show, 7), 1fr);
+		border-bottom: 1px solid var(--divider-color);
+		align-items: stretch;
+	}
+
+	.week-view-header-row {
+		font-weight: bold;
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.week-view-header-calendar,
+	.week-view-calendar-name {
+		padding: 8px;
+		border-right: 1px solid var(--divider-color);
+		font-weight: bold;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+
+	.week-view-header-day {
+		padding: 8px;
+		text-align: center;
+	}
+
+	.week-view-days-grid {
+		grid-column: 2 / -1;
+		display: grid;
+		grid-template-columns: subgrid;
+	}
+
+	.week-view-day {
+		padding: 4px;
+		border-right: 1px solid var(--divider-color);
+		min-height: 50px;
+	}
+	.week-view-day:last-child {
+		border-right: none;
+	}
+
+	.week-event {
+		padding: 2px 4px;
+		border-radius: 4px;
+		color: var(--primary-text-color);
+		margin-bottom: 2px;
+		font-size: 0.8em;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		cursor: pointer;
+	}
 `;

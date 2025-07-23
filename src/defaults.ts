@@ -62,7 +62,7 @@ export default {
 	progressBarBackgroundColor: '#555',
 
 	enableModeChange: false,
-	defaultMode: 'Event',
+	viewStyle: 'Event',
 
 	// Calendar Mode Default Settings
 

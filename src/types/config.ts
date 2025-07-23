@@ -76,7 +76,7 @@ export interface atomicCardConfig {
 	showFullDayProgress?: boolean;
 	progressBarColor?: string;
 	enableModeChange?: boolean;
-	defaultMode: string;
+	viewStyle?: string;
 
 	// Calendar Mode Settings
 	calGridColor?: string;

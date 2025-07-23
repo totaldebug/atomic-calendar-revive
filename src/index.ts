@@ -36,6 +36,8 @@ import { getDate, getTitleHTML, setNoEventDays, showCalendarLink } from './lib/c
 import EventClass from './lib/event.class';
 import { getCalendarMode, getEventMode, groupEventsByDay } from './lib/event.func';
 import { getDescription, getHoursHTML, getLocationHTML, getWeekNumberHTML } from './lib/eventMode.html';
+import { getMonthDaysHTML } from './lib/monthMode.html';
+import { getWeekViewHTML } from './lib/weekMode.html';
 import localize from './localize/localize';
 import { styles } from './style';
 import { atomicCardConfig } from './types/config';
@@ -48,6 +50,9 @@ export class AtomicCalendarRevive extends LitElement {
 	@property() private _config!: atomicCardConfig;
 	@property() private content;
 	@property() private selectedMonth;
+	@property() public lastUpdateTime: dayjs.Dayjs | undefined;
+	@property() public month: any;
+	@property() public weekEvents?: EventClass[];
 
 	lastCalendarUpdateTime!: dayjs.Dayjs;
 	lastEventsUpdateTime!: dayjs.Dayjs;
@@ -58,7 +63,6 @@ export class AtomicCalendarRevive extends LitElement {
 	modeToggle: string;
 	refreshCalEvents: boolean;
 	monthToGet: string;
-	month!: Promise<unknown>;
 	showLoader: boolean;
 	hiddenEvents: number;
 	eventSummary: TemplateResult | void | TemplateResult<1>[];
@@ -111,7 +115,7 @@ export class AtomicCalendarRevive extends LitElement {
 			...customConfig,
 		};
 
-		this.modeToggle = this._config.defaultMode!;
+		this.modeToggle = this._config.viewStyle!;
 
 		if (typeof this._config.entities === 'string') {
 			this._config.entities = [
@@ -127,6 +131,40 @@ export class AtomicCalendarRevive extends LitElement {
 				};
 			}
 		});
+	}
+	updateMonthHTML() {
+		if (!this.month) {
+			this.content = html`<div class="loader">
+				${this.showLoader ? html`<ha-circular-progress active></ha-circular-progress>` : ''}
+			</div>`;
+			return;
+		}
+
+		const weekDays = dayjs.weekdaysShort(true);
+		const htmlDayNames = weekDays.map((day) => html`<div class="month-weekday">${day}</div>`);
+
+		this.content = html`
+			<div class="calTitleContainer">${this.getCalendarHeaderHTML()}</div>
+			<div class="month-view-container">
+				<div class="month-weekdays">${htmlDayNames}</div>
+				<div class="month-days-grid">${getMonthDaysHTML(this.month, this._config)}</div>
+			</div>
+		`;
+	}
+
+	updateWeekHTML() {
+		if (!this.weekEvents) {
+			this.content = html`<div class="loader">
+				${this.showLoader ? html`<ha-circular-progress active></ha-circular-progress>` : ''}
+			</div>`;
+			return;
+		}
+
+		this.content = html`
+			<div class="week-view-container" style="--days-to-show: ${this._config.maxDaysToShow || 7}">
+				${getWeekViewHTML(this._config, this.weekEvents)}
+			</div>
+		`;
 	}
 
 	protected render(): TemplateResult | void {
@@ -199,47 +237,72 @@ export class AtomicCalendarRevive extends LitElement {
 	async updateCard() {
 		this.firstrun = false;
 
-		// check if an update is needed
-		if (
-			!this.isUpdating &&
-			this.modeToggle == 'Event' &&
-			(!this.lastEventsUpdateTime || dayjs().diff(this.lastEventsUpdateTime, 'seconds') > this._config.refreshInterval)
-		) {
-			this.showLoader = true;
-			this.hiddenEvents = 0;
+		// Determine if a data refresh is needed, regardless of the current mode
+		const now = dayjs();
+		const needsRefresh =
+			!this.lastUpdateTime || now.diff(this.lastUpdateTime, 'seconds') > this._config.refreshInterval;
+
+		if (this.isUpdating) {
+			return;
+		}
+
+		// 1. DATA REFRESH LOGIC
+		if (needsRefresh && !this.isUpdating) {
 			this.isUpdating = true;
+			this.showLoader = true;
+
 			try {
-				const { events, failedEvents } = await getEventMode(this._config, this.hass);
-				this.events = events[0];
-				this.hiddenEvents = events[1];
-				this.failedEvents = failedEvents;
-				// Check no event days and display
-				if (this._config.showNoEventDays) {
-					this.events = setNoEventDays(this._config, this.events);
+				// Fetch data based on the current mode
+				switch (this.modeToggle) {
+					case 'Event':
+						const { events, failedEvents } = await getEventMode(this._config, this.hass);
+						let processedEvents = events[0];
+						this.hiddenEvents = events[1];
+						this.failedEvents = failedEvents;
+						// Re-add the original processing logic here
+						if (this._config.showNoEventDays) {
+							processedEvents = setNoEventDays(this._config, processedEvents);
+						}
+						this.events = groupEventsByDay(processedEvents);
+						break;
+
+					case 'Calendar':
+					case 'Month':
+						this.month = await getCalendarMode(this._config, this.hass, this.selectedMonth);
+						break;
+
+					case 'Week':
+						const weekData = await getEventMode(this._config, this.hass);
+						this.weekEvents = weekData.events[0];
+						break;
 				}
-				this.events = groupEventsByDay(this.events);
+
+				this.lastUpdateTime = now; // Update the timestamp after a successful fetch
 			} catch (error) {
-				console.log(error);
-				this.errorMessage = html`${localize('errors.update_card')}
-					<a
-						href="https://docs.totaldebug.uk/atomic-calendar-revive/overview/faq.html"
-						target="${this._config.linkTarget}"
-						>See Here</a
-					>`;
+				console.error('Error updating card:', error);
+				this.errorMessage = html`Could not update card. See console for details.`;
+			} finally {
+				this.isUpdating = false;
 				this.showLoader = false;
 			}
-
-			this.lastEventsUpdateTime = dayjs();
-			this.updateEventsHTML(this.events);
-			this.isUpdating = false;
-			this.showLoader = false;
 		}
-		// check if the mode was toggled, then load the correct
-		// html render
-		if (this.modeToggle == 'Event') {
-			this.updateEventsHTML(this.events);
-		} else {
-			await this.updateCalendarHTML();
+
+		// 2. RENDERING LOGIC
+		// This part now just renders the view using pre-fetched data
+		switch (this.modeToggle) {
+			case 'Event':
+				// The data is already processed, so we just call the render function
+				this.updateEventsHTML(this.events);
+				break;
+			case 'compactCalendar':
+				this.updateCalendarHTML();
+				break;
+			case 'fullCalendar':
+				this.updateMonthHTML();
+				break;
+			case 'Schedule':
+				this.updateWeekHTML();
+				break;
 		}
 	}
 

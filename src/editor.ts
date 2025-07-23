@@ -208,7 +208,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 		this._initialized = true;
 
 		const linkTargets: string[] = ['_blank', '_self', '_parent', '_top'];
-		const defaultModes: string[] = ['Event', 'Calendar'];
+		const defaultModes: string[] = ['Event', 'Calendar', 'Week', 'Month'];
 		const sortBy: string[] = ['start', 'milestone', 'none'];
 
 		this.options = {
@@ -295,7 +295,7 @@ export class AtomicCalendarReviveEditor extends ScopedRegistryHost(LitElement) i
 						name: 'defaultMode',
 						section: 'main',
 						label: localize('main.fields.defaultMode'),
-						selected: defaultModes.indexOf(this._config.defaultMode || defaultConfig.defaultMode),
+						selected: defaultModes.indexOf(this._config.viewStyle || defaultConfig.viewStyle),
 					},
 					{
 						type: 'dropdown',
