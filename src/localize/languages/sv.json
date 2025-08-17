@@ -23,30 +23,30 @@
 	},
 	"required": {
 		"name": "Nödvändig",
-		"secondary": "Nödvändiga optioner för att detta kort ska fungera"
+		"secondary": "Nödvändiga inställningar för att detta kort ska fungera"
 	},
 	"main": {
-		"name": "Huvud-ptioner",
-		"secondary": "Globala Optioner",
+		"name": "Huvudinställningar",
+		"secondary": "Globala inställningar",
 		"fields": {
 			"name": "Namn",
 			"showColors": "Visa färger",
 			"maxDaysToShow": "Max antal dagar att visa",
-			"showLocation": "Visa plats-ikon",
+			"showLocation": "Visa platsikon",
 			"showLoader": "Visa animation för laddning",
 			"showDate": "Visa datum på kortet",
 			"showDeclined": "Visa nekade händelser",
 			"sortBy": "Sortera efter",
 			"allDayBottom": "Visa heldagshändelser längst ner",
-			"hideFinishedEvents": "Hide finished events Dölj avslutade händelser",
+			"hideFinishedEvents": "Dölj avslutade händelser",
 			"dateFormat": "Datumformat",
-			"defaultMode": "Standard-mode",
+			"defaultMode": "Förvalt läge",
 			"linkTarget": "Länkmål",
-			"refreshInterval": "Refresh Interval",
-			"showRelativeTime": "Show Relative Time",
-			"firstDayOfWeek": "First Day of Week 0-6",
-			"cardHeight": "kortets höjd",
-			"hideDuplicates": "dölja dubbletter",
+			"refreshInterval": "Uppdateringsintervall",
+			"showRelativeTime": "Visa relativ tid",
+			"firstDayOfWeek": "Veckans första dag 0-6",
+			"cardHeight": "Kortets höjd",
+			"hideDuplicates": "Dölj dubbletter",
 			"showMultiDay": "Dela flerdagarsevenemang",
 			"showMultiDayEventParts": "Visa flerdagarsevenemangsdelar",
 			"eventTitle": "Ange tom händelsetitel",
@@ -59,8 +59,8 @@
 		}
 	},
 	"event": {
-		"name": "Händelse-mode",
-		"secondary": "Optioner för händelse-mode",
+		"name": "Händelse-läge",
+		"secondary": "Inställningar för händelse-läget",
 		"fields": {
 			"showCurrentEventLine": "Visa länk före händelsen?",
 			"showProgressBar": "Visa förlopp?",
@@ -71,10 +71,10 @@
 			"showNoEventsForToday": "Visa inga händelser idag?",
 			"showFullDayProgress": "Visa förlopp för heldagshändelser?",
 			"untilText": "Text för Tills:",
-			"noEventText": "Text för INga händelser idag:",
+			"noEventText": "Text för Inga händelser idag:",
 			"noEventsForNextDaysText": "Text för Inga händelser för följande dagar:",
 			"fullDayEventText": "Text för Heldagshändelse:",
-			"showEventIcon": "Show Event Icon",
+			"showEventIcon": "Visa händelseikon",
 			"showHiddenText": "Visa dold händelsetext",
 			"hiddenEventText": "Text för dolda händelser:",
 			"showCalendarName": "Visa kalendernamn",
@@ -88,20 +88,21 @@
 		}
 	},
 	"calendar": {
-		"name": "Kalender-mode",
-		"secondary": "Optioner för kalender-mode",
+		"name": "Kalender-läge",
+		"secondary": "Inställningar för kalender-läge",
 		"fields": {
 			"showLastCalendarWeek": "Visa sista veckan",
 			"disableCalEventLink": "Inaktivera länk till händelse",
 			"disableCalLocationLink": "Inaktivera länk till plats",
-			"calShowDescription": "Visa beskrivning?"
+			"calShowDescription": "Visa beskrivning?",
+			"disableCalLink": "Inaktivera kalenderlänk"
 		}
 	},
 	"appearance": {
 		"name": "Utseende",
 		"secondary": "Personliga färger etc.",
 		"main": {
-			"name": "Huvid",
+			"name": "Huvud",
 			"secondary": "Globala färginställningar"
 		},
 		"fields": {
