@@ -88,7 +88,7 @@ function buildCalendar(config: atomicCardConfig, selectedMonth) {
 	const dayOfWeekNumber = firstDay.day();
 	const month: any = [];
 	let weekShift = 0;
-	dayOfWeekNumber - config.firstDayOfWeek! >= 0 ? (weekShift = 0) : (weekShift = 7);
+	weekShift = dayOfWeekNumber - config.firstDayOfWeek! >= 0 ? 0 : 7;
 	for (
 		let i = config.firstDayOfWeek! - dayOfWeekNumber - weekShift;
 		i < 42 - dayOfWeekNumber + config.firstDayOfWeek! - weekShift;

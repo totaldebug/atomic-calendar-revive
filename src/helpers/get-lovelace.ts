@@ -15,7 +15,6 @@ export function getLovelaceCast(): any {
 }
 
 export function getLovelace(): LovelaceConfig | null {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	let root: any = document.querySelector('home-assistant');
 	root = root && root.shadowRoot;
 	root = root && root.querySelector('home-assistant-main');

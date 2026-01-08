@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { HassServiceTarget } from 'home-assistant-js-websocket';
 
 import { FrontendLocaleData, HomeAssistant } from './homeassistant';

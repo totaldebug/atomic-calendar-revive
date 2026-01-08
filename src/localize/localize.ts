@@ -1,4 +1,3 @@
-/* eslint-disable import/no-duplicates */
 import { FEATURE_REQUEST } from '../const';
 import * as ca from './languages/ca.json';
 import * as cs from './languages/cs.json';
