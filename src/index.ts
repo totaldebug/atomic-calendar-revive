@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
 import duration from 'dayjs/plugin/duration';
 import isoWeek from 'dayjs/plugin/isoWeek';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
@@ -21,6 +22,7 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(week);
 dayjs.extend(duration);
 dayjs.extend(timezone);
+dayjs.extend(advancedFormat);
 
 // Import Card Editor
 import './editor';
