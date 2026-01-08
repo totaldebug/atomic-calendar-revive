@@ -160,7 +160,11 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name
-							? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
+							? html`<div
+									class="header-name ${compactMode}"
+									style="color: ${this._config.nameColor};"
+									@click="${() => this.handleToggle()}"
+								>
 									${this._config.name}
 								</div>`
 							: ''}

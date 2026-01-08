@@ -18,24 +18,20 @@ export const styles: CSSResultGroup = css`
 		margin: 0 8px 0 2px;
 	}
 	.header-name {
-		font-family: var(--paper-font-headline_-_font-family);
-		-webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
-		font-size: var(--paper-font-headline_-_font-size);
-		font-weight: var(--paper-font-headline_-_font-weight);
-		letter-spacing: var(--paper-font-headline_-_letter-spacing);
-		line-height: var(--paper-font-headline_-_line-height);
-		text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
-		opacity: var(--dark-primary-opacity);
+		color: var(--ha-card-header-color, var(--primary-text-color));
+		font-family: var(--ha-card-header-font-family, inherit);
+		font-size: var(--ha-card-header-font-size, 24px);
+		font-weight: var(--ha-card-header-font-weight, 400);
+		letter-spacing: -0.012em;
+		line-height: 32px;
 		padding: 4px 8px 12px 0px;
-		float: left;
 	}
 	.header-date {
-		font-size: var(--paper-font-headline_-_font-size);
 		font-size: 1.3rem;
 		font-weight: 400;
 		color: var(--primary-text-color);
 		padding: 4px 8px 12px 0px;
-		line-height: var(--paper-font-headline_-_line-height);
+		line-height: 32px;
 		float: right;
 	}
 	.header-name.compact,
