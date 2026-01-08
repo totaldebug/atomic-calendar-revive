@@ -119,6 +119,21 @@ export function isHtml(input) {
 }
 
 /**
+ * Truncates HTML string based on text content length
+ * @param input HTML string
+ * @param limit Character limit
+ * @returns Truncated HTML (as text if truncated) or original HTML
+ */
+export function truncateHtml(input: string, limit: number): string {
+	const div = document.createElement('div');
+	div.innerHTML = input;
+	if (div.innerText.length > limit) {
+		return div.innerText.substring(0, limit) + '...';
+	}
+	return input;
+}
+
+/**
  * Gets the title html for an event mode event
  * @param config card configuration
  * @param event event to get title html for
@@ -224,7 +239,10 @@ export function getDescription(config: atomicCardConfig, event: EventClass) {
 	if (config.showDescription && event.description) {
 		let { description } = event;
 		if (isHtml(event.description)) {
-			description = unsafeHTML(event.description);
+			if (config.descLength) {
+				description = truncateHtml(event.description, config.descLength);
+			}
+			description = unsafeHTML(description);
 		}
 
 		if (!isHtml(event.description) && config.descLength && event.description.length >= config.descLength) {
@@ -254,7 +272,10 @@ export function getCalendarDescriptionHTML(config: atomicCardConfig, event: Even
 	if (event.description) {
 		let { description } = event;
 		if (isHtml(event.description)) {
-			description = unsafeHTML(event.description);
+			if (config.descLength) {
+				description = truncateHtml(event.description, config.descLength);
+			}
+			description = unsafeHTML(description);
 		}
 		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
 			description = event.description.slice(0, config.descLength);
