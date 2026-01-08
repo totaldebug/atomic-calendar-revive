@@ -7,11 +7,6 @@ import terser from '@rollup/plugin-terser';
 import serve from 'rollup-plugin-serve';
 import typescript from 'rollup-plugin-typescript2';
 
-import { ignoreSelectFiles } from './elements/ignore/select.js';
-import { ignoreSwitchFiles } from './elements/ignore/switch.js';
-import { ignoreTextfieldFiles } from './elements/ignore/textfield.js';
-import ignore from './rollup-plugins/ignore.js';
-
 const plugins = [
 	nodeResolve({
 		jsnext: true,
@@ -57,9 +52,6 @@ const plugins = [
 		headers: {
 			'Access-Control-Allow-Origin': '*',
 		},
-	}),
-	ignore({
-		files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
 	}),
 ];
 

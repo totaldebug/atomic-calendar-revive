@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 
 import { fireEvent } from './common/fire-event';
 import { appearanceSchema, calendarSchema, entitySchema, eventSchema, mainSchema } from './editor-schema';
+import { style } from './style-editor';
 import { atomicCardConfig } from './types/config';
 import { HomeAssistant } from './types/homeassistant';
 import { LovelaceCardEditor } from './types/lovelace';
@@ -15,38 +16,41 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	private _initialized = false;
 
 	static get styles() {
-		return css`
-			.card-config {
-				display: flex;
-				flex-direction: column;
-				gap: 16px;
-			}
-			.option {
-				padding: 4px 0;
-				cursor: pointer;
-			}
-			.row {
-				display: flex;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.title {
-				font-size: 16px;
-				font-weight: bold;
-				margin-left: 8px;
-			}
-			.secondary {
-				color: var(--secondary-text-color);
-			}
-			.values {
-				padding-left: 16px;
-				background: var(--secondary-background-color);
-				padding: 16px;
-			}
-			ha-expansion-panel {
-				margin-bottom: 8px;
-			}
-		`;
+		return [
+			style,
+			css`
+				.card-config {
+					display: flex;
+					flex-direction: column;
+					gap: 16px;
+				}
+				.option {
+					padding: 4px 0;
+					cursor: pointer;
+				}
+				.row {
+					display: flex;
+					align-items: center;
+					margin-bottom: 8px;
+				}
+				.title {
+					font-size: 16px;
+					font-weight: bold;
+					margin-left: 8px;
+				}
+				.secondary {
+					color: var(--secondary-text-color);
+				}
+				.values {
+					padding-left: 16px;
+					background: var(--secondary-background-color);
+					padding: 16px;
+				}
+				ha-expansion-panel {
+					margin-bottom: 8px;
+				}
+			`,
+		];
 	}
 
 	public setConfig(config: atomicCardConfig): void {
@@ -79,6 +83,19 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 
 		return html`
 			<div class="card-config">
+				<div class="sponsor">
+					<div>
+						Please consider sponsoring this project. <br />
+						This will help keep the project alive and continue development.
+					</div>
+					<div class="badge">
+						<a href="https://github.com/sponsors/marksie1988" target="_blank">
+							<img
+								src="https://img.shields.io/badge/sponsor-000?style=for-the-badge&logo=githubsponsors&logoColor=red"
+							/>
+						</a>
+					</div>
+				</div>
 				<ha-expansion-panel outlined>
 					<div slot="header" class="title">Main Settings</div>
 					<div class="values">

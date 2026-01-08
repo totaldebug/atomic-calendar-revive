@@ -66,9 +66,6 @@ export const style = css`
 		margin-right: -1px;
 		margin-left: -1px;
 	}
-	.mwc-text-field {
-		width: 97%;
-	}
 	.sponsor {
 		margin: 5px;
 		padding: 8px;
