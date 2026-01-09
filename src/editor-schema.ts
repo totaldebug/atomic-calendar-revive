@@ -37,7 +37,7 @@ export const mainSchema = [
 	{
 		name: 'defaultMode',
 		label: localize('main.fields.defaultMode'),
-		selector: { select: { options: ['Event', 'Calendar', 'Planner'], mode: 'dropdown' } },
+		selector: { select: { options: ['Event', 'Calendar', 'Planner', 'Inline'], mode: 'dropdown' } },
 	},
 	{
 		name: 'linkTarget',

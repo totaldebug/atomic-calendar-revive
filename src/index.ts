@@ -10,7 +10,7 @@ import timezone from 'dayjs/plugin/timezone';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import week from 'dayjs/plugin/weekOfYear';
 import { CSSResultGroup, LitElement, TemplateResult, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import './locale.dayjs';
 
 dayjs.extend(updateLocale);
@@ -32,10 +32,12 @@ import { getDefaultConfig } from './helpers/get-default-config';
 import { setHass } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
 import { getDate } from './lib/common.html';
+import EventClass from './lib/event.class';
 import { ILoaderHost } from './lib/loader-host.interface';
 import { ICalendarView } from './lib/view.interface';
 import { CalendarView } from './lib/views/CalendarView';
 import { EventView } from './lib/views/EventView';
+import { InlineCalendarView } from './lib/views/InlineCalendarView';
 import { PlannerView } from './lib/views/PlannerView';
 import localize from './localize/localize';
 import { styles } from './style';
@@ -49,6 +51,7 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 	@property() private _config!: atomicCardConfig;
 	@property() private content;
 	@property() public showLoader: boolean = false;
+	@state() public selectedEvent?: EventClass;
 
 	shouldUpdateHtml: boolean;
 	errorMessage: TemplateResult;
@@ -162,6 +165,7 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 			class="cal-card"
 			style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}"
 		>
+			${this.renderModal()}
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name
@@ -183,6 +187,27 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 		</ha-card>`;
 	}
 
+	private renderModal(): TemplateResult {
+		if (!this.selectedEvent) {
+			return html``;
+		}
+		const event = this.selectedEvent;
+
+		return html`
+			<div class="modal open" @click="${() => (this.selectedEvent = undefined)}">
+				<div class="modal-content" @click="${(e) => e.stopPropagation()}">
+					<span class="modal-close" @click="${() => (this.selectedEvent = undefined)}">&times;</span>
+					<div class="modal-event-title">${event.title}</div>
+					<div class="modal-event-time">
+						${event.isAllDayEvent
+							? localize('common.fullDayEventText')
+							: `${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')}`}
+					</div>
+				</div>
+			</div>
+		`;
+	}
+
 	/**
 	 * Updates the entire card
 	 */
@@ -194,7 +219,8 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 			!this.currentView ||
 			(this.modeToggle === 'Event' && !(this.currentView instanceof EventView)) ||
 			(this.modeToggle === 'Calendar' && !(this.currentView instanceof CalendarView)) ||
-			(this.modeToggle === 'Planner' && !(this.currentView instanceof PlannerView))
+			(this.modeToggle === 'Planner' && !(this.currentView instanceof PlannerView)) ||
+			(this.modeToggle === 'Inline' && !(this.currentView instanceof InlineCalendarView))
 		) {
 			if (this.modeToggle === 'Event') {
 				this.currentView = new EventView(this);
@@ -202,6 +228,8 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 				this.currentView = new CalendarView(this);
 			} else if (this.modeToggle === 'Planner') {
 				this.currentView = new PlannerView(this);
+			} else if (this.modeToggle === 'Inline') {
+				this.currentView = new InlineCalendarView(this);
 			} else {
 				this.currentView = new EventView(this);
 			}
@@ -216,6 +244,8 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 				this.modeToggle = 'Calendar';
 			} else if (this.modeToggle === 'Calendar') {
 				this.modeToggle = 'Planner';
+			} else if (this.modeToggle === 'Planner') {
+				this.modeToggle = 'Inline';
 			} else {
 				this.modeToggle = 'Event';
 			}
