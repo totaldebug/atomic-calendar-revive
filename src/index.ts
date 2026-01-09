@@ -92,7 +92,7 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 		this._config = {
 			...defaultConfig,
 			...customConfig,
-		};
+		} as atomicCardConfig;
 
 		this.modeToggle = this._config.defaultMode!;
 

@@ -43,4 +43,7 @@ Main Options
  showAllDayEvents          boolean   optional        ``true`` if set false will hide all events that are a full day
  offsetHeaderDate          boolean   optional        ``false`` if set true the header date will match the startDaysAhead offset date
  allDayBottom              boolean   optional        ``false`` if set true all day events will show below other running events
+ tap_action                object    optional        ``action: more-info`` Defines the action to run when the event is clicked.
+ hold_action               object    optional        ``action: none`` Defines the action to run when the event is held.
+ double_tap_action         object    optional        ``action: none`` Defines the action to run when the event is double-tapped.
 ========================= ========= =============== ==========================================================================================================================================================================================================================

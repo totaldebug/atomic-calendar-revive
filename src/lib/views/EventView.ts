@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import { TemplateResult, html } from 'lit';
 
+import { handleAction } from '../../helpers/handle-action';
 import localize from '../../localize/localize';
 import { atomicCardConfig } from '../../types/config';
 import { HomeAssistant } from '../../types/homeassistant';
@@ -213,7 +214,12 @@ export class EventView implements ICalendarView {
 								${eventDate}
 							</div>`
 						: html``;
-				return html`<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
+				return html`<div
+					class="single-event-container ${compactMode} ${dayWrap} ${hideDate}"
+					style="${lastEventStyle}"
+					@click="${(e: Event) =>
+						handleAction(e.currentTarget as HTMLElement, this.hass, this.config, 'tap', event.entity.entity_id)}"
+				>
 					${currentEventLine} ${eventLeft}
 					<div class="event-right" style="${finishedEventsStyle}">
 						<div class="event-right-top">

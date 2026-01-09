@@ -1,3 +1,5 @@
+import { ActionConfig } from './lovelace';
+
 export interface atomicCardConfig {
 	entities?: any;
 	type: string;
@@ -121,4 +123,9 @@ export interface atomicCardConfig {
 	plannerDaysToShow?: number;
 	plannerRollingWeek?: boolean;
 	_showPastEvents?: boolean;
+
+	// Actions
+	tap_action?: ActionConfig;
+	hold_action?: ActionConfig;
+	double_tap_action?: ActionConfig;
 }

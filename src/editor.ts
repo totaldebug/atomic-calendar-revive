@@ -199,6 +199,11 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 				</ha-expansion-panel>
 
 				<ha-expansion-panel outlined>
+					<div slot="header" class="title">Actions</div>
+					<div class="values">${this.renderActions()}</div>
+				</ha-expansion-panel>
+
+				<ha-expansion-panel outlined>
 					<div slot="header" class="title">Entities</div>
 					<div class="values">${this.renderEntities()}</div>
 				</ha-expansion-panel>
@@ -239,6 +244,25 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		`;
 	}
 
+	private renderActions(): TemplateResult {
+		const actions = ['tap_action', 'hold_action', 'double_tap_action'];
+		return html`
+			${actions.map(
+				(action) => html`
+					<div class="option" style="margin-bottom: 8px;">
+						<ha-selector
+							.hass=${this.hass}
+							.selector=${{ ui_action: {} }}
+							.value=${this._config[action]}
+							.label=${action.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}
+							@value-changed=${(ev) => this._actionValueChanged(ev, action)}
+						></ha-selector>
+					</div>
+				`,
+			)}
+		`;
+	}
+
 	private _computeLabel(schema: any) {
 		return schema.label || schema.name;
 	}
@@ -247,6 +271,13 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		fireEvent(this, 'config-changed', { config: ev.detail.value });
+	}
+
+	private _actionValueChanged(ev: CustomEvent, action: string): void {
+		this._config = { ...this._config, [action]: ev.detail.value };
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		fireEvent(this, 'config-changed', { config: this._config });
 	}
 
 	private _entitiesChanged(ev: CustomEvent): void {
