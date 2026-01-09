@@ -242,14 +242,11 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 		if (this._config.enableModeChange) {
 			if (this.modeToggle === 'Event') {
 				this.modeToggle = 'Calendar';
+				this.requestUpdate();
 			} else if (this.modeToggle === 'Calendar') {
-				this.modeToggle = 'Planner';
-			} else if (this.modeToggle === 'Planner') {
-				this.modeToggle = 'Inline';
-			} else {
 				this.modeToggle = 'Event';
+				this.requestUpdate();
 			}
-			this.requestUpdate();
 		}
 	}
 
