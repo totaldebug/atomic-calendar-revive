@@ -38,6 +38,7 @@ export default {
 
 	showNoEventsForToday: false,
 	showNoEventDays: false,
+	hideCardIfNoEvents: false,
 
 	showHours: true, //shows the bottom line (time, duration of event)
 	showEndTime: true,

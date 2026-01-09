@@ -26,6 +26,10 @@ export class EventView implements ICalendarView {
 		this.parent = parent;
 	}
 
+	get hasEvents(): boolean {
+		return this.events.length > 0;
+	}
+
 	async update(hass: HomeAssistant, config: atomicCardConfig): Promise<void> {
 		this.config = config;
 		this.hass = hass;

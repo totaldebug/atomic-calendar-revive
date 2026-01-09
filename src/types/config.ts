@@ -56,6 +56,7 @@ export interface atomicCardConfig {
 	descLength?: number;
 	showNoEventsForToday?: boolean;
 	showNoEventDays?: boolean;
+	hideCardIfNoEvents?: boolean;
 	noEventText?: string;
 	noEventsForNextDaysText?: string;
 	showHours?: boolean;

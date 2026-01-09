@@ -97,6 +97,7 @@ export const eventSchema = [
 	{ name: 'showTimeRemaining', label: localize('event.fields.showTimeRemaining'), selector: { boolean: {} } },
 	{ name: 'showAllDayHours', label: localize('event.fields.showAllDayHours'), selector: { boolean: {} } },
 	{ name: 'hoursOnSameLine', label: localize('event.fields.hoursOnSameLine'), selector: { boolean: {} } },
+	{ name: 'hideCardIfNoEvents', label: 'Hide card if no events', selector: { boolean: {} } },
 ];
 
 export const calendarSchema = [

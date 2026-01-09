@@ -29,6 +29,10 @@ export class PlannerView implements ICalendarView {
 		this.parent = parent;
 	}
 
+	get hasEvents(): boolean {
+		return true;
+	}
+
 	async update(hass: HomeAssistant, config: atomicCardConfig): Promise<void> {
 		this.config = config;
 		this.hass = hass;

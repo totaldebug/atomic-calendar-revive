@@ -152,6 +152,10 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 		}
 		this.updateCard();
 
+		if (this._config.hideCardIfNoEvents && this.currentView && !this.currentView.hasEvents && !this.showLoader) {
+			return html``;
+		}
+
 		const compactMode = this._config.compactMode ? 'compact' : '';
 
 		return html`<ha-card

@@ -32,6 +32,10 @@ export class CalendarView implements ICalendarView {
 		this.monthToGet = dayjs().format('MM');
 	}
 
+	get hasEvents(): boolean {
+		return true;
+	}
+
 	async update(hass: HomeAssistant, config: atomicCardConfig): Promise<void> {
 		this.hass = hass;
 		this.config = config;
