@@ -179,7 +179,9 @@ export class CalendarView implements ICalendarView {
 				</div>`;
 			} else {
 				const eventTime = this.config.showHours
-					? html`<div class="hours">${event.startDateTime.format('LT')}-${event.endDateTime.format('LT')}</div>`
+					? html`<div class="hours">
+							${event.startDateTime.format('LT')}${this.config.showEndTime ? `-${event.endDateTime.format('LT')}` : ''}
+						</div>`
 					: '';
 
 				const bulletType: string = event.isDeclined ? 'bullet-event-div-declined' : 'bullet-event-div-accepted';

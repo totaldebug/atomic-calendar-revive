@@ -57,6 +57,7 @@ export interface atomicCardConfig {
 	noEventText?: string;
 	noEventsForNextDaysText?: string;
 	showHours?: boolean;
+	showEndTime?: boolean;
 	eventTitleColor?: string;
 	locationIconColor?: string;
 	locationTextSize?: number;

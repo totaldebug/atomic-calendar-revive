@@ -52,6 +52,7 @@ export const mainSchema = [
 	{ name: 'cardHeight', label: localize('main.fields.cardHeight'), selector: { text: {} } },
 	{ name: 'showLoader', label: localize('main.fields.showLoader'), selector: { boolean: {} } },
 	{ name: 'showDate', label: localize('main.fields.showDate'), selector: { boolean: {} } },
+	{ name: 'showEndTime', label: 'Show End Time', selector: { boolean: {} } },
 	{ name: 'showDeclined', label: localize('main.fields.showDeclined'), selector: { boolean: {} } },
 	{ name: 'hideFinishedEvents', label: localize('main.fields.hideFinishedEvents'), selector: { boolean: {} } },
 	{ name: 'showLocation', label: localize('main.fields.showLocation'), selector: { boolean: {} } },

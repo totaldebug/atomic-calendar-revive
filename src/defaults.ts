@@ -37,6 +37,7 @@ export default {
 	showNoEventDays: false,
 
 	showHours: true, //shows the bottom line (time, duration of event)
+	showEndTime: true,
 	showRelativeTime: true,
 
 	eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set

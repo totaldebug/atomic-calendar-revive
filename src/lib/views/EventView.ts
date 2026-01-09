@@ -247,6 +247,14 @@ export class EventView implements ICalendarView {
 			return html``;
 		}
 
+		// If showEndTime is false, simplify the output
+		if (config.showEndTime === false) {
+			if (event.isAllDayEvent) {
+				return html`${config.fullDayEventText ?? localize('common.fullDayEventText')}`;
+			}
+			return html`${event.startDateTime.format('LT')}`;
+		}
+
 		// full day events, no hours set
 		// 1. Starts any day, ends later -> 'All day, end date'
 
