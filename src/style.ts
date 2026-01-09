@@ -433,8 +433,10 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.planner-corner {
-		min-width: 100px;
+		min-width: 150px;
+		width: 150px;
 		flex-shrink: 0;
+		border-bottom: 1px solid var(--divider-color);
 	}
 
 	.planner-header {
@@ -453,14 +455,17 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.planner-day-label {
-		min-width: 100px;
+		min-width: 150px;
+		width: 150px;
 		flex-shrink: 0;
 		padding: 8px;
 		border-right: 1px solid var(--divider-color);
+		border-left: 1px solid var(--divider-color);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		overflow: hidden;
 	}
 
 	.day-name {

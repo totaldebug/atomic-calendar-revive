@@ -45,7 +45,7 @@
 			"linkTarget": "Link cél",
 			"refreshInterval": "Frissítési időköz",
 			"showRelativeTime": "Relatív idő megjelenítése",
-			"firstDayOfWeek": "A hét első napja 0-6",
+			"firstDayOfWeek": "A hét első napja",
 			"cardHeight": "Kártya magassága",
 			"hideDuplicates": "Ismétlődések elrejtése",
 			"showMultiDay": "Többnapos események szétválasztása",

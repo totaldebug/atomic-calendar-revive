@@ -46,7 +46,7 @@
 			"linkTarget": "Link-doel",
 			"refreshInterval": "Verversingsinterval",
 			"showRelativeTime": "Toon relatieve tijd",
-			"firstDayOfWeek": "Eerste dag van de week 0-6",
+			"firstDayOfWeek": "Eerste dag van de week",
 			"cardHeight": "Kaarthoogte",
 			"hideDuplicates": "Verberg duplicaten",
 			"showMultiDay": "Splits meerdaagse gebeurtenissen",

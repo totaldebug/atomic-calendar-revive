@@ -45,7 +45,7 @@
 			"linkTarget": "Цель ссылки",
 			"refreshInterval": "Интервал обновления",
 			"showRelativeTime": "Показать относительное время",
-			"firstDayOfWeek": "Первый день недели 0-6",
+			"firstDayOfWeek": "Первый день недели",
 			"cardHeight": "Высота карты",
 			"hideDuplicates": "Скрыть дубликаты",
 			"showMultiDay": "Разделить многодневные события",

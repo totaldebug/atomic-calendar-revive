@@ -45,7 +45,7 @@
 			"linkTarget": "Lenkemål",
 			"refreshInterval": "Oppdateringsintervall",
 			"showRelativeTime": "Vis den relative tiden",
-			"firstDayOfWeek": "Første dag i uken 0-6",
+			"firstDayOfWeek": "Første dag i uken",
 			"cardHeight": "Høyde på kort",
 			"hideDuplicates": "Skjul duplikater",
 			"showMultiDay": "Delte flerdagers arrangementer",

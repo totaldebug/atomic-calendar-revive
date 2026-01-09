@@ -12,7 +12,11 @@ export const mainSchema = [
 		label: localize('main.fields.descLength'),
 		selector: { number: { min: 0, max: 99999999999 } },
 	},
-	{ name: 'firstDayOfWeek', label: localize('main.fields.firstDayOfWeek'), selector: { number: { min: 0, max: 6 } } },
+	{
+		name: 'firstDayOfWeek',
+		label: localize('main.fields.firstDayOfWeek'),
+		selector: { select: { options: [], mode: 'dropdown' } },
+	},
 	{
 		name: 'maxDaysToShow',
 		label: localize('main.fields.maxDaysToShow'),

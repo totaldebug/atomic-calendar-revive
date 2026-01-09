@@ -1,5 +1,7 @@
+import dayjs from 'dayjs';
 import { LitElement, TemplateResult, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import memoizeOne from 'memoize-one';
 
 import { fireEvent } from './common/fire-event';
 import defaults from './defaults';
@@ -84,9 +86,36 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		this._helpers = await (window as any).loadCardHelpers();
 	}
 
+	private _computeSchema = memoizeOne((schema: any[]) => {
+		return schema.map((field) => {
+			if (field.name === 'firstDayOfWeek') {
+				const weekdays = dayjs.weekdays();
+				const options = weekdays.map((day, index) => ({
+					value: index,
+					label: day,
+				}));
+				return {
+					...field,
+					selector: {
+						select: {
+							options: options,
+							mode: 'dropdown',
+						},
+					},
+				};
+			}
+			return field;
+		});
+	});
+
 	protected render(): TemplateResult | void {
 		if (!this.hass || !this._helpers) {
 			return html``;
+		}
+
+		// Ensure dayjs locale is set
+		if (this.hass.language) {
+			dayjs.locale(this.hass.language.toLowerCase());
 		}
 
 		return html`
@@ -110,7 +139,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 						<ha-form
 							.hass=${this.hass}
 							.data=${this._config}
-							.schema=${mainSchema}
+							.schema=${this._computeSchema(mainSchema)}
 							.computeLabel=${this._computeLabel}
 							@value-changed=${this._valueChanged}
 						></ha-form>

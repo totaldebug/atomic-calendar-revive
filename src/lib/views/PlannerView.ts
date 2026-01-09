@@ -92,20 +92,20 @@ export class PlannerView implements ICalendarView {
 			};
 		});
 
-		// Render Header Row (Calendars)
-		const calendarHeaders = calendars.map(
-			(cal) => html`<div class="planner-header" style="color: ${cal.color}">${cal.name}</div>`,
-		);
-
-		// Render Rows (Days)
-		const dayRows = this.events.map((dayEvents: [EventClass]) => {
+		// Render Header Row (Days)
+		const dayHeaders = this.events.map((dayEvents: [EventClass]) => {
 			const date = dayEvents[0].startDateTime;
-			const dayLabel = html`<div class="planner-day-label">
+			return html`<div class="planner-header">
 				<div class="day-name">${date.format('dddd')}</div>
 				<div class="day-date">${date.format('D MMM')}</div>
 			</div>`;
+		});
 
-			const calendarCells = calendars.map((cal) => {
+		// Render Rows (Calendars)
+		const calendarRows = calendars.map((cal) => {
+			const calendarLabel = html`<div class="planner-day-label" style="color: ${cal.color}">${cal.name}</div>`;
+
+			const dayCells = this.events.map((dayEvents: [EventClass]) => {
 				const eventsForCal = dayEvents.filter((e) => e.entity.entity_id === cal.id && !e.isEmpty);
 				return html`<div class="planner-cell">
 					${eventsForCal.map(
@@ -123,16 +123,16 @@ export class PlannerView implements ICalendarView {
 				</div>`;
 			});
 
-			return html`<div class="planner-row">${dayLabel} ${calendarCells}</div>`;
+			return html`<div class="planner-row">${calendarLabel} ${dayCells}</div>`;
 		});
 
 		return html`
 			<div class="planner-container">
 				<div class="planner-header-row">
 					<div class="planner-corner"></div>
-					${calendarHeaders}
+					${dayHeaders}
 				</div>
-				${dayRows}
+				${calendarRows}
 			</div>
 		`;
 	}

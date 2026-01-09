@@ -45,7 +45,7 @@
 			"linkTarget": "Ціль посилання",
 			"refreshInterval": "Інтервал оновлення",
 			"showRelativeTime": "Показувати час до початку події",
-			"firstDayOfWeek": "Перший день тижня 0-6",
+			"firstDayOfWeek": "Перший день тижня",
 			"cardHeight": "Висота картки",
 			"hideDuplicates": "Приховати дублікати",
 			"showMultiDay": "Розділити багатоденні події",

@@ -45,7 +45,7 @@
 			"linkTarget": "Objetivo del enlace",
 			"refreshInterval": "Intervalo de actualización",
 			"showRelativeTime": "Mostrar Tiempo Relativo",
-			"firstDayOfWeek": "Primer día de la semana 0-6",
+			"firstDayOfWeek": "Primer día de la semana",
 			"cardHeight": "Altura de la tarjeta",
 			"hideDuplicates": "Ocultar duplicados",
 			"showMultiDay": "Dividir Eventos de Varios Días",

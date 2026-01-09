@@ -4,8 +4,8 @@
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
 	"scripts": {
-		"lint": "eslint src/*.ts | more ",
-		"lintindex": "eslint src/index.ts | more",
+		"lint": "eslint src/*.ts",
+		"lintindex": "eslint src/index.ts",
 		"lintindexfix": "eslint src/index.ts --fix",
 		"lintfixall": "eslint src/*.ts --fix",
 		"linteditor": "eslint src/index-editor.ts",
