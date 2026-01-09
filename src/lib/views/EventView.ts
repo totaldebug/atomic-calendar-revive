@@ -214,9 +214,8 @@ export class EventView implements ICalendarView {
 							</div>`
 						: html``;
 				return html`<div class="single-event-container ${compactMode} ${dayWrap} ${hideDate}" style="${lastEventStyle}">
-					${eventLeft}
+					${currentEventLine} ${eventLeft}
 					<div class="event-right" style="${finishedEventsStyle}">
-						${currentEventLine}
 						<div class="event-right-top">
 							${getTitleHTML(this.config, event, this.hass, 'Event')}
 							<div class="event-location">

@@ -50,7 +50,6 @@ export const styles: CSSResultGroup = css`
 	}
 	.event-left,
 	.event-right {
-		grid-row: 1;
 	}
 	.event-left {
 		grid-column: 1;
@@ -159,6 +158,11 @@ export const styles: CSSResultGroup = css`
 		margin: -8px 0px 2px 0px;
 		border-width: 2px 0 0 0;
 	}
+
+	.single-event-container > .eventBar:first-child {
+		margin-top: 8px;
+	}
+
 	.event-cal-name-icon {
 		--mdc-icon-size: 15px;
 	}
@@ -166,6 +170,7 @@ export const styles: CSSResultGroup = css`
 	.eventBar {
 		margin-top: -10px;
 		margin-bottom: 0px;
+		grid-column: 1 / -1;
 	}
 
 	progress {
