@@ -2,7 +2,15 @@ import { LitElement, TemplateResult, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 import { fireEvent } from './common/fire-event';
-import { appearanceSchema, calendarSchema, entitySchema, eventSchema, mainSchema } from './editor-schema';
+import defaults from './defaults';
+import {
+	appearanceSchema,
+	calendarSchema,
+	entitySchema,
+	eventSchema,
+	mainSchema,
+	plannerSchema,
+} from './editor-schema';
 import { style } from './style-editor';
 import { atomicCardConfig } from './types/config';
 import { HomeAssistant } from './types/homeassistant';
@@ -54,7 +62,7 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 	}
 
 	public setConfig(config: atomicCardConfig): void {
-		this._config = config;
+		this._config = { ...defaults, ...config };
 		this.loadCardHelpers();
 	}
 
@@ -129,6 +137,19 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 							.hass=${this.hass}
 							.data=${this._config}
 							.schema=${calendarSchema}
+							.computeLabel=${this._computeLabel}
+							@value-changed=${this._valueChanged}
+						></ha-form>
+					</div>
+				</ha-expansion-panel>
+
+				<ha-expansion-panel outlined>
+					<div slot="header" class="title">Planner Mode</div>
+					<div class="values">
+						<ha-form
+							.hass=${this.hass}
+							.data=${this._config}
+							.schema=${plannerSchema}
 							.computeLabel=${this._computeLabel}
 							@value-changed=${this._valueChanged}
 						></ha-form>

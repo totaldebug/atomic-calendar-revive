@@ -140,6 +140,43 @@ export async function getCalendarMode(config: atomicCardConfig, hass, selectedMo
 }
 
 /**
+ * Gets the date range for Planner Mode
+ * @param config Card Configuration
+ * @returns Object containing start and end dates
+ */
+export function getPlannerDateRange(config: atomicCardConfig) {
+	const daysToShow = config.plannerDaysToShow! == 0 ? config.plannerDaysToShow! : config.plannerDaysToShow! - 1;
+	const today = dayjs();
+	let start = today.startOf('day').add(config.startDaysAhead!, 'day');
+
+	if (!config.plannerRollingWeek) {
+		const currentDay = start.day();
+		const firstDay = config.firstDayOfWeek!;
+		let diff = currentDay - firstDay;
+		if (diff < 0) {
+			diff += 7;
+		}
+		start = start.subtract(diff, 'day').startOf('day');
+	}
+
+	const end = start.endOf('day').add(daysToShow, 'day');
+	return { start, end };
+}
+
+/**
+ * Gets events for PlannerMode specifically, calculations for the dates are different
+ * to event mode hence the different function
+ *
+ * @param config Card Configuration
+ * @param hass Hassio Options
+ * @returns List of Events
+ */
+export async function getPlannerMode(config: atomicCardConfig, hass) {
+	const { start, end } = getPlannerDateRange(config);
+	return await getAllEvents(start, end, config, hass, 'Event');
+}
+
+/**
  * gets events from HA, this is for both Calendar and Event mode
  *
  */

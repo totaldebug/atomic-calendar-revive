@@ -25,15 +25,24 @@ export function showCalendarLink(config, selectedMonth) {
 	}
 }
 
-export function setNoEventDays(config: atomicCardConfig, singleEvents) {
+export function setNoEventDays(
+	config: atomicCardConfig,
+	singleEvents,
+	customStart?: dayjs.Dayjs,
+	customEnd?: dayjs.Dayjs,
+) {
 	// Create an array of days to show
 	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-	const initialTime = dayjs().add(config.startDaysAhead!, 'day').startOf('day'),
-		endTime = dayjs()
-			.add(daysToShow + config.startDaysAhead!, 'day')
-			.endOf('day'),
-		allDates: any = [];
-	for (let q = initialTime; q.isBefore(endTime, 'day'); q = q.add(1, 'day')) {
+	const initialTime = customStart
+		? customStart.startOf('day')
+		: dayjs().add(config.startDaysAhead!, 'day').startOf('day');
+	const endTime = customEnd
+		? customEnd.endOf('day')
+		: dayjs()
+				.add(daysToShow + config.startDaysAhead!, 'day')
+				.endOf('day');
+	const allDates: any = [];
+	for (let q = initialTime; q.isBefore(endTime); q = q.add(1, 'day')) {
 		allDates.push(q);
 	}
 	allDates.map((day) => {

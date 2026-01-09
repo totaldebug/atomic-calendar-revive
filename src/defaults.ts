@@ -97,4 +97,8 @@ export default {
 
 	titleLength: 0,
 	descLength: 0,
+
+	// Planner Mode Default Settings
+	plannerDaysToShow: 7,
+	plannerRollingWeek: false,
 };

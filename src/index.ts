@@ -36,6 +36,7 @@ import { ILoaderHost } from './lib/loader-host.interface';
 import { ICalendarView } from './lib/view.interface';
 import { CalendarView } from './lib/views/CalendarView';
 import { EventView } from './lib/views/EventView';
+import { PlannerView } from './lib/views/PlannerView';
 import localize from './localize/localize';
 import { styles } from './style';
 import { atomicCardConfig } from './types/config';
@@ -188,12 +189,17 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 		if (
 			!this.currentView ||
 			(this.modeToggle === 'Event' && !(this.currentView instanceof EventView)) ||
-			(this.modeToggle !== 'Event' && !(this.currentView instanceof CalendarView))
+			(this.modeToggle === 'Calendar' && !(this.currentView instanceof CalendarView)) ||
+			(this.modeToggle === 'Planner' && !(this.currentView instanceof PlannerView))
 		) {
 			if (this.modeToggle === 'Event') {
 				this.currentView = new EventView(this);
-			} else {
+			} else if (this.modeToggle === 'Calendar') {
 				this.currentView = new CalendarView(this);
+			} else if (this.modeToggle === 'Planner') {
+				this.currentView = new PlannerView(this);
+			} else {
+				this.currentView = new EventView(this);
 			}
 		}
 
@@ -202,7 +208,13 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 
 	handleToggle() {
 		if (this._config.enableModeChange) {
-			this.modeToggle = this.modeToggle === 'Event' ? 'Calendar' : 'Event';
+			if (this.modeToggle === 'Event') {
+				this.modeToggle = 'Calendar';
+			} else if (this.modeToggle === 'Calendar') {
+				this.modeToggle = 'Planner';
+			} else {
+				this.modeToggle = 'Event';
+			}
 			this.requestUpdate();
 		}
 	}

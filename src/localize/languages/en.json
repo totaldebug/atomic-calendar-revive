@@ -99,6 +99,14 @@
 			"disableCalLink": "Disable calendar link"
 		}
 	},
+	"planner": {
+		"name": "Planner Mode",
+		"secondary": "Planner Mode specific options",
+		"fields": {
+			"plannerDaysToShow": "Days to Show",
+			"plannerRollingWeek": "Rolling Week (Start Today)"
+		}
+	},
 	"appearance": {
 		"name": "Appearance",
 		"secondary": "Customize the colors etc.",

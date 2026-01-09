@@ -419,4 +419,76 @@ export const styles: CSSResultGroup = css`
 			transform: rotate(360deg);
 		}
 	}
+
+	/* PLANNER VIEW */
+	.planner-container {
+		display: flex;
+		flex-direction: column;
+		overflow-x: auto;
+	}
+
+	.planner-header-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.planner-corner {
+		min-width: 100px;
+		flex-shrink: 0;
+	}
+
+	.planner-header {
+		flex: 1;
+		text-align: center;
+		font-weight: bold;
+		padding: 8px;
+		min-width: 150px;
+		border-bottom: 1px solid var(--divider-color);
+	}
+
+	.planner-row {
+		display: flex;
+		flex-direction: row;
+		border-bottom: 1px solid var(--divider-color);
+	}
+
+	.planner-day-label {
+		min-width: 100px;
+		flex-shrink: 0;
+		padding: 8px;
+		border-right: 1px solid var(--divider-color);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.day-name {
+		font-weight: bold;
+	}
+
+	.day-date {
+		font-size: 0.9em;
+		opacity: 0.8;
+	}
+
+	.planner-cell {
+		flex: 1;
+		min-width: 150px;
+		padding: 4px;
+		border-right: 1px solid var(--divider-color);
+	}
+
+	.planner-event {
+		background-color: var(--cal-event-background-color, rgba(0, 0, 0, 0.1));
+		border-radius: 4px;
+		padding: 4px;
+		margin-bottom: 4px;
+		font-size: 0.9em;
+	}
+
+	.planner-event-time {
+		font-size: 0.8em;
+		opacity: 0.8;
+	}
 `;

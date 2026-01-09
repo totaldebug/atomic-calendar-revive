@@ -322,6 +322,9 @@ export default class EventClass {
 	//start time, returns today if before today
 	get startTimeToShow() {
 		const time = this.startDateTime;
+		if (this._globalConfig._showPastEvents) {
+			return time;
+		}
 		if (dayjs(time).isBefore(dayjs().startOf('day')) && !(this._globalConfig.startDaysAhead < 0)) {
 			return dayjs().startOf('day');
 		} else {

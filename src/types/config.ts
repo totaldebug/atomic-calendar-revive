@@ -115,4 +115,9 @@ export interface atomicCardConfig {
 	showTimeRemaining?: boolean;
 	showAllDayHours?: boolean;
 	showCalendarName?: boolean;
+
+	// Planner Mode Settings
+	plannerDaysToShow?: number;
+	plannerRollingWeek?: boolean;
+	_showPastEvents?: boolean;
 }

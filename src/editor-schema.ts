@@ -33,17 +33,17 @@ export const mainSchema = [
 	{
 		name: 'defaultMode',
 		label: localize('main.fields.defaultMode'),
-		selector: { select: { options: ['Event', 'Calendar'] } },
+		selector: { select: { options: ['Event', 'Calendar', 'Planner'], mode: 'dropdown' } },
 	},
 	{
 		name: 'linkTarget',
 		label: localize('main.fields.linkTarget'),
-		selector: { select: { options: ['_blank', '_self', '_parent', '_top'] } },
+		selector: { select: { options: ['_blank', '_self', '_parent', '_top'], mode: 'dropdown' } },
 	},
 	{
 		name: 'sortBy',
 		label: localize('main.fields.sortBy'),
-		selector: { select: { options: ['start', 'milestone', 'none'] } },
+		selector: { select: { options: ['start', 'milestone', 'none'], mode: 'dropdown' } },
 	},
 	{ name: 'cardHeight', label: localize('main.fields.cardHeight'), selector: { text: {} } },
 	{ name: 'showLoader', label: localize('main.fields.showLoader'), selector: { boolean: {} } },
@@ -108,6 +108,15 @@ export const calendarSchema = [
 		selector: { boolean: {} },
 	},
 	{ name: 'disableCalLink', label: localize('calendar.fields.disableCalLink'), selector: { boolean: {} } },
+];
+
+export const plannerSchema = [
+	{
+		name: 'plannerDaysToShow',
+		label: localize('planner.fields.plannerDaysToShow'),
+		selector: { number: { min: 1, max: 365 } },
+	},
+	{ name: 'plannerRollingWeek', label: localize('planner.fields.plannerRollingWeek'), selector: { boolean: {} } },
 ];
 
 export const appearanceSchema = [
