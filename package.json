@@ -107,7 +107,7 @@
 			[
 				"@semantic-release/exec",
 				{
-					"prepareCmd": "yarn run build"
+					"prepareCmd": "pnpm run build"
 				}
 			],
 			[
