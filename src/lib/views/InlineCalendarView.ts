@@ -130,6 +130,16 @@ export class InlineCalendarView implements ICalendarView {
 			const dayStyleSat = dayDate.isoWeekday() == 6 ? `weekendSat` : ``;
 			const dayStyleSun = dayDate.isoWeekday() == 7 ? `weekendSun` : ``;
 
+			const showWeek = this.config.showWeekNumber && i % 7 === 0;
+			const weekHtml = showWeek
+				? html`<div
+						class="cal-week-number"
+						style="position: absolute; top: 0px; left: 0px; background-color: #757575; color: #ffffff; font-size: 0.75em; padding: 2px 5px; font-weight: bold;"
+					>
+						W${dayDate.week()}
+					</div>`
+				: '';
+
 			if (i < 35 || showLastRow) {
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
@@ -137,9 +147,10 @@ export class InlineCalendarView implements ICalendarView {
 						class="cal ${dayStyleSat} ${dayStyleSun} ${dayStyleOtherMonth}"
 						style="--cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config.calDayColor}"
 					>
-						<div class="calDay inline">
-							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-							<div class="events">
+						<div class="calDay inline" style="position: relative; height: 100%; width: 100%;">
+							${weekHtml}
+							<div class="${dayClassToday}" style="position: absolute; top: 0px; right: 5px;">${day.date.date()}</div>
+							<div class="events" style="padding-top: 22px; padding-bottom: 5px;">
 								${day.allEvents.map((event: EventClass) => {
 									const eventColor =
 										typeof event.entityConfig.color != 'undefined'

@@ -135,6 +135,17 @@ export class CalendarView implements ICalendarView {
 			if (dayDate.isSame(dayjs(), 'day') && !this.clickedDate) {
 				this.handleCalendarEventSummary(day, false);
 			}
+
+			const showWeek = this.config.showWeekNumber && i % 7 === 0;
+			const weekHtml = showWeek
+				? html`<div
+						class="cal-week-number"
+						style="position: absolute; top: 0px; left: 0px; background-color: #757575; color: #ffffff; font-size: 0.75em; padding: 2px 5px; font-weight: bold;"
+					>
+						W${dayDate.week()}
+					</div>`
+				: '';
+
 			if (i < 35 || showLastRow) {
 				return html`
 					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
@@ -144,9 +155,15 @@ export class CalendarView implements ICalendarView {
 						style="${dayStyleClicked} --cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config
 							.calDayColor}"
 					>
-						<div class="calDay">
-							<div class="${dayClassToday}" style="position: relative; top: 5%;">${day.date.date()}</div>
-							<div class="iconDiv">${this.handleCalendarIcons(day)}</div>
+						<div
+							class="calDay"
+							style="position: relative; max-width: none; width: 100%; height: 100%; margin: 0; padding: 0;"
+						>
+							${weekHtml}
+							<div class="${dayClassToday}" style="position: absolute; top: 0px; right: 5px;">${day.date.date()}</div>
+							<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">
+								${this.handleCalendarIcons(day)}
+							</div>
 						</div>
 					</td>
 					${i && i % 6 === 0 ? html`</tr>` : ''}

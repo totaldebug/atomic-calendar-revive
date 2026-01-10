@@ -252,10 +252,10 @@ export const styles: CSSResultGroup = css`
 	}
 
 	td.cal {
-		padding: 5px 5px 5px 5px;
+		padding: 0px;
 		border: 1px solid var(--cal-grid-color);
 		text-align: center;
-		vertical-align: middle;
+		vertical-align: top;
 		width: 100%;
 		color: var(--cal-day-color);
 	}
