@@ -87,13 +87,14 @@ export class PlannerView implements ICalendarView {
 		}
 
 		// Get unique calendars from config
-		const calendars = this.config.entities.map((entity) => {
-			const entityId = typeof entity === 'string' ? entity : entity.entity;
-			const stateObj = this.hass.states[entityId];
+		const rawEntities = this.config.entities ?? [];
+		const calendars = rawEntities.map((entity) => {
+			const entityObj = typeof entity === 'string' ? { entity: entity } : entity;
+			const stateObj = this.hass.states[entityObj.entity];
 			return {
-				id: entityId,
-				name: entity.name || stateObj?.attributes?.friendly_name || entityId,
-				color: entity.color || 'var(--primary-color)',
+				id: entityObj.entity,
+				name: entityObj.name || stateObj?.attributes?.friendly_name || entityObj.entity,
+				color: entityObj.color || 'var(--primary-color)',
 			};
 		});
 
