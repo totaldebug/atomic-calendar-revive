@@ -200,16 +200,17 @@ export async function getAllEvents(
 
 	const calendarEntityPromises: any[] = [];
 	config.entities.map((entity) => {
-		const calendarEntity = (entity && entity.entity) || entity;
+		const entityObj = typeof entity === 'string' ? { entity: entity } : entity;
+		const calendarEntity = entityObj.entity;
 
-		const daysToShow = entity.maxDaysToShow! == 0 ? entity.maxDaysToShow! : entity.maxDaysToShow! - 1;
+		const daysToShow = entityObj.maxDaysToShow! == 0 ? entityObj.maxDaysToShow! : entityObj.maxDaysToShow! - 1;
 
 		const endTime =
-			entity.maxDaysToShow === undefined
+			entityObj.maxDaysToShow === undefined
 				? end.endOf('day').format(dateFormat)
 				: start.endOf('day').add(daysToShow, 'day').format(dateFormat);
 
-		const url: string = `calendars/${entity.entity}?start=${startTime}&end=${endTime}`;
+		const url: string = `calendars/${entityObj.entity}?start=${startTime}&end=${endTime}`;
 
 		// make all requests at the same time
 		calendarEntityPromises.push(
@@ -217,7 +218,7 @@ export async function getAllEvents(
 				.callApi('GET', url)
 				.then((rawEvents) => {
 					rawEvents.map((event) => {
-						event.entity = entity;
+						event.entity = entityObj;
 						event.calendarEntity = calendarEntity;
 						event.hassEntity = hass.states[calendarEntity];
 					});
@@ -228,7 +229,7 @@ export async function getAllEvents(
 				})
 				.catch((error) => {
 					failedEvents.push({
-						name: entity.name || calendarEntity,
+						name: entityObj.name || calendarEntity,
 						error,
 					});
 				}),

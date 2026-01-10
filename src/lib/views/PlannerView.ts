@@ -30,7 +30,7 @@ export class PlannerView implements ICalendarView {
 	}
 
 	get hasEvents(): boolean {
-		return true;
+		return this.events.length > 0;
 	}
 
 	async update(hass: HomeAssistant, config: atomicCardConfig): Promise<void> {
@@ -88,10 +88,11 @@ export class PlannerView implements ICalendarView {
 
 		// Get unique calendars from config
 		const calendars = this.config.entities.map((entity) => {
-			const stateObj = this.hass.states[entity.entity];
+			const entityId = typeof entity === 'string' ? entity : entity.entity;
+			const stateObj = this.hass.states[entityId];
 			return {
-				id: entity.entity,
-				name: entity.name || stateObj?.attributes?.friendly_name || entity.entity,
+				id: entityId,
+				name: entity.name || stateObj?.attributes?.friendly_name || entityId,
 				color: entity.color || 'var(--primary-color)',
 			};
 		});

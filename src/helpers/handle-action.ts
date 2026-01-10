@@ -36,14 +36,17 @@ export const handleAction = (
 		}
 	}
 
-	const event = new Event('hass-action', { bubbles: true, composed: true });
-	(event as any).detail = {
-		config: actionConfig,
-		action: action,
-	};
+	const event = new CustomEvent('hass-action', {
+		bubbles: true,
+		composed: true,
+		detail: {
+			config: actionConfig,
+			action: action,
+		},
+	});
 
 	if (actionConfig.action === 'more-info' && entityId) {
-		(event as any).detail.config = { ...actionConfig, entity: entityId };
+		(event.detail as any).config = { ...actionConfig, entity: entityId };
 	}
 
 	node.dispatchEvent(event);

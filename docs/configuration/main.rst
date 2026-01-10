@@ -25,7 +25,7 @@ Main Options
  linkTarget                string    optional        ``_blank`` Allows custom target for links, default will open new tab.
  defaultMode               integer   optional        ``Event`` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default
  refreshInterval           integer   optional        ``60`` Set how often the calendar should refresh data in seconds
- showHours                 boolean   optional        ``true`` shows when and event starts / ends
+ showHours                 boolean   optional        ``true`` shows when an event starts / ends
  showEndTime               boolean   optional        ``true`` shows when an event ends
  showRelativeTime          boolean   optional        ``true`` shows amount of time until event starts
  showPrivate               boolean   optional        ``true`` show private events (only Google Calendar)

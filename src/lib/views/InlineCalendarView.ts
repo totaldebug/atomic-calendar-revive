@@ -32,7 +32,7 @@ export class InlineCalendarView implements ICalendarView {
 	}
 
 	get hasEvents(): boolean {
-		return true;
+		return this.month.some((day) => day.allEvents.length > 0);
 	}
 
 	async update(hass: HomeAssistant, config: atomicCardConfig): Promise<void> {

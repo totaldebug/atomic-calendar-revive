@@ -16,7 +16,7 @@ export class EventView implements ICalendarView {
 	private hiddenEvents: number = 0;
 	private failedEvents: any[] = [];
 	private lastEventsUpdateTime: dayjs.Dayjs | null = null;
-	private errorMessage: TemplateResult = html``;
+	private errorMessage: TemplateResult | null = null;
 	private isUpdating: boolean = false;
 	private config!: atomicCardConfig;
 	private hass!: HomeAssistant;
@@ -70,12 +70,12 @@ export class EventView implements ICalendarView {
 	}
 
 	render(): TemplateResult {
-		if (this.errorMessage !== html`` && (!this.events || this.events.length === 0)) {
+		if (this.errorMessage && (!this.events || this.events.length === 0)) {
 			return this.errorMessage;
 		}
 
 		if (!this.events) {
-			return this.errorMessage;
+			return this.errorMessage || html``;
 		}
 
 		if (this.events.length === 0 && (this.config.maxDaysToShow == 1 || this.config.maxDaysToShow == 0)) {

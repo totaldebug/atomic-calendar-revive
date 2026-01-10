@@ -132,7 +132,7 @@ export const appearanceSchema = [
 export const entitySchema = [
 	{ name: 'name', label: 'Name', selector: { text: {} } },
 	{ name: 'icon', label: 'Icon', selector: { icon: {} } },
-	{ name: 'color', label: 'Color', selector: { text: { type: 'color' } } },
+	{ name: 'color', label: 'Color', selector: { color: {} } },
 	{ name: 'startTimeFilter', label: 'Start Time Filter', selector: { text: {} } },
 	{ name: 'endTimeFilter', label: 'End Time Filter', selector: { text: {} } },
 	{ name: 'maxDaysToShow', label: 'Max Days To Show', selector: { number: {} } },

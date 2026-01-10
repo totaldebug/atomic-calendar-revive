@@ -134,10 +134,11 @@ export function isHtml(input) {
  * @returns Truncated HTML (as text if truncated) or original HTML
  */
 export function truncateHtml(input: string, limit: number): string {
-	const div = document.createElement('div');
-	div.innerHTML = input;
-	if (div.innerText.length > limit) {
-		return div.innerText.substring(0, limit) + '...';
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(input, 'text/html');
+	const text = doc.body.textContent || '';
+	if (text.length > limit) {
+		return text.substring(0, limit) + '...';
 	}
 	return input;
 }
