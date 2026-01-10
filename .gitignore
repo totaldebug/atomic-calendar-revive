@@ -94,3 +94,5 @@ undefined/
 .dynamodb/
 
 docs/_build
+.gemini*
+GEMINI.md

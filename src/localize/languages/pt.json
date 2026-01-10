@@ -45,7 +45,7 @@
 			"linkTarget": "Destino link",
 			"refreshInterval": "Intervalo atualização",
 			"showRelativeTime": "Mostrar tempo relativo",
-			"firstDayOfWeek": "Primeiro dia da semana 0-6",
+			"firstDayOfWeek": "Primeiro dia da semana",
 			"cardHeight": "Altura cartão",
 			"hideDuplicates": "Esconder duplicados",
 			"showMultiDay": "Dividir eventos de mutiplos dias",

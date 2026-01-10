@@ -25,7 +25,8 @@ Main Options
  linkTarget                string    optional        ``_blank`` Allows custom target for links, default will open new tab.
  defaultMode               integer   optional        ``Event`` Set `Event` to make Events default mode, set `Calendar` to make Calendar mode default
  refreshInterval           integer   optional        ``60`` Set how often the calendar should refresh data in seconds
- showHours                 boolean   optional        ``true`` shows when and event starts / ends
+ showHours                 boolean   optional        ``true`` shows when an event starts / ends
+ showEndTime               boolean   optional        ``true`` shows when an event ends
  showRelativeTime          boolean   optional        ``true`` shows amount of time until event starts
  showPrivate               boolean   optional        ``true`` show private events (only Google Calendar)
  showNoEventDays           boolean   optional        ``false`` Shows days that have no events, instead of only showing event days
@@ -42,4 +43,7 @@ Main Options
  showAllDayEvents          boolean   optional        ``true`` if set false will hide all events that are a full day
  offsetHeaderDate          boolean   optional        ``false`` if set true the header date will match the startDaysAhead offset date
  allDayBottom              boolean   optional        ``false`` if set true all day events will show below other running events
+ tap_action                object    optional        ``action: more-info`` Defines the action to run when the event is clicked.
+ hold_action               object    optional        ``action: none`` Defines the action to run when the event is held.
+ double_tap_action         object    optional        ``action: none`` Defines the action to run when the event is double-tapped.
 ========================= ========= =============== ==========================================================================================================================================================================================================================

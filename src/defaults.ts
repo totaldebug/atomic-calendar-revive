@@ -1,3 +1,6 @@
+import { atomicCardConfig } from './types/config';
+import { ActionConfig } from './types/lovelace';
+
 export default {
 	cardHeight: '100%',
 
@@ -35,8 +38,10 @@ export default {
 
 	showNoEventsForToday: false,
 	showNoEventDays: false,
+	hideCardIfNoEvents: false,
 
 	showHours: true, //shows the bottom line (time, duration of event)
+	showEndTime: true,
 	showRelativeTime: true,
 
 	eventTitleColor: 'var(--primary-text-color)', //Event title settings (center top), if no custom color set
@@ -97,4 +102,19 @@ export default {
 
 	titleLength: 0,
 	descLength: 0,
-};
+
+	// Planner Mode Default Settings
+	plannerDaysToShow: 7,
+	plannerRollingWeek: false,
+
+	// Action Settings
+	tap_action: {
+		action: 'more-info',
+	} as ActionConfig,
+	hold_action: {
+		action: 'none',
+	} as ActionConfig,
+	double_tap_action: {
+		action: 'none',
+	} as ActionConfig,
+} as Partial<atomicCardConfig>;

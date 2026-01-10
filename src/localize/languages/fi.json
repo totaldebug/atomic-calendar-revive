@@ -45,7 +45,7 @@
 			"linkTarget": "Linkin kohde",
 			"refreshInterval": "Päivitysväli",
 			"showRelativeTime": "Näytä suhteellinen aika",
-			"firstDayOfWeek": "Viikon ensimmäinen päivä 0-6",
+			"firstDayOfWeek": "Viikon ensimmäinen päivä",
 			"cardHeight": "Kortin korkeus",
 			"hideDuplicates": "Piilota kaksoiskappaleet",
 			"showMultiDay": "Jaa monipäiväiset tapahtumat",

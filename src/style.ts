@@ -18,24 +18,20 @@ export const styles: CSSResultGroup = css`
 		margin: 0 8px 0 2px;
 	}
 	.header-name {
-		font-family: var(--paper-font-headline_-_font-family);
-		-webkit-font-smoothing: var(--paper-font-headline_-_-webkit-font-smoothing);
-		font-size: var(--paper-font-headline_-_font-size);
-		font-weight: var(--paper-font-headline_-_font-weight);
-		letter-spacing: var(--paper-font-headline_-_letter-spacing);
-		line-height: var(--paper-font-headline_-_line-height);
-		text-rendering: var(--paper-font-common-expensive-kerning_-_text-rendering);
-		opacity: var(--dark-primary-opacity);
+		color: var(--ha-card-header-color, var(--primary-text-color));
+		font-family: var(--ha-card-header-font-family, inherit);
+		font-size: var(--ha-card-header-font-size, 24px);
+		font-weight: var(--ha-card-header-font-weight, 400);
+		letter-spacing: -0.012em;
+		line-height: 32px;
 		padding: 4px 8px 12px 0px;
-		float: left;
 	}
 	.header-date {
-		font-size: var(--paper-font-headline_-_font-size);
 		font-size: 1.3rem;
 		font-weight: 400;
 		color: var(--primary-text-color);
 		padding: 4px 8px 12px 0px;
-		line-height: var(--paper-font-headline_-_line-height);
+		line-height: 32px;
 		float: right;
 	}
 	.header-name.compact,
@@ -54,7 +50,6 @@ export const styles: CSSResultGroup = css`
 	}
 	.event-left,
 	.event-right {
-		grid-row: 1;
 	}
 	.event-left {
 		grid-column: 1;
@@ -163,6 +158,11 @@ export const styles: CSSResultGroup = css`
 		margin: -8px 0px 2px 0px;
 		border-width: 2px 0 0 0;
 	}
+
+	.single-event-container > .eventBar:first-child {
+		margin-top: 8px;
+	}
+
 	.event-cal-name-icon {
 		--mdc-icon-size: 15px;
 	}
@@ -170,6 +170,7 @@ export const styles: CSSResultGroup = css`
 	.eventBar {
 		margin-top: -10px;
 		margin-bottom: 0px;
+		grid-column: 1 / -1;
 	}
 
 	progress {
@@ -264,6 +265,19 @@ export const styles: CSSResultGroup = css`
 		font-size: 95%;
 		max-width: 38px;
 		margin: auto;
+	}
+
+	.calDay .iconDiv {
+		white-space: nowrap;
+	}
+
+	.calendar-icon-container {
+		display: inline-block;
+		margin-right: 10px; /* adjust this value to fit your layout */
+	}
+
+	.calendar-icon-container:nth-child(4n) {
+		margin-right: 0;
 	}
 
 	.currentDay {
@@ -404,5 +418,192 @@ export const styles: CSSResultGroup = css`
 		100% {
 			transform: rotate(360deg);
 		}
+	}
+
+	/* PLANNER VIEW */
+	.planner-container {
+		display: flex;
+		flex-direction: column;
+		overflow-x: auto;
+	}
+
+	.planner-header-row {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.planner-corner {
+		min-width: 150px;
+		width: 150px;
+		flex-shrink: 0;
+		border-bottom: 1px solid var(--divider-color);
+	}
+
+	.planner-header {
+		flex: 1;
+		text-align: center;
+		font-weight: bold;
+		padding: 8px;
+		min-width: 150px;
+		border-bottom: 1px solid var(--divider-color);
+	}
+
+	.planner-row {
+		display: flex;
+		flex-direction: row;
+		border-bottom: 1px solid var(--divider-color);
+	}
+
+	.planner-day-label {
+		min-width: 150px;
+		width: 150px;
+		flex-shrink: 0;
+		padding: 8px;
+		border-right: 1px solid var(--divider-color);
+		border-left: 1px solid var(--divider-color);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	.day-name {
+		font-weight: bold;
+	}
+
+	.day-date {
+		font-size: 0.9em;
+		opacity: 0.8;
+	}
+
+	.planner-cell {
+		flex: 1;
+		min-width: 150px;
+		padding: 4px;
+		border-right: 1px solid var(--divider-color);
+	}
+
+	.planner-event {
+		background-color: var(--cal-event-background-color, rgba(0, 0, 0, 0.1));
+		border-radius: 4px;
+		padding: 4px;
+		margin-bottom: 4px;
+		font-size: 0.9em;
+	}
+
+	.planner-event-time {
+		font-size: 0.8em;
+		opacity: 0.8;
+	}
+
+	/* INLINE CALENDAR VIEW */
+	.calDay.inline {
+		height: auto !important;
+		max-width: none !important;
+		min-height: 100px;
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		text-align: left;
+		margin: 0;
+	}
+
+	.calDay.inline .events {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 2px;
+		overflow-y: auto;
+		max-height: 150px;
+	}
+
+	.event-bar {
+		padding: 2px 4px;
+		border-radius: 3px;
+		font-size: 0.8em;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		cursor: pointer;
+		margin-bottom: 2px;
+		display: flex;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.event-bar:hover {
+		opacity: 0.8;
+	}
+
+	.event-bar .time {
+		font-weight: bold;
+	}
+
+	.event-bar .title {
+		flex: 1;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.event-bar .event-icon {
+		--mdc-icon-size: 14px;
+	}
+
+	/* MODAL */
+	.modal {
+		display: none;
+		position: fixed;
+		z-index: 1000;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	.modal.open {
+		display: block;
+	}
+
+	.modal-content {
+		background-color: var(--card-background-color, white);
+		margin: 15% auto;
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%;
+		max-width: 500px;
+		border-radius: 8px;
+		position: relative;
+		color: var(--primary-text-color);
+	}
+
+	.modal-close {
+		color: #aaa;
+		float: right;
+		font-size: 28px;
+		font-weight: bold;
+		cursor: pointer;
+	}
+
+	.modal-close:hover,
+	.modal-close:focus {
+		color: black;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.modal-event-title {
+		font-size: 1.5em;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	.modal-event-time {
+		font-size: 1.1em;
+		color: var(--secondary-text-color);
+		margin-bottom: 10px;
 	}
 `;

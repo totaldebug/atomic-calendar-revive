@@ -26,14 +26,8 @@ export const style = css`
 	.entity-box {
 		margin-top: 5px;
 		padding: 8px;
-		background-image: repeating-linear-gradient(
-				27deg,
-				#333333,
-				#333333 11px,
-				transparent 11px,
-				transparent 14px,
-				#333333 14px
-			),
+		background-image:
+			repeating-linear-gradient(27deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);
@@ -72,20 +66,11 @@ export const style = css`
 		margin-right: -1px;
 		margin-left: -1px;
 	}
-	.mwc-text-field {
-		width: 97%;
-	}
 	.sponsor {
 		margin: 5px;
 		padding: 8px;
-		background-image: repeating-linear-gradient(
-				27deg,
-				#333333,
-				#333333 11px,
-				transparent 11px,
-				transparent 14px,
-				#333333 14px
-			),
+		background-image:
+			repeating-linear-gradient(27deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(117deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(207deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px),
 			repeating-linear-gradient(297deg, #333333, #333333 11px, transparent 11px, transparent 14px, #333333 14px);

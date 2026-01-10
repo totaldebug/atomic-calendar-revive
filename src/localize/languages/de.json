@@ -45,7 +45,7 @@
 			"linkTarget": "Verknüpfungsziel",
 			"refreshInterval": "Aktualisierungsintervall",
 			"showRelativeTime": "Relative Zeit anzeigen",
-			"firstDayOfWeek": "Erster Wochentag 0-6",
+			"firstDayOfWeek": "Erster Wochentag",
 			"cardHeight": "Kartenhöhe",
 			"hideDuplicates": "Duplikate ausblenden",
 			"showMultiDay": "Mehrtägige Ereignisse aufteilen",

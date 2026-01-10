@@ -6,11 +6,6 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 
-import { ignoreSelectFiles } from './elements/ignore/select.js';
-import { ignoreSwitchFiles } from './elements/ignore/switch.js';
-import { ignoreTextfieldFiles } from './elements/ignore/textfield.js';
-import ignore from './rollup-plugins/ignore.js';
-
 const plugins = [
 	nodeResolve({
 		jsnext: true,
@@ -30,7 +25,7 @@ const plugins = [
 				'@babel/env',
 				{
 					modules: false,
-					targets: 'iOS 12, > 2.5%, not dead',
+					targets: '> 2.5%, not dead',
 				},
 			],
 		],
@@ -47,21 +42,26 @@ const plugins = [
 		],
 	}),
 	terser(),
-	ignore({
-		files: [...ignoreTextfieldFiles, ...ignoreSwitchFiles, ...ignoreSelectFiles].map((file) => require.resolve(file)),
-	}),
 ];
 
 export default {
 	input: ['./src/index.ts'],
 	output: {
 		file: 'dist/atomic-calendar-revive.js',
-		format: 'umd',
+		format: 'esm',
 		name: 'AtomicCalendarRevive',
-		inlineDynamicImports: false,
+		inlineDynamicImports: true,
 	},
 	watch: {
 		clearScreen: false,
 	},
 	plugins: [...plugins],
+	onwarn: function (warning, handler) {
+        if (warning.code === 'THIS_IS_UNDEFINED') {
+            return;
+        }
+
+        // console.warn everything else
+        handler(warning);
+    }
 };

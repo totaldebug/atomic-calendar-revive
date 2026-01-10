@@ -1,6 +1,7 @@
 import { mdiCalendar } from '@mdi/js';
 import dayjs from 'dayjs';
 import { html } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import EventClass from './event.class';
 import { getEventIcon } from '../helpers/get-icon';
@@ -24,15 +25,24 @@ export function showCalendarLink(config, selectedMonth) {
 	}
 }
 
-export function setNoEventDays(config: atomicCardConfig, singleEvents) {
+export function setNoEventDays(
+	config: atomicCardConfig,
+	singleEvents,
+	customStart?: dayjs.Dayjs,
+	customEnd?: dayjs.Dayjs,
+) {
 	// Create an array of days to show
 	const daysToShow = config.maxDaysToShow! == 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-	const initialTime = dayjs().add(config.startDaysAhead!, 'day').startOf('day'),
-		endTime = dayjs()
-			.add(daysToShow + config.startDaysAhead!, 'day')
-			.endOf('day'),
-		allDates: any = [];
-	for (let q = initialTime; q.isBefore(endTime, 'day'); q = q.add(1, 'day')) {
+	const initialTime = customStart
+		? customStart.startOf('day')
+		: dayjs().add(config.startDaysAhead!, 'day').startOf('day');
+	const endTime = customEnd
+		? customEnd.endOf('day')
+		: dayjs()
+				.add(daysToShow + config.startDaysAhead!, 'day')
+				.endOf('day');
+	const allDates: any = [];
+	for (let q = initialTime; q.isBefore(endTime); q = q.add(1, 'day')) {
 		allDates.push(q);
 	}
 	allDates.map((day) => {
@@ -118,6 +128,22 @@ export function isHtml(input) {
 }
 
 /**
+ * Truncates HTML string based on text content length
+ * @param input HTML string
+ * @param limit Character limit
+ * @returns Truncated HTML (as text if truncated) or original HTML
+ */
+export function truncateHtml(input: string, limit: number): string {
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(input, 'text/html');
+	const text = doc.body.textContent || '';
+	if (text.length > limit) {
+		return text.substring(0, limit) + '...';
+	}
+	return input;
+}
+
+/**
  * Gets the title html for an event mode event
  * @param config card configuration
  * @param event event to get title html for
@@ -150,5 +176,127 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 				</div>
 			</a>
 		`;
+	}
+}
+
+/**
+ * generate Event Location link HTML
+ * @param config card configuration
+ * @param event event to get location from
+ * @returns TemplateResult containing location information
+ */
+export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
+	if (!event.location || !config.showLocation) {
+		return html``;
+	} else if (config.disableLocationLink) {
+		return html`<ha-icon
+				class="event-location-icon"
+				style="--location-icon-color: ${config.locationIconColor}"
+				icon="mdi:map-marker"
+			></ha-icon
+			>&nbsp;${event.address}`;
+	} else {
+		const loc: string = event.location;
+		const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
+		return html`<a
+			href=${location}
+			target="${config.linkTarget}"
+			class="location-link"
+			style="--location-link-size: ${config.locationTextSize}%"
+		>
+			<ha-icon
+				class="event-location-icon"
+				style="--location-icon-color: ${config.locationIconColor}"
+				icon="mdi:map-marker"
+			>
+			</ha-icon
+			>&nbsp;${event.address}
+		</a>`;
+	}
+}
+
+/**
+ * Gets the location for the event and displays if required
+ * @param config card configuration
+ * @param event event to get location for
+ * @returns TemplateResult with location icon and link
+ */
+export function getCalendarLocationHTML(config: atomicCardConfig, event: EventClass) {
+	if (!event.location || !config.showLocation || config.disableCalLocationLink) {
+		return html``;
+	} else {
+		const loc: string = event.location;
+		const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
+		return html`
+			<a
+				href=${location}
+				target="${config.linkTarget}"
+				class="location-link"
+				style="--location-link-size: ${config.locationTextSize}%"
+			>
+				<ha-icon
+					class="event-location-icon"
+					style="--location-icon-color: ${config.locationIconColor}"
+					icon="mdi:map-marker"
+				></ha-icon
+				>&nbsp;
+			</a>
+		`;
+	}
+}
+
+export function getDescription(config: atomicCardConfig, event: EventClass) {
+	if (config.showDescription && event.description) {
+		let { description } = event;
+		if (isHtml(event.description)) {
+			if (config.descLength) {
+				description = truncateHtml(event.description, config.descLength);
+			}
+			description = unsafeHTML(description);
+		}
+
+		if (!isHtml(event.description) && config.descLength && event.description.length >= config.descLength) {
+			description = html`${event.description.slice(0, config.descLength)}`;
+		}
+		return html`<div class="event-right">
+			<div class="event-main">
+				<div
+					class="event-description"
+					style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
+				>
+					${description}
+				</div>
+			</div>
+		</div>`;
+	}
+	return html``;
+}
+
+/**
+ * Gets the calendar description and wraps in html
+ * @param config calendar card configuration
+ * @param event event record
+ * @returns html description
+ */
+export function getCalendarDescriptionHTML(config: atomicCardConfig, event: EventClass) {
+	if (event.description) {
+		let { description } = event;
+		if (isHtml(event.description)) {
+			if (config.descLength) {
+				description = truncateHtml(event.description, config.descLength);
+			}
+			description = unsafeHTML(description);
+		}
+		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
+			description = event.description.slice(0, config.descLength);
+		}
+		return html`<div
+			class="calDescription"
+			style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
+		>
+			- ${description}
+		</div>`;
+	} else {
+		return html`;`;
 	}
 }

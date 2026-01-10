@@ -1,3 +1,5 @@
+import { ActionConfig } from './lovelace';
+
 export interface atomicCardConfig {
 	entities?: any;
 	type: string;
@@ -54,9 +56,11 @@ export interface atomicCardConfig {
 	descLength?: number;
 	showNoEventsForToday?: boolean;
 	showNoEventDays?: boolean;
+	hideCardIfNoEvents?: boolean;
 	noEventText?: string;
 	noEventsForNextDaysText?: string;
 	showHours?: boolean;
+	showEndTime?: boolean;
 	eventTitleColor?: string;
 	locationIconColor?: string;
 	locationTextSize?: number;
@@ -115,4 +119,14 @@ export interface atomicCardConfig {
 	showTimeRemaining?: boolean;
 	showAllDayHours?: boolean;
 	showCalendarName?: boolean;
+
+	// Planner Mode Settings
+	plannerDaysToShow?: number;
+	plannerRollingWeek?: boolean;
+	_showPastEvents?: boolean;
+
+	// Actions
+	tap_action?: ActionConfig;
+	hold_action?: ActionConfig;
+	double_tap_action?: ActionConfig;
 }

@@ -15,6 +15,7 @@
    configuration/entity
    configuration/event
    configuration/calendar
+   configuration/planner
    configuration/language
    configuration/styling
 

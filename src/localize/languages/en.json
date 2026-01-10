@@ -45,7 +45,7 @@
 			"linkTarget": "Link target",
 			"refreshInterval": "Refresh Interval",
 			"showRelativeTime": "Show Relative Time",
-			"firstDayOfWeek": "First Day of Week 0-6",
+			"firstDayOfWeek": "First Day of Week",
 			"cardHeight": "Card Height",
 			"hideDuplicates": "Hide duplicates",
 			"showMultiDay": "Split Multi-Day Events",
@@ -97,6 +97,14 @@
 			"disableCalLocationLink": "Disable calendar location link",
 			"calShowDescription": "Show Description",
 			"disableCalLink": "Disable calendar link"
+		}
+	},
+	"planner": {
+		"name": "Planner Mode",
+		"secondary": "Planner Mode specific options",
+		"fields": {
+			"plannerDaysToShow": "Days to Show",
+			"plannerRollingWeek": "Rolling Week (Start Today)"
 		}
 	},
 	"appearance": {
