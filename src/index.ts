@@ -134,7 +134,6 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 						? 'HH:mm'
 						: dayjs().localeData().longDateFormat('LT');
 			dayjs.updateLocale(this.language, {
-				weekStart: this._config.firstDayOfWeek!,
 				formats: {
 					LT: timeFormat,
 				},

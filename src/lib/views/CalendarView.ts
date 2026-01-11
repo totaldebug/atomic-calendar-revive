@@ -60,7 +60,9 @@ export class CalendarView implements ICalendarView {
 	}
 
 	render(): TemplateResult {
-		const weekDays = dayjs.weekdaysMin(true);
+		const firstDay = this.config.firstDayOfWeek ?? 1;
+		const days = dayjs.weekdaysMin(false);
+		const weekDays = [...days.slice(firstDay), ...days.slice(0, firstDay)];
 		const htmlDayNames = weekDays.map(
 			(day) => html`<th class="cal" style="color:  ${this.config.calWeekDayColor};">${day}</th>`,
 		);
