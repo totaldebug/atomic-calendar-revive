@@ -40,7 +40,7 @@
 		"@semantic-release/exec": "^7.1.0",
 		"@semantic-release/git": "^10.0.1",
 		"@typescript-eslint/eslint-plugin": "^8.52.0",
-		"@typescript-eslint/parser": "^8.52.0",
+		"@typescript-eslint/parser": "^8.53.0",
 		"babel-preset-minify": "^0.5.2",
 		"commitizen": "^4.3.1",
 		"conventional-changelog-conventionalcommits": "^9.1.0",
