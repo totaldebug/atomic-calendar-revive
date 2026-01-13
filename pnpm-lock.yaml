@@ -6,7 +6,7 @@ settings:
 
 overrides:
   lit: ^3.0.2
-  '@lit/reactive-element': 2.0.1
+  '@lit/reactive-element': 2.1.2
 
 importers:
 
@@ -19,8 +19,8 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       '@lit/reactive-element':
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 2.1.2
+        version: 2.1.2
       '@mdi/js':
         specifier: 7.4.47
         version: 7.4.47
@@ -808,11 +808,11 @@ packages:
   '@lit-labs/scoped-registry-mixin@1.0.4':
     resolution: {integrity: sha512-gYeotwRwluD7RsFgU0eP48WgBMg6fIF5RXzbrjs/gwsPiJiFtal90s+x/LHIHqQ2VkubsyP+m+QAfgmOnsNhUg==}
 
-  '@lit-labs/ssr-dom-shim@1.5.0':
-    resolution: {integrity: sha512-HLomZXMmrCFHSRKESF5vklAKsDY7/fsT/ZhqCu3V0UoW/Qbv8wxmO4W9bx4KnCCF2Zak4yuk+AGraK/bPmI4kA==}
+  '@lit-labs/ssr-dom-shim@1.5.1':
+    resolution: {integrity: sha512-Aou5UdlSpr5whQe8AA/bZG0jMj96CoJIWbGfZ91qieWu5AWUMKw8VR/pAkQkJYvBNhmCcWnZlyyk5oze8JIqYA==}
 
-  '@lit/reactive-element@2.0.1':
-    resolution: {integrity: sha512-eu50SQXHRthFwWJMp0oAFg95Rvm6MTPjxSXWuvAu7It90WVFLFpNBoIno7XOXSDvVgTrtKnUV4OLJqys2Svn4g==}
+  '@lit/reactive-element@2.1.2':
+    resolution: {integrity: sha512-pbCDiVMnne1lYUIaYNN5wrwQXDtHaYtg7YEFPeW+hws6U47WeFvISGUWekPGKWOP1ygrs0ef0o1VJMk1exos5A==}
 
   '@mdi/js@7.4.47':
     resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
@@ -4713,14 +4713,14 @@ snapshots:
 
   '@lit-labs/scoped-registry-mixin@1.0.4':
     dependencies:
-      '@lit/reactive-element': 2.0.1
+      '@lit/reactive-element': 2.1.2
       lit: 3.3.2
 
-  '@lit-labs/ssr-dom-shim@1.5.0': {}
+  '@lit-labs/ssr-dom-shim@1.5.1': {}
 
-  '@lit/reactive-element@2.0.1':
+  '@lit/reactive-element@2.1.2':
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.5.0
+      '@lit-labs/ssr-dom-shim': 1.5.1
 
   '@mdi/js@7.4.47': {}
 
@@ -6762,8 +6762,8 @@ snapshots:
 
   lit-element@4.2.2:
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.5.0
-      '@lit/reactive-element': 2.0.1
+      '@lit-labs/ssr-dom-shim': 1.5.1
+      '@lit/reactive-element': 2.1.2
       lit-html: 3.3.2
 
   lit-html@3.3.2:
@@ -6772,7 +6772,7 @@ snapshots:
 
   lit@3.3.2:
     dependencies:
-      '@lit/reactive-element': 2.0.1
+      '@lit/reactive-element': 2.1.2
       lit-element: 4.2.2
       lit-html: 3.3.2
 

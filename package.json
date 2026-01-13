@@ -73,7 +73,7 @@
 	},
 	"resolutions": {
 		"lit": "^3.0.2",
-		"@lit/reactive-element": "2.0.1"
+		"@lit/reactive-element": "2.1.2"
 	},
 	"bugs": {
 		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"
