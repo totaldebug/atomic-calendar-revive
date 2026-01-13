@@ -16,16 +16,15 @@ const plugins = [
 	typescript(),
 	json(),
 	babel({
-		include: ['node_modules/lit*/**', 'node_modules/@lit/**'],
 		babelHelpers: 'bundled',
 		compact: true,
-		extensions: ['.js', '.ts'],
+		extensions: ['.js', '.ts', '.mjs'],
 		presets: [
 			[
 				'@babel/env',
 				{
 					modules: false,
-					targets: '> 2.5%, not dead',
+					targets: 'iOS 12, > 2.5%, not dead',
 				},
 			],
 		],
@@ -38,7 +37,6 @@ const plugins = [
 			],
 			'@babel/plugin-proposal-class-properties',
 			'@babel/plugin-transform-template-literals',
-			'@babel/plugin-transform-nullish-coalescing-operator',
 		],
 	}),
 	terser(),

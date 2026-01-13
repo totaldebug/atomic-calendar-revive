@@ -17,11 +17,9 @@ const plugins = [
 	typescript(),
 	json(),
 	babel({
-		// exclude: 'node_modules/**',
-		include: ['node_modules/lit*/**', 'node_modules/@lit/**'],
 		babelHelpers: 'bundled',
 		compact: true,
-		extensions: ['.js', '.ts'],
+		extensions: ['.js', '.ts', '.mjs'],
 		presets: [
 			[
 				'@babel/env',
@@ -40,7 +38,6 @@ const plugins = [
 			],
 			'@babel/plugin-proposal-class-properties',
 			'@babel/plugin-transform-template-literals',
-			'@babel/plugin-transform-nullish-coalescing-operator',
 		],
 	}),
 	terser(),

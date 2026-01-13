@@ -304,6 +304,17 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 			}
 		}
 
+		// check if the maxDaysToShow is set, if it is we will remove any events
+		// that go over this limit
+		if (config.maxDaysToShow !== undefined && config.maxDaysToShow > 0) {
+			const daysToShow = config.maxDaysToShow - 1;
+			const endLimit = dayjs().startOf('day').add(config.startDaysAhead!, 'day').add(daysToShow, 'day').endOf('day');
+
+			if (newEvent.startDateTime.isAfter(endLimit)) {
+				return events;
+			}
+		}
+
 		if (
 			newEvent.entityConfig.startTimeFilter &&
 			newEvent.entityConfig.endTimeFilter &&
