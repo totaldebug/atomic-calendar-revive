@@ -50,7 +50,7 @@
 		"eslint-import-resolver-typescript": "^4.4.4",
 		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-prettier": "^5.5.4",
-		"prettier": "^3.7.4",
+		"prettier": "^3.8.0",
 		"rollup": "^4.55.1",
 		"rollup-plugin-serve": "^3.0.0",
 		"rollup-plugin-typescript2": "^0.36.0",
