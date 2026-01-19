@@ -306,8 +306,10 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 
 		// check if the maxDaysToShow is set, if it is we will remove any events
 		// that go over this limit
-		if (config.maxDaysToShow !== undefined && config.maxDaysToShow > 0) {
-			const daysToShow = config.maxDaysToShow - 1;
+		const entityMaxDaysToShow = newEvent.entityConfig.maxDaysToShow;
+		const effectiveMaxDaysToShow = entityMaxDaysToShow !== undefined ? entityMaxDaysToShow : config.maxDaysToShow;
+		if (mode !== 'Calendar' && effectiveMaxDaysToShow !== undefined && effectiveMaxDaysToShow > 0) {
+			const daysToShow = effectiveMaxDaysToShow - 1;
 			const endLimit = dayjs().startOf('day').add(config.startDaysAhead!, 'day').add(daysToShow, 'day').endOf('day');
 
 			if (newEvent.startDateTime.isAfter(endLimit)) {
