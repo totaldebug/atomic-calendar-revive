@@ -222,7 +222,13 @@ export class EventView implements ICalendarView {
 					class="single-event-container ${compactMode} ${dayWrap} ${hideDate}"
 					style="${lastEventStyle}"
 					@click="${(e: Event) =>
-						handleAction(e.currentTarget as HTMLElement, this.hass, this.config, 'tap', event.entity.entity_id)}"
+						handleAction(
+							e.currentTarget as HTMLElement,
+							this.hass,
+							{ ...this.config, ...event.entityConfig },
+							'tap',
+							event.entity.entity_id,
+						)}"
 				>
 					${currentEventLine} ${eventLeft}
 					<div class="event-right" style="${finishedEventsStyle}">

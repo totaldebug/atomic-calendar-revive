@@ -157,10 +157,7 @@ export class CalendarView implements ICalendarView {
 						style="${dayStyleClicked} --cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config
 							.calDayColor}"
 					>
-						<div
-							class="calDay"
-							style="position: relative; max-width: none; width: 100%; height: 100%; margin: 0; padding: 0;"
-						>
+						<div class="calDay" style="position: relative; max-width: none; width: 100%; margin: 0; padding: 0;">
 							${weekHtml}
 							<div class="${dayClassToday}" style="position: absolute; top: 0px; right: 5px;">${day.date.date()}</div>
 							<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">
