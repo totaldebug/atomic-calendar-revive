@@ -98,18 +98,14 @@ export class CalendarView implements ICalendarView {
 		return html`<div class="calDateSelector">
 			<ha-icon-button
 				class="prev"
-				style="--mdc-icon-color: ${this.config.calDateColor}"
 				.path=${mdiChevronLeft}
 				.label=${this.hass.localize('ui.common.previous')}
 				@click="${() => this.handleMonthChange(-1)}"
 			>
 			</ha-icon-button>
-			<span class="date" style="text-decoration: none; color: ${this.config.calDateColor};">
-				${this.selectedMonth.format('MMMM')} ${this.selectedMonth.format('YYYY')}
-			</span>
+			<span class="date"> ${this.selectedMonth.format('MMMM')} ${this.selectedMonth.format('YYYY')} </span>
 			<ha-icon-button
 				class="next"
-				style="--mdc-icon-color: ${this.config.calDateColor}"
 				.path=${mdiChevronRight}
 				.label=${this.hass.localize('ui.common.next')}
 				@click="${() => this.handleMonthChange(1)}"
@@ -124,7 +120,14 @@ export class CalendarView implements ICalendarView {
 			showLastRow = false;
 		}
 
-		return month.map((day: CalendarDay, i: number) => {
+		const rows: TemplateResult[] = [];
+		let currentBatch: TemplateResult[] = [];
+
+		month.forEach((day: CalendarDay, i: number) => {
+			if (i >= 35 && !showLastRow) {
+				return;
+			}
+
 			const dayDate = dayjs(day.date);
 			const dayStyleOtherMonth = dayDate.isSame(this.selectedMonth, 'month') ? '' : `differentMonth`;
 			const dayClassToday = dayDate.isSame(dayjs(), 'day') ? `currentDay` : ``;
@@ -148,29 +151,40 @@ export class CalendarView implements ICalendarView {
 					</div>`
 				: '';
 
-			if (i < 35 || showLastRow) {
-				return html`
-					${i % 7 === 0 ? html`<tr class="cal"></tr>` : ''}
-					<td
-						@click="${() => this.handleCalendarEventSummary(day, true)}"
-						class="cal ${dayStyleSat} ${dayStyleSun} ${dayStyleOtherMonth}"
-						style="${dayStyleClicked} --cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config
-							.calDayColor}"
-					>
-						<div class="calDay" style="position: relative; max-width: none; width: 100%; margin: 0; padding: 0;">
-							${weekHtml}
-							<div class="${dayClassToday}" style="position: absolute; top: 0px; right: 5px;">${day.date.date()}</div>
-							<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">
-								${this.handleCalendarIcons(day)}
-							</div>
-						</div>
-					</td>
-					${i && i % 6 === 0 ? html`</tr>` : ''}
-				`;
-			} else {
-				return html``;
+			currentBatch.push(html`
+				<td
+					@click="${() => this.handleCalendarEventSummary(day, true)}"
+					class="cal day ${dayStyleSat} ${dayStyleSun} ${dayStyleOtherMonth}"
+					style="${dayStyleClicked} --cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config
+						.calDayColor}"
+				>
+					<div class="calDay" style="${dayStyleClicked}">
+						${weekHtml}
+						<div class="day-number ${dayClassToday}">${day.date.date()}</div>
+						<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">${this.handleCalendarIcons(day)}</div>
+					</div>
+				</td>
+			`);
+
+			if (i % 7 === 6) {
+				rows.push(
+					html`<tr class="cal">
+						${currentBatch}
+					</tr>`,
+				);
+				currentBatch = [];
 			}
 		});
+
+		if (currentBatch.length > 0) {
+			rows.push(
+				html`<tr class="cal">
+					${currentBatch}
+				</tr>`,
+			);
+		}
+
+		return rows;
 	}
 
 	private handleCalendarEventSummary(day: CalendarDay, fromClick: boolean) {
@@ -192,7 +206,7 @@ export class CalendarView implements ICalendarView {
 				const bulletType: string = event.isDeclined ? 'summary-fullday-div-declined' : 'summary-fullday-div-accepted';
 
 				return html`<div class="${bulletType}" style="border-color:  ${eventColor}; ${finishedEventsStyle}">
-					<div aria-hidden="true">
+					<div class="event-summary-content" aria-hidden="true">
 						${getTitleHTML(this.config, event, this.hass, 'Calendar')} ${getCalendarLocationHTML(this.config, event)}
 						${this.config.calShowDescription ? getCalendarDescriptionHTML(this.config, event) : ''}
 					</div>

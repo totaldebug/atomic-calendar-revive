@@ -26,14 +26,17 @@ export const handleAction = (
 		actionConfig = { action: 'more-info' };
 	}
 
+	if (actionConfig.action === 'more-info' && !entityId) {
+		actionConfig = { action: 'none' };
+	}
+
 	if (
 		actionConfig.confirmation &&
 		(!actionConfig.confirmation.exemptions ||
-			!actionConfig.confirmation.exemptions.some((e) => e.user === hass.user?.id))
+			!actionConfig.confirmation.exemptions.some((e) => e.user === hass.user?.id)) &&
+		!confirm(actionConfig.confirmation.text || `Are you sure you want to ${actionConfig.action}?`)
 	) {
-		if (!confirm(actionConfig.confirmation.text || `Are you sure you want to ${actionConfig.action}?`)) {
-			return;
-		}
+		return;
 	}
 
 	const event = new CustomEvent('hass-action', {

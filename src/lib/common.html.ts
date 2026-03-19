@@ -12,6 +12,7 @@ export function showCalendarLink(config, selectedMonth) {
 	if (!config.disableCalLink) {
 		return html`<div class="calIconSelector">
 			<ha-icon-button
+				class="cal-link-button"
 				.path=${mdiCalendar}
 				style="--mdc-icon-color: ${config.calDateColor}"
 				onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format(
@@ -108,11 +109,11 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
 	if (!config.showMultiDayEventParts === true || (event.addDays === false && event.daysLong === undefined)) {
 		return;
 	} else if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
-		return html`(${event.addDays + 1}/${event.daysLong})`;
+		return html`<span class="event-parts">(${event.addDays + 1}/${event.daysLong})</span>`;
 	} else if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
 		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day');
 
-		return html`(${daysSinceStart + 1}/${event.daysLong})`;
+		return html`<span class="event-parts">(${daysSinceStart + 1}/${event.daysLong})</span>`;
 	} else {
 		return html``;
 	}

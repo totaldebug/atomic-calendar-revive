@@ -101,7 +101,7 @@ export class PlannerView implements ICalendarView {
 		// Render Header Row (Calendars)
 		const calendarHeaders = calendars.map((cal) => {
 			return html`<div class="planner-header">
-				<div class="day-name" style="color: ${cal.color}">${cal.name}</div>
+				<div class="day-name calendar-name" style="color: ${cal.color}">${cal.name}</div>
 			</div>`;
 		});
 

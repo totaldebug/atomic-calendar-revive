@@ -214,6 +214,7 @@ export const styles: CSSResultGroup = css`
 	div.calIconSelector ha-icon-button,
 	div.calDateSelector ha-icon-button {
 		color: var(--primary-color);
+		--mdc-icon-color: var(--cal-date-color);
 	}
 	div.calDateSelector .prev {
 		border: 1px solid var(--primary-color);
@@ -223,6 +224,8 @@ export const styles: CSSResultGroup = css`
 		border: 1px solid var(--primary-color);
 		border-radius: 0px 0px 0px 0px;
 		padding: 4px 2px 2px 4px;
+		text-decoration: none;
+		color: var(--cal-date-color);
 	}
 	div.calDateSelector .next {
 		border: 1px solid var(--primary-color);
@@ -251,7 +254,7 @@ export const styles: CSSResultGroup = css`
 		text-transform: uppercase;
 	}
 
-	td.cal {
+	td.cal.day {
 		padding: 0px;
 		border: 1px solid var(--cal-grid-color);
 		text-align: center;
@@ -261,10 +264,20 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.calDay {
-		height: 38px;
+		aspect-ratio: 1 / 1;
 		font-size: 95%;
-		max-width: 38px;
-		margin: auto;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		position: relative;
+		max-width: none;
+	}
+
+	.day-number {
+		position: absolute !important;
+		top: 0px;
+		right: 5px;
 	}
 
 	.calDay .iconDiv {
@@ -281,11 +294,10 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.currentDay {
-		position: relative;
 		width: 20px;
 		height: 20px;
 		background-color: var(--primary-color);
-		color: var(--text-primary-color) !important;
+		color: var(--text-primary-color);
 		text-align: center;
 		line-height: 20px;
 		border-radius: 50%;
@@ -499,14 +511,16 @@ export const styles: CSSResultGroup = css`
 
 	/* INLINE CALENDAR VIEW */
 	.calDay.inline {
-		height: auto !important;
-		max-width: none !important;
+		aspect-ratio: unset;
+		height: auto;
+		max-width: none;
 		min-height: 100px;
 		display: flex;
 		flex-direction: column;
 		align-items: stretch;
 		text-align: left;
 		margin: 0;
+		width: 100%;
 	}
 
 	.calDay.inline .events {
