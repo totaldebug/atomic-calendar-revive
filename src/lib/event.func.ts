@@ -173,7 +173,7 @@ export function getPlannerDateRange(config: atomicCardConfig) {
  */
 export async function getPlannerMode(config: atomicCardConfig, hass) {
 	const { start, end } = getPlannerDateRange(config);
-	return await getAllEvents(start, end, config, hass, 'Event');
+	return await getAllEvents(start, end, config, hass, 'Planner');
 }
 
 /**
@@ -185,7 +185,7 @@ export async function getAllEvents(
 	end: dayjs.Dayjs,
 	config: atomicCardConfig,
 	hass,
-	mode: 'Event' | 'Calendar',
+	mode: 'Event' | 'Calendar' | 'Planner',
 ) {
 	// format times correctly
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
@@ -245,7 +245,7 @@ export async function getAllEvents(
  * @param {Array<Events>} list of raw caldav calendar events
  * @return {Promise<Array<EventClass>>}
  */
-export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 'Event' | 'Calendar') {
+export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 'Event' | 'Calendar' | 'Planner') {
 	let hiddenEvents: number = 0;
 	// reduce all the events into the ones we care about
 	// events = all the events we care about
@@ -307,10 +307,19 @@ export function processEvents(allEvents: any[], config: atomicCardConfig, mode: 
 		// check if the maxDaysToShow is set, if it is we will remove any events
 		// that go over this limit
 		const entityMaxDaysToShow = newEvent.entityConfig.maxDaysToShow;
-		const effectiveMaxDaysToShow = entityMaxDaysToShow !== undefined ? entityMaxDaysToShow : config.maxDaysToShow;
+		let effectiveMaxDaysToShow = entityMaxDaysToShow !== undefined ? entityMaxDaysToShow : config.maxDaysToShow;
+		if (mode === 'Planner') {
+			effectiveMaxDaysToShow = entityMaxDaysToShow !== undefined ? entityMaxDaysToShow : config.plannerDaysToShow;
+		}
+
 		if (mode !== 'Calendar' && effectiveMaxDaysToShow !== undefined && effectiveMaxDaysToShow > 0) {
 			const daysToShow = effectiveMaxDaysToShow - 1;
-			const endLimit = dayjs().startOf('day').add(config.startDaysAhead!, 'day').add(daysToShow, 'day').endOf('day');
+			let endLimit = dayjs().startOf('day').add(config.startDaysAhead!, 'day').add(daysToShow, 'day').endOf('day');
+
+			if (mode === 'Planner') {
+				const { start, end } = getPlannerDateRange(config);
+				endLimit = entityMaxDaysToShow !== undefined ? start.add(daysToShow, 'day').endOf('day') : end;
+			}
 
 			if (newEvent.startDateTime.isAfter(endLimit)) {
 				return events;

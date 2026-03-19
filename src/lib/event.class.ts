@@ -242,7 +242,7 @@ export default class EventClass {
 	 * split event into a multi day event where it crosses to a new day
 	 * @param {*} newEvent
 	 */
-	splitIntoMultiDay(newEvent, mode: 'Event' | 'Calendar') {
+	splitIntoMultiDay(newEvent, mode: 'Event' | 'Calendar' | 'Planner') {
 		const partialEvents: any[] = [];
 
 		// multi days start at two days
@@ -254,6 +254,27 @@ export default class EventClass {
 		);
 		if (fullDays) {
 			daysLong = fullDays;
+		}
+
+		let windowStart = dayjs().startOf('day').add(this._globalConfig.startDaysAhead!, 'day');
+		const entityMaxDays = newEvent.entityConfig.maxDaysToShow;
+		const maxDays = entityMaxDays !== undefined ? entityMaxDays : this._globalConfig.maxDaysToShow!;
+		let windowEnd = windowStart.endOf('day').add(maxDays == 0 ? maxDays : maxDays - 1, 'day');
+
+		if (mode === 'Planner') {
+			const plannerMaxDays = entityMaxDays !== undefined ? entityMaxDays : this._globalConfig.plannerDaysToShow!;
+			const daysToShow = plannerMaxDays == 0 ? plannerMaxDays : plannerMaxDays - 1;
+
+			if (!this._globalConfig.plannerRollingWeek) {
+				const currentDay = windowStart.day();
+				const firstDay = this._globalConfig.firstDayOfWeek!;
+				let diff = currentDay - firstDay;
+				if (diff < 0) {
+					diff += 7;
+				}
+				windowStart = windowStart.subtract(diff, 'day').startOf('day');
+			}
+			windowEnd = windowStart.endOf('day').add(daysToShow, 'day');
 		}
 
 		for (let i = 0; i < daysLong; i++) {
@@ -272,18 +293,14 @@ export default class EventClass {
 			// Create event object for each of the days the multi-event occurs on
 			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
 
-			// only add event if start date is before the maxDaysToShow and after
-			// the current date
-			const endDate = dayjs().startOf('day').add(this._globalConfig.maxDaysToShow, 'days');
-
-			if (
-				endDate.isAfter(partialEvent.startDateTime) &&
-				dayjs().startOf('day').subtract(1, 'minute').isBefore(partialEvent.startDateTime) &&
-				mode === 'Event'
-			) {
-				partialEvents.push(partialEvent);
-			}
-			if (mode === 'Calendar') {
+			if (mode === 'Event' || mode === 'Planner') {
+				if (
+					windowEnd.isAfter(partialEvent.startDateTime) &&
+					windowStart.subtract(1, 'minute').isBefore(partialEvent.startDateTime)
+				) {
+					partialEvents.push(partialEvent);
+				}
+			} else if (mode === 'Calendar') {
 				partialEvents.push(partialEvent);
 			}
 		}
