@@ -1,6 +1,10 @@
 import { CSSResultGroup, css } from 'lit';
 
 export const styles: CSSResultGroup = css`
+	:host {
+		display: block;
+		height: 100%;
+	}
 	.cal-card {
 		cursor: default;
 		padding: 16px;
