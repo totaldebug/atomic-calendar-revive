@@ -268,10 +268,9 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.calDay {
+		aspect-ratio: 1 / 1;
 		font-size: 95%;
 		width: 100%;
-		height: 100%;
-		min-height: 80px;
 		margin: 0;
 		padding: 0;
 		overflow: hidden;
@@ -401,9 +400,9 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.calIcon {
-		--mdc-icon-size: 10px;
-		width: 10px;
-		height: 10px;
+		--mdc-icon-size: 16px;
+		width: 16px;
+		height: 16px;
 		padding-top: 0px;
 		margin-top: -10px;
 		margin-right: -1px;
