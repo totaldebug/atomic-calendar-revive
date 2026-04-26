@@ -3,12 +3,76 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   schedule:
-    interval: daily
+    interval: weekly
   open-pull-requests-limit: 10
   target-branch: beta
   labels:
     - type/dependencies
+  groups:
+    babel:
+      patterns:
+        - "@babel/*"
+        - "babel-*"
+    rollup:
+      patterns:
+        - "@rollup/*"
+        - "rollup"
+        - "rollup-plugin-*"
+    eslint:
+      patterns:
+        - "eslint"
+        - "eslint-*"
+        - "@eslint/*"
+        - "@typescript-eslint/*"
+        - "typescript-eslint"
+    lit:
+      patterns:
+        - "lit"
+        - "@lit/*"
+        - "@lit-labs/*"
+    semantic-release:
+      patterns:
+        - "semantic-release"
+        - "@semantic-release/*"
+        - "conventional-changelog-*"
+        - "commitizen"
+        - "cz-conventional-changelog"
+    dev-dependencies:
+      dependency-type: development
+      exclude-patterns:
+        - "@babel/*"
+        - "babel-*"
+        - "@rollup/*"
+        - "rollup"
+        - "rollup-plugin-*"
+        - "eslint"
+        - "eslint-*"
+        - "@eslint/*"
+        - "@typescript-eslint/*"
+        - "typescript-eslint"
+        - "semantic-release"
+        - "@semantic-release/*"
+        - "conventional-changelog-*"
+        - "commitizen"
+        - "cz-conventional-changelog"
+    production-dependencies:
+      dependency-type: production
+      exclude-patterns:
+        - "lit"
+        - "@lit/*"
+        - "@lit-labs/*"
   ignore:
   - dependency-name: eslint-config-prettier
     versions:
     - 8.0.0
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+  target-branch: beta
+  labels:
+    - type/dependencies
+  groups:
+    github-actions:
+      patterns:
+        - "*"
