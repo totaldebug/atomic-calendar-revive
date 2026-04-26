@@ -1,6 +1,6 @@
 import js from '@eslint/js';
 import * as tseslint from 'typescript-eslint';
-import pluginImport from 'eslint-plugin-import';
+import pluginImport from 'eslint-plugin-import-x';
 import pluginPrettier from 'eslint-plugin-prettier';
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended';
 
@@ -58,7 +58,7 @@ export default [
       ],
     },
     settings: {
-      'import/resolver': {
+      'import-x/resolver': {
         typescript: {
           project: './tsconfig.json',
         },

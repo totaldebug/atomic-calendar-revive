@@ -1,3 +1,4 @@
+import { fireEvent } from '../common/fire-event';
 import { HomeAssistant } from '../types/homeassistant';
 import { ActionConfig } from '../types/lovelace';
 
@@ -26,28 +27,59 @@ export const handleAction = (
 		actionConfig = { action: 'more-info' };
 	}
 
+	if (actionConfig.action === 'more-info' && !entityId) {
+		actionConfig = { action: 'none' };
+	}
+
 	if (
 		actionConfig.confirmation &&
 		(!actionConfig.confirmation.exemptions ||
-			!actionConfig.confirmation.exemptions.some((e) => e.user === hass.user?.id))
+			!actionConfig.confirmation.exemptions.some((e) => e.user === hass.user?.id)) &&
+		!confirm(actionConfig.confirmation.text || `Are you sure you want to ${actionConfig.action}?`)
 	) {
-		if (!confirm(actionConfig.confirmation.text || `Are you sure you want to ${actionConfig.action}?`)) {
-			return;
+		return;
+	}
+
+	switch (actionConfig.action) {
+		case 'more-info':
+			if (entityId) {
+				fireEvent(node, 'hass-more-info' as never, { entityId } as never);
+			}
+			break;
+		case 'navigate':
+			if (actionConfig.navigation_path) {
+				history.pushState(null, '', actionConfig.navigation_path);
+				fireEvent(window, 'location-changed' as never, { replace: false } as never);
+			}
+			break;
+		case 'url':
+			if (actionConfig.url_path) {
+				window.open(actionConfig.url_path);
+			}
+			break;
+		case 'toggle':
+			if (entityId) {
+				hass.callService('homeassistant', 'toggle', { entity_id: entityId });
+			}
+			break;
+		case 'call-service': {
+			if (!actionConfig.service) break;
+			const [domain, service] = actionConfig.service.split('.', 2);
+			const data: Record<string, unknown> = {
+				...(actionConfig.service_data ?? {}),
+				...(actionConfig.data ?? {}),
+			};
+			if (entityId && !('entity_id' in data) && !actionConfig.target) {
+				data.entity_id = entityId;
+			}
+			hass.callService(domain, service, data, actionConfig.target);
+			break;
 		}
+		case 'fire-dom-event':
+			fireEvent(node, 'll-custom' as never, actionConfig as never);
+			break;
+		case 'none':
+		default:
+			break;
 	}
-
-	const event = new CustomEvent('hass-action', {
-		bubbles: true,
-		composed: true,
-		detail: {
-			config: actionConfig,
-			action: action,
-		},
-	});
-
-	if (actionConfig.action === 'more-info' && entityId) {
-		(event.detail as any).config = { ...actionConfig, entity: entityId };
-	}
-
-	node.dispatchEvent(event);
 };

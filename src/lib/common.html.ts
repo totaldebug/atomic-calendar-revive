@@ -12,6 +12,7 @@ export function showCalendarLink(config, selectedMonth) {
 	if (!config.disableCalLink) {
 		return html`<div class="calIconSelector">
 			<ha-icon-button
+				class="cal-link-button"
 				.path=${mdiCalendar}
 				style="--mdc-icon-color: ${config.calDateColor}"
 				onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format(
@@ -65,7 +66,6 @@ export function setNoEventDays(
 			const emptyEvent = new EventClass(emptyEv, config);
 			emptyEvent.isEmpty = true;
 			singleEvents.push(emptyEvent);
-			isEvent = false;
 		}
 	});
 	return singleEvents;
@@ -108,11 +108,11 @@ export function getMultiDayEventParts(config: atomicCardConfig, event: EventClas
 	if (!config.showMultiDayEventParts === true || (event.addDays === false && event.daysLong === undefined)) {
 		return;
 	} else if (config.showMultiDayEventParts === true && event.addDays !== false && event.daysLong) {
-		return html`(${event.addDays + 1}/${event.daysLong})`;
+		return html`<span class="event-parts">(${event.addDays + 1}/${event.daysLong})</span>`;
 	} else if (config.showMultiDayEventParts === true && event.addDays === false && event.daysLong) {
 		const daysSinceStart = dayjs(event.startTimeToShow).diff(event.startDateTime, 'day');
 
-		return html`(${daysSinceStart + 1}/${event.daysLong})`;
+		return html`<span class="event-parts">(${daysSinceStart + 1}/${event.daysLong})</span>`;
 	} else {
 		return html``;
 	}
@@ -153,6 +153,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	const titleColor: string =
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
+	const fullDayClass = event.isAllDayEvent ? `event-title-fullday` : ``;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 	let { title } = event;
 
@@ -162,7 +163,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
 		return html`
 			<div
-				class="event-title ${dayClassEventRunning} ${mode}"
+				class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}"
 				style="text-decoration: ${textDecoration};color: ${titleColor}"
 			>
 				${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
@@ -171,7 +172,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	} else {
 		return html`
 			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-				<div class="event-title ${dayClassEventRunning} ${mode}" style="color: ${titleColor}">
+				<div class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}" style="color: ${titleColor}">
 					${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
 				</div>
 			</a>

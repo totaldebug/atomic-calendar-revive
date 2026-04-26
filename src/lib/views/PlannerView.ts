@@ -4,10 +4,10 @@ import { TemplateResult, html } from 'lit';
 import localize from '../../localize/localize';
 import { atomicCardConfig } from '../../types/config';
 import { HomeAssistant } from '../../types/homeassistant';
+import { ICardHost } from '../card-host.interface';
 import { getTitleHTML, setNoEventDays } from '../common.html';
 import EventClass from '../event.class';
-import { getPlannerDateRange, getPlannerMode, groupEventsByDay } from '../event.func';
-import { ILoaderHost } from '../loader-host.interface';
+import { fetchPlannerEvents, getPlannerDateRange, groupEventsByDay } from '../pipeline';
 import { ICalendarView } from '../view.interface';
 
 /**
@@ -23,9 +23,9 @@ export class PlannerView implements ICalendarView {
 	private isUpdating: boolean = false;
 	private config!: atomicCardConfig;
 	private hass!: HomeAssistant;
-	private parent: ILoaderHost;
+	private parent: ICardHost;
 
-	constructor(parent: ILoaderHost) {
+	constructor(parent: ICardHost) {
 		this.parent = parent;
 	}
 
@@ -41,8 +41,8 @@ export class PlannerView implements ICalendarView {
 			!this.isUpdating &&
 			(!this.lastEventsUpdateTime || dayjs().diff(this.lastEventsUpdateTime, 'seconds') > this.config.refreshInterval)
 		) {
-			this.parent.showLoader = true;
-			this.parent.requestUpdate();
+			this.parent.setLoading(true);
+			this.parent.scheduleRender();
 			this.hiddenEvents = 0;
 			this.isUpdating = true;
 			try {
@@ -50,10 +50,10 @@ export class PlannerView implements ICalendarView {
 				if (!plannerConfig.plannerRollingWeek) {
 					plannerConfig._showPastEvents = true;
 				}
-				const { events, failedEvents } = await getPlannerMode(plannerConfig, this.hass);
-				this.events = events[0];
-				this.hiddenEvents = events[1];
-				this.failedEvents = failedEvents;
+				const { events, hidden, failed } = await fetchPlannerEvents(plannerConfig, this.hass);
+				this.events = events;
+				this.hiddenEvents = hidden;
+				this.failedEvents = failed;
 
 				// Force fill days for Planner Mode
 				const { start, end } = getPlannerDateRange(this.config);
@@ -72,8 +72,8 @@ export class PlannerView implements ICalendarView {
 
 			this.lastEventsUpdateTime = dayjs();
 			this.isUpdating = false;
-			this.parent.showLoader = false;
-			this.parent.requestUpdate();
+			this.parent.setLoading(false);
+			this.parent.scheduleRender();
 		}
 	}
 
@@ -101,7 +101,7 @@ export class PlannerView implements ICalendarView {
 		// Render Header Row (Calendars)
 		const calendarHeaders = calendars.map((cal) => {
 			return html`<div class="planner-header">
-				<div class="day-name" style="color: ${cal.color}">${cal.name}</div>
+				<div class="day-name calendar-name" style="color: ${cal.color}">${cal.name}</div>
 			</div>`;
 		});
 

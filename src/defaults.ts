@@ -5,7 +5,7 @@ export default {
 	cardHeight: '100%',
 
 	// main settings
-	maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
+	maxDaysToShow: 0, // maximum days to show (if zero, show only currently running events)
 	maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
 	showLoader: true, // show animation when loading events from Google calendar
 

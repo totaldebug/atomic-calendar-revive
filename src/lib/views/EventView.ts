@@ -5,10 +5,10 @@ import { handleAction } from '../../helpers/handle-action';
 import localize from '../../localize/localize';
 import { atomicCardConfig } from '../../types/config';
 import { HomeAssistant } from '../../types/homeassistant';
+import { ICardHost } from '../card-host.interface';
 import { getCurrDayAndMonth, getDescription, getLocationHTML, getTitleHTML, setNoEventDays } from '../common.html';
 import EventClass from '../event.class';
-import { getEventMode, groupEventsByDay } from '../event.func';
-import { ILoaderHost } from '../loader-host.interface';
+import { fetchEventModeEvents, groupEventsByDay } from '../pipeline';
 import { ICalendarView } from '../view.interface';
 
 export class EventView implements ICalendarView {
@@ -20,9 +20,9 @@ export class EventView implements ICalendarView {
 	private isUpdating: boolean = false;
 	private config!: atomicCardConfig;
 	private hass!: HomeAssistant;
-	private parent: ILoaderHost;
+	private parent: ICardHost;
 
-	constructor(parent: ILoaderHost) {
+	constructor(parent: ICardHost) {
 		this.parent = parent;
 	}
 
@@ -38,15 +38,15 @@ export class EventView implements ICalendarView {
 			!this.isUpdating &&
 			(!this.lastEventsUpdateTime || dayjs().diff(this.lastEventsUpdateTime, 'seconds') > this.config.refreshInterval)
 		) {
-			this.parent.showLoader = true;
-			this.parent.requestUpdate();
+			this.parent.setLoading(true);
+			this.parent.scheduleRender();
 			this.hiddenEvents = 0;
 			this.isUpdating = true;
 			try {
-				const { events, failedEvents } = await getEventMode(this.config, this.hass);
-				this.events = events[0];
-				this.hiddenEvents = events[1];
-				this.failedEvents = failedEvents;
+				const { events, hidden, failed } = await fetchEventModeEvents(this.config, this.hass);
+				this.events = events;
+				this.hiddenEvents = hidden;
+				this.failedEvents = failed;
 				// Check no event days and display
 				if (this.config.showNoEventDays) {
 					this.events = setNoEventDays(this.config, this.events);
@@ -64,8 +64,8 @@ export class EventView implements ICalendarView {
 
 			this.lastEventsUpdateTime = dayjs();
 			this.isUpdating = false;
-			this.parent.showLoader = false;
-			this.parent.requestUpdate();
+			this.parent.setLoading(false);
+			this.parent.scheduleRender();
 		}
 	}
 
@@ -164,6 +164,7 @@ export class EventView implements ICalendarView {
 					const eventProgress = dayjs().diff(event.startDateTime, 'minutes');
 					const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
 					progressBar = html`<progress
+						class="event-progress-bar"
 						style="--progress-bar: ${this.config.progressBarColor}; --progress-bar-bg: ${this.config
 							.progressBarBackgroundColor};"
 						value="${eventPercentProgress}"
@@ -187,7 +188,7 @@ export class EventView implements ICalendarView {
 					const now = dayjs();
 					timeUntilRemaining = html`<div class="relative-time time-remaining">
 						${this.config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
-							? `(${event.startDateTime.fromNow()})`
+							? `(${event.startDateTime.isSame(now, 'day') ? event.startDateTime.fromNow() : event.startDateTime.startOf('day').from(now.startOf('day'))})`
 							: this.config.showTimeRemaining &&
 								  event.startDateTime.isBefore(now, 'minutes') &&
 								  event.endDateTime.isAfter(now, 'minutes')
@@ -222,7 +223,13 @@ export class EventView implements ICalendarView {
 					class="single-event-container ${compactMode} ${dayWrap} ${hideDate}"
 					style="${lastEventStyle}"
 					@click="${(e: Event) =>
-						handleAction(e.currentTarget as HTMLElement, this.hass, this.config, 'tap', event.entity.entity_id)}"
+						handleAction(
+							e.currentTarget as HTMLElement,
+							this.hass,
+							{ ...this.config, ...event.entityConfig },
+							'tap',
+							event.entity.entity_id,
+						)}"
 				>
 					${currentEventLine} ${eventLeft}
 					<div class="event-right" style="${finishedEventsStyle}">

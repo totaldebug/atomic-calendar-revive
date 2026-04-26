@@ -267,17 +267,29 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		return schema.label || schema.name;
 	}
 
+	private _getCleanConfig(config: atomicCardConfig): atomicCardConfig {
+		const newConfig = { ...config };
+		for (const [key, value] of Object.entries(newConfig)) {
+			if (JSON.stringify(value) === JSON.stringify(defaults[key])) {
+				delete newConfig[key];
+			}
+		}
+		return newConfig;
+	}
+
 	private _valueChanged(ev: CustomEvent): void {
+		const config = this._getCleanConfig(ev.detail.value);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		fireEvent(this, 'config-changed', { config: ev.detail.value });
+		fireEvent(this, 'config-changed', { config });
 	}
 
 	private _actionValueChanged(ev: CustomEvent, action: string): void {
 		this._config = { ...this._config, [action]: ev.detail.value };
+		const config = this._getCleanConfig(this._config);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		fireEvent(this, 'config-changed', { config: this._config });
+		fireEvent(this, 'config-changed', { config });
 	}
 
 	private _entitiesChanged(ev: CustomEvent): void {
@@ -291,9 +303,10 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		});
 
 		this._config = { ...this._config, entities: newEntities };
+		const config = this._getCleanConfig(this._config);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		fireEvent(this, 'config-changed', { config: this._config });
+		fireEvent(this, 'config-changed', { config });
 	}
 
 	private _entityValueChanged(ev: CustomEvent, index: number): void {
@@ -301,8 +314,9 @@ export class AtomicCalendarReviveEditor extends LitElement implements LovelaceCa
 		const entities = [...(this._config.entities || [])];
 		entities[index] = newEntityConfig;
 		this._config = { ...this._config, entities };
+		const config = this._getCleanConfig(this._config);
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
-		fireEvent(this, 'config-changed', { config: this._config });
+		fireEvent(this, 'config-changed', { config });
 	}
 }

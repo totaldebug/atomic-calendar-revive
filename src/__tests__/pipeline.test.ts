@@ -1,0 +1,327 @@
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
+
+import { ENTITY, allDayEvent, makeConfig, timedEvent } from './fixtures';
+import { groupEventsByDay, processEvents } from '../lib/pipeline';
+
+const NOW = '2026-04-25T12:00:00';
+
+beforeEach(() => {
+	vi.useFakeTimers();
+	vi.setSystemTime(new Date(NOW));
+});
+
+afterEach(() => {
+	vi.useRealTimers();
+});
+
+describe('processEvents: filters', () => {
+	test('passes through events with no filters set', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'A'),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'B'),
+		];
+		const [events, hidden] = processEvents(raw, cfg, 'Event');
+		expect(events).toHaveLength(2);
+		expect(hidden).toBe(0);
+	});
+
+	test('blocklist removes matching titles', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Standup', {
+				entity: { ...ENTITY, blocklist: '^Standup$' },
+			}),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'Lunch', {
+				entity: { ...ENTITY, blocklist: '^Standup$' },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Lunch']);
+	});
+
+	test('allowlist keeps only matching titles', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Important: A', {
+				entity: { ...ENTITY, allowlist: '^Important' },
+			}),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'Trivia', {
+				entity: { ...ENTITY, allowlist: '^Important' },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Important: A']);
+	});
+
+	test('declined events filtered when showDeclined=false', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, showDeclined: false });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'A', {
+				attendees: [{ self: true, responseStatus: 'declined' }],
+			}),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'B'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['B']);
+	});
+
+	test('all-day events filtered when showAllDayEvents=false', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, showAllDayEvents: false });
+		const raw = [
+			allDayEvent('2026-04-25', '2026-04-26', 'AllDay'),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'Timed'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Timed']);
+	});
+
+	test('finished events filtered when hideFinishedEvents=true', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, hideFinishedEvents: true });
+		const raw = [
+			timedEvent('2026-04-25T08:00:00', '2026-04-25T09:00:00', 'Finished'),
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Future'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Future']);
+	});
+
+	test('maxEventCount trims and reports hidden', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, maxEventCount: 2 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'A'),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'B'),
+			timedEvent('2026-04-27T14:00:00', '2026-04-27T15:00:00', 'C'),
+			timedEvent('2026-04-28T14:00:00', '2026-04-28T15:00:00', 'D'),
+		];
+		const [events, hidden] = processEvents(raw, cfg, 'Event');
+		expect(events).toHaveLength(2);
+		expect(hidden).toBe(2);
+	});
+
+	test('softLimit allows overflow up to maxEventCount + softLimit', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, maxEventCount: 2, softLimit: 2 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'A'),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'B'),
+			timedEvent('2026-04-27T14:00:00', '2026-04-27T15:00:00', 'C'),
+			timedEvent('2026-04-28T14:00:00', '2026-04-28T15:00:00', 'D'),
+		];
+		const [events, hidden] = processEvents(raw, cfg, 'Event');
+		// 4 events, maxEventCount=2, softLimit=2, threshold = 2+2 = 4. 4 > 4 is false, so no trim.
+		expect(events).toHaveLength(4);
+		expect(hidden).toBe(0);
+	});
+
+	test('hideDuplicates merges by title|start|end and joins origin names', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, hideDuplicates: true });
+		const e1 = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Sync', {
+			entity: { entity: 'calendar.a', name: 'Calendar A' },
+		});
+		const e2 = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Sync', {
+			entity: { entity: 'calendar.b', name: 'Calendar B' },
+		});
+		const cfgWithBoth = makeConfig({
+			maxDaysToShow: 7,
+			hideDuplicates: true,
+			entities: [
+				{ entity: 'calendar.a', name: 'Calendar A' },
+				{ entity: 'calendar.b', name: 'Calendar B' },
+			],
+		});
+		const [events] = processEvents([e1, e2], cfgWithBoth, 'Event');
+		expect(events).toHaveLength(1);
+		expect(events[0].originName).toContain('Calendar A');
+		expect(events[0].originName).toContain('Calendar B');
+		void cfg;
+	});
+
+	test('multiday split applied when showMultiDay=true', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, showMultiDay: true });
+		const raw = [timedEvent('2026-04-25T10:00:00', '2026-04-27T10:00:00', 'Trip')];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.length).toBeGreaterThan(1);
+	});
+
+	test('Calendar mode does not apply maxDaysToShow window filter', () => {
+		const cfg = makeConfig({ maxDaysToShow: 1 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-05-15T14:00:00', '2026-05-15T15:00:00', 'FarFuture'),
+		];
+		const [events] = processEvents(raw, cfg, 'Calendar');
+		expect(events).toHaveLength(2);
+	});
+
+	test('Event mode applies maxDaysToShow window filter', () => {
+		const cfg = makeConfig({ maxDaysToShow: 2, startDaysAhead: 0 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'Tomorrow'),
+			timedEvent('2026-04-30T14:00:00', '2026-04-30T15:00:00', 'TooFar'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).not.toContain('TooFar');
+	});
+
+	test('single-day window excludes all-day event on the following day (#1610)', () => {
+		// today is 2026-04-25 per NOW. With startDaysAhead=3 and maxDaysToShow=1
+		// the window covers 2026-04-28 only — the 2026-04-29 all-day event must not leak in.
+		const cfg = makeConfig({ maxDaysToShow: 1, startDaysAhead: 3 });
+		const raw = [
+			timedEvent('2026-04-28T18:00:00', '2026-04-28T21:00:00', 'InWindow'),
+			allDayEvent('2026-04-29', '2026-04-30', 'NextDayAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['InWindow']);
+	});
+
+	test('startTimeFilter / endTimeFilter restrict to time-of-day window', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const inWindow = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'In', {
+			entity: { ...ENTITY, startTimeFilter: '13:00', endTimeFilter: '17:00' },
+		});
+		const outWindow = timedEvent('2026-04-25T22:00:00', '2026-04-25T23:00:00', 'Out', {
+			entity: { ...ENTITY, startTimeFilter: '13:00', endTimeFilter: '17:00' },
+		});
+		const [events] = processEvents([inWindow, outWindow], cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['In']);
+	});
+
+	test('Calendar mode keeps past all-day events within the visible month', () => {
+		// Regression for Sourcery review on PR #1758: passesAllDayBeforeWindow
+		// must not prune all-day events whose end is before now+startDaysAhead
+		// when rendering a full month grid.
+		const cfg = makeConfig({ maxDaysToShow: 7, startDaysAhead: 0 });
+		const raw = [
+			allDayEvent('2026-04-10', '2026-04-11', 'PastAllDayInMonth'),
+			allDayEvent('2026-04-26', '2026-04-27', 'FutureAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Calendar');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(
+			expect.arrayContaining(['PastAllDayInMonth', 'FutureAllDay']),
+		);
+	});
+
+	test('Event mode still prunes all-day events that ended before the window starts', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7, startDaysAhead: 0 });
+		const raw = [
+			allDayEvent('2026-04-10', '2026-04-11', 'PastAllDay'),
+			allDayEvent('2026-04-26', '2026-04-27', 'FutureAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['FutureAllDay']);
+	});
+});
+
+describe('Planner mode pipeline', () => {
+	// NOW = 2026-04-25 (Saturday). With firstDayOfWeek=1 (Mon, default) and
+	// plannerRollingWeek=false, the non-rolling planner aligns to Mon 2026-04-20
+	// and ends Sun 2026-04-26.
+
+	test('non-rolling planner enforces upper bound at the aligned week end', () => {
+		// NOW = Saturday 2026-04-25, firstDayOfWeek = 1 → window aligns Mon 4/20 – Sun 4/26.
+		// Lower-bound filtering is the responsibility of the HA API range query
+		// (fetchRawEvents), so processEvents only enforces the upper bound here.
+		const cfg = makeConfig({ plannerDaysToShow: 7, plannerRollingWeek: false, firstDayOfWeek: 1 });
+		const raw = [
+			timedEvent('2026-04-22T10:00:00', '2026-04-22T11:00:00', 'InsideMidWeek'),
+			timedEvent('2026-04-26T10:00:00', '2026-04-26T11:00:00', 'InsideWeekEnd'),
+			timedEvent('2026-04-27T10:00:00', '2026-04-27T11:00:00', 'AfterWeek'),
+		];
+		const [events] = processEvents(raw, cfg, 'Planner');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['InsideMidWeek', 'InsideWeekEnd']));
+		expect(titles).not.toContain('AfterWeek');
+	});
+
+	test('rolling planner enforces upper bound at today + plannerDaysToShow', () => {
+		// Rolling window: [today, today + plannerDaysToShow - 1].
+		const cfg = makeConfig({ plannerDaysToShow: 7, plannerRollingWeek: true, firstDayOfWeek: 1 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-05-01T10:00:00', '2026-05-01T11:00:00', 'Day7'),
+			timedEvent('2026-05-02T10:00:00', '2026-05-02T11:00:00', 'Day8'),
+		];
+		const [events] = processEvents(raw, cfg, 'Planner');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Today', 'Day7']));
+		expect(titles).not.toContain('Day8');
+	});
+
+	test('entity-level maxDaysToShow narrows the planner window', () => {
+		const cfg = makeConfig({ plannerDaysToShow: 7, plannerRollingWeek: true, firstDayOfWeek: 1 });
+		const raw = [
+			// Within global 7-day window but beyond the per-entity 2-day override.
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today', {
+				entity: { ...ENTITY, maxDaysToShow: 2 },
+			}),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'Tomorrow', {
+				entity: { ...ENTITY, maxDaysToShow: 2 },
+			}),
+			timedEvent('2026-04-28T14:00:00', '2026-04-28T15:00:00', 'BeyondEntityWindow', {
+				entity: { ...ENTITY, maxDaysToShow: 2 },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Planner');
+		expect(events.map((e: { title: string }) => e.title)).not.toContain('BeyondEntityWindow');
+	});
+
+	test('entity-level maxDaysToShow narrows the event window', () => {
+		const cfg = makeConfig({ maxDaysToShow: 14, startDaysAhead: 0 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Day0', {
+				entity: { ...ENTITY, maxDaysToShow: 3 },
+			}),
+			timedEvent('2026-04-27T14:00:00', '2026-04-27T15:00:00', 'Day2', {
+				entity: { ...ENTITY, maxDaysToShow: 3 },
+			}),
+			timedEvent('2026-04-30T14:00:00', '2026-04-30T15:00:00', 'BeyondEntityWindow', {
+				entity: { ...ENTITY, maxDaysToShow: 3 },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Day0', 'Day2']));
+		expect(titles).not.toContain('BeyondEntityWindow');
+	});
+
+	test('multiday split events are clamped to the planner window', () => {
+		const cfg = makeConfig({
+			plannerDaysToShow: 7,
+			plannerRollingWeek: true,
+			firstDayOfWeek: 1,
+			showMultiDay: true,
+		});
+		// Spans 4 days starting today; without clamping all 4 partials would emit.
+		// Set plannerDaysToShow lower than the span to assert clamping.
+		const cfgNarrow = makeConfig({
+			plannerDaysToShow: 2,
+			plannerRollingWeek: true,
+			firstDayOfWeek: 1,
+			showMultiDay: true,
+		});
+		const raw = [timedEvent('2026-04-25T10:00:00', '2026-04-29T10:00:00', 'Trip')];
+		const [events] = processEvents(raw, cfgNarrow, 'Planner');
+		// Only the partials that start within today and tomorrow should remain.
+		expect(events.length).toBeLessThan(4);
+		expect(events.length).toBeGreaterThan(0);
+		void cfg;
+	});
+});
+
+describe('groupEventsByDay', () => {
+	test('groups by daysToSort key', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'A'),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'B'),
+			timedEvent('2026-04-26T14:00:00', '2026-04-26T15:00:00', 'C'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const groups = groupEventsByDay(events);
+		expect(groups).toHaveLength(2);
+		expect(groups[0]).toHaveLength(2);
+		expect(groups[1]).toHaveLength(1);
+	});
+});

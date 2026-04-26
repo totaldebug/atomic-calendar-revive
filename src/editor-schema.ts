@@ -41,6 +41,9 @@ export const mainSchema = [
 		label: localize('main.fields.linkTarget'),
 		selector: { select: { options: ['_blank', '_self', '_parent', '_top'], mode: 'dropdown' } },
 	},
+	{ name: 'tap_action', label: 'Tap Action', selector: { 'ui-action': {} } },
+	{ name: 'hold_action', label: 'Hold Action', selector: { 'ui-action': {} } },
+	{ name: 'double_tap_action', label: 'Double Tap Action', selector: { 'ui-action': {} } },
 ];
 
 export const eventSchema = [
@@ -142,4 +145,7 @@ export const entitySchema = [
 	{ name: 'allowlistLocation', label: 'Allowlist Location', selector: { text: {} } },
 	{ name: 'eventTitle', label: 'Event Title', selector: { text: {} } },
 	{ name: 'showMultiDay', label: 'Show Multi Day', selector: { boolean: {} } },
+	{ name: 'tap_action', label: 'Tap Action', selector: { 'ui-action': {} } },
+	{ name: 'hold_action', label: 'Hold Action', selector: { 'ui-action': {} } },
+	{ name: 'double_tap_action', label: 'Double Tap Action', selector: { 'ui-action': {} } },
 ];

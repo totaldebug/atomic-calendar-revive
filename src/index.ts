@@ -27,13 +27,13 @@ dayjs.extend(advancedFormat);
 // Import Card Editor
 import './editor';
 import { CARD_VERSION } from './const';
-import defaultConfig from './defaults';
 import { getDefaultConfig } from './helpers/get-default-config';
 import { setHass } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
+import { ICardHost } from './lib/card-host.interface';
 import { getDate } from './lib/common.html';
+import { resolveConfig } from './lib/config-validator';
 import EventClass from './lib/event.class';
-import { ILoaderHost } from './lib/loader-host.interface';
 import { ICalendarView } from './lib/view.interface';
 import { CalendarView } from './lib/views/CalendarView';
 import { EventView } from './lib/views/EventView';
@@ -46,12 +46,24 @@ import { HomeAssistant, TimeFormat } from './types/homeassistant';
 import { LovelaceCardEditor } from './types/lovelace';
 
 @customElement('atomic-calendar-revive')
-export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
+export class AtomicCalendarRevive extends LitElement implements ICardHost {
 	@property() public hass!: HomeAssistant;
 	@property() private _config!: atomicCardConfig;
 	@property() private content;
 	@property() public showLoader: boolean = false;
 	@state() public selectedEvent?: EventClass;
+
+	public setLoading(loading: boolean): void {
+		this.showLoader = loading;
+	}
+
+	public scheduleRender(): void {
+		this.requestUpdate();
+	}
+
+	public openEventDetail(event: EventClass): void {
+		this.selectedEvent = event;
+	}
 
 	shouldUpdateHtml: boolean;
 	errorMessage: TemplateResult;
@@ -83,36 +95,8 @@ export class AtomicCalendarRevive extends LitElement implements ILoaderHost {
 
 	public setConfig(config: atomicCardConfig): void {
 		setHass(this.hass);
-		if (!config) {
-			throw new Error(localize('errors.invalid_configuration'));
-		}
-		if (!config.entities || !config.entities.length) {
-			throw new Error(localize('errors.no_entities'));
-		}
-
-		const customConfig: atomicCardConfig = JSON.parse(JSON.stringify(config));
-
-		this._config = {
-			...defaultConfig,
-			...customConfig,
-		} as atomicCardConfig;
-
+		this._config = resolveConfig(config);
 		this.modeToggle = this._config.defaultMode!;
-
-		if (typeof this._config.entities === 'string') {
-			this._config.entities = [
-				{
-					entity: config.entities,
-				},
-			];
-		}
-		this._config.entities.forEach((entity, i) => {
-			if (typeof entity === 'string') {
-				this._config.entities[i] = {
-					entity: entity,
-				};
-			}
-		});
 	}
 
 	protected render(): TemplateResult | void {
