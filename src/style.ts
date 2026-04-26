@@ -268,9 +268,10 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.calDay {
-		aspect-ratio: 1 / 1;
 		font-size: 95%;
 		width: 100%;
+		height: 100%;
+		min-height: 80px;
 		margin: 0;
 		padding: 0;
 		overflow: hidden;

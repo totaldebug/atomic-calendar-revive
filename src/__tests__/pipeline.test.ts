@@ -164,6 +164,18 @@ describe('processEvents: filters', () => {
 		expect(events.map((e: { title: string }) => e.title)).not.toContain('TooFar');
 	});
 
+	test('single-day window excludes all-day event on the following day (#1610)', () => {
+		// today is 2026-04-25 per NOW. With startDaysAhead=3 and maxDaysToShow=1
+		// the window covers 2026-04-28 only — the 2026-04-29 all-day event must not leak in.
+		const cfg = makeConfig({ maxDaysToShow: 1, startDaysAhead: 3 });
+		const raw = [
+			timedEvent('2026-04-28T18:00:00', '2026-04-28T21:00:00', 'InWindow'),
+			allDayEvent('2026-04-29', '2026-04-30', 'NextDayAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['InWindow']);
+	});
+
 	test('startTimeFilter / endTimeFilter restrict to time-of-day window', () => {
 		const cfg = makeConfig({ maxDaysToShow: 7 });
 		const inWindow = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'In', {

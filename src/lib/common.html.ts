@@ -153,6 +153,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	const titleColor: string =
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
+	const fullDayClass = event.isAllDayEvent ? `event-title-fullday` : ``;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 	let { title } = event;
 
@@ -162,7 +163,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
 		return html`
 			<div
-				class="event-title ${dayClassEventRunning} ${mode}"
+				class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}"
 				style="text-decoration: ${textDecoration};color: ${titleColor}"
 			>
 				${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
@@ -171,7 +172,7 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	} else {
 		return html`
 			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-				<div class="event-title ${dayClassEventRunning} ${mode}" style="color: ${titleColor}">
+				<div class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}" style="color: ${titleColor}">
 					${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
 				</div>
 			</a>

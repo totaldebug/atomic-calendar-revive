@@ -5,7 +5,7 @@ import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
 import serve from 'rollup-plugin-serve';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 
 const plugins = [
 	nodeResolve({
@@ -14,13 +14,14 @@ const plugins = [
 	}),
 	eslint(),
 	commonjs(),
-	typescript(),
+	typescript({ tsconfig: './tsconfig.json' }),
 	json(),
 	babel({
 		babelHelpers: 'bundled',
 		compact: true,
 		extensions: ['.js', '.ts', '.mjs'],
 		presets: [
+			'@babel/preset-typescript',
 			[
 				'@babel/env',
 				{
