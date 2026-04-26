@@ -13,7 +13,7 @@ const plugins = [
 	}),
 	eslint(),
 	commonjs(),
-	typescript({ tsconfig: './tsconfig.json' }),
+	typescript({ tsconfig: './tsconfig.json', sourceMap: false }),
 	json(),
 	babel({
 		babelHelpers: 'bundled',
