@@ -17,7 +17,7 @@ export class CalendarView implements ICalendarView {
 	private config!: atomicCardConfig;
 	private hass!: HomeAssistant;
 
-	constructor(parent: ICardHost) {
+	constructor(private parent: ICardHost) {
 		this.grid = new MonthGrid(parent);
 	}
 
@@ -53,6 +53,7 @@ export class CalendarView implements ICalendarView {
 	private selectDay(day: CalendarDay): void {
 		this.clickedDate = day.date;
 		this.summaryHtml = this.buildSummary(day);
+		this.parent.scheduleRender();
 	}
 
 	private buildSummary(day: CalendarDay): TemplateResult[] {
