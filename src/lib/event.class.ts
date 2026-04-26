@@ -239,15 +239,14 @@ export default class EventClass {
 	}
 
 	/**
-	 * split event into a multi day event where it crosses to a new day
-	 * @param {*} newEvent
+	 * Split this multi-day event into one EventClass per calendar day it covers.
+	 * Mode-agnostic: returns every partial. Callers filter by their visibility window.
 	 */
-	splitIntoMultiDay(newEvent, mode: 'Event' | 'Calendar' | 'Planner') {
-		const partialEvents: any[] = [];
+	split(): EventClass[] {
+		const partialEvents: EventClass[] = [];
 
 		// multi days start at two days
 		// every 24 hours is a day. if we do get some full days then just add to 1 daysLong
-		// TODO: Confirm this works as expected
 		let daysLong = 2;
 		const fullDays = Math.round(
 			this.endDateTime.subtract(1, 'minutes').endOf('day').diff(this.startDateTime.startOf('day'), 'hours') / 24,
@@ -256,53 +255,13 @@ export default class EventClass {
 			daysLong = fullDays;
 		}
 
-		let windowStart = dayjs().startOf('day').add(this._globalConfig.startDaysAhead!, 'day');
-		const entityMaxDays = newEvent.entityConfig.maxDaysToShow;
-		const maxDays = entityMaxDays !== undefined ? entityMaxDays : this._globalConfig.maxDaysToShow!;
-		let windowEnd = windowStart.endOf('day').add(maxDays == 0 ? maxDays : maxDays - 1, 'day');
-
-		if (mode === 'Planner') {
-			const plannerMaxDays = entityMaxDays !== undefined ? entityMaxDays : this._globalConfig.plannerDaysToShow!;
-			const daysToShow = plannerMaxDays == 0 ? plannerMaxDays : plannerMaxDays - 1;
-
-			if (!this._globalConfig.plannerRollingWeek) {
-				const currentDay = windowStart.day();
-				const firstDay = this._globalConfig.firstDayOfWeek!;
-				let diff = currentDay - firstDay;
-				if (diff < 0) {
-					diff += 7;
-				}
-				windowStart = windowStart.subtract(diff, 'day').startOf('day');
-			}
-			windowEnd = windowStart.endOf('day').add(daysToShow, 'day');
-		}
-
 		for (let i = 0; i < daysLong; i++) {
-			// copy event then add the current day/total days to 'new' event
-			const copiedEvent = JSON.parse(JSON.stringify(newEvent.rawEvent));
-			// count the loops, this shows which day of the event we are on
+			const copiedEvent = JSON.parse(JSON.stringify(this.rawEvent));
 			copiedEvent.addDays = i;
-			// count the total number of days in the event
 			copiedEvent.daysLong = daysLong;
-
-			// is this the first day of the event?
 			copiedEvent._isFirstDay = i === 0;
-			// is this the last day of the event?
 			copiedEvent._isLastDay = i === daysLong - 1 && i > 0;
-
-			// Create event object for each of the days the multi-event occurs on
-			const partialEvent: EventClass = new EventClass(copiedEvent, this._globalConfig);
-
-			if (mode === 'Event' || mode === 'Planner') {
-				if (
-					windowEnd.isAfter(partialEvent.startDateTime) &&
-					windowStart.subtract(1, 'minute').isBefore(partialEvent.startDateTime)
-				) {
-					partialEvents.push(partialEvent);
-				}
-			} else if (mode === 'Calendar') {
-				partialEvents.push(partialEvent);
-			}
+			partialEvents.push(new EventClass(copiedEvent, this._globalConfig));
 		}
 		return partialEvents;
 	}

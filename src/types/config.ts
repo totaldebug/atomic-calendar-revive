@@ -10,6 +10,7 @@ export interface atomicCardConfig {
 	eventTitle?: string;
 	cardHeight?: string;
 	sortBy?: string;
+	allDayBottom?: boolean;
 	showMultiDay: boolean;
 	showMultiDayEventParts?: boolean;
 	hideDuplicates: boolean;

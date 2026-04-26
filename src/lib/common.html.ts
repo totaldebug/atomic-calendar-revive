@@ -66,7 +66,6 @@ export function setNoEventDays(
 			const emptyEvent = new EventClass(emptyEv, config);
 			emptyEvent.isEmpty = true;
 			singleEvents.push(emptyEvent);
-			isEvent = false;
 		}
 	});
 	return singleEvents;
