@@ -65,7 +65,13 @@ export const handleAction = (
 		case 'call-service': {
 			if (!actionConfig.service) break;
 			const [domain, service] = actionConfig.service.split('.', 2);
-			const data = { ...(actionConfig.service_data ?? {}), ...(actionConfig.data ?? {}) };
+			const data: Record<string, unknown> = {
+				...(actionConfig.service_data ?? {}),
+				...(actionConfig.data ?? {}),
+			};
+			if (entityId && !('entity_id' in data) && !actionConfig.target) {
+				data.entity_id = entityId;
+			}
 			hass.callService(domain, service, data, actionConfig.target);
 			break;
 		}

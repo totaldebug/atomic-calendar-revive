@@ -133,7 +133,9 @@ export class MonthGrid {
 	}
 
 	private renderHeader(): TemplateResult {
-		return html`<div class="calDateSelector">
+		const dateColor = this.config.calDateColor;
+		const colorVar = dateColor ? `--cal-date-color: ${dateColor}` : '';
+		return html`<div class="calDateSelector" style=${colorVar}>
 			<ha-icon-button
 				class="prev"
 				.path=${mdiChevronLeft}

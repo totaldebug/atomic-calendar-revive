@@ -29,7 +29,8 @@ interface DateRange {
 
 // ─── Filters ──────────────────────────────────────────────────────────────────
 
-function passesAllDayBeforeWindow(e: EventClass, config: atomicCardConfig): boolean {
+function passesAllDayBeforeWindow(e: EventClass, config: atomicCardConfig, mode: Mode): boolean {
+	if (mode === 'Calendar') return true;
 	if (!e.isAllDayEvent) return true;
 	return !e.endDateTime.isBefore(dayjs().add(config.startDaysAhead!, 'day'));
 }
@@ -185,7 +186,7 @@ export function processEvents(rawEvents: any[], config: atomicCardConfig, mode: 
 		raw.originCalendar = config.entities.find((entity: { entity: string }) => entity.entity === raw.entity.entity);
 		const event = new EventClass(raw, config);
 
-		if (!passesAllDayBeforeWindow(event, config)) continue;
+		if (!passesAllDayBeforeWindow(event, config, mode)) continue;
 		if (!passesDeclined(event, config)) continue;
 		if (!passesAllDayHidden(event, config)) continue;
 		if (!passesBlocklist(event)) continue;
