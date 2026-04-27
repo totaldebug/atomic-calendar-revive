@@ -1,7 +1,8 @@
+import dayjs from 'dayjs';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { ENTITY, allDayEvent, makeConfig, timedEvent } from './fixtures';
-import { groupEventsByDay, processEvents } from '../lib/pipeline';
+import { fetchRawEvents, groupEventsByDay, processEvents } from '../lib/pipeline';
 
 const NOW = '2026-04-25T12:00:00';
 
@@ -307,6 +308,68 @@ describe('Planner mode pipeline', () => {
 		expect(events.length).toBeLessThan(4);
 		expect(events.length).toBeGreaterThan(0);
 		void cfg;
+	});
+});
+
+describe('fetchRawEvents: API fetch window', () => {
+	const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+	const range = { start: dayjs('2026-04-01T00:00:00'), end: dayjs('2026-05-12T00:00:00') };
+	const expectedFullStart = range.start.startOf('day').format(DATE_FORMAT);
+	const expectedFullEnd = range.end.endOf('day').format(DATE_FORMAT);
+
+	function makeHass() {
+		const calls: string[] = [];
+		const hass = {
+			callApi: vi.fn((_method: string, url: string) => {
+				calls.push(url);
+				return Promise.resolve([]);
+			}),
+			states: {},
+		};
+		return { hass, calls };
+	}
+
+	test('Calendar mode ignores entity-level maxDaysToShow and uses full range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 7 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Calendar');
+
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedFullEnd}`);
+	});
+
+	test('Event mode honours entity-level maxDaysToShow and truncates range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 7 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Event');
+
+		const expectedTruncatedEnd = range.start.endOf('day').add(6, 'day').format(DATE_FORMAT);
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedTruncatedEnd}`);
+	});
+
+	test('Planner mode honours entity-level maxDaysToShow and truncates range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 3 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Planner');
+
+		const expectedTruncatedEnd = range.start.endOf('day').add(2, 'day').format(DATE_FORMAT);
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedTruncatedEnd}`);
+	});
+
+	test('entity without maxDaysToShow uses full range in any mode', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY }] });
+
+		for (const mode of ['Calendar', 'Event', 'Planner'] as const) {
+			const { hass, calls } = makeHass();
+			await fetchRawEvents(hass, cfg, range, mode);
+			expect(calls).toHaveLength(1);
+			expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedFullEnd}`);
+		}
 	});
 });
 

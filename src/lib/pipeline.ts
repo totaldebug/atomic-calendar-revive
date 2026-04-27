@@ -246,6 +246,7 @@ export async function fetchRawEvents(
 	hass: any,
 	config: atomicCardConfig,
 	range: DateRange,
+	mode: Mode,
 ): Promise<{ raw: any[]; failed: FailedEvent[] }> {
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 	const startTime = range.start.startOf('day').format(dateFormat);
@@ -257,7 +258,7 @@ export async function fetchRawEvents(
 		const calendarEntity = entityObj.entity;
 		const daysToShow = entityObj.maxDaysToShow === 0 ? 0 : entityObj.maxDaysToShow - 1;
 		const endTime =
-			entityObj.maxDaysToShow === undefined
+			mode === 'Calendar' || entityObj.maxDaysToShow === undefined
 				? range.end.endOf('day').format(dateFormat)
 				: range.start.endOf('day').add(daysToShow, 'day').format(dateFormat);
 		const url = `calendars/${calendarEntity}?start=${startTime}&end=${endTime}`;
@@ -285,14 +286,14 @@ export async function fetchRawEvents(
 
 export async function fetchEventModeEvents(config: atomicCardConfig, hass: any): Promise<PipelineResult> {
 	const range = getEventModeRange(config);
-	const { raw, failed } = await fetchRawEvents(hass, config, range);
+	const { raw, failed } = await fetchRawEvents(hass, config, range, 'Event');
 	const [events, hidden] = processEvents(raw, config, 'Event');
 	return { events, hidden, failed };
 }
 
 export async function fetchPlannerEvents(config: atomicCardConfig, hass: any): Promise<PipelineResult> {
 	const range = getPlannerDateRange(config);
-	const { raw, failed } = await fetchRawEvents(hass, config, range);
+	const { raw, failed } = await fetchRawEvents(hass, config, range, 'Planner');
 	const [events, hidden] = processEvents(raw, config, 'Planner');
 	return { events, hidden, failed };
 }

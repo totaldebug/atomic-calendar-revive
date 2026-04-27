@@ -78,7 +78,7 @@ export class MonthGrid {
 
 		try {
 			const month = buildEmptyMonth(config, this.selectedMonth);
-			const { raw } = await fetchRawEvents(hass, config, { start: month[0].date, end: month[41].date });
+			const { raw } = await fetchRawEvents(hass, config, { start: month[0].date, end: month[41].date }, 'Calendar');
 			const [events] = processEvents(raw, config, 'Calendar');
 			for (const day of month) {
 				for (const event of events) {
