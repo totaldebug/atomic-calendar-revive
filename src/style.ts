@@ -286,6 +286,38 @@ export const styles: CSSResultGroup = css`
 
 	.calDay .iconDiv {
 		white-space: nowrap;
+		padding-top: 22px;
+		padding-bottom: 5px;
+	}
+
+	/* COMPACT CALENDAR MODE — restores tight v10.0.0 grid sizing when compactMode: true */
+	.month-grid.compact .calTitleContainer {
+		padding: 2px 4px 4px 4px;
+	}
+	.month-grid.compact td.cal.day {
+		padding: 2px;
+		vertical-align: middle;
+	}
+	.month-grid.compact .calDay {
+		aspect-ratio: unset;
+		height: 38px;
+		max-width: 38px;
+		margin: auto;
+	}
+	.month-grid.compact .calDay .iconDiv {
+		padding-top: 14px;
+		padding-bottom: 0;
+	}
+	.month-grid.compact .calIcon {
+		--mdc-icon-size: 10px;
+		width: 10px;
+		height: 10px;
+		margin-top: 0;
+	}
+	.month-grid.compact .currentDay {
+		width: 14px;
+		height: 14px;
+		line-height: 14px;
 	}
 
 	.calendar-icon-container {

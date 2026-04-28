@@ -33,9 +33,7 @@ export class CalendarView implements ICalendarView {
 
 	render(): TemplateResult {
 		return this.grid.render({
-			renderCellBody: (day) => html`
-				<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">${this.renderDayIcons(day)}</div>
-			`,
+			renderCellBody: (day) => html` <div class="iconDiv">${this.renderDayIcons(day)}</div> `,
 			onCellClick: (day) => this.selectDay(day),
 			cellHighlightStyle: (day) =>
 				dayjs(day.date).isSame(dayjs(this.clickedDate), 'day')

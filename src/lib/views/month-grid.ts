@@ -114,21 +114,28 @@ export class MonthGrid {
 			(day) => html`<th class="cal" style="color: ${this.config.calWeekDayColor};">${day}</th>`,
 		);
 
+		const compactClass = this.config.compactMode ? 'compact' : '';
+
 		return html`
-			<div class="calTitleContainer">${this.renderHeader()}${showCalendarLink(this.config, this.selectedMonth)}</div>
-			<div class="calTableContainer">
-				<table class="cal" style="color: ${this.config.eventTitleColor};--cal-border-color:${this.config.calGridColor}">
-					<thead>
-						<tr>
-							${dayHeaders}
-						</tr>
-					</thead>
-					<tbody>
-						${this.renderRows(slot)}
-					</tbody>
-				</table>
+			<div class="month-grid ${compactClass}">
+				<div class="calTitleContainer">${this.renderHeader()}${showCalendarLink(this.config, this.selectedMonth)}</div>
+				<div class="calTableContainer">
+					<table
+						class="cal"
+						style="color: ${this.config.eventTitleColor};--cal-border-color:${this.config.calGridColor}"
+					>
+						<thead>
+							<tr>
+								${dayHeaders}
+							</tr>
+						</thead>
+						<tbody>
+							${this.renderRows(slot)}
+						</tbody>
+					</table>
+				</div>
+				${slot.renderAfter ? slot.renderAfter() : ''}
 			</div>
-			${slot.renderAfter ? slot.renderAfter() : ''}
 		`;
 	}
 
