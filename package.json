@@ -62,7 +62,7 @@
 		"vitest": "^2.1.9"
 	},
 	"dependencies": {
-		"@formatjs/icu-messageformat-parser": "3.5.5",
+		"@formatjs/icu-messageformat-parser": "3.5.6",
 		"@lit-labs/scoped-registry-mixin": "1.0.4",
 		"@lit/reactive-element": "2.0.1",
 		"@mdi/js": "7.4.47",
