@@ -64,7 +64,7 @@
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "3.5.5",
 		"@lit-labs/scoped-registry-mixin": "1.0.4",
-		"@lit/reactive-element": "2.0.1",
+		"@lit/reactive-element": "2.1.2",
 		"@mdi/js": "7.4.47",
 		"@webcomponents/webcomponentsjs": "2.8.0",
 		"dayjs": "1.11.20",
@@ -77,7 +77,7 @@
 	},
 	"resolutions": {
 		"lit": "^3.0.2",
-		"@lit/reactive-element": "2.0.1"
+		"@lit/reactive-element": "2.1.2"
 	},
 	"bugs": {
 		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"
