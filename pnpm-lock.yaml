@@ -6,7 +6,7 @@ settings:
 
 overrides:
   lit: ^3.0.2
-  '@lit/reactive-element': 2.0.1
+  '@lit/reactive-element': 2.1.2
 
 importers:
 
@@ -19,8 +19,8 @@ importers:
         specifier: 1.0.4
         version: 1.0.4
       '@lit/reactive-element':
-        specifier: 2.0.1
-        version: 2.0.1
+        specifier: 2.1.2
+        version: 2.1.2
       '@mdi/js':
         specifier: 7.4.47
         version: 7.4.47
@@ -35,7 +35,7 @@ importers:
         version: 9.6.0
       lit:
         specifier: ^3.0.2
-        version: 3.3.2
+        version: 3.3.3
       memoize-one:
         specifier: 6.0.0
         version: 6.0.0
@@ -968,11 +968,11 @@ packages:
   '@lit-labs/scoped-registry-mixin@1.0.4':
     resolution: {integrity: sha512-gYeotwRwluD7RsFgU0eP48WgBMg6fIF5RXzbrjs/gwsPiJiFtal90s+x/LHIHqQ2VkubsyP+m+QAfgmOnsNhUg==}
 
-  '@lit-labs/ssr-dom-shim@1.5.1':
-    resolution: {integrity: sha512-Aou5UdlSpr5whQe8AA/bZG0jMj96CoJIWbGfZ91qieWu5AWUMKw8VR/pAkQkJYvBNhmCcWnZlyyk5oze8JIqYA==}
+  '@lit-labs/ssr-dom-shim@1.6.0':
+    resolution: {integrity: sha512-VHb0ALPMTlgKjM6yIxxoQNnpKyUKLD04VzeQdsiXkMqkvYlAHxq9glGLmgbb889/1GsohSOAjvQYoiBppXFqrQ==}
 
-  '@lit/reactive-element@2.0.1':
-    resolution: {integrity: sha512-eu50SQXHRthFwWJMp0oAFg95Rvm6MTPjxSXWuvAu7It90WVFLFpNBoIno7XOXSDvVgTrtKnUV4OLJqys2Svn4g==}
+  '@lit/reactive-element@2.1.2':
+    resolution: {integrity: sha512-pbCDiVMnne1lYUIaYNN5wrwQXDtHaYtg7YEFPeW+hws6U47WeFvISGUWekPGKWOP1ygrs0ef0o1VJMk1exos5A==}
 
   '@mdi/js@7.4.47':
     resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
@@ -2726,6 +2726,10 @@ packages:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
     engines: {node: '>= 0.4'}
 
+  is-core-module@2.16.2:
+    resolution: {integrity: sha512-evOr8xfXKxE6qSR0hSXL2r3sd7ALj8+7jQEUvPYcm5sgZFdJ+AYzT6yNmJenvIYQBgIGwfwz08sL8zoL7yq2BA==}
+    engines: {node: '>= 0.4'}
+
   is-data-view@1.0.2:
     resolution: {integrity: sha512-RKtWF8pGmS87i2D6gqQu/l7EYRlVdfzemCJN/P3UOs//x1QE7mfhvzHIApBTRf7axvT6DMGwSwBXYCT0nfB9xw==}
     engines: {node: '>= 0.4'}
@@ -2930,11 +2934,11 @@ packages:
   lit-element@4.2.2:
     resolution: {integrity: sha512-aFKhNToWxoyhkNDmWZwEva2SlQia+jfG0fjIWV//YeTaWrVnOxD89dPKfigCUspXFmjzOEUQpOkejH5Ly6sG0w==}
 
-  lit-html@3.3.2:
-    resolution: {integrity: sha512-Qy9hU88zcmaxBXcc10ZpdK7cOLXvXpRoBxERdtqV9QOrfpMZZ6pSYP91LhpPtap3sFMUiL7Tw2RImbe0Al2/kw==}
+  lit-html@3.3.3:
+    resolution: {integrity: sha512-el8M6jK2o3RXBnrSHX3ZKrsN8zEV63pSExTO1wYJz7QndGYZ8353e2a5PPX+qHe2aGayfnchQmkAojaWAREOIA==}
 
-  lit@3.3.2:
-    resolution: {integrity: sha512-NF9zbsP79l4ao2SNrH3NkfmFgN/hBYSQo90saIVI1o5GpjAdCPVstVzO1MrLOakHoEhYkrtRjPK6Ob521aoYWQ==}
+  lit@3.3.3:
+    resolution: {integrity: sha512-fycuvZg/hkpozL00lm1pEJH5nN/lr9ZXd6mJI2HSN4+Bzc+LDNdEApJ6HFbPkdFNHLvOplIIuJvxkS4XUxqirw==}
 
   load-json-file@4.0.0:
     resolution: {integrity: sha512-Kx8hMakjX03tiGTLAIdJ+lL0htKnXjEZN6hk/tozf/WOuYGdZBJrZ+rCJRbVCugsjB3jMLn9746NsQIf5VjBMw==}
@@ -5110,14 +5114,14 @@ snapshots:
 
   '@lit-labs/scoped-registry-mixin@1.0.4':
     dependencies:
-      '@lit/reactive-element': 2.0.1
-      lit: 3.3.2
+      '@lit/reactive-element': 2.1.2
+      lit: 3.3.3
 
-  '@lit-labs/ssr-dom-shim@1.5.1': {}
+  '@lit-labs/ssr-dom-shim@1.6.0': {}
 
-  '@lit/reactive-element@2.0.1':
+  '@lit/reactive-element@2.1.2':
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.5.1
+      '@lit-labs/ssr-dom-shim': 1.6.0
 
   '@mdi/js@7.4.47': {}
 
@@ -6495,7 +6499,7 @@ snapshots:
   eslint-import-resolver-node@0.3.9:
     dependencies:
       debug: 3.2.7
-      is-core-module: 2.16.1
+      is-core-module: 2.16.2
       resolve: 1.22.12
     transitivePeerDependencies:
       - supports-color
@@ -6561,7 +6565,7 @@ snapshots:
       eslint-import-resolver-node: 0.3.9
       eslint-module-utils: 2.12.1(@typescript-eslint/parser@8.59.0(eslint@10.2.1(jiti@2.6.1))(typescript@6.0.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@4.4.4)(eslint@10.2.1(jiti@2.6.1))
       hasown: 2.0.3
-      is-core-module: 2.16.1
+      is-core-module: 2.16.2
       is-glob: 4.0.3
       minimatch: 3.1.5
       object.fromentries: 2.0.8
@@ -7136,6 +7140,11 @@ snapshots:
     dependencies:
       hasown: 2.0.3
 
+  is-core-module@2.16.2:
+    dependencies:
+      hasown: 2.0.3
+    optional: true
+
   is-data-view@1.0.2:
     dependencies:
       call-bound: 1.0.4
@@ -7328,19 +7337,19 @@ snapshots:
 
   lit-element@4.2.2:
     dependencies:
-      '@lit-labs/ssr-dom-shim': 1.5.1
-      '@lit/reactive-element': 2.0.1
-      lit-html: 3.3.2
+      '@lit-labs/ssr-dom-shim': 1.6.0
+      '@lit/reactive-element': 2.1.2
+      lit-html: 3.3.3
 
-  lit-html@3.3.2:
+  lit-html@3.3.3:
     dependencies:
       '@types/trusted-types': 2.0.7
 
-  lit@3.3.2:
+  lit@3.3.3:
     dependencies:
-      '@lit/reactive-element': 2.0.1
+      '@lit/reactive-element': 2.1.2
       lit-element: 4.2.2
-      lit-html: 3.3.2
+      lit-html: 3.3.3
 
   load-json-file@4.0.0:
     dependencies:
