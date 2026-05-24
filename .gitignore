@@ -71,6 +71,12 @@ typings/
 .env
 .env.test
 
+# Claude Code: local agent config, skills, and session secrets
+.claude/
+
+# Playwright CLI session state, snapshots, and console logs
+.playwright-cli/
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 undefined/
