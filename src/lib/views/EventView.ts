@@ -138,7 +138,7 @@ export class EventView implements ICalendarView {
 				const currentEventLine =
 					this.config.showCurrentEventLine && isEventNext
 						? html`<div class="eventBar">
-								<hr class="event" style="--event-bar-color: ${this.config.eventBarColor} " />
+								<hr class="event" />
 							</div>`
 						: ``;
 
@@ -163,13 +163,7 @@ export class EventView implements ICalendarView {
 					const eventDuration = event.endDateTime.diff(event.startDateTime, 'minutes');
 					const eventProgress = dayjs().diff(event.startDateTime, 'minutes');
 					const eventPercentProgress = (eventProgress * 100) / eventDuration / 100;
-					progressBar = html`<progress
-						class="event-progress-bar"
-						style="--progress-bar: ${this.config.progressBarColor}; --progress-bar-bg: ${this.config
-							.progressBarBackgroundColor};"
-						value="${eventPercentProgress}"
-						max="1"
-					></progress>`;
+					progressBar = html`<progress class="event-progress-bar" value="${eventPercentProgress}" max="1"></progress>`;
 				}
 
 				const finishedEventsStyle =

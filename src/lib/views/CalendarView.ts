@@ -35,10 +35,7 @@ export class CalendarView implements ICalendarView {
 		return this.grid.render({
 			renderCellBody: (day) => html` <div class="iconDiv">${this.renderDayIcons(day)}</div> `,
 			onCellClick: (day) => this.selectDay(day),
-			cellHighlightStyle: (day) =>
-				dayjs(day.date).isSame(dayjs(this.clickedDate), 'day')
-					? `background-color: ${this.config.calActiveEventBackgroundColor};`
-					: '',
+			cellHighlightClass: (day) => (dayjs(day.date).isSame(dayjs(this.clickedDate), 'day') ? 'active' : ''),
 			renderAfter: () => html`<div class="summary-div">${this.summaryHtml}</div>`,
 			onMonthLoaded: (month) => {
 				if (this.clickedDate) return;

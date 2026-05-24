@@ -3,7 +3,16 @@ import { CSSResultGroup, css } from 'lit';
 export const styles: CSSResultGroup = css`
 	:host {
 		display: block;
-		height: 100%;
+		/* --cal-host-height controls how the card sizes against its parent.
+		   Default 100% fills the parent (Lovelace grid cell). Override with
+		   auto if you want the card to shrink-wrap its content. */
+		height: var(--cal-host-height, 100%);
+		/* Non-color custom properties. Override via card_mod with
+		   ha-card { --cal-grid-color: red; }
+		   Text colors are intentionally not defaulted here so consumers can fall
+		   back to inherit, which lets card_mod color rules flow through. */
+		--cal-grid-color: rgba(86, 86, 86, 0.35);
+		--cal-active-event-bg: rgba(86, 128, 86, 0.35);
 	}
 	.cal-card {
 		cursor: default;
@@ -22,7 +31,7 @@ export const styles: CSSResultGroup = css`
 		margin: 0 8px 0 2px;
 	}
 	.header-name {
-		color: var(--ha-card-header-color, var(--primary-text-color));
+		color: var(--cal-name-color, var(--ha-card-header-color, var(--primary-text-color)));
 		font-family: var(--ha-card-header-font-family, inherit);
 		font-size: var(--ha-card-header-font-size, 24px);
 		font-weight: var(--ha-card-header-font-weight, 400);
@@ -107,7 +116,7 @@ export const styles: CSSResultGroup = css`
 	}
 	.event-location-icon {
 		--mdc-icon-size: 15px;
-		color: var(--location-icon-color);
+		color: var(--cal-location-icon-color, inherit);
 		height: 15px;
 		width: 15px;
 		margin-top: -2px;
@@ -115,7 +124,7 @@ export const styles: CSSResultGroup = css`
 	.location-link {
 		text-decoration: none;
 		color: var(--accent-color);
-		font-size: var(--location-link-size);
+		font-size: var(--cal-location-link-size, 100%);
 		user-select: text;
 	}
 	.hours {
@@ -133,8 +142,8 @@ export const styles: CSSResultGroup = css`
 		display: flex;
 		justify-content: space-between;
 		padding: 0px 5px 0 5px;
-		color: var(--description-color);
-		font-size: var(--description-size);
+		color: var(--cal-description-color, inherit);
+		font-size: var(--cal-description-size, 80%);
 		overflow-wrap: anywhere;
 		user-select: text;
 	}
@@ -158,7 +167,7 @@ export const styles: CSSResultGroup = css`
 	/* END EVENT MODE */
 
 	hr.event {
-		color: var(--event-bar-color);
+		color: var(--cal-event-bar-color, var(--primary-color));
 		margin: -8px 0px 2px 0px;
 		border-width: 2px 0 0 0;
 	}
@@ -181,14 +190,14 @@ export const styles: CSSResultGroup = css`
 		border-radius: 2px;
 		width: 100%;
 		height: 3px;
-		box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--cal-progress-shadow, 1px 1px 4px rgba(0, 0, 0, 0.2));
 	}
 	progress::-webkit-progress-bar {
-		background-color: var(--progress-bar-bg);
+		background-color: var(--cal-progress-bar-bg, #555);
 		border-radius: 2px;
 	}
 	progress::-webkit-progress-value {
-		background-color: var(--progress-bar);
+		background-color: var(--cal-progress-bar, var(--primary-color));
 		border-radius: 2px;
 	}
 
@@ -218,7 +227,7 @@ export const styles: CSSResultGroup = css`
 	div.calIconSelector ha-icon-button,
 	div.calDateSelector ha-icon-button {
 		color: var(--primary-color);
-		--mdc-icon-color: var(--cal-date-color);
+		--mdc-icon-color: var(--cal-date-color, inherit);
 	}
 	div.calDateSelector .prev {
 		border: 1px solid var(--primary-color);
@@ -229,7 +238,7 @@ export const styles: CSSResultGroup = css`
 		border-radius: 0px 0px 0px 0px;
 		padding: 4px 2px 2px 4px;
 		text-decoration: none;
-		color: var(--cal-date-color);
+		color: var(--cal-date-color, inherit);
 	}
 	div.calDateSelector .next {
 		border: 1px solid var(--primary-color);
@@ -250,9 +259,13 @@ export const styles: CSSResultGroup = css`
 		table-layout: fixed;
 	}
 
+	table.cal {
+		color: var(--cal-event-title-color, inherit);
+	}
+
 	thead th.cal {
-		color: var(--secondary-text-color);
-		border: 1px solid --cal-border-color;
+		color: var(--cal-weekday-color, var(--secondary-text-color));
+		border: 1px solid var(--cal-grid-color);
 		font-size: 11px;
 		font-weight: 400;
 		text-transform: uppercase;
@@ -264,7 +277,11 @@ export const styles: CSSResultGroup = css`
 		text-align: center;
 		vertical-align: top;
 		width: 100%;
-		color: var(--cal-day-color);
+		color: var(--cal-day-color, inherit);
+	}
+
+	td.cal.day.active {
+		background-color: var(--cal-active-event-bg);
 	}
 
 	.calDay {
@@ -341,11 +358,11 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.weekendSat {
-		background-color: rgba(255, 255, 255, 0.05);
+		background-color: var(--cal-weekend-sat-bg, rgba(255, 255, 255, 0.05));
 	}
 
 	.weekendSun {
-		background-color: rgba(255, 255, 255, 0.15);
+		background-color: var(--cal-weekend-sun-bg, rgba(255, 255, 255, 0.15));
 	}
 
 	.differentMonth {
@@ -421,8 +438,8 @@ export const styles: CSSResultGroup = css`
 		display: flex;
 		justify-content: space-between;
 		padding: 0px 5px 0 5px;
-		color: var(--description-color);
-		font-size: var(--description-size);
+		color: var(--cal-description-color, inherit);
+		font-size: var(--cal-description-size, 80%);
 	}
 
 	.calMain {
@@ -450,8 +467,8 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.loader {
-		border: 4px solid #f3f3f3;
-		border-top: 4px solid grey;
+		border: 4px solid var(--cal-loader-track-color, #f3f3f3);
+		border-top: 4px solid var(--cal-loader-color, var(--primary-color, grey));
 		border-radius: 50%;
 		width: 14px;
 		height: 14px;
@@ -611,7 +628,7 @@ export const styles: CSSResultGroup = css`
 		width: 100%;
 		height: 100%;
 		overflow: auto;
-		background-color: rgba(0, 0, 0, 0.4);
+		background-color: var(--cal-modal-overlay-bg, rgba(0, 0, 0, 0.4));
 	}
 
 	.modal.open {
@@ -619,19 +636,19 @@ export const styles: CSSResultGroup = css`
 	}
 
 	.modal-content {
-		background-color: var(--card-background-color, white);
+		background-color: var(--cal-modal-bg, var(--card-background-color, white));
 		margin: 15% auto;
 		padding: 20px;
-		border: 1px solid #888;
+		border: 1px solid var(--cal-modal-border-color, #888);
 		width: 80%;
 		max-width: 500px;
 		border-radius: 8px;
 		position: relative;
-		color: var(--primary-text-color);
+		color: var(--cal-modal-color, var(--primary-text-color));
 	}
 
 	.modal-close {
-		color: #aaa;
+		color: var(--cal-modal-close-color, #aaa);
 		float: right;
 		font-size: 28px;
 		font-weight: bold;
@@ -640,7 +657,7 @@ export const styles: CSSResultGroup = css`
 
 	.modal-close:hover,
 	.modal-close:focus {
-		color: black;
+		color: var(--cal-modal-close-hover-color, var(--primary-text-color, black));
 		text-decoration: none;
 		cursor: pointer;
 	}
