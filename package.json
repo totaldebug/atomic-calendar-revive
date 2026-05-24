@@ -3,6 +3,7 @@
 	"version": "10.2.3-beta.2",
 	"description": "Calendar Card for Home Assistant",
 	"main": "atomic-calendar-revive.js",
+	"packageManager": "pnpm@11.3.0",
 	"scripts": {
 		"test": "vitest run",
 		"test:watch": "vitest",
@@ -74,10 +75,6 @@
 		"npm": "11.13.0",
 		"tslib": "^2.8.1",
 		"typescript": "6.0.3"
-	},
-	"resolutions": {
-		"lit": "^3.0.2",
-		"@lit/reactive-element": "2.0.1"
 	},
 	"bugs": {
 		"url": "https://github.com/totaldebug/atomic-calendar-revive/issues"
