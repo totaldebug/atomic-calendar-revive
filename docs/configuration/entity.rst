@@ -10,12 +10,12 @@ Entity Options
  endTimeFilter        string         Only shows events between specific times _NOTE_ must be set with ``startTimeFilter`` format: ``'17:00'``
  maxDaysToShow        integer        ``7`` Maximum number of days to show. Overrides main configuration maxDaysToShow for this calendar
  blocklist            string         ``null`` Case-insensitive regex to ignore events whose title matches. Matched against the original summary, even when ``titleReplace`` rewrites the display title
- blocklistLocation    string         ``null`` Simple case insensitive regex to ignore events that match location
+ blocklistLocation    string         ``null`` Case-insensitive regex to ignore events whose location matches
  allowlist            string         ``null`` Case-insensitive regex to only show events whose title matches. Matched against the original summary
- allowlistLocation    string         ``null`` Simple case insensitive regex to only add events that match location
+ allowlistLocation    string         ``null`` Case-insensitive regex to only show events whose location matches
  showMultiDay         boolean        ``false`` Split multi-day events across all days
  name                 string         ``null`` Add a calendar name to be shown with event
- eventTitle           string         Where no event title exists, add this string instead, Will only add to this entity, can also be globally set
+ eventTitle           string         Where no event title exists, add this string instead. Only applies to this entity; can also be set globally
  color                string         ``null`` Default color for this calendar's event titles
  showDescription      boolean        Per-entity override of the global ``showDescription``. Useful to show descriptions for some calendars (e.g. kids) and hide them for others
  showHours            boolean        Per-entity override of the global ``showHours``. Useful for public iCal feeds (e.g. holidays) where times are not meaningful

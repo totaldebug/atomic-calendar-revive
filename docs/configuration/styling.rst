@@ -199,7 +199,7 @@ The card uses descriptive CSS classes throughout (``.calDay``,
 ``.day-number``, ``.currentDay``, ``.summary-event-div``,
 ``.bullet-event-div-accepted`` etc.) so anything not covered by the custom
 properties above can be targeted with regular ``card_mod`` selectors. The video
-below walks through finding the right class with browser devtools.
+below walks through finding the right class with browser DevTools.
 
 .. note::
     The video predates the ``--cal-*`` custom properties documented above and
