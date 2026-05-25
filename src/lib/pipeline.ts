@@ -128,7 +128,7 @@ function partialIsInWindow(partial: EventClass, window: DateRange): boolean {
 // ─── Multiday handling ────────────────────────────────────────────────────────
 
 function expandMultiDay(event: EventClass, config: atomicCardConfig, mode: Mode): EventClass[] {
-	if (!config.showMultiDay || !event.isMultiDay) {
+	if (!event.showMultiDay || !event.isMultiDay) {
 		return [event];
 	}
 	const partials = event.split();

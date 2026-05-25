@@ -144,6 +144,31 @@ describe('processEvents: filters', () => {
 		expect(events.length).toBeGreaterThan(1);
 	});
 
+	// Regression for #1658: entity-level showMultiDay should opt that calendar
+	// into splitting even when the global setting is false. Allows swipe-card
+	// per-day layouts where each card has maxDaysToShow=1 + a different
+	// startDaysAhead and still surfaces in-progress multi-day events.
+	test('entity-level showMultiDay splits even when global is false', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 1,
+			startDaysAhead: 3,
+			showMultiDay: false,
+		});
+		// Spans today+2..today+4 (NOW=2026-04-25 → 2026-04-27..2026-04-29 inclusive,
+		// end exclusive 2026-04-30). The day-3 window covers 2026-04-28.
+		const raw = [
+			allDayEvent('2026-04-27', '2026-04-30', 'Trip', {
+				entity: { ...ENTITY, showMultiDay: true },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events).toHaveLength(1);
+		expect(events[0].title).toBe('Trip');
+		// The surviving partial should sit on day 3 (2026-04-28), not the
+		// original 2026-04-27 start.
+		expect(events[0].startDateTime.format('YYYY-MM-DD')).toBe('2026-04-28');
+	});
+
 	test('Calendar mode does not apply maxDaysToShow window filter', () => {
 		const cfg = makeConfig({ maxDaysToShow: 1 });
 		const raw = [

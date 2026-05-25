@@ -39,6 +39,13 @@ export default class EventClass {
 		return this._eventClass.entity || {};
 	}
 
+	// Entity-level `showMultiDay` (declared in EntityConfig) takes precedence over
+	// the global setting so per-entity card configs in a multi-card layout can opt
+	// individual calendars in/out of multi-day splitting.
+	get showMultiDay(): boolean {
+		return this.entityConfig.showMultiDay ?? this._globalConfig.showMultiDay ?? false;
+	}
+
 	set originName(value: string) {
 		this._customOriginName = value;
 	}
@@ -103,7 +110,7 @@ export default class EventClass {
 	}
 
 	get daysLong() {
-		if (this._globalConfig.showMultiDay) {
+		if (this.showMultiDay) {
 			return this.rawEvent.daysLong;
 		} else {
 			const fullDays = Math.round(
@@ -227,7 +234,7 @@ export default class EventClass {
 			return true;
 		}
 		// check for days that are between multi days - they ARE all day
-		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this._globalConfig.showMultiDay) {
+		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this.showMultiDay) {
 			return true;
 		}
 		// if start and end are both "dateTime" then it's NOT an all day event
