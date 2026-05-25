@@ -154,6 +154,13 @@ The card uses descriptive CSS classes throughout (``.calDay``,
 properties above can be targeted with regular ``card_mod`` selectors. The video
 below walks through finding the right class with browser devtools.
 
+.. note::
+    The video predates the ``--cal-*`` custom properties documented above and
+    demonstrates only the class-hunting approach. That technique is still valid
+    — and necessary for elements that don't have a dedicated custom property —
+    but for most styling needs you'll get a cleaner result by setting the
+    relevant ``--cal-*`` variable first.
+
 .. image:: https://img.youtube.com/vi/-5MKd7LY-oc/maxresdefault.jpg
     :alt: Atomic Calendar Revive and card_mod
     :target: https://www.youtube.com/watch?v=-5MKd7LY-oc
