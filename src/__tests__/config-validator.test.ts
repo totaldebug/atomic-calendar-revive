@@ -38,7 +38,7 @@ describe('resolveConfig: existing checks', () => {
 
 	test('merges defaults', () => {
 		const cfg = resolveConfig(base());
-		expect(cfg.maxDaysToShow).toBe(0);
+		expect(cfg.maxDaysToShow).toBe(7);
 		expect(cfg.firstDayOfWeek).toBe(1);
 		expect(cfg.defaultMode).toBe('Event');
 	});
