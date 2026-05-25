@@ -387,4 +387,29 @@ describe('groupEventsByDay', () => {
 		expect(groups[0]).toHaveLength(2);
 		expect(groups[1]).toHaveLength(1);
 	});
+
+	// Regression for #1754: in Planner mode with rolling week, a multi-day event
+	// that started in the past is clamped to today by startTimeToShow and bucketed
+	// under today's daysToSort. The view derives its row label from this same
+	// startTimeToShow so the label matches the bucket (not the event's real
+	// past start date).
+	test('past-starting multi-day events use startTimeToShow for the date label', () => {
+		const cfg = makeConfig({
+			plannerDaysToShow: 7,
+			plannerRollingWeek: true,
+			firstDayOfWeek: 1,
+			showMultiDay: false,
+		});
+		const raw = [allDayEvent('2026-04-07', '2026-05-30', 'Trip')];
+		const [events] = processEvents(raw, cfg, 'Planner');
+		const groups = groupEventsByDay(events);
+		expect(groups).toHaveLength(1);
+		const today = dayjs('2026-04-25').startOf('day');
+		const first = groups[0][0] as unknown as {
+			startTimeToShow: dayjs.Dayjs;
+			startDateTime: dayjs.Dayjs;
+		};
+		expect(first.startTimeToShow.format('YYYY-MM-DD')).toBe(today.format('YYYY-MM-DD'));
+		expect(first.startDateTime.format('YYYY-MM-DD')).toBe('2026-04-07');
+	});
 });
