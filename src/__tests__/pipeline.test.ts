@@ -55,6 +55,30 @@ describe('processEvents: filters', () => {
 		expect(events.map((e: { title: string }) => e.title)).toEqual(['Important: A']);
 	});
 
+	// #1599: allowlist needs to match the original summary even when
+	// titleReplace strips the matched prefix from the display title.
+	test('allowlist matches rawTitle, then titleReplace strips for display', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Dinner = Sushi', {
+				entity: {
+					...ENTITY,
+					allowlist: '^Dinner = ',
+					titleReplace: [{ from: '^Dinner = ', to: '' }],
+				},
+			}),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'Standup', {
+				entity: {
+					...ENTITY,
+					allowlist: '^Dinner = ',
+					titleReplace: [{ from: '^Dinner = ', to: '' }],
+				},
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Sushi']);
+	});
+
 	test('declined events filtered when showDeclined=false', () => {
 		const cfg = makeConfig({ maxDaysToShow: 7, showDeclined: false });
 		const raw = [

@@ -41,6 +41,11 @@ export interface EntityConfig {
 	// for fontSize; numeric or named values for fontWeight ("bold", 700, "500").
 	fontSize?: string | number;
 	fontWeight?: string | number;
+	// Per-entity title rewrites. Each entry's `from` is treated as a
+	// case-insensitive regex; matches are replaced with `to`. Useful to strip
+	// shared-calendar prefixes (e.g. "Dinner = " → ""), rename family tags
+	// ("Daddy Work" → "Work"), or remove suffixes ("hat Geburtstag" → "").
+	titleReplace?: Array<{ from: string; to: string }>;
 }
 
 export interface ConfigEntity extends EntityConfig {

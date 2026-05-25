@@ -66,7 +66,7 @@ function passesRegexField(value: string | undefined, pattern: string | undefined
 }
 
 function passesBlocklist(e: EventClass): boolean {
-	return passesRegexField(e.title, e.entityConfig.blocklist, 'block');
+	return passesRegexField(e.rawTitle, e.entityConfig.blocklist, 'block');
 }
 
 function passesBlocklistLocation(e: EventClass): boolean {
@@ -75,8 +75,8 @@ function passesBlocklistLocation(e: EventClass): boolean {
 
 function passesAllowlist(e: EventClass): boolean {
 	const pattern = e.entityConfig.allowlist;
-	if (!pattern || !e.title) return true;
-	return passesRegexField(e.title, pattern, 'allow');
+	if (!pattern || !e.rawTitle) return true;
+	return passesRegexField(e.rawTitle, pattern, 'allow');
 }
 
 function passesAllowlistLocation(e: EventClass): boolean {

@@ -151,3 +151,74 @@ describe('resolveConfig: malformed entities', () => {
 		expect(() => resolveConfig(base({ entities: 42 as unknown as atomicCardConfig['entities'] }))).toThrow();
 	});
 });
+
+describe('resolveConfig: titleReplace validation', () => {
+	test('valid titleReplace passes', () => {
+		const cfg = resolveConfig(
+			base({
+				entities: [
+					{
+						entity: 'calendar.test',
+						titleReplace: [
+							{ from: '^Dinner = ', to: '' },
+							{ from: 'Birthday', to: 'BD' },
+						],
+					} as unknown as { entity: string },
+				],
+			}),
+		);
+		expect(cfg.entities[0].titleReplace).toHaveLength(2);
+	});
+
+	test('non-array titleReplace throws', () => {
+		expect(() =>
+			resolveConfig(
+				base({
+					entities: [
+						{ entity: 'calendar.test', titleReplace: 'oops' } as unknown as { entity: string },
+					],
+				}),
+			),
+		).toThrow(/titleReplace/);
+	});
+
+	test('invalid from regex throws', () => {
+		expect(() =>
+			resolveConfig(
+				base({
+					entities: [
+						{ entity: 'calendar.test', titleReplace: [{ from: '[invalid', to: '' }] } as unknown as {
+							entity: string;
+						},
+					],
+				}),
+			),
+		).toThrow(/titleReplace\[0\]\.from/);
+	});
+
+	test('missing from string throws', () => {
+		expect(() =>
+			resolveConfig(
+				base({
+					entities: [
+						{ entity: 'calendar.test', titleReplace: [{ to: '' }] } as unknown as { entity: string },
+					],
+				}),
+			),
+		).toThrow(/titleReplace\[0\]\.from/);
+	});
+
+	test('non-string to throws', () => {
+		expect(() =>
+			resolveConfig(
+				base({
+					entities: [
+						{ entity: 'calendar.test', titleReplace: [{ from: 'x', to: 42 }] } as unknown as {
+							entity: string;
+						},
+					],
+				}),
+			),
+		).toThrow(/titleReplace\[0\]\.to/);
+	});
+});

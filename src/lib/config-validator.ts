@@ -69,6 +69,27 @@ function validateEntity(entity: { entity: string; [k: string]: unknown }, index:
 	assertValidTime(entity.startTimeFilter, `${path}.startTimeFilter`);
 	assertValidTime(entity.endTimeFilter, `${path}.endTimeFilter`);
 	assertNonNegativeInt(entity.maxDaysToShow, `${path}.maxDaysToShow`);
+	assertTitleReplace(entity.titleReplace, `${path}.titleReplace`);
+}
+
+function assertTitleReplace(value: unknown, fieldPath: string): void {
+	if (value === undefined) return;
+	if (!Array.isArray(value)) {
+		fail(`${fieldPath} must be an array of {from, to} entries`);
+	}
+	value.forEach((entry, idx) => {
+		if (!entry || typeof entry !== 'object') {
+			fail(`${fieldPath}[${idx}] must be an object with 'from' and 'to' string fields`);
+		}
+		const { from, to } = entry as { from?: unknown; to?: unknown };
+		if (typeof from !== 'string') {
+			fail(`${fieldPath}[${idx}].from must be a string regex pattern`);
+		}
+		assertValidRegex(from, `${fieldPath}[${idx}].from`);
+		if (to !== undefined && typeof to !== 'string') {
+			fail(`${fieldPath}[${idx}].to must be a string (or omitted)`);
+		}
+	});
 }
 
 /**

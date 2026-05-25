@@ -1,8 +1,8 @@
 import dayjs from 'dayjs';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
-import { allDayEvent, makeConfig, timedEvent } from './fixtures';
-import EventClass from '../lib/event.class';
+import { ENTITY, allDayEvent, makeConfig, timedEvent } from './fixtures';
+import EventClass, { applyTitleReplace } from '../lib/event.class';
 
 const NOW = '2026-04-25T12:00:00';
 
@@ -116,5 +116,68 @@ describe('EventClass: title fallback', () => {
 		raw.summary = undefined;
 		const e = new EventClass(raw, makeConfig({ eventTitle: 'Global Default' }));
 		expect(e.title).toBe('Global Default');
+	});
+});
+
+// #1395 / #1599 / #1605: per-entity title rewrite rules.
+describe('EventClass: titleReplace', () => {
+	test('strips a literal prefix when "to" is empty', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Dinner = Sushi', {
+			entity: { ...ENTITY, titleReplace: [{ from: '^Dinner = ', to: '' }] },
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.title).toBe('Sushi');
+	});
+
+	test('renames matching titles', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Daddy Work', {
+			entity: { ...ENTITY, titleReplace: [{ from: 'Daddy Work', to: 'Work' }] },
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.title).toBe('Work');
+	});
+
+	test('multiple rules apply in order', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Birthday Grandpa', {
+			entity: {
+				...ENTITY,
+				titleReplace: [
+					{ from: '^Birthday ', to: '' },
+					{ from: 'Grandpa', to: 'Opa' },
+				],
+			},
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.title).toBe('Opa');
+	});
+
+	test('case-insensitive match', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'STEVE hat Geburtstag', {
+			entity: { ...ENTITY, titleReplace: [{ from: ' hat Geburtstag$', to: '' }] },
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.title).toBe('STEVE');
+	});
+
+	test('invalid regex rule is skipped, other rules still apply', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Foo Bar', {
+			entity: { ...ENTITY, titleReplace: [{ from: '[invalid', to: 'X' }, { from: 'Bar', to: 'Baz' }] },
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.title).toBe('Foo Baz');
+	});
+
+	test('rawTitle is unchanged so blocklist/allowlist can match the original', () => {
+		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Dinner = Sushi', {
+			entity: { ...ENTITY, titleReplace: [{ from: '^Dinner = ', to: '' }] },
+		});
+		const e = new EventClass(raw, makeConfig());
+		expect(e.rawTitle).toBe('Dinner = Sushi');
+		expect(e.title).toBe('Sushi');
+	});
+
+	test('applyTitleReplace is a no-op without rules', () => {
+		expect(applyTitleReplace('Hello', undefined)).toBe('Hello');
+		expect(applyTitleReplace('Hello', [])).toBe('Hello');
 	});
 });
