@@ -145,6 +145,53 @@ Example
 Mixing both patterns is fine: a blanket ``color`` rule for the broad strokes
 and a handful of ``--cal-*`` overrides for the elements that need to stand out.
 
+Semantic classes on event titles
+================================
+
+Every ``.event-title`` element carries extra classes that describe the event,
+so you can write card_mod rules that depend on event state without DOM-hunting:
+
+.. list-table::
+    :widths: 32 68
+    :header-rows: 1
+
+    * - Class
+      - Applied when
+    * - ``.event-title-fullday``
+      - The event is an all-day event (Event and Planner modes). In Calendar
+        mode the day-summary container uses ``.summary-fullday-div-accepted``
+        or ``.summary-fullday-div-declined``.
+    * - ``.running``
+      - The event is currently in progress (``startDateTime`` ≤ now < ``endDateTime``).
+    * - ``.recurring``
+      - The event is part of a recurring series (Google Calendar
+        ``recurringEventId`` is set).
+    * - ``.Event`` / ``.Calendar`` / ``.Planner``
+      - The view mode rendering this title.
+    * - ``.cal-<slug>``
+      - The slugified calendar entity. ``calendar.family_main`` becomes
+        ``.cal-family-main``; non-alphanumeric chars collapse to dashes,
+        everything is lowercased.
+
+Example — give all-day birthdays a banner background, fade past recurring
+events, and tint a specific calendar:
+
+.. code-block:: yaml
+
+    card_mod:
+      style: |
+        .event-title.event-title-fullday {
+          background: rgba(255, 165, 0, 0.18);
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        .event-title.recurring {
+          font-style: italic;
+        }
+        .event-title.cal-family {
+          color: var(--accent-color);
+        }
+
 Targeting other elements
 ========================
 

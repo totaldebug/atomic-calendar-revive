@@ -153,7 +153,9 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
 	const fullDayClass = event.isAllDayEvent ? `event-title-fullday` : ``;
-	const classes = `event-title ${dayClassEventRunning} ${mode} ${fullDayClass}`;
+	const recurringClass = event.isRecurring ? `recurring` : ``;
+	const sourceClass = entitySourceClass(event.entityConfig.entity);
+	const classes = `event-title ${dayClassEventRunning} ${mode} ${fullDayClass} ${recurringClass} ${sourceClass}`;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
 	const entityStyle = entityTitleStyle(event.entityConfig);
 	let { title } = event;
@@ -176,6 +178,21 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 			</a>
 		`;
 	}
+}
+
+/**
+ * Slugify a calendar entity_id (`calendar.family_main`) into a CSS-safe class
+ * suffix (`cal-family-main`). Returned empty when no entity is supplied so
+ * downstream class templates degrade cleanly.
+ */
+export function entitySourceClass(entity?: string): string {
+	if (!entity) return '';
+	const slug = entity
+		.replace(/^calendar\./, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+	return slug ? `cal-${slug}` : '';
 }
 
 /**
