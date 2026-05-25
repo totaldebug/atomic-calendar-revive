@@ -56,7 +56,8 @@
 			"descLength": "Max description length (0 for unlimited)",
 			"showAllDayEvents": "Show all day events",
 			"offsetHeaderDate": "Offset header date",
-			"startDaysAhead": "Events starting `x` days from today"
+			"startDaysAhead": "Events starting `x` days from today",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

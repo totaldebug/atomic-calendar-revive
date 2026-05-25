@@ -56,7 +56,8 @@
 			"descLength": "Максимальная длина описания (0 для неограниченной)",
 			"showAllDayEvents": "Показать события на весь день",
 			"offsetHeaderDate": "Смещение заголовка даты",
-			"startDaysAhead": "События, начинающиеся через x дней сегодня"
+			"startDaysAhead": "События, начинающиеся через x дней сегодня",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

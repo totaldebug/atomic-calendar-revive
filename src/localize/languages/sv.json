@@ -55,7 +55,8 @@
 			"descLength": "Max beskrivningslängd (0 för obegränsat)",
 			"showAllDayEvents": "Visa heldagshändelser",
 			"offsetHeaderDate": "Offset rubrikdatum",
-			"startDaysAhead": "Händelser som börjar `x` dagar från och med idag"
+			"startDaysAhead": "Händelser som börjar `x` dagar från och med idag",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

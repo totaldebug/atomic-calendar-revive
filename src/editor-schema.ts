@@ -32,6 +32,11 @@ export const mainSchema = [
 		selector: { number: { min: 0, max: 365 } },
 	},
 	{
+		name: 'showPastDaysOfWeek',
+		label: localize('main.fields.showPastDaysOfWeek'),
+		selector: { boolean: {} },
+	},
+	{
 		name: 'sortBy',
 		label: localize('main.fields.sortBy'),
 		selector: { select: { options: ['start', 'milestone', 'none'], mode: 'dropdown' } },

@@ -29,6 +29,7 @@ export interface atomicCardConfig {
 	showDate?: boolean;
 	dateFormat?: string;
 	startDaysAhead?: number;
+	showPastDaysOfWeek?: boolean;
 	showLastCalendarWeek?: boolean;
 	showCalNameInEvent?: boolean;
 	disableEventLink?: boolean;

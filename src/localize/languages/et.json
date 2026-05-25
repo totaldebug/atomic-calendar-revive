@@ -55,7 +55,8 @@
 			"descLength": "Kirjelduse maksimaalne pikkus (0 piiramatu puhul)",
 			"showAllDayEvents": "Näita kogu päeva sündmusi",
 			"offsetHeaderDate": "Nihke päise kuupäev",
-			"startDaysAhead": "Sündmused alates tänasest `x` päeva pärast"
+			"startDaysAhead": "Sündmused alates tänasest `x` päeva pärast",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

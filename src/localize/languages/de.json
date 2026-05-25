@@ -56,7 +56,8 @@
 			"descLength": "Maximale Länge der Beschreibung (0 für unbegrenzt)",
 			"showAllDayEvents": "Alle Tagesereignisse anzeigen",
 			"offsetHeaderDate": "Kopfdatum verschieben",
-			"startDaysAhead": "Ereignisse, die in `x` Tagen von heute an beginnen"
+			"startDaysAhead": "Ereignisse, die in `x` Tagen von heute an beginnen",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

@@ -56,7 +56,8 @@
 			"descLength": "Maks beskrivelseslengde (0 for ubegrenset)",
 			"showAllDayEvents": "Vis heldagsbegivenheter",
 			"offsetHeaderDate": "Offset overskriftsdato",
-			"startDaysAhead": "Arrangementer som starter `x` dager fra i dag"
+			"startDaysAhead": "Arrangementer som starter `x` dager fra i dag",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

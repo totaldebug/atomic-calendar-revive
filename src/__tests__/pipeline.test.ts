@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { ENTITY, allDayEvent, makeConfig, timedEvent } from './fixtures';
-import { fetchRawEvents, groupEventsByDay, processEvents } from '../lib/pipeline';
+import { fetchEventModeEvents, fetchRawEvents, groupEventsByDay, processEvents } from '../lib/pipeline';
 
 const NOW = '2026-04-25T12:00:00';
 
@@ -238,6 +238,67 @@ describe('processEvents: filters', () => {
 		const [events] = processEvents(raw, cfg, 'Event');
 		expect(events.map((e: { title: string }) => e.title)).toEqual(['FutureAllDay']);
 	});
+
+	// #1578 / #1600: showPastDaysOfWeek anchors the Event window to the start of
+	// the current week so past days of this week stay visible. NOW = Saturday
+	// 2026-04-25, firstDayOfWeek = 1 → window aligns Mon 2026-04-20 onwards.
+	test('showPastDaysOfWeek keeps past timed events within the current week', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const raw = [
+			timedEvent('2026-04-20T10:00:00', '2026-04-20T11:00:00', 'Monday'),
+			timedEvent('2026-04-22T10:00:00', '2026-04-22T11:00:00', 'Wednesday'),
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-04-26T10:00:00', '2026-04-26T11:00:00', 'Sunday'),
+			timedEvent('2026-04-27T10:00:00', '2026-04-27T11:00:00', 'NextMonday'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Monday', 'Wednesday', 'Today', 'Sunday']));
+		expect(titles).not.toContain('NextMonday');
+	});
+
+	test('showPastDaysOfWeek keeps past all-day events within the current week', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const raw = [
+			allDayEvent('2026-04-21', '2026-04-22', 'TuesdayAllDay'),
+			allDayEvent('2026-04-13', '2026-04-14', 'LastWeekAllDay'),
+			allDayEvent('2026-04-26', '2026-04-27', 'SundayAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['TuesdayAllDay', 'SundayAllDay']));
+		expect(titles).not.toContain('LastWeekAllDay');
+	});
+
+	test('showPastDaysOfWeek respects firstDayOfWeek=0 (Sunday)', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 0,
+		});
+		// NOW = Saturday 2026-04-25 → with firstDayOfWeek=0, week is Sun 2026-04-19 – Sat 2026-04-25.
+		const raw = [
+			timedEvent('2026-04-19T10:00:00', '2026-04-19T11:00:00', 'Sunday'),
+			timedEvent('2026-04-20T10:00:00', '2026-04-20T11:00:00', 'Monday'),
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-04-26T10:00:00', '2026-04-26T11:00:00', 'NextSunday'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Sunday', 'Monday', 'Today']));
+		expect(titles).not.toContain('NextSunday');
+	});
 });
 
 describe('Planner mode pipeline', () => {
@@ -384,6 +445,21 @@ describe('fetchRawEvents: API fetch window', () => {
 		const expectedTruncatedEnd = range.start.endOf('day').add(2, 'day').format(DATE_FORMAT);
 		expect(calls).toHaveLength(1);
 		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedTruncatedEnd}`);
+	});
+
+	test('fetchEventModeEvents widens API window backwards when showPastDaysOfWeek is set', async () => {
+		// NOW = Saturday 2026-04-25, firstDayOfWeek = 1 → start anchors to Mon 4/20.
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const { hass, calls } = makeHass();
+		await fetchEventModeEvents(cfg, hass);
+		expect(calls).toHaveLength(1);
+		const expectedStart = dayjs('2026-04-20').startOf('day').format(DATE_FORMAT);
+		expect(calls[0]).toContain(`start=${expectedStart}`);
 	});
 
 	test('entity without maxDaysToShow uses full range in any mode', async () => {

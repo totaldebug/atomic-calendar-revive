@@ -56,7 +56,8 @@
 			"descLength": "Leírás max hossza (0: végtelen)",
 			"showAllDayEvents": "Egész napos események megjelenítése",
 			"offsetHeaderDate": "Fejléc dátum eltolás",
-			"startDaysAhead": " Az x nap múlva kezdődő események"
+			"startDaysAhead": " Az x nap múlva kezdődő események",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

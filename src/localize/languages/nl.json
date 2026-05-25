@@ -57,7 +57,8 @@
 			"descLength": "Max beschrijvingslengte (0 voor onbeperkt)",
 			"showAllDayEvents": "Toon gebeurtenissen die de hele dag duren",
 			"offsetHeaderDate": "Datum van koptekst verschuiven",
-			"startDaysAhead": "Gebeurtenissen die `x` dagen vanaf vandaag beginnen"
+			"startDaysAhead": "Gebeurtenissen die `x` dagen vanaf vandaag beginnen",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

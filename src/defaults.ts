@@ -16,6 +16,7 @@ export default {
 	showDate: false,
 	dateFormat: 'LL',
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
+	showPastDaysOfWeek: false, // anchor the Event-mode window to the start of the current week (firstDayOfWeek-aware), so past days of the current week stay visible
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
 	sortBy: 'start', // sort first by start time or milestone

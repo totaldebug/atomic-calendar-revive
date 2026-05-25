@@ -56,7 +56,8 @@
 			"descLength": "Največja dolžina opisa (0 za neomejeno)",
 			"showAllDayEvents": "Pokaži celodnevne dogodke",
 			"offsetHeaderDate": "Datum zamika glave",
-			"startDaysAhead": "Dogodki, ki se začnejo `x` dni od danes"
+			"startDaysAhead": "Dogodki, ki se začnejo `x` dni od danes",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {
