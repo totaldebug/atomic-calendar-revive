@@ -171,10 +171,9 @@ export class EventView implements ICalendarView {
 						? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter + `;`
 						: ``;
 
-				// Show the hours
-				const hoursHTML = this.config.showHours
-					? html`<div class="hours">${this.getHoursHTML(this.config, event)}</div>`
-					: html``;
+				// Show the hours (entity-level override wins over global)
+				const showHours = event.entityConfig.showHours ?? this.config.showHours;
+				const hoursHTML = showHours ? html`<div class="hours">${this.getHoursHTML(this.config, event)}</div>` : html``;
 
 				// Show the relative time
 				let timeUntilRemaining;

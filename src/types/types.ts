@@ -31,6 +31,16 @@ export interface EntityConfig {
 	allowlist?: string;
 	allowlistLocation?: string;
 	eventTitle?: string;
+	color?: string;
+	eventTitleColor?: string;
+	// Per-entity overrides for global toggles. When set, override the matching
+	// top-level config option for events from this calendar.
+	showDescription?: boolean;
+	showHours?: boolean;
+	// Per-entity title styling. Free-form CSS values (e.g. "120%", "1.1em", 14)
+	// for fontSize; numeric or named values for fontWeight ("bold", 700, "500").
+	fontSize?: string | number;
+	fontWeight?: string | number;
 }
 
 export interface ConfigEntity extends EntityConfig {

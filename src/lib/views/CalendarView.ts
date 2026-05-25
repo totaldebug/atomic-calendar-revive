@@ -70,7 +70,8 @@ export class CalendarView implements ICalendarView {
 				</div>`;
 			}
 
-			const eventTime = this.config.showHours
+			const showHours = event.entityConfig.showHours ?? this.config.showHours;
+			const eventTime = showHours
 				? html`<div class="hours">
 						${event.startDateTime.format('LT')}${this.config.showEndTime ? `-${event.endDateTime.format('LT')}` : ''}
 					</div>`

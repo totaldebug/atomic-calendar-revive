@@ -153,7 +153,9 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
 	const fullDayClass = event.isAllDayEvent ? `event-title-fullday` : ``;
+	const classes = `event-title ${dayClassEventRunning} ${mode} ${fullDayClass}`;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
+	const entityStyle = entityTitleStyle(event.entityConfig);
 	let { title } = event;
 
 	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
@@ -161,22 +163,36 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	}
 	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
 		return html`
-			<div
-				class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}"
-				style="text-decoration: ${textDecoration};color: ${titleColor}"
-			>
+			<div class="${classes}" style="text-decoration: ${textDecoration};color: ${titleColor};${entityStyle}">
 				${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
 			</div>
 		`;
 	} else {
 		return html`
 			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-				<div class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}" style="color: ${titleColor}">
+				<div class="${classes}" style="color: ${titleColor};${entityStyle}">
 					${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
 				</div>
 			</a>
 		`;
 	}
+}
+
+/**
+ * Build an inline `font-size; font-weight` snippet from per-entity overrides.
+ * Numeric `fontSize` is treated as pixels; strings pass through so users can
+ * write `120%` or `1.1em`. Returns an empty string when nothing is set.
+ */
+export function entityTitleStyle(entityConfig: { fontSize?: string | number; fontWeight?: string | number }): string {
+	const parts: string[] = [];
+	if (entityConfig.fontSize !== undefined && entityConfig.fontSize !== '') {
+		const value = typeof entityConfig.fontSize === 'number' ? `${entityConfig.fontSize}px` : entityConfig.fontSize;
+		parts.push(`font-size: ${value}`);
+	}
+	if (entityConfig.fontWeight !== undefined && entityConfig.fontWeight !== '') {
+		parts.push(`font-weight: ${entityConfig.fontWeight}`);
+	}
+	return parts.length ? parts.join('; ') + ';' : '';
 }
 
 /**
@@ -220,7 +236,8 @@ export function getCalendarLocationHTML(config: atomicCardConfig, event: EventCl
 }
 
 export function getDescription(config: atomicCardConfig, event: EventClass) {
-	if (config.showDescription && event.description) {
+	const showDescription = event.entityConfig.showDescription ?? config.showDescription;
+	if (showDescription && event.description) {
 		let { description } = event;
 		if (isHtml(event.description)) {
 			if (config.descLength) {
