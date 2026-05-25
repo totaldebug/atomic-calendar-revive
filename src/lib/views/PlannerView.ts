@@ -107,7 +107,9 @@ export class PlannerView implements ICalendarView {
 
 		// Render Rows (Days)
 		const dayRows = this.events.map((dayEvents: [EventClass]) => {
-			const date = dayEvents[0].startDateTime;
+			// Use startTimeToShow so past-starting multi-day events bucket under today
+			// match their row label (matches the daysToSort key used for grouping).
+			const date = dayEvents[0].startTimeToShow;
 			// Row Label (Date)
 			const dateLabel = html`<div class="planner-day-label">
 				<div class="day-name">${date.format('dddd')}</div>

@@ -5,6 +5,27 @@ import dayjs from 'dayjs';
  * There can be Google Events and CalDav Events. This class normalizes those
  */
 
+/**
+ * Apply an array of {from, to} regex replacements to a title. Each `from` is
+ * compiled as a case-insensitive global regex; an invalid pattern is skipped
+ * silently rather than blowing up rendering. Returns the input unchanged when
+ * no rules are configured.
+ */
+export function applyTitleReplace(title: string, rules?: Array<{ from: string; to: string }>): string {
+	if (!rules || rules.length === 0) return title;
+	let out = title;
+	for (const rule of rules) {
+		if (!rule || typeof rule.from !== 'string' || rule.from === '') continue;
+		try {
+			const re = new RegExp(rule.from, 'gi');
+			out = out.replace(re, rule.to ?? '');
+		} catch {
+			// invalid regex — leave the title alone for this rule
+		}
+	}
+	return out.trim();
+}
+
 export default class EventClass {
 	isEmpty: boolean;
 	private _eventClass: any;
@@ -37,6 +58,13 @@ export default class EventClass {
 
 	get entityConfig() {
 		return this._eventClass.entity || {};
+	}
+
+	// Entity-level `showMultiDay` (declared in EntityConfig) takes precedence over
+	// the global setting so per-entity card configs in a multi-card layout can opt
+	// individual calendars in/out of multi-day splitting.
+	get showMultiDay(): boolean {
+		return this.entityConfig.showMultiDay ?? this._globalConfig.showMultiDay ?? false;
 	}
 
 	set originName(value: string) {
@@ -103,7 +131,7 @@ export default class EventClass {
 	}
 
 	get daysLong() {
-		if (this._globalConfig.showMultiDay) {
+		if (this.showMultiDay) {
 			return this.rawEvent.daysLong;
 		} else {
 			const fullDays = Math.round(
@@ -227,7 +255,7 @@ export default class EventClass {
 			return true;
 		}
 		// check for days that are between multi days - they ARE all day
-		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this._globalConfig.showMultiDay) {
+		if (!this.isFirstDay && !this.isLastDay && this.daysLong && this.showMultiDay) {
 			return true;
 		}
 		// if start and end are both "dateTime" then it's NOT an all day event
@@ -274,16 +302,18 @@ export default class EventClass {
 		}
 	}
 
-	get title() {
+	// Unreplaced title — used for filtering (block/allowlist) so users can
+	// match the original summary even when titleReplace strips part of it for
+	// display. Title display logic goes through `title`.
+	get rawTitle(): string {
 		if (!this.rawEvent.summary) {
-			if (this.entityConfig.eventTitle) {
-				return this.entityConfig.eventTitle;
-			} else {
-				return this._globalConfig.eventTitle;
-			}
-		} else {
-			return this.rawEvent.summary;
+			return this.entityConfig.eventTitle ?? this._globalConfig.eventTitle ?? '';
 		}
+		return this.rawEvent.summary;
+	}
+
+	get title() {
+		return applyTitleReplace(this.rawTitle, this.entityConfig.titleReplace);
 	}
 
 	get description() {

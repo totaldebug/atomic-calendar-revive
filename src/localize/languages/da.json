@@ -56,7 +56,8 @@
 			"descLength": "Max beskrivelseslængde (0 for ubegrænset)",
 			"showAllDayEvents": "Vis heldagsbegivenheder",
 			"offsetHeaderDate": "Forskudt overskriftsdato",
-			"startDaysAhead": "Begivenheder starter `x` dage fra i dag"
+			"startDaysAhead": "Begivenheder starter `x` dage fra i dag",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

@@ -56,7 +56,8 @@
 			"descLength": "Tamanho máximo descrição (0 para ilimitado)",
 			"showAllDayEvents": "Mostrar eventos dia completo",
 			"offsetHeaderDate": "Desfasamento data cabeçalho",
-			"startDaysAhead": "Eventos a iniciar a `x` dias desde hoje"
+			"startDaysAhead": "Eventos a iniciar a `x` dias desde hoje",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

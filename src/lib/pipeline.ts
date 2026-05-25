@@ -27,12 +27,27 @@ interface DateRange {
 	end: dayjs.Dayjs;
 }
 
+// ─── Window helpers ───────────────────────────────────────────────────────────
+
+// Event-mode start anchor. With showPastDaysOfWeek=true, the window starts at
+// the beginning of the current week (firstDayOfWeek-aware) so past days of the
+// current week stay visible; otherwise it starts at today + startDaysAhead.
+function getEventModeStart(config: atomicCardConfig): dayjs.Dayjs {
+	const baseStart = dayjs().startOf('day').add(config.startDaysAhead!, 'day');
+	if (!config.showPastDaysOfWeek) return baseStart;
+	const currentDay = baseStart.day();
+	const firstDay = config.firstDayOfWeek ?? 1;
+	let diff = currentDay - firstDay;
+	if (diff < 0) diff += 7;
+	return baseStart.subtract(diff, 'day').startOf('day');
+}
+
 // ─── Filters ──────────────────────────────────────────────────────────────────
 
 function passesAllDayBeforeWindow(e: EventClass, config: atomicCardConfig, mode: Mode): boolean {
 	if (mode === 'Calendar') return true;
 	if (!e.isAllDayEvent) return true;
-	return !e.endDateTime.isBefore(dayjs().add(config.startDaysAhead!, 'day'));
+	return !e.endDateTime.isBefore(getEventModeStart(config));
 }
 
 function passesDeclined(e: EventClass, config: atomicCardConfig): boolean {
@@ -51,7 +66,7 @@ function passesRegexField(value: string | undefined, pattern: string | undefined
 }
 
 function passesBlocklist(e: EventClass): boolean {
-	return passesRegexField(e.title, e.entityConfig.blocklist, 'block');
+	return passesRegexField(e.rawTitle, e.entityConfig.blocklist, 'block');
 }
 
 function passesBlocklistLocation(e: EventClass): boolean {
@@ -60,8 +75,8 @@ function passesBlocklistLocation(e: EventClass): boolean {
 
 function passesAllowlist(e: EventClass): boolean {
 	const pattern = e.entityConfig.allowlist;
-	if (!pattern || !e.title) return true;
-	return passesRegexField(e.title, pattern, 'allow');
+	if (!pattern || !e.rawTitle) return true;
+	return passesRegexField(e.rawTitle, pattern, 'allow');
 }
 
 function passesAllowlistLocation(e: EventClass): boolean {
@@ -79,7 +94,7 @@ function passesMaxDaysWindow(e: EventClass, config: atomicCardConfig, mode: Mode
 	if (effective === undefined || effective <= 0) return true;
 
 	const daysToShow = effective - 1;
-	let endLimit = dayjs().startOf('day').add(config.startDaysAhead!, 'day').add(daysToShow, 'day').endOf('day');
+	let endLimit = getEventModeStart(config).add(daysToShow, 'day').endOf('day');
 
 	if (mode === 'Planner') {
 		const { start, end } = getPlannerDateRange(config);
@@ -113,7 +128,7 @@ function computeVisibilityWindow(config: atomicCardConfig, mode: Mode, entityMax
 		return { start, end };
 	}
 
-	const start = dayjs().startOf('day').add(config.startDaysAhead!, 'day');
+	const start = getEventModeStart(config);
 	const max = entityMaxDays !== undefined ? entityMaxDays : config.maxDaysToShow!;
 	const end = start.endOf('day').add(max === 0 ? max : max - 1, 'day');
 	return { start, end };
@@ -128,7 +143,7 @@ function partialIsInWindow(partial: EventClass, window: DateRange): boolean {
 // ─── Multiday handling ────────────────────────────────────────────────────────
 
 function expandMultiDay(event: EventClass, config: atomicCardConfig, mode: Mode): EventClass[] {
-	if (!config.showMultiDay || !event.isMultiDay) {
+	if (!event.showMultiDay || !event.isMultiDay) {
 		return [event];
 	}
 	const partials = event.split();
@@ -234,8 +249,7 @@ export function getPlannerDateRange(config: atomicCardConfig): DateRange {
 
 function getEventModeRange(config: atomicCardConfig): DateRange {
 	const daysToShow = config.maxDaysToShow! === 0 ? config.maxDaysToShow! : config.maxDaysToShow! - 1;
-	const today = dayjs();
-	const start = today.startOf('day').add(config.startDaysAhead!, 'day');
+	const start = getEventModeStart(config);
 	const end = start.endOf('day').add(daysToShow, 'day');
 	return { start, end };
 }
@@ -246,6 +260,7 @@ export async function fetchRawEvents(
 	hass: any,
 	config: atomicCardConfig,
 	range: DateRange,
+	mode: Mode,
 ): Promise<{ raw: any[]; failed: FailedEvent[] }> {
 	const dateFormat = 'YYYY-MM-DDTHH:mm:ss';
 	const startTime = range.start.startOf('day').format(dateFormat);
@@ -257,7 +272,7 @@ export async function fetchRawEvents(
 		const calendarEntity = entityObj.entity;
 		const daysToShow = entityObj.maxDaysToShow === 0 ? 0 : entityObj.maxDaysToShow - 1;
 		const endTime =
-			entityObj.maxDaysToShow === undefined
+			mode === 'Calendar' || entityObj.maxDaysToShow === undefined
 				? range.end.endOf('day').format(dateFormat)
 				: range.start.endOf('day').add(daysToShow, 'day').format(dateFormat);
 		const url = `calendars/${calendarEntity}?start=${startTime}&end=${endTime}`;
@@ -284,15 +299,19 @@ export async function fetchRawEvents(
 // ─── Public API for views ─────────────────────────────────────────────────────
 
 export async function fetchEventModeEvents(config: atomicCardConfig, hass: any): Promise<PipelineResult> {
-	const range = getEventModeRange(config);
-	const { raw, failed } = await fetchRawEvents(hass, config, range);
-	const [events, hidden] = processEvents(raw, config, 'Event');
+	// When showPastDaysOfWeek anchors the window to start-of-week, past events
+	// need to keep their real start date so they group under their actual day
+	// rather than collapsing onto today.
+	const effectiveConfig = config.showPastDaysOfWeek ? { ...config, _showPastEvents: true } : config;
+	const range = getEventModeRange(effectiveConfig);
+	const { raw, failed } = await fetchRawEvents(hass, effectiveConfig, range, 'Event');
+	const [events, hidden] = processEvents(raw, effectiveConfig, 'Event');
 	return { events, hidden, failed };
 }
 
 export async function fetchPlannerEvents(config: atomicCardConfig, hass: any): Promise<PipelineResult> {
 	const range = getPlannerDateRange(config);
-	const { raw, failed } = await fetchRawEvents(hass, config, range);
+	const { raw, failed } = await fetchRawEvents(hass, config, range, 'Planner');
 	const [events, hidden] = processEvents(raw, config, 'Planner');
 	return { events, hidden, failed };
 }

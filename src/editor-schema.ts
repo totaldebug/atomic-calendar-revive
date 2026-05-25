@@ -32,6 +32,11 @@ export const mainSchema = [
 		selector: { number: { min: 0, max: 365 } },
 	},
 	{
+		name: 'showPastDaysOfWeek',
+		label: localize('main.fields.showPastDaysOfWeek'),
+		selector: { boolean: {} },
+	},
+	{
 		name: 'sortBy',
 		label: localize('main.fields.sortBy'),
 		selector: { select: { options: ['start', 'milestone', 'none'], mode: 'dropdown' } },
@@ -145,6 +150,10 @@ export const entitySchema = [
 	{ name: 'allowlistLocation', label: 'Allowlist Location', selector: { text: {} } },
 	{ name: 'eventTitle', label: 'Event Title', selector: { text: {} } },
 	{ name: 'showMultiDay', label: 'Show Multi Day', selector: { boolean: {} } },
+	{ name: 'showDescription', label: 'Show Description', selector: { boolean: {} } },
+	{ name: 'showHours', label: 'Show Hours', selector: { boolean: {} } },
+	{ name: 'fontSize', label: 'Font Size (e.g. 120%, 14px)', selector: { text: {} } },
+	{ name: 'fontWeight', label: 'Font Weight (e.g. bold, 700)', selector: { text: {} } },
 	{ name: 'tap_action', label: 'Tap Action', selector: { 'ui-action': {} } },
 	{ name: 'hold_action', label: 'Hold Action', selector: { 'ui-action': {} } },
 	{ name: 'double_tap_action', label: 'Double Tap Action', selector: { 'ui-action': {} } },

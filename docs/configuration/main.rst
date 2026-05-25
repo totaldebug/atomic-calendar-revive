@@ -17,6 +17,7 @@ Main Options
  showLoader                boolean   optional        ``true`` Show animation, when events are being loaded from Google Calendar.
  showDate                  boolean   optional        ``false`` Show the date on the right side of the card name
  startDaysAhead            integer   optional        ``0`` If you set more than 0, events will be loaded starting `x` days from today. For example `1` - the component will show events starting from tomorrow, if a negative number is used, events previous will be shown.
+ showPastDaysOfWeek        boolean   optional        ``false`` In Event mode, anchor the visible window to the start of the current week (respects ``firstDayOfWeek``). With ``maxDaysToShow: 7`` on a Wednesday you'll see Mon–Sun rather than Wed–Tue. Past events show under their real date and are dimmed when ``dimFinishedEvents`` is set.
  showDescription           boolean   optional        ``false`` Shows long description of event from Google Calendar.
  showNoEventsForToday      boolean   optional        ``false`` Shows `No events for today` if no events, instead of omit the entry.
  sortBy                    boolean   optional        ``start`` Sort events by start time. ``start|milestone|none``

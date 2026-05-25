@@ -24,7 +24,7 @@ export interface CellContext {
 export interface GridSlot {
 	renderCellBody(day: CalendarDay, ctx: CellContext): TemplateResult;
 	onCellClick?(day: CalendarDay): void;
-	cellHighlightStyle?(day: CalendarDay): string;
+	cellHighlightClass?(day: CalendarDay): string;
 	cellInnerClass?: string;
 	renderAfter?(): TemplateResult;
 	onMonthLoaded?(month: CalendarDay[]): void;
@@ -78,7 +78,7 @@ export class MonthGrid {
 
 		try {
 			const month = buildEmptyMonth(config, this.selectedMonth);
-			const { raw } = await fetchRawEvents(hass, config, { start: month[0].date, end: month[41].date });
+			const { raw } = await fetchRawEvents(hass, config, { start: month[0].date, end: month[41].date }, 'Calendar');
 			const [events] = processEvents(raw, config, 'Calendar');
 			for (const day of month) {
 				for (const event of events) {
@@ -110,32 +110,32 @@ export class MonthGrid {
 		const firstDayOfWeek = this.config.firstDayOfWeek ?? 1;
 		const days = dayjs.weekdaysMin(false);
 		const weekDays = [...days.slice(firstDayOfWeek), ...days.slice(0, firstDayOfWeek)];
-		const dayHeaders = weekDays.map(
-			(day) => html`<th class="cal" style="color: ${this.config.calWeekDayColor};">${day}</th>`,
-		);
+		const dayHeaders = weekDays.map((day) => html`<th class="cal">${day}</th>`);
+
+		const compactClass = this.config.compactMode ? 'compact' : '';
 
 		return html`
-			<div class="calTitleContainer">${this.renderHeader()}${showCalendarLink(this.config, this.selectedMonth)}</div>
-			<div class="calTableContainer">
-				<table class="cal" style="color: ${this.config.eventTitleColor};--cal-border-color:${this.config.calGridColor}">
-					<thead>
-						<tr>
-							${dayHeaders}
-						</tr>
-					</thead>
-					<tbody>
-						${this.renderRows(slot)}
-					</tbody>
-				</table>
+			<div class="month-grid ${compactClass}">
+				<div class="calTitleContainer">${this.renderHeader()}${showCalendarLink(this.config, this.selectedMonth)}</div>
+				<div class="calTableContainer">
+					<table class="cal">
+						<thead>
+							<tr>
+								${dayHeaders}
+							</tr>
+						</thead>
+						<tbody>
+							${this.renderRows(slot)}
+						</tbody>
+					</table>
+				</div>
+				${slot.renderAfter ? slot.renderAfter() : ''}
 			</div>
-			${slot.renderAfter ? slot.renderAfter() : ''}
 		`;
 	}
 
 	private renderHeader(): TemplateResult {
-		const dateColor = this.config.calDateColor;
-		const colorVar = dateColor ? `--cal-date-color: ${dateColor}` : '';
-		return html`<div class="calDateSelector" style=${colorVar}>
+		return html`<div class="calDateSelector">
 			<ha-icon-button
 				class="prev"
 				.path=${mdiChevronLeft}
@@ -200,18 +200,13 @@ export class MonthGrid {
 				</div>`
 			: html``;
 
-		const highlightStyle = slot.cellHighlightStyle?.(day) ?? '';
+		const highlightClass = slot.cellHighlightClass?.(day) ?? '';
 		const innerClass = slot.cellInnerClass ? ` ${slot.cellInnerClass}` : '';
 		const clickHandler = slot.onCellClick ? () => slot.onCellClick!(day) : undefined;
 
 		return html`
-			<td
-				@click=${clickHandler}
-				class="cal day ${weekendClass} ${differentMonthClass}"
-				style="${highlightStyle} --cal-grid-color: ${this.config.calGridColor}; --cal-day-color: ${this.config
-					.calDayColor}"
-			>
-				<div class="calDay${innerClass}" style="${highlightStyle}">
+			<td @click=${clickHandler} class="cal day ${weekendClass} ${differentMonthClass} ${highlightClass}">
+				<div class="calDay${innerClass}">
 					${weekNumber}
 					<div class="day-number ${todayClass}">${day.date.date()}</div>
 					${slot.renderCellBody(day, { isToday, weekendClass, differentMonthClass, weekNumber })}

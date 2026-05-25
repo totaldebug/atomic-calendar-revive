@@ -97,6 +97,45 @@ export class AtomicCalendarRevive extends LitElement implements ICardHost {
 		setHass(this.hass);
 		this._config = resolveConfig(config);
 		this.modeToggle = this._config.defaultMode!;
+		this.applyHostCustomProperties();
+	}
+
+	private applyHostCustomProperties(): void {
+		const c = this._config;
+		// Push config-driven colors onto the host as CSS custom properties so they
+		// cascade through the shadow DOM. card_mod can override any of these via
+		// `ha-card { --cal-*: ...; }` because ha-card sits between :host and the
+		// consumers. For text colors we skip pushing when the value matches the
+		// default `var(--primary-text-color)` — leaving the prop unset lets the
+		// consumer fall back to `inherit`, which is what makes a plain
+		// `ha-card { color: ... }` card_mod rule reach the inner elements.
+		const TEXT_DEFAULT = 'var(--primary-text-color)';
+		const textProps: Array<[string, string | undefined]> = [
+			['--cal-name-color', c.nameColor],
+			['--cal-weekday-color', c.calWeekDayColor],
+			['--cal-day-color', c.calDayColor],
+			['--cal-date-color', c.calDateColor],
+			['--cal-event-title-color', c.eventTitleColor],
+			['--cal-description-color', c.descColor],
+		];
+		for (const [prop, value] of textProps) {
+			if (value && value !== TEXT_DEFAULT) this.style.setProperty(prop, value);
+			else this.style.removeProperty(prop);
+		}
+		const nonTextProps: Array<[string, string | number | undefined]> = [
+			['--cal-grid-color', c.calGridColor],
+			['--cal-active-event-bg', c.calActiveEventBackgroundColor],
+			['--cal-event-bar-color', c.eventBarColor],
+			['--cal-progress-bar', c.progressBarColor],
+			['--cal-progress-bar-bg', c.progressBarBackgroundColor],
+			['--cal-location-icon-color', c.locationIconColor],
+			['--cal-location-link-size', c.locationTextSize !== undefined ? `${c.locationTextSize}%` : undefined],
+			['--cal-description-size', c.descSize !== undefined ? `${c.descSize}%` : undefined],
+		];
+		for (const [prop, value] of nonTextProps) {
+			if (value !== undefined && value !== '') this.style.setProperty(prop, String(value));
+			else this.style.removeProperty(prop);
+		}
 	}
 
 	protected render(): TemplateResult | void {
@@ -152,11 +191,7 @@ export class AtomicCalendarRevive extends LitElement implements ICardHost {
 			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
 				? html` <div class="header ${compactMode}">
 						${this._config.name
-							? html`<div
-									class="header-name ${compactMode}"
-									style="color: ${this._config.nameColor};"
-									@click="${() => this.handleToggle()}"
-								>
+							? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
 									${this._config.name}
 								</div>`
 							: ''}

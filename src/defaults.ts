@@ -5,7 +5,7 @@ export default {
 	cardHeight: '100%',
 
 	// main settings
-	maxDaysToShow: 0, // maximum days to show (if zero, show only currently running events)
+	maxDaysToShow: 7, // maximum days to show (if zero, show only currently running events)
 	maxEventCount: 0, // maximum number of events to show (if zero, unlimited)
 	showLoader: true, // show animation when loading events from Google calendar
 
@@ -16,6 +16,7 @@ export default {
 	showDate: false,
 	dateFormat: 'LL',
 	startDaysAhead: 0, // shows the events starting on x days from today. Default 0.
+	showPastDaysOfWeek: false, // anchor the Event-mode window to the start of the current week (firstDayOfWeek-aware), so past days of the current week stay visible
 	showLastCalendarWeek: false, // always shows last line/week in calendar mode, even if it's not the current month
 
 	sortBy: 'start', // sort first by start time or milestone

@@ -33,14 +33,9 @@ export class CalendarView implements ICalendarView {
 
 	render(): TemplateResult {
 		return this.grid.render({
-			renderCellBody: (day) => html`
-				<div class="iconDiv" style="padding-top: 22px; padding-bottom: 5px;">${this.renderDayIcons(day)}</div>
-			`,
+			renderCellBody: (day) => html` <div class="iconDiv">${this.renderDayIcons(day)}</div> `,
 			onCellClick: (day) => this.selectDay(day),
-			cellHighlightStyle: (day) =>
-				dayjs(day.date).isSame(dayjs(this.clickedDate), 'day')
-					? `background-color: ${this.config.calActiveEventBackgroundColor};`
-					: '',
+			cellHighlightClass: (day) => (dayjs(day.date).isSame(dayjs(this.clickedDate), 'day') ? 'active' : ''),
 			renderAfter: () => html`<div class="summary-div">${this.summaryHtml}</div>`,
 			onMonthLoaded: (month) => {
 				if (this.clickedDate) return;
@@ -75,7 +70,8 @@ export class CalendarView implements ICalendarView {
 				</div>`;
 			}
 
-			const eventTime = this.config.showHours
+			const showHours = event.entityConfig.showHours ?? this.config.showHours;
+			const eventTime = showHours
 				? html`<div class="hours">
 						${event.startDateTime.format('LT')}${this.config.showEndTime ? `-${event.endDateTime.format('LT')}` : ''}
 					</div>`

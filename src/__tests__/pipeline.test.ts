@@ -1,7 +1,8 @@
+import dayjs from 'dayjs';
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 
 import { ENTITY, allDayEvent, makeConfig, timedEvent } from './fixtures';
-import { groupEventsByDay, processEvents } from '../lib/pipeline';
+import { fetchEventModeEvents, fetchRawEvents, groupEventsByDay, processEvents } from '../lib/pipeline';
 
 const NOW = '2026-04-25T12:00:00';
 
@@ -52,6 +53,30 @@ describe('processEvents: filters', () => {
 		];
 		const [events] = processEvents(raw, cfg, 'Event');
 		expect(events.map((e: { title: string }) => e.title)).toEqual(['Important: A']);
+	});
+
+	// #1599: allowlist needs to match the original summary even when
+	// titleReplace strips the matched prefix from the display title.
+	test('allowlist matches rawTitle, then titleReplace strips for display', () => {
+		const cfg = makeConfig({ maxDaysToShow: 7 });
+		const raw = [
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Dinner = Sushi', {
+				entity: {
+					...ENTITY,
+					allowlist: '^Dinner = ',
+					titleReplace: [{ from: '^Dinner = ', to: '' }],
+				},
+			}),
+			timedEvent('2026-04-25T16:00:00', '2026-04-25T17:00:00', 'Standup', {
+				entity: {
+					...ENTITY,
+					allowlist: '^Dinner = ',
+					titleReplace: [{ from: '^Dinner = ', to: '' }],
+				},
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events.map((e: { title: string }) => e.title)).toEqual(['Sushi']);
 	});
 
 	test('declined events filtered when showDeclined=false', () => {
@@ -143,6 +168,31 @@ describe('processEvents: filters', () => {
 		expect(events.length).toBeGreaterThan(1);
 	});
 
+	// Regression for #1658: entity-level showMultiDay should opt that calendar
+	// into splitting even when the global setting is false. Allows swipe-card
+	// per-day layouts where each card has maxDaysToShow=1 + a different
+	// startDaysAhead and still surfaces in-progress multi-day events.
+	test('entity-level showMultiDay splits even when global is false', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 1,
+			startDaysAhead: 3,
+			showMultiDay: false,
+		});
+		// Spans today+2..today+4 (NOW=2026-04-25 → 2026-04-27..2026-04-29 inclusive,
+		// end exclusive 2026-04-30). The day-3 window covers 2026-04-28.
+		const raw = [
+			allDayEvent('2026-04-27', '2026-04-30', 'Trip', {
+				entity: { ...ENTITY, showMultiDay: true },
+			}),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		expect(events).toHaveLength(1);
+		expect(events[0].title).toBe('Trip');
+		// The surviving partial should sit on day 3 (2026-04-28), not the
+		// original 2026-04-27 start.
+		expect(events[0].startDateTime.format('YYYY-MM-DD')).toBe('2026-04-28');
+	});
+
 	test('Calendar mode does not apply maxDaysToShow window filter', () => {
 		const cfg = makeConfig({ maxDaysToShow: 1 });
 		const raw = [
@@ -211,6 +261,67 @@ describe('processEvents: filters', () => {
 		];
 		const [events] = processEvents(raw, cfg, 'Event');
 		expect(events.map((e: { title: string }) => e.title)).toEqual(['FutureAllDay']);
+	});
+
+	// #1578 / #1600: showPastDaysOfWeek anchors the Event window to the start of
+	// the current week so past days of this week stay visible. NOW = Saturday
+	// 2026-04-25, firstDayOfWeek = 1 → window aligns Mon 2026-04-20 onwards.
+	test('showPastDaysOfWeek keeps past timed events within the current week', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const raw = [
+			timedEvent('2026-04-20T10:00:00', '2026-04-20T11:00:00', 'Monday'),
+			timedEvent('2026-04-22T10:00:00', '2026-04-22T11:00:00', 'Wednesday'),
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-04-26T10:00:00', '2026-04-26T11:00:00', 'Sunday'),
+			timedEvent('2026-04-27T10:00:00', '2026-04-27T11:00:00', 'NextMonday'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Monday', 'Wednesday', 'Today', 'Sunday']));
+		expect(titles).not.toContain('NextMonday');
+	});
+
+	test('showPastDaysOfWeek keeps past all-day events within the current week', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const raw = [
+			allDayEvent('2026-04-21', '2026-04-22', 'TuesdayAllDay'),
+			allDayEvent('2026-04-13', '2026-04-14', 'LastWeekAllDay'),
+			allDayEvent('2026-04-26', '2026-04-27', 'SundayAllDay'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['TuesdayAllDay', 'SundayAllDay']));
+		expect(titles).not.toContain('LastWeekAllDay');
+	});
+
+	test('showPastDaysOfWeek respects firstDayOfWeek=0 (Sunday)', () => {
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 0,
+		});
+		// NOW = Saturday 2026-04-25 → with firstDayOfWeek=0, week is Sun 2026-04-19 – Sat 2026-04-25.
+		const raw = [
+			timedEvent('2026-04-19T10:00:00', '2026-04-19T11:00:00', 'Sunday'),
+			timedEvent('2026-04-20T10:00:00', '2026-04-20T11:00:00', 'Monday'),
+			timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Today'),
+			timedEvent('2026-04-26T10:00:00', '2026-04-26T11:00:00', 'NextSunday'),
+		];
+		const [events] = processEvents(raw, cfg, 'Event');
+		const titles = events.map((e: { title: string }) => e.title);
+		expect(titles).toEqual(expect.arrayContaining(['Sunday', 'Monday', 'Today']));
+		expect(titles).not.toContain('NextSunday');
 	});
 });
 
@@ -310,6 +421,83 @@ describe('Planner mode pipeline', () => {
 	});
 });
 
+describe('fetchRawEvents: API fetch window', () => {
+	const DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ss';
+	const range = { start: dayjs('2026-04-01T00:00:00'), end: dayjs('2026-05-12T00:00:00') };
+	const expectedFullStart = range.start.startOf('day').format(DATE_FORMAT);
+	const expectedFullEnd = range.end.endOf('day').format(DATE_FORMAT);
+
+	function makeHass() {
+		const calls: string[] = [];
+		const hass = {
+			callApi: vi.fn((_method: string, url: string) => {
+				calls.push(url);
+				return Promise.resolve([]);
+			}),
+			states: {},
+		};
+		return { hass, calls };
+	}
+
+	test('Calendar mode ignores entity-level maxDaysToShow and uses full range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 7 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Calendar');
+
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedFullEnd}`);
+	});
+
+	test('Event mode honours entity-level maxDaysToShow and truncates range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 7 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Event');
+
+		const expectedTruncatedEnd = range.start.endOf('day').add(6, 'day').format(DATE_FORMAT);
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedTruncatedEnd}`);
+	});
+
+	test('Planner mode honours entity-level maxDaysToShow and truncates range', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY, maxDaysToShow: 3 }] });
+		const { hass, calls } = makeHass();
+
+		await fetchRawEvents(hass, cfg, range, 'Planner');
+
+		const expectedTruncatedEnd = range.start.endOf('day').add(2, 'day').format(DATE_FORMAT);
+		expect(calls).toHaveLength(1);
+		expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedTruncatedEnd}`);
+	});
+
+	test('fetchEventModeEvents widens API window backwards when showPastDaysOfWeek is set', async () => {
+		// NOW = Saturday 2026-04-25, firstDayOfWeek = 1 → start anchors to Mon 4/20.
+		const cfg = makeConfig({
+			maxDaysToShow: 7,
+			startDaysAhead: 0,
+			showPastDaysOfWeek: true,
+			firstDayOfWeek: 1,
+		});
+		const { hass, calls } = makeHass();
+		await fetchEventModeEvents(cfg, hass);
+		expect(calls).toHaveLength(1);
+		const expectedStart = dayjs('2026-04-20').startOf('day').format(DATE_FORMAT);
+		expect(calls[0]).toContain(`start=${expectedStart}`);
+	});
+
+	test('entity without maxDaysToShow uses full range in any mode', async () => {
+		const cfg = makeConfig({ entities: [{ ...ENTITY }] });
+
+		for (const mode of ['Calendar', 'Event', 'Planner'] as const) {
+			const { hass, calls } = makeHass();
+			await fetchRawEvents(hass, cfg, range, mode);
+			expect(calls).toHaveLength(1);
+			expect(calls[0]).toBe(`calendars/${ENTITY.entity}?start=${expectedFullStart}&end=${expectedFullEnd}`);
+		}
+	});
+});
+
 describe('groupEventsByDay', () => {
 	test('groups by daysToSort key', () => {
 		const cfg = makeConfig({ maxDaysToShow: 7 });
@@ -323,5 +511,30 @@ describe('groupEventsByDay', () => {
 		expect(groups).toHaveLength(2);
 		expect(groups[0]).toHaveLength(2);
 		expect(groups[1]).toHaveLength(1);
+	});
+
+	// Regression for #1754: in Planner mode with rolling week, a multi-day event
+	// that started in the past is clamped to today by startTimeToShow and bucketed
+	// under today's daysToSort. The view derives its row label from this same
+	// startTimeToShow so the label matches the bucket (not the event's real
+	// past start date).
+	test('past-starting multi-day events use startTimeToShow for the date label', () => {
+		const cfg = makeConfig({
+			plannerDaysToShow: 7,
+			plannerRollingWeek: true,
+			firstDayOfWeek: 1,
+			showMultiDay: false,
+		});
+		const raw = [allDayEvent('2026-04-07', '2026-05-30', 'Trip')];
+		const [events] = processEvents(raw, cfg, 'Planner');
+		const groups = groupEventsByDay(events);
+		expect(groups).toHaveLength(1);
+		const today = dayjs('2026-04-25').startOf('day');
+		const first = groups[0][0] as unknown as {
+			startTimeToShow: dayjs.Dayjs;
+			startDateTime: dayjs.Dayjs;
+		};
+		expect(first.startTimeToShow.format('YYYY-MM-DD')).toBe(today.format('YYYY-MM-DD'));
+		expect(first.startDateTime.format('YYYY-MM-DD')).toBe('2026-04-07');
 	});
 });

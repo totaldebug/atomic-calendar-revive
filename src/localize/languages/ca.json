@@ -56,7 +56,8 @@
 			"descLength": "Màxima longitut de la descripció (0 per il·limitat)",
 			"showAllDayEvents": "Mostrat esdeveniments de tot el dia",
 			"offsetHeaderDate": "Compensació de la data de la capçalera",
-			"startDaysAhead": "Esdeveniments que comencen `x` dies a partir d'ara"
+			"startDaysAhead": "Esdeveniments que comencen `x` dies a partir d'ara",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

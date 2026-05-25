@@ -31,6 +31,21 @@ export interface EntityConfig {
 	allowlist?: string;
 	allowlistLocation?: string;
 	eventTitle?: string;
+	color?: string;
+	eventTitleColor?: string;
+	// Per-entity overrides for global toggles. When set, override the matching
+	// top-level config option for events from this calendar.
+	showDescription?: boolean;
+	showHours?: boolean;
+	// Per-entity title styling. Free-form CSS values (e.g. "120%", "1.1em", 14)
+	// for fontSize; numeric or named values for fontWeight ("bold", 700, "500").
+	fontSize?: string | number;
+	fontWeight?: string | number;
+	// Per-entity title rewrites. Each entry's `from` is treated as a
+	// case-insensitive regex; matches are replaced with `to`. Useful to strip
+	// shared-calendar prefixes (e.g. "Dinner = " → ""), rename family tags
+	// ("Daddy Work" → "Work"), or remove suffixes ("hat Geburtstag" → "").
+	titleReplace?: Array<{ from: string; to: string }>;
 }
 
 export interface ConfigEntity extends EntityConfig {

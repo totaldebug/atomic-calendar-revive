@@ -48,7 +48,8 @@
 			"cardHeight": "Výška karty",
 			"hideDuplicates": "Skrýt duplicity",
 			"showMultiDay": "Spojit vícedenní události",
-			"showMultiDayEventParts": "Zobrazit části vícedenních událostí"
+			"showMultiDayEventParts": "Zobrazit části vícedenních událostí",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

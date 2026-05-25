@@ -14,7 +14,6 @@ export function showCalendarLink(config, selectedMonth) {
 			<ha-icon-button
 				class="cal-link-button"
 				.path=${mdiCalendar}
-				style="--mdc-icon-color: ${config.calDateColor}"
 				onClick="window.open('https://calendar.google.com/calendar/r/month/${selectedMonth.format(
 					'YYYY',
 				)}/${selectedMonth.format('MM')}/1'), '${config.linkTarget}'"
@@ -154,7 +153,11 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 		typeof event.entityConfig.color != 'undefined' ? event.entityConfig.color : config.eventTitleColor;
 	const dayClassEventRunning = event.isRunning ? `running` : ``;
 	const fullDayClass = event.isAllDayEvent ? `event-title-fullday` : ``;
+	const recurringClass = event.isRecurring ? `recurring` : ``;
+	const sourceClass = entitySourceClass(event.entityConfig.entity);
+	const classes = `event-title ${dayClassEventRunning} ${mode} ${fullDayClass} ${recurringClass} ${sourceClass}`;
 	const textDecoration: string = event.isDeclined ? 'line-through' : 'none';
+	const entityStyle = entityTitleStyle(event.entityConfig);
 	let { title } = event;
 
 	if (!isHtml(event.title) && config.titleLength && event.title.length > config.titleLength) {
@@ -162,22 +165,51 @@ export function getTitleHTML(config: atomicCardConfig, event: EventClass, hass: 
 	}
 	if (config.disableEventLink || event.htmlLink === undefined || event.htmlLink === null) {
 		return html`
-			<div
-				class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}"
-				style="text-decoration: ${textDecoration};color: ${titleColor}"
-			>
+			<div class="${classes}" style="text-decoration: ${textDecoration};color: ${titleColor};${entityStyle}">
 				${getEventIcon(config, event, hass)} ${title} ${getMultiDayEventParts(config, event)}
 			</div>
 		`;
 	} else {
 		return html`
 			<a href="${event.htmlLink}" style="text-decoration: ${textDecoration};" target="${config.linkTarget}">
-				<div class="event-title ${dayClassEventRunning} ${mode} ${fullDayClass}" style="color: ${titleColor}">
+				<div class="${classes}" style="color: ${titleColor};${entityStyle}">
 					${getEventIcon(config, event, hass)} <span>${title} ${getMultiDayEventParts(config, event)} </span>
 				</div>
 			</a>
 		`;
 	}
+}
+
+/**
+ * Slugify a calendar entity_id (`calendar.family_main`) into a CSS-safe class
+ * suffix (`cal-family-main`). Returned empty when no entity is supplied so
+ * downstream class templates degrade cleanly.
+ */
+export function entitySourceClass(entity?: string): string {
+	if (!entity) return '';
+	const slug = entity
+		.replace(/^calendar\./, '')
+		.toLowerCase()
+		.replace(/[^a-z0-9]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+	return slug ? `cal-${slug}` : '';
+}
+
+/**
+ * Build an inline `font-size; font-weight` snippet from per-entity overrides.
+ * Numeric `fontSize` is treated as pixels; strings pass through so users can
+ * write `120%` or `1.1em`. Returns an empty string when nothing is set.
+ */
+export function entityTitleStyle(entityConfig: { fontSize?: string | number; fontWeight?: string | number }): string {
+	const parts: string[] = [];
+	if (entityConfig.fontSize !== undefined && entityConfig.fontSize !== '') {
+		const value = typeof entityConfig.fontSize === 'number' ? `${entityConfig.fontSize}px` : entityConfig.fontSize;
+		parts.push(`font-size: ${value}`);
+	}
+	if (entityConfig.fontWeight !== undefined && entityConfig.fontWeight !== '') {
+		parts.push(`font-weight: ${entityConfig.fontWeight}`);
+	}
+	return parts.length ? parts.join('; ') + ';' : '';
 }
 
 /**
@@ -190,28 +222,12 @@ export function getLocationHTML(config: atomicCardConfig, event: EventClass) {
 	if (!event.location || !config.showLocation) {
 		return html``;
 	} else if (config.disableLocationLink) {
-		return html`<ha-icon
-				class="event-location-icon"
-				style="--location-icon-color: ${config.locationIconColor}"
-				icon="mdi:map-marker"
-			></ha-icon
-			>&nbsp;${event.address}`;
+		return html`<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;${event.address}`;
 	} else {
 		const loc: string = event.location;
 		const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
-		return html`<a
-			href=${location}
-			target="${config.linkTarget}"
-			class="location-link"
-			style="--location-link-size: ${config.locationTextSize}%"
-		>
-			<ha-icon
-				class="event-location-icon"
-				style="--location-icon-color: ${config.locationIconColor}"
-				icon="mdi:map-marker"
-			>
-			</ha-icon
-			>&nbsp;${event.address}
+		return html`<a href=${location} target="${config.linkTarget}" class="location-link">
+			<ha-icon class="event-location-icon" icon="mdi:map-marker"> </ha-icon>&nbsp;${event.address}
 		</a>`;
 	}
 }
@@ -229,25 +245,16 @@ export function getCalendarLocationHTML(config: atomicCardConfig, event: EventCl
 		const loc: string = event.location;
 		const location: string = loc.startsWith('http') ? loc : 'https://maps.google.com/?q=' + loc;
 		return html`
-			<a
-				href=${location}
-				target="${config.linkTarget}"
-				class="location-link"
-				style="--location-link-size: ${config.locationTextSize}%"
-			>
-				<ha-icon
-					class="event-location-icon"
-					style="--location-icon-color: ${config.locationIconColor}"
-					icon="mdi:map-marker"
-				></ha-icon
-				>&nbsp;
+			<a href=${location} target="${config.linkTarget}" class="location-link">
+				<ha-icon class="event-location-icon" icon="mdi:map-marker"></ha-icon>&nbsp;
 			</a>
 		`;
 	}
 }
 
 export function getDescription(config: atomicCardConfig, event: EventClass) {
-	if (config.showDescription && event.description) {
+	const showDescription = event.entityConfig.showDescription ?? config.showDescription;
+	if (showDescription && event.description) {
 		let { description } = event;
 		if (isHtml(event.description)) {
 			if (config.descLength) {
@@ -261,12 +268,7 @@ export function getDescription(config: atomicCardConfig, event: EventClass) {
 		}
 		return html`<div class="event-right">
 			<div class="event-main">
-				<div
-					class="event-description"
-					style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
-				>
-					${description}
-				</div>
+				<div class="event-description">${description}</div>
 			</div>
 		</div>`;
 	}
@@ -291,12 +293,7 @@ export function getCalendarDescriptionHTML(config: atomicCardConfig, event: Even
 		if (!isHtml(event.description) && config.descLength && event.description.length > config.descLength) {
 			description = event.description.slice(0, config.descLength);
 		}
-		return html`<div
-			class="calDescription"
-			style="--description-color: ${config.descColor}; --description-size: ${config.descSize}%"
-		>
-			- ${description}
-		</div>`;
+		return html`<div class="calDescription">- ${description}</div>`;
 	} else {
 		return html`;`;
 	}

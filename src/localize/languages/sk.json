@@ -56,7 +56,8 @@
 			"descLength": "Maximálna dĺžka popisu (0 pre neobmedzené)",
 			"showAllDayEvents": "Zobraziť celodenné udalosti",
 			"offsetHeaderDate": "Dátum posunutia hlavičky",
-			"startDaysAhead": "Udalosti začínajúce `x` dní odo dneška"
+			"startDaysAhead": "Udalosti začínajúce `x` dní odo dneška",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

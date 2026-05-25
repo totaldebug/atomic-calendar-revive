@@ -56,7 +56,8 @@
 			"descLength": "Kuvauksen enimmäispituus (0 rajattomasti)",
 			"showAllDayEvents": "Näytä koko päivän tapahtumat",
 			"offsetHeaderDate": "Offset otsikon päivämäärä",
-			"startDaysAhead": "Tapahtumat alkavat `x` päivän kuluttua tästä päivästä"
+			"startDaysAhead": "Tapahtumat alkavat `x` päivän kuluttua tästä päivästä",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {

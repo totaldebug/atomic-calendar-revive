@@ -56,7 +56,8 @@
 			"descLength": "Макс. довжина опису (0 для необмеженої)",
 			"showAllDayEvents": "Показувати цілоденні події",
 			"offsetHeaderDate": "Змістити дату в заголовку",
-			"startDaysAhead": "Події, що починаються `х` днів від сьогодні"
+			"startDaysAhead": "Події, що починаються `х` днів від сьогодні",
+			"showPastDaysOfWeek": "Anchor window to start of current week"
 		}
 	},
 	"event": {
