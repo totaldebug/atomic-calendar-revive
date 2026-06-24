@@ -28,7 +28,7 @@ dayjs.extend(advancedFormat);
 import './editor';
 import { CARD_VERSION } from './const';
 import { getDefaultConfig } from './helpers/get-default-config';
-import { setHass } from './helpers/globals';
+import { setHass, setLanguage } from './helpers/globals';
 import { registerCustomCard } from './helpers/register-custom-card';
 import { ICardHost } from './lib/card-host.interface';
 import { getDate } from './lib/common.html';
@@ -96,6 +96,9 @@ export class AtomicCalendarRevive extends LitElement implements ICardHost {
 	public setConfig(config: atomicCardConfig): void {
 		setHass(this.hass);
 		this._config = resolveConfig(config);
+		// Make the card's configured language available to localize() so UI
+		// strings honour the `language` option, not just dayjs date formatting.
+		setLanguage(this._config.language);
 		this.modeToggle = this._config.defaultMode!;
 		this.applyHostCustomProperties();
 	}
