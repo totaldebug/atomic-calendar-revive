@@ -120,9 +120,13 @@ export class PlannerView implements ICalendarView {
 			const calendarCells = calendars.map((cal) => {
 				const eventsForCal = dayEvents.filter((e) => e.entity.entity_id === cal.id && !e.isEmpty);
 				return html`<div class="planner-cell">
-					${eventsForCal.map(
-						(event) => html`
-							<div class="planner-event">
+					${eventsForCal.map((event) => {
+						const finishedEventsStyle =
+							event.isFinished && this.config.dimFinishedEvents
+								? `opacity: ` + this.config.finishedEventOpacity + `; filter: ` + this.config.finishedEventFilter + `;`
+								: ``;
+						return html`
+							<div class="planner-event" style="${finishedEventsStyle}">
 								${getTitleHTML(this.config, event, this.hass, 'Planner')}
 								<div class="planner-event-time">
 									${event.isAllDayEvent
@@ -130,8 +134,8 @@ export class PlannerView implements ICalendarView {
 										: `${event.startDateTime.format('LT')}${this.config.showEndTime ? ` - ${event.endDateTime.format('LT')}` : ''}`}
 								</div>
 							</div>
-						`,
-					)}
+						`;
+					})}
 				</div>`;
 			});
 
