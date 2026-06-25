@@ -55,9 +55,22 @@ function getTranslatedString(key: string, lang: string): string | undefined {
 
 let languageNotSupportedMessage = false;
 
+// Treat empty strings and the literal string "null"/"undefined" (which can end
+// up persisted in localStorage) as "no language selected" so we fall back to
+// DEFAULT_LANG instead of warning about an unsupported language.
+function normaliseLang(value: string | null | undefined): string | undefined {
+	if (!value) return undefined;
+	const trimmed = value.trim();
+	if (trimmed === '' || trimmed === 'null' || trimmed === 'undefined') return undefined;
+	return trimmed;
+}
+
 export default function localize(key: string) {
 	const lang =
-		(globalData.hass?.locale?.language || globalData.hass?.language || localStorage.getItem('selectedLanguage')) ??
+		normaliseLang(globalData.language) ??
+		normaliseLang(globalData.hass?.locale?.language) ??
+		normaliseLang(globalData.hass?.language) ??
+		normaliseLang(localStorage.getItem('selectedLanguage')) ??
 		DEFAULT_LANG;
 	if (languages[lang]) {
 		// eslint-disable-next-line no-var

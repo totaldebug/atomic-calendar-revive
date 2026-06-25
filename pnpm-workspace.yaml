@@ -1,3 +1,13 @@
 allowBuilds:
   esbuild: true
   unrs-resolver: true
+# Force patched versions of transitive (dev/build-toolchain) dependencies
+# flagged by Dependabot security alerts. None of these ship in the card bundle.
+overrides:
+  vite: ^7.1.5
+  esbuild: ^0.25.0
+  'undici@>=7.0.0 <7.28.0': ^7.28.0
+  'undici@<6.27.0': ^6.27.0
+  lodash: ^4.18.0
+  js-yaml: ^4.2.0
+  tmp: ^0.2.6
