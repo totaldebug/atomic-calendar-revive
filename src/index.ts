@@ -191,17 +191,21 @@ export class AtomicCalendarRevive extends LitElement implements ICardHost {
 			style="${this._config.compactMode ? 'line-height: 80%;' : ''} --card-height: ${this._config.cardHeight}"
 		>
 			${this.renderModal()}
-			${this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
-				? html` <div class="header ${compactMode}">
-						${this._config.name
-							? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
-									${this._config.name}
-								</div>`
-							: ''}
-						${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
-						${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
-					</div>`
-				: ''}
+			${
+				this._config.name || this._config.showDate || (this.showLoader && this._config.showLoader)
+					? html` <div class="header ${compactMode}">
+							${
+								this._config.name
+									? html`<div class="header-name ${compactMode}" @click="${() => this.handleToggle()}">
+											${this._config.name}
+										</div>`
+									: ''
+							}
+							${this.showLoader && this._config.showLoader ? html`<div class="loader"></div>` : ''}
+							${this._config.showDate ? html`<div class="header-date ${compactMode}">${getDate(this._config)}</div>` : ''}
+						</div>`
+					: ''
+			}
 			<div class="cal-eventContainer" style="padding-top: 4px;">
 				${this.currentView ? this.currentView.render() : html``}
 			</div>
@@ -220,9 +224,11 @@ export class AtomicCalendarRevive extends LitElement implements ICardHost {
 					<span class="modal-close" @click="${() => (this.selectedEvent = undefined)}">&times;</span>
 					<div class="modal-event-title">${event.title}</div>
 					<div class="modal-event-time">
-						${event.isAllDayEvent
-							? localize('common.fullDayEventText')
-							: `${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')}`}
+						${
+							event.isAllDayEvent
+								? localize('common.fullDayEventText')
+								: `${event.startDateTime.format('LT')} - ${event.endDateTime.format('LT')}`
+						}
 					</div>
 				</div>
 			</div>

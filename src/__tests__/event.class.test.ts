@@ -161,7 +161,13 @@ describe('EventClass: titleReplace', () => {
 
 	test('invalid regex rule is skipped, other rules still apply', () => {
 		const raw = timedEvent('2026-04-25T14:00:00', '2026-04-25T15:00:00', 'Foo Bar', {
-			entity: { ...ENTITY, titleReplace: [{ from: '[invalid', to: 'X' }, { from: 'Bar', to: 'Baz' }] },
+			entity: {
+				...ENTITY,
+				titleReplace: [
+					{ from: '[invalid', to: 'X' },
+					{ from: 'Bar', to: 'Baz' },
+				],
+			},
 		});
 		const e = new EventClass(raw, makeConfig());
 		expect(e.title).toBe('Foo Baz');
