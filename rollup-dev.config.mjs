@@ -34,10 +34,9 @@ const plugins = [
 			[
 				'@babel/plugin-proposal-decorators',
 				{
-					legacy: true,
+					version: 'legacy',
 				},
 			],
-			'@babel/plugin-proposal-class-properties',
 			'@babel/plugin-transform-template-literals',
 		],
 	}),

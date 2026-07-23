@@ -174,9 +174,7 @@ describe('resolveConfig: titleReplace validation', () => {
 		expect(() =>
 			resolveConfig(
 				base({
-					entities: [
-						{ entity: 'calendar.test', titleReplace: 'oops' } as unknown as { entity: string },
-					],
+					entities: [{ entity: 'calendar.test', titleReplace: 'oops' } as unknown as { entity: string }],
 				}),
 			),
 		).toThrow(/titleReplace/);
@@ -200,9 +198,7 @@ describe('resolveConfig: titleReplace validation', () => {
 		expect(() =>
 			resolveConfig(
 				base({
-					entities: [
-						{ entity: 'calendar.test', titleReplace: [{ to: '' }] } as unknown as { entity: string },
-					],
+					entities: [{ entity: 'calendar.test', titleReplace: [{ to: '' }] } as unknown as { entity: string }],
 				}),
 			),
 		).toThrow(/titleReplace\[0\]\.from/);

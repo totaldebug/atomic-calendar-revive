@@ -180,13 +180,15 @@ export class EventView implements ICalendarView {
 				if (this.config.showRelativeTime || this.config.showTimeRemaining) {
 					const now = dayjs();
 					timeUntilRemaining = html`<div class="relative-time time-remaining">
-						${this.config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
-							? `(${event.startDateTime.isSame(now, 'day') ? event.startDateTime.fromNow() : event.startDateTime.startOf('day').from(now.startOf('day'))})`
-							: this.config.showTimeRemaining &&
-								  event.startDateTime.isBefore(now, 'minutes') &&
-								  event.endDateTime.isAfter(now, 'minutes')
-								? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
-								: ''}
+						${
+							this.config.showRelativeTime && event.startDateTime.isAfter(now, 'minutes')
+								? `(${event.startDateTime.isSame(now, 'day') ? event.startDateTime.fromNow() : event.startDateTime.startOf('day').from(now.startOf('day'))})`
+								: this.config.showTimeRemaining &&
+									  event.startDateTime.isBefore(now, 'minutes') &&
+									  event.endDateTime.isAfter(now, 'minutes')
+									? `${dayjs.duration(event.endDateTime.diff(now)).humanize()}`
+									: ''
+						}
 					</div>`;
 				} else {
 					timeUntilRemaining = html``;
