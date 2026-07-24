@@ -11,12 +11,16 @@ import { resolveInlineEventStyle } from '../lib/views/InlineCalendarView';
 
 describe('resolveInlineEventStyle', () => {
 	test('all-day event with no custom color uses accent fill and contrast text', () => {
-		const event = new EventClass(allDayEvent('2026-04-25', '2026-04-26'), makeConfig());
-		const { background, textColor } = resolveInlineEventStyle(event, makeConfig());
+		const config = makeConfig();
+		const event = new EventClass(allDayEvent('2026-04-25', '2026-04-26'), config);
+		const { background, textColor } = resolveInlineEventStyle(event, config);
 		expect(background).toBe('var(--primary-color)');
 		expect(textColor).toBe('var(--text-primary-color)');
 		// The regression: fill must not equal the text color.
 		expect(background).not.toBe(textColor);
+		// The root cause was both defaulting to defaultCalColor; assert neither does now.
+		expect(background).not.toBe(config.defaultCalColor);
+		expect(textColor).not.toBe(config.defaultCalColor);
 	});
 
 	test('all-day event honours a per-calendar color as the fill', () => {
