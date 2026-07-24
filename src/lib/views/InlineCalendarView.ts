@@ -5,7 +5,34 @@ import { getEntityIcon } from '../../helpers/get-icon';
 import { atomicCardConfig } from '../../types/config';
 import { HomeAssistant } from '../../types/homeassistant';
 import { ICardHost } from '../card-host.interface';
+import EventClass from '../event.class';
 import { ICalendarView } from '../view.interface';
+
+export interface InlineEventStyle {
+	/** CSS `background-color` value, or `''` for no fill (timed events). */
+	background: string;
+	/** CSS `color` value for the bar text and icon. */
+	textColor: string;
+}
+
+// #1794: all-day events render as a filled bar. Both the fill and the text used
+// to default to the same token (`defaultCalColor` and `eventTitleColor` both
+// resolve to `var(--primary-text-color)`), so with no per-calendar `color:` the
+// bar's fill equalled its own text and the event was invisible. Default the fill
+// to the theme accent instead and pair it with `--text-primary-color` (the token
+// intended to contrast solid fills) so the title stays legible; a per-calendar
+// `color:` still overrides the fill. Timed events keep coloured text and no fill.
+export function resolveInlineEventStyle(event: EventClass, config: atomicCardConfig): InlineEventStyle {
+	const customColor = event.entityConfig.color;
+	const hasCustomColor = typeof customColor !== 'undefined';
+	if (event.isAllDayEvent) {
+		return {
+			background: hasCustomColor ? customColor : 'var(--primary-color)',
+			textColor: 'var(--text-primary-color)',
+		};
+	}
+	return { background: '', textColor: hasCustomColor ? customColor : config.defaultCalColor };
+}
 
 export class InlineCalendarView implements ICalendarView {
 	private grid: MonthGrid;
@@ -37,11 +64,9 @@ export class InlineCalendarView implements ICalendarView {
 
 	private renderEvents(day: CalendarDay): TemplateResult[] {
 		return day.allEvents.map((event) => {
-			const eventColor =
-				typeof event.entityConfig.color !== 'undefined' ? event.entityConfig.color : this.config.defaultCalColor;
 			const isAllDay = event.isAllDayEvent;
-			const titleColor = isAllDay ? this.config.eventTitleColor : eventColor;
-			const backgroundStyle = isAllDay ? `background-color: ${eventColor};` : '';
+			const { background, textColor: titleColor } = resolveInlineEventStyle(event, this.config);
+			const backgroundStyle = background ? `background-color: ${background};` : '';
 			const time = !isAllDay
 				? `${event.startDateTime.format('LT')}${this.config.showEndTime ? ` - ${event.endDateTime.format('LT')}` : ''}`
 				: '';
