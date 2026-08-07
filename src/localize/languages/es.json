@@ -57,7 +57,7 @@
 			"showAllDayEvents": "Mostrar eventos de todo el día",
 			"offsetHeaderDate": "Fecha de encabezado de compensación",
 			"startDaysAhead": "Eventos que comienzan `x` días desde hoy",
-			"showPastDaysOfWeek": "Anchor window to start of current week"
+			"showPastDaysOfWeek": "Anclar ventana al inicio de la semana actual"
 		}
 	},
 	"event": {
@@ -98,6 +98,14 @@
 			"disableCalLocationLink": "¿Desactivar enlace de ubicación del calendario?",
 			"calShowDescription": "¿Mostrar descripción del calendario?",
 			"disableCalLink": "¿Desactivar enlace del calendario?"
+		}
+	},
+	"planner": {
+		"name": "Modo Planificador",
+		"secondary": "Opciones específicas del Modo Planificador",
+		"fields": {
+			"plannerDaysToShow": "Días a mostrar",
+			"plannerRollingWeek": "Semana móvil (comenzar hoy)"
 		}
 	},
 	"appearance": {
