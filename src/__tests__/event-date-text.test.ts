@@ -54,4 +54,10 @@ describe('getEventDateText', () => {
 		// Late-in-the-day timestamp must still be recognised as "today".
 		expect(getEventDateText(config, dayjs().endOf('day'))).toBe('Today');
 	});
+
+	test('matches tomorrow regardless of the time of day', () => {
+		const config = makeConfig({ showTodayTomorrow: true });
+		// Late-in-the-day timestamp must still be recognised as "tomorrow".
+		expect(getEventDateText(config, dayjs().add(1, 'day').endOf('day'))).toBe('Tomorrow');
+	});
 });
