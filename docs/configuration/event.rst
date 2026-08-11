@@ -21,5 +21,6 @@ Event Mode Options
  hoursOnSameLine         boolean    ``false`` if set true will move hours to show on the same line as the summary.
  showAllDayHours         boolean    ``true`` Show "All Day" text under full day events
  eventDateFormat         string     ``ddd D MMM`` Set the date format for events (`Reference <https://day.js.org/docs/en/display/format>`_)
+ showTodayTomorrow       boolean    ``false`` Show a localized "Today"/"Tomorrow" label instead of the date for those two days (other days keep ``eventDateFormat``)
  hideCardIfNoEvents      boolean    ``false`` Hides the entire card if there are no events to display
 ======================= ========== ===========================================================================================================

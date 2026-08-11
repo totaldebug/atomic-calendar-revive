@@ -8,7 +8,9 @@
 		"untilText": "Tot",
 		"noEventText": "Geen gebeurtenissen",
 		"noEventsForNextDaysText": "Geen gebeurtenissen in de komende dagen",
-		"hiddenEventText": "gebeurtenissen zijn verborgen"
+		"hiddenEventText": "gebeurtenissen zijn verborgen",
+		"today": "Vandaag",
+		"tomorrow": "Morgen"
 	},
 	"ui": {
 		"common": {
@@ -87,7 +89,8 @@
 			"showTimeRemaining": "Toon resterende tijd",
 			"showAllDayHours": "Toon uren voor hele dag gebeurtenissen",
 			"hoursOnSameLine": "Toon uren op de gebeurtenislijn",
-			"eventDateFormat": "Datumformaat gebeurtenis"
+			"eventDateFormat": "Datumformaat gebeurtenis",
+			"showTodayTomorrow": "Labels Vandaag/Morgen tonen?"
 		}
 	},
 	"calendar": {

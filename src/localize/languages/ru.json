@@ -8,7 +8,9 @@
 		"untilText": "До",
 		"noEventText": "Нет событий",
 		"noEventsForNextDaysText": "Нет событий в ближайшие дни",
-		"hiddenEventText": "события скрыты"
+		"hiddenEventText": "события скрыты",
+		"today": "Сегодня",
+		"tomorrow": "Завтра"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Показать оставшееся время",
 			"showAllDayHours": "Показать текст события на весь день",
 			"hoursOnSameLine": "Показать часы на строке события",
-			"eventDateFormat": "Формат даты события"
+			"eventDateFormat": "Формат даты события",
+			"showTodayTomorrow": "Показывать метки Сегодня/Завтра"
 		}
 	},
 	"calendar": {

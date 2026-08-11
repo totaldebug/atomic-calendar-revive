@@ -46,6 +46,7 @@ export interface atomicCardConfig {
 	showEventDate: boolean;
 	showDatePerEvent: boolean;
 	showRelativeTime?: boolean;
+	showTodayTomorrow?: boolean;
 	eventDateFormat: string;
 	showWeekNumber?: boolean;
 	showAllDayEvents: boolean;

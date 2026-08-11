@@ -8,7 +8,9 @@
 		"untilText": "Jusqu'au",
 		"noEventText": "pas d'événements",
 		"noEventsForNextDaysText": "Aucun événement dans les prochains jours",
-		"hiddenEventText": "les événements sont masqués"
+		"hiddenEventText": "les événements sont masqués",
+		"today": "Aujourd'hui",
+		"tomorrow": "Demain"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Afficher le temps restant",
 			"showAllDayHours": "Afficher le texte de l'événement toute la journée",
 			"hoursOnSameLine": "Afficher les heures sur la ligne de l'événement",
-			"eventDateFormat": "Format de la date de l'événement"
+			"eventDateFormat": "Format de la date de l'événement",
+			"showTodayTomorrow": "Afficher les libellés Aujourd'hui/Demain"
 		}
 	},
 	"calendar": {

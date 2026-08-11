@@ -8,7 +8,9 @@
 		"untilText": "Tills",
 		"noEventText": "Inga händelser",
 		"noEventsForNextDaysText": "Inga händelser de närmaste dagarna",
-		"hiddenEventText": "händelser är dolda"
+		"hiddenEventText": "händelser är dolda",
+		"today": "Idag",
+		"tomorrow": "Imorgon"
 	},
 	"ui": {
 		"common": {
@@ -85,7 +87,8 @@
 			"showTimeRemaining": "Visa återstående tid",
 			"showAllDayHours": "Visa heldagshändelsetext",
 			"hoursOnSameLine": "Visa öppettider på evenemangsraden",
-			"eventDateFormat": "Händelsedatumformat"
+			"eventDateFormat": "Händelsedatumformat",
+			"showTodayTomorrow": "Visa etiketter Idag/Imorgon?"
 		}
 	},
 	"calendar": {

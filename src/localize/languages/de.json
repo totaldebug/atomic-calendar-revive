@@ -8,7 +8,9 @@
 		"untilText": "Bis",
 		"noEventText": "Keine Einträge",
 		"noEventsForNextDaysText": "Keine Einträge in den nächsten Tagen",
-		"hiddenEventText": "Einträge sind ausgeblendet."
+		"hiddenEventText": "Einträge sind ausgeblendet.",
+		"today": "Heute",
+		"tomorrow": "Morgen"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Verbleibende Zeit anzeigen?",
 			"showAllDayHours": "Ganztägigen Ereignistext anzeigen?",
 			"hoursOnSameLine": "Stunden auf der Ereigniszeile anzeigen?",
-			"eventDateFormat": "Ereignisdatumsformat"
+			"eventDateFormat": "Ereignisdatumsformat",
+			"showTodayTomorrow": "Labels Heute/Morgen anzeigen?"
 		}
 	},
 	"calendar": {

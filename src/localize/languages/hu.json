@@ -8,7 +8,9 @@
 		"untilText": "Amíg",
 		"noEventText": "Nincs esemény",
 		"noEventsForNextDaysText": "Nincsenek események a következő napokra",
-		"hiddenEventText": "az események elrejtve"
+		"hiddenEventText": "az események elrejtve",
+		"today": "Ma",
+		"tomorrow": "Holnap"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Hátralévő idő megjelenítése",
 			"showAllDayHours": "Egész napos esemény szöveg megjelenítése",
 			"hoursOnSameLine": "Az idő megjelenítése az esemény sorában",
-			"eventDateFormat": "Esemény dátumának formátuma"
+			"eventDateFormat": "Esemény dátumának formátuma",
+			"showTodayTomorrow": "Ma/Holnap címkék megjelenítése?"
 		}
 	},
 	"calendar": {

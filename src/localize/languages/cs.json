@@ -8,7 +8,9 @@
 		"untilText": "Do",
 		"noEventText": "Žádné události",
 		"noEventsForNextDaysText": "Žádné události v následujících dnech",
-		"hiddenEventText": "události jsou skyty"
+		"hiddenEventText": "události jsou skyty",
+		"today": "Dnes",
+		"tomorrow": "Zítra"
 	},
 	"ui": {
 		"common": {
@@ -75,7 +77,8 @@
 			"showWeekNumber": "Zobrazit číslo týdne",
 			"showEventDate": "Zobrazit datum události",
 			"showDatePerEvent": "Zobrazit datum u každé události",
-			"eventDateFormat": "Formát data události"
+			"eventDateFormat": "Formát data události",
+			"showTodayTomorrow": "Zobrazit popisky Dnes/Zítra?"
 		}
 	},
 	"calendar": {
