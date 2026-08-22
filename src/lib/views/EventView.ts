@@ -6,7 +6,14 @@ import localize from '../../localize/localize';
 import { atomicCardConfig } from '../../types/config';
 import { HomeAssistant } from '../../types/homeassistant';
 import { ICardHost } from '../card-host.interface';
-import { getCurrDayAndMonth, getDescription, getLocationHTML, getTitleHTML, setNoEventDays } from '../common.html';
+import {
+	getCurrDayAndMonth,
+	getDescription,
+	getEventDateText,
+	getLocationHTML,
+	getTitleHTML,
+	setNoEventDays,
+} from '../common.html';
 import EventClass from '../event.class';
 import { fetchEventModeEvents, groupEventsByDay } from '../pipeline';
 import { ICalendarView } from '../view.interface';
@@ -200,7 +207,7 @@ export class EventView implements ICalendarView {
 
 				// check and set the date format
 				const eventDate = showDatePerEvent
-					? html`<div class="event-date-day">${event.startTimeToShow.format(this.config.eventDateFormat)}</div>`
+					? html`<div class="event-date-day">${getEventDateText(this.config, event.startTimeToShow)}</div>`
 					: html``;
 
 				const dayClassTodayEvent = event.startTimeToShow.isSame(dayjs(), 'day') ? `current-day` : ``;

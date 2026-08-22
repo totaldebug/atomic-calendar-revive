@@ -8,7 +8,9 @@
 		"untilText": "do",
 		"noEventText": "Žiadne udalosti",
 		"noEventsForNextDaysText": "Žiadne udalosti v najbližších dňoch",
-		"hiddenEventText": "udalosti sú skryté"
+		"hiddenEventText": "udalosti sú skryté",
+		"today": "Dnes",
+		"tomorrow": "Zajtra"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Zobraziť zostávajúci čas",
 			"showAllDayHours": "Zobraziť text celodennej udalosti",
 			"hoursOnSameLine": "Zobraziť hodiny na riadku udalosti",
-			"eventDateFormat": "Formát dátumu udalosti"
+			"eventDateFormat": "Formát dátumu udalosti",
+			"showTodayTomorrow": "Zobraziť štítky Dnes/Zajtra?"
 		}
 	},
 	"calendar": {

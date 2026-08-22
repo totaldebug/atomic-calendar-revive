@@ -5,6 +5,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 import EventClass from './event.class';
 import { getEventIcon } from '../helpers/get-icon';
+import localize from '../localize/localize';
 import { atomicCardConfig } from '../types/config';
 import { HomeAssistant } from '../types/homeassistant';
 
@@ -76,6 +77,27 @@ export function getDate(config: atomicCardConfig) {
 		date = dayjs().add(config.startDaysAhead, 'day').format(config.dateFormat);
 	}
 	return html`${date}`;
+}
+
+/**
+ * Returns the date label shown in an event's day header. When `showTodayTomorrow`
+ * is enabled, events falling on today or tomorrow display a localized "Today" or
+ * "Tomorrow" label; every other day falls back to the configured `eventDateFormat`.
+ * @param config card configuration
+ * @param eventDate the (clamped) start time used for the event's date header
+ * @returns the label string to render
+ */
+export function getEventDateText(config: atomicCardConfig, eventDate: dayjs.Dayjs): string {
+	if (config.showTodayTomorrow) {
+		const today = dayjs().startOf('day');
+		if (eventDate.isSame(today, 'day')) {
+			return localize('common.today');
+		}
+		if (eventDate.isSame(today.add(1, 'day'), 'day')) {
+			return localize('common.tomorrow');
+		}
+	}
+	return eventDate.format(config.eventDateFormat);
 }
 
 /**

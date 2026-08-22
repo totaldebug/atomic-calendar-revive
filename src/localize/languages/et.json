@@ -8,7 +8,9 @@
 		"untilText": "Kuni",
 		"noEventText": "üritusi pole",
 		"noEventsForNextDaysText": "Paari järgmise päeva sündmusi pole",
-		"hiddenEventText": "Sündmused on varjatud"
+		"hiddenEventText": "Sündmused on varjatud",
+		"today": "Täna",
+		"tomorrow": "Homme"
 	},
 	"ui": {
 		"common": {
@@ -84,7 +86,8 @@
 			"showTimeRemaining": "Näita järelejäänud aega",
 			"showAllDayHours": "Näita kogu päeva sündmuse teksti",
 			"hoursOnSameLine": "Näidake sündmuse reale tundi",
-			"eventDateFormat": "Sündmuse kuupäeva vorming"
+			"eventDateFormat": "Sündmuse kuupäeva vorming",
+			"showTodayTomorrow": "Kuva sildid Täna/Homme?"
 		}
 	},
 	"calendar": {

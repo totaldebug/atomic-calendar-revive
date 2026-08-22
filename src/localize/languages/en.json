@@ -8,7 +8,9 @@
 		"untilText": "Until",
 		"noEventText": "No events",
 		"noEventsForNextDaysText": "No events in the next few days",
-		"hiddenEventText": "events are hidden"
+		"hiddenEventText": "events are hidden",
+		"today": "Today",
+		"tomorrow": "Tomorrow"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Show time remaining",
 			"showAllDayHours": "Show All Day event text",
 			"hoursOnSameLine": "Show hours on the event line",
-			"eventDateFormat": "Event date format"
+			"eventDateFormat": "Event date format",
+			"showTodayTomorrow": "Show Today/Tomorrow labels?"
 		}
 	},
 	"calendar": {

@@ -89,6 +89,7 @@ export default {
 
 	showEventIcon: false,
 	eventDateFormat: 'ddd D MMM',
+	showTodayTomorrow: false,
 	hideDuplicates: false,
 
 	showMultiDay: false,

@@ -74,6 +74,7 @@ export const eventSchema = [
 	{ name: 'noEventText', label: localize('event.fields.noEventText'), selector: { text: {} } },
 	{ name: 'hiddenEventText', label: localize('event.fields.hiddenEventText'), selector: { text: {} } },
 	{ name: 'eventDateFormat', label: localize('event.fields.eventDateFormat'), selector: { text: {} } },
+	{ name: 'showTodayTomorrow', label: localize('event.fields.showTodayTomorrow'), selector: { boolean: {} } },
 	{ name: 'disableEventLink', label: localize('event.fields.disableEventLink'), selector: { boolean: {} } },
 	{ name: 'disableLocationLink', label: localize('event.fields.disableLocationLink'), selector: { boolean: {} } },
 	{ name: 'showNoEventsForToday', label: localize('event.fields.showNoEventsForToday'), selector: { boolean: {} } },

@@ -8,7 +8,9 @@
 		"untilText": "Inntil",
 		"noEventText": "Ingen hendelser",
 		"noEventsForNextDaysText": "Ingen hendelser de nærmeste dager",
-		"hiddenEventText": "hendelser er skjulte"
+		"hiddenEventText": "hendelser er skjulte",
+		"today": "I dag",
+		"tomorrow": "I morgen"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Vis gjenværende tid",
 			"showAllDayHours": "Vis tekst for hele dagen",
 			"hoursOnSameLine": "Vis timer på arrangementslinjen",
-			"eventDateFormat": "Datoformat for hendelsen"
+			"eventDateFormat": "Datoformat for hendelsen",
+			"showTodayTomorrow": "Vis I dag/I morgen-etiketter?"
 		}
 	},
 	"calendar": {

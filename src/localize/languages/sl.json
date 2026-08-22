@@ -8,7 +8,9 @@
 		"untilText": "Do",
 		"noEventText": "Ni dogodkov",
 		"noEventsForNextDaysText": "Ni dogodkov v naslednjih nekaj dneh",
-		"hiddenEventText": "dogodki so skriti"
+		"hiddenEventText": "dogodki so skriti",
+		"today": "Danes",
+		"tomorrow": "Jutri"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Pokaži preostali čas",
 			"showAllDayHours": "Prikaži besedilo celodnevnega dogodka",
 			"hoursOnSameLine": "Prikaži ure na vrstici dogodkov",
-			"eventDateFormat": "Oblika datuma dogodka"
+			"eventDateFormat": "Oblika datuma dogodka",
+			"showTodayTomorrow": "Prikaži oznake Danes/Jutri?"
 		}
 	},
 	"calendar": {

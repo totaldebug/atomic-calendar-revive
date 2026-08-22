@@ -8,7 +8,9 @@
 		"untilText": "Fins",
 		"noEventText": "Sense esdeveniments",
 		"noEventsForNextDaysText": "Sense esdeveniments en els propers dies",
-		"hiddenEventText": "esdeveniments ocults"
+		"hiddenEventText": "esdeveniments ocults",
+		"today": "Avui",
+		"tomorrow": "Demà"
 	},
 	"ui": {
 		"common": {
@@ -86,7 +88,8 @@
 			"showTimeRemaining": "Mostrar temps restant",
 			"showAllDayHours": "Mostrar text d'esdeveniment de tot el dia",
 			"hoursOnSameLine": "Mostrar hores a la línia de l'esdeveniment",
-			"eventDateFormat": "Format de data de l'esdeveniment"
+			"eventDateFormat": "Format de data de l'esdeveniment",
+			"showTodayTomorrow": "Mostrar etiquetes Avui/Demà?"
 		}
 	},
 	"calendar": {
