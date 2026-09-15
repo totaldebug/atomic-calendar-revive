@@ -14,7 +14,7 @@ Entity Options
  allowlist            string         ``null`` Case-insensitive regex to only show events whose title matches. Matched against the original summary
  allowlistLocation    string         ``null`` Case-insensitive regex to only show events whose location matches
  showMultiDay         boolean        ``false`` Split multi-day events across all days
- name                 string         ``null`` Add a calendar name to be shown with event
+ name                 string|list    ``null`` Add a calendar name to be shown with event. Defaults to the calendar entity name. Accepts a structured name on Home Assistant 2026.4 and later (see below)
  eventTitle           string         Where no event title exists, add this string instead. Only applies to this entity; can also be set globally
  color                string         ``null`` Default color for this calendar's event titles
  showDescription      boolean        Per-entity override of the global ``showDescription``. Useful to show descriptions for some calendars (e.g. kids) and hide them for others
@@ -60,3 +60,33 @@ Rename per-person tags ("Daddy Work" → "Work", strip "hat Geburtstag"):
    Click the calendar you wish to change, click the cog in the top right and set a new icon.
 
    This is how I recommend setting up the icons now.
+
+Structured names
+----------------
+
+*Requires Home Assistant 2026.4 or later. On earlier versions a structured* ``name``
+*falls back to the entity's friendly name.*
+
+Home Assistant composes an entity's display name out of its registry context
+(entity, device, area, floor) rather than one ``friendly_name`` string. From
+2026.4 the card uses that composed name when no ``name`` is set, so calendar
+names match what the built-in cards show.
+
+To pick the parts yourself, set ``name`` to a list:
+
+.. code-block:: yaml
+
+    entities:
+      - entity: calendar.family
+        name:
+          - type: area
+          - type: entity
+
+Available part types are ``entity``, ``device``, ``parent_device``, ``area``,
+``floor``, and ``text`` for a literal (``{type: text, text: Family}``). Parts
+that resolve to nothing are dropped. A plain string ``name`` keeps working
+exactly as before.
+
+See the `Home Assistant developer documentation
+<https://developers.home-assistant.io/docs/frontend/data#hassformatentitynamestateobj-name-options>`_
+for details.

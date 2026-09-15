@@ -80,6 +80,12 @@ export default class EventClass {
 			return originCalendar.name;
 		}
 
+		// Resolved in the pipeline from the entity's registry context; falls back
+		// to friendly_name on Home Assistant versions without that support.
+		if (this._eventClass.hassEntityName) {
+			return this._eventClass.hassEntityName;
+		}
+
 		const { entity } = this;
 		if (entity && entity.attributes && entity.attributes.friendly_name) {
 			return entity.attributes.friendly_name;
