@@ -22,8 +22,9 @@ const supportsEntityNames = (hass: any): boolean => {
  * versions that cannot resolve a structured name.
  */
 export function computeEntityName(hass: any, stateObj: any, name?: any): string | undefined {
-	// A string name is the override, exactly as formatEntityName treats it.
-	if (typeof name === 'string') return name;
+	// A non-empty string is the override. An empty string falls through to the
+	// entity name, matching what this card did before.
+	if (typeof name === 'string' && name) return name;
 	if (!stateObj) return undefined;
 	if (hass && supportsEntityNames(hass)) {
 		return hass.formatEntityName(stateObj, name) || undefined;

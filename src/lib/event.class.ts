@@ -76,7 +76,10 @@ export default class EventClass {
 			return this._customOriginName;
 		}
 		const { originCalendar } = this;
-		if (originCalendar && originCalendar.name) {
+		// Only a plain string is a literal override here. A structured name is
+		// resolved from the registry in the pipeline and arrives as hassEntityName
+		// below; returning it raw would render as [object Object].
+		if (originCalendar && typeof originCalendar.name === 'string' && originCalendar.name) {
 			return originCalendar.name;
 		}
 

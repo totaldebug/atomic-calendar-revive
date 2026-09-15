@@ -287,7 +287,7 @@ export async function fetchRawEvents(
 					event.hassEntity = hass.states[calendarEntity];
 					// Resolve the calendar's display name here, where hass is available -
 					// EventClass only receives the state object, not hass itself.
-					event.hassEntityName = computeEntityName(hass, hass.states[calendarEntity]);
+					event.hassEntityName = computeEntityName(hass, hass.states[calendarEntity], entityObj.name);
 				}
 				raw.push(...events);
 			})
