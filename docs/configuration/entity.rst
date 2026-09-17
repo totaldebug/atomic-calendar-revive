@@ -82,7 +82,7 @@ To pick the parts yourself, set ``name`` to a list:
           - type: area
           - type: entity
 
-Available part types are ``entity``, ``device``, ``parent_device``, ``area``,
+Available part types are ``entity``, ``device``, ``area``,
 ``floor``, and ``text`` for a literal (``{type: text, text: Family}``). Parts
 that resolve to nothing are dropped. A plain string ``name`` keeps working
 exactly as before.
