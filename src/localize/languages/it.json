@@ -1,0 +1,125 @@
+{
+	"common": {
+		"version": "Versione",
+		"show_warning": "Mostra Avviso",
+		"error": "Errore",
+		"description": "Una card calendario avanzata per Home Assistant con Lovelace.",
+		"fullDayEventText": "Giornata Intera",
+		"untilText": "Fino a",
+		"noEventText": "Nessun evento",
+		"noEventsForNextDaysText": "Nessun evento nei prossimi giorni",
+		"hiddenEventText": "eventi nascosti",
+		"today": "Oggi",
+		"tomorrow": "Domani"
+	},
+	"ui": {
+		"common": {
+			"previous": "Precedente",
+			"next": "Successivo",
+			"week": "Settimana"
+		}
+	},
+	"errors": {
+		"invalid_configuration": "Configurazione non valida",
+		"update_card": "Il calendario non può essere caricato dal componente Home Assistant",
+		"no_entities": "Non hai specificato nessuna entità"
+	},
+	"required": {
+		"name": "Obbligatorio",
+		"secondary": "Opzioni obbligatorie per il funzionamento di questa card"
+	},
+	"main": {
+		"name": "Opzioni principali",
+		"secondary": "Opzioni valide a livello globale",
+		"fields": {
+			"name": "Nome",
+			"showColors": "Mostra colori",
+			"maxDaysToShow": "Numero massimo di giorni da mostrare",
+			"showLocation": "Mostra icona posizione",
+			"showLoader": "Mostra animazione di caricamento",
+			"showDate": "Mostra data sulla card",
+			"showDeclined": "Mostra eventi rifiutati",
+			"sortBy": "Ordina per",
+			"allDayBottom": "Mostra gli eventi giornata intera in fondo",
+			"hideFinishedEvents": "Nascondi eventi terminati",
+			"dateFormat": "Formato data",
+			"defaultMode": "Modalità predefinita",
+			"linkTarget": "Destinazione link",
+			"refreshInterval": "Intervallo di aggiornamento",
+			"showRelativeTime": "Mostra tempo relativo",
+			"firstDayOfWeek": "Primo giorno della settimana",
+			"cardHeight": "Altezza card",
+			"hideDuplicates": "Nascondi duplicati",
+			"showMultiDay": "Dividi eventi multi-giorno",
+			"showMultiDayEventParts": "Mostra parti degli eventi multi-giorno",
+			"eventTitle": "Imposta titolo evento vuoto",
+			"compactMode": "Attiva modalità compatta",
+			"titleLength": "Lunghezza massima titolo (0 per illimitato)",
+			"descLength": "Lunghezza massima descrizione (0 per illimitato)",
+			"showAllDayEvents": "Mostra eventi giornata intera",
+			"offsetHeaderDate": "Sposta data nell'intestazione",
+			"startDaysAhead": "Eventi che iniziano tra `x` giorni da oggi",
+			"showPastDaysOfWeek": "Ancora la finestra all'inizio della settimana corrente"
+		}
+	},
+	"event": {
+		"name": "Modalità Evento",
+		"secondary": "Opzioni specifiche della modalità Evento",
+		"fields": {
+			"showCurrentEventLine": "Mostra linea prima dell'evento?",
+			"showProgressBar": "Mostra barra di avanzamento?",
+			"showMonth": "Mostra mese?",
+			"showDescription": "Mostra descrizione?",
+			"disableEventLink": "Disabilita i link nel titolo dell'evento?",
+			"disableLocationLink": "Disabilita i link alla posizione?",
+			"showNoEventsForToday": "Mostra 'Nessun evento oggi'?",
+			"showFullDayProgress": "Mostra avanzamento eventi giornata intera?",
+			"untilText": "Testo per 'fino a':",
+			"noEventText": "Testo per nessun evento oggi:",
+			"noEventsForNextDaysText": "Testo per nessun evento nei prossimi giorni:",
+			"fullDayEventText": "Testo per evento giornata intera:",
+			"showEventIcon": "Mostra icona evento",
+			"showHiddenText": "Mostra testo eventi nascosti?",
+			"hiddenEventText": "Testo per eventi nascosti:",
+			"showCalendarName": "Mostra nome calendario",
+			"showWeekNumber": "Mostra numeri settimana",
+			"showEventDate": "Mostra data per gli eventi",
+			"showDatePerEvent": "Mostra data accanto a ogni evento",
+			"showTimeRemaining": "Mostra tempo rimanente",
+			"showAllDayHours": "Mostra testo evento giornata intera",
+			"hoursOnSameLine": "Mostra orari sulla riga dell'evento",
+			"eventDateFormat": "Formato data evento",
+			"showTodayTomorrow": "Mostra etichette Oggi/Domani?"
+		}
+	},
+	"calendar": {
+		"name": "Modalità Calendario",
+		"secondary": "Opzioni specifiche della modalità Calendario",
+		"fields": {
+			"showLastCalendarWeek": "Mostra ultima settimana del calendario",
+			"disableCalEventLink": "Disabilita link evento calendario",
+			"disableCalLocationLink": "Disabilita link posizione calendario",
+			"calShowDescription": "Mostra descrizione",
+			"disableCalLink": "Disabilita link calendario"
+		}
+	},
+	"planner": {
+		"name": "Modalità Planner",
+		"secondary": "Opzioni specifiche della modalità Planner",
+		"fields": {
+			"plannerDaysToShow": "Giorni da mostrare",
+			"plannerRollingWeek": "Settimana scorrevole (inizia da oggi)"
+		}
+	},
+	"appearance": {
+		"name": "Aspetto",
+		"secondary": "Personalizza i colori ecc.",
+		"main": {
+			"name": "Principale",
+			"secondary": "Impostazioni colori globali"
+		},
+		"fields": {
+			"dimFinishedEvents": "Attenua eventi terminati?"
+		}
+	}
+}
