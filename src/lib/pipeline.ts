@@ -3,6 +3,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import isBetween from 'dayjs/plugin/isBetween';
 
 import EventClass from './event.class';
+import { computeEntityName } from './entity-name';
 import sortEvents from '../common/sort_events';
 import { atomicCardConfig } from '../types/config';
 
@@ -284,6 +285,9 @@ export async function fetchRawEvents(
 					event.entity = entityObj;
 					event.calendarEntity = calendarEntity;
 					event.hassEntity = hass.states[calendarEntity];
+					// Resolve the calendar's display name here, where hass is available -
+					// EventClass only receives the state object, not hass itself.
+					event.hassEntityName = computeEntityName(hass, hass.states[calendarEntity], entityObj.name);
 				}
 				raw.push(...events);
 			})
