@@ -3,6 +3,7 @@ import { TemplateResult, html } from 'lit';
 
 import localize from '../../localize/localize';
 import { atomicCardConfig } from '../../types/config';
+import { computeEntityName } from '../entity-name';
 import { HomeAssistant } from '../../types/homeassistant';
 import { ICardHost } from '../card-host.interface';
 import { getTitleHTML, setNoEventDays } from '../common.html';
@@ -93,7 +94,7 @@ export class PlannerView implements ICalendarView {
 			const stateObj = this.hass.states[entityObj.entity];
 			return {
 				id: entityObj.entity,
-				name: entityObj.name || stateObj?.attributes?.friendly_name || entityObj.entity,
+				name: computeEntityName(this.hass, stateObj, entityObj.name) || entityObj.entity,
 				color: entityObj.color || 'var(--primary-color)',
 			};
 		});
