@@ -59,7 +59,7 @@
 		"rollup-plugin-serve": "^3.0.0",
 		"semantic-release": "^25.0.6",
 		"typescript-eslint": "^8.62.1",
-		"vitest": "^4.1.10"
+		"vitest": "^4.1.11"
 	},
 	"dependencies": {
 		"@formatjs/icu-messageformat-parser": "3.5.14",
