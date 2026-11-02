@@ -164,6 +164,12 @@ export const styles: CSSResultGroup = css`
 		padding: 1px 1px 1px 1px;
 		vertical-align: top;
 	}
+	/* compactMode sets line-height: 80% on ha-card, which resolves to a fixed
+	   length based on the card font size. Use the same ratio relative to the
+	   title's own font size so a per-entity fontSize does not overlap (#1821). */
+	.single-event-container.compact .event-title {
+		line-height: 0.8;
+	}
 	/* END EVENT MODE */
 
 	hr.event {
